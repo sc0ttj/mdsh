@@ -1,0 +1,120 @@
+#!/bin/bash
+
+# generates simple 'meta data' for blog posts
+#
+# Usage:   create_post [-all]
+#
+#          Follow the instructions to create your page meta info.
+#          You can give `-all` to set all meta info, allowing you
+#          to override site defaults.
+
+# load the users config file from $HOME
+[ -f $HOME/.bl/config ] && source $HOME/.bl/config
+# load the local config file
+[ -f .site_config ] && source .site_config
+
+echo
+echo "Enter the meta info for your page:"
+echo
+
+# get user input to create the meta data
+echo -n "Title:        "
+read title
+echo -n "Description:  "
+read description
+echo -n "Time to read: "
+read time_to_read
+echo -n "Category:     "
+read category
+echo -n "Tags (comma separated words or phrases): "
+read tags
+# if -all given, as kfor all meta info
+if [ "$1" = "-all" ];then
+  echo -n "Author:       "
+  read author
+  echo -n "Email:        "
+  read email
+  echo -n "Twitter:      "
+  read twitter
+  echo -n "Language:     "
+  read language
+  echo -n "JS deps (comma separated package names): "
+  read js_deps
+fi
+# generate some more meta info
+slug=$(slugify.sh "$title")
+created="$(date -u +"%Y/%m/%d")"
+modified="$created"
+
+# set meta info
+meta_data="# title:        $title
+# slug name:    $slug
+# description:  $description
+# time to read: $time_to_read
+# category:     $category
+# tags:         $tags
+# author:       ${author:-$blog_author}
+# email:        ${email:-$blog_email}
+# twitter:      ${twitter:-$blog_twitter}
+# language:     ${language:-$blog_language}
+# JS deps:      ${js_deps:-$blog_js_deps}
+# created:      $created
+# modified:     $modified"
+
+
+# show meta info
+echo
+echo "Meta data:
+
+$meta_data"
+
+
+# ask to continue
+echo
+echo -n "Continue (Y/n)? "
+read -n1 answer
+echo
+
+# quit if not 'y' or 'Y'
+if [ "$answer" = 'n' ] || [ "$answer" = 'N' ];then
+  echo
+  echo "Exiting..."
+  exit 1
+fi
+
+# write file
+mkdir -p ./posts/$created/
+echo "$meta_data" > ./posts/$created/${slug}.md
+echo ""          >> ./posts/$created/${slug}.md
+echo "---"       >> ./posts/$created/${slug}.md
+
+# final message
+echo "Saved meta data in: posts/$created/${slug}.md"
+echo
+echo "Now write your markdown below, line by line.
+ * support for embedding executable commands in your markdown
+ * just start a sub-shell \$() and the results will be in the final markdown.
+ * Hit ENTER 3 times to exit and save the file. "
+echo
+echo
+
+# run interactive shell for writing the content itself, in markdown
+./mdshell posts/$created/${slug}.md
+
+# update the main database of posts for the site
+echo "$created|${slug}.md|$title|$author|$category|$tags" >> posts.csv
+sort -u posts.csv | uniq >> posts_sorted.csv
+mv posts_sorted.csv posts.csv
+
+./update_pages
+
+exit 0
+
+
+#### for another script
+
+# convert $meta_data to HTML, for meta info in <head>
+# convert $meta_data to HTML, for article header
+# convert $meta_data to HTML, for main index
+# convert $meta_data to HTML, for navigation/menu
+

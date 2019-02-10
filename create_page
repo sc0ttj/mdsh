@@ -1,0 +1,273 @@
+#!/bin/bash
+
+# load the users config file from $HOME
+[ -f $HOME/.bl/config ] && source $HOME/.bl/config
+# load the local config file
+[ -f .site_config ] && source .site_config
+
+markdown=''
+mardown_meta=''
+mardown_body=''
+body_html=''
+
+# create an HTML page
+function create_page {
+  local lang="${blog_language:-en}"
+  local site_header="$(print_site_header)"
+  local prev_and_next_posts=''
+  echo "<!DOCTYPE html>
+<!--[if lte IE 6]><html lang=\"$lang\" class=\"preIE7 preIE8 preIE9 preIE11\"><![endif]-->
+<!--[if IE 7]><html lang=\"$lang\" class=\"preIE8 preIE9 preIE11\"><![endif]-->
+<!--[if IE 8]><html lang=\"$lang\" class=\"preIE9 preIE11\"><![endif]-->
+<!--[if IE 9]><html lang=\"$lang\" class=\"preIE11\"><![endif]-->
+<!--[if IE 10]><html lang=\"$lang\" class=\"preIE11\"><![endif]-->
+<!--[if gte IE 11]><!--><html lang=\"$lang\"><!--<![endif]-->"
+  echo "<head>"
+  print_site_meta
+  print_site_inline_styles
+  print_site_stylesheets
+  print_site_javascripts
+  echo "</head>"
+  echo "<body>"
+  echo "$site_header"
+  echo '<a id="content"></a>'
+  echo "$body_html"
+  print_site_footer
+  echo "</body>"
+  echo "</html>"
+}
+
+
+function print_site_meta {
+  echo '<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>'${page_title:-$blog_title}'</title>
+<meta name="description" content="'${blog_descr}'">
+<meta name="subject" content="blog, '${blog_categories}'">
+<meta name="generator" content="bl" />
+<meta name="medium" content="blog">
+<meta name="copyright" content="'${blog_author}'">
+<meta name="language" content="'${blog_language}'">
+<meta name="robots" content="index,follow">
+<meta name="revised" content="'$(date)'">
+<meta name="topic" content="'${blog_categories}'">
+<meta name="owner" content="'${blog_author}'">
+<meta name="pagename" content="'${page_title:-$blog_title}'">
+<meta property="og:title" content="'${page_title:-$blog_title}'">
+<meta property="og:description" content="'${blog_descr}'">
+<meta property="og:url" content="'${page_url:-$blog_url}'">
+<meta property="og:site_name" content="'${page_title:-$blog_title}'">
+<meta property="og:type" content="website">
+<meta property="og:image" content="'${blog_url}'/pics/rss.png" >
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="'${page_title:-$blog_title}'" />
+<meta name="twitter:site" content="'${blog_twitter}'" />
+<meta name="twitter:image" content="'${blog_url}'/pics/rss.png" />'
+  if [ "${blog_google_analytics_id}" != "" ];then
+    echo '<meta name="google-analytics" content="'${blog_google_analytics_id}'">'
+  fi
+  echo '<link rel="author" href="/humans.txt" />
+<link rel="canonical" href="'${blog_url}'/">
+<link rel="alternate" type="application/rss+xml" title="Subscribe to ${blog_title}" href="'${blog_url}'/feed.rss" />
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">'
+}
+
+function print_site_inline_styles {
+  echo '<style>
+  body {
+    font-family: Ubuntu, serif;
+    font-size: 18px;
+  }
+  pre, code {
+    font-family: Inconsolata, Monaco, monospace, serif;
+    font-size: 18px;
+  }
+</style>'
+}
+
+function print_site_stylesheets {
+  echo '<link rel="stylesheet" href="/assets/css/main.css">'
+  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
+}
+
+function print_site_javascripts {
+  # optional google analytics
+  if [ "$blog_google_analytics_id" != '' ];then
+    echo '<!-- google analytics -->
+<script type="text/javascript" id="google-analytics">
+ var _gaq = _gaq || [];
+ _gaq.push(["_setAccount", "'${blog_google_analytics_id:-none}'"]);
+ _gaq.push(["_trackPageview"]);
+ (function(){
+  var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
+  ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+  var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+ })();
+</script>'
+  fi
+  # add JS packages from unpkg.com
+  for pkgname in $(echo "$blog_js_deps" | tr ',' ' ')
+  do
+    echo '<script id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
+  done
+  # add site-wide app.js, if it exists
+  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>'
+}
+
+function print_site_header {
+  echo '<div class="page_header">'
+  echo '<h1><a href="/index.html">'$blog_title'</a></h1>'
+  echo '<a class="off-screen" href="#content">Skip to content</a>'
+  echo '<ul>'
+  local site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)"
+  for category in $site_categories
+  do
+    echo '<li><a href="'${blog_url}'/categories/'$category'.html">'$category'</a></li>'
+  done
+  echo '</ul>'
+  echo '</div>'
+}
+
+function print_site_footer {
+  if [ "$page_slug" != "" ];then
+    echo "$(list_prev_and_next_pages "${page_slug}.md")"
+  fi
+  echo '<div class="footer">'
+  echo '<p>'$blog_footer'</p>'
+  echo '</div>'
+}
+
+################################################################################
+
+function list_recent_posts {
+  # list relative paths to the 10 most recent posts in ./posts dir
+  local recent_posts="$(find posts/ -type f -name "*.md" -exec stat -c "%y %n" {} + | sort -r | head -10 | cut -f4 -d' ')"
+  local post_name
+  # then list each one
+  echo '<ul class="posts">'
+  for post in $recent_posts
+  do
+    post_name="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
+    [ "$post_name" = "" ] && post_name=$(basename ${post//.md/})
+    echo '  <li><a href="'${blog_url}'/'${post//.md/.html}'">'${post_name}'</a></li>'
+  done
+  echo '</ul>'
+}
+
+function list_pages_in_category {
+  local category="$1"
+  local titles="$(grep "|$category|" ./posts.csv | cut -f3 -d'|')"
+
+  if [ "$titles" != "" ];then
+    echo '<ul class="posts">'
+    OLDIFS=$IFS
+    IFS="
+"
+    for title in $titles
+    do
+      local created="$(grep -m1 "|$title|" ./posts.csv | cut -f1 -d'|')"
+      local slug="$(grep -m1 "|$title|" ./posts.csv | cut -f2 -d'|')"
+      local title="$(grep -m1 "|$title|" ./posts.csv | cut -f3 -d'|')"
+      echo '  <li><a href="'${blog_url}'/posts/'$created'/'${slug//.md/}'.html">'$title'</a></li>'
+    done
+    IFS=$OLDIFS
+    echo '</ul>'
+  fi
+}
+
+function list_prev_and_next_pages {
+  local current_post="$(grep "|${1//.md/}.md|" ./posts.csv)"
+  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}.md|" ./posts.csv | grep -v "$current_post")"
+  if [ "$prev_current_next_posts" = "" ];then
+    prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}|" ./posts.csv)"
+  fi
+  if [ "$prev_current_next_posts" = "" ];then
+    return 1
+  fi
+  local prev_post=$(echo "$prev_current_next_posts" | head -1)
+  local next_post=$(echo "$prev_current_next_posts" | tail -1)
+
+  local prev_date="$(echo "$prev_post" | cut -f1 -d'|')"
+  local next_date="$(echo "$next_post" | cut -f1 -d'|')"
+  local prev_slug="$(echo "$prev_post" | cut -f2 -d'|')"
+  local next_slug="$(echo "$next_post" | cut -f2 -d'|')"
+  local prev_title="$(echo "$prev_post" | cut -f3 -d'|')"
+  local next_title="$(echo "$next_post" | cut -f3 -d'|')"
+
+  echo '<ul class="prev-next-posts">'
+  echo '  <li class="prev_post"><a href="../../../'$prev_date'/'${prev_slug//.md/}'.html">'$prev_title'</a></li>'
+  if [ "$next_title" != "$prev_title" ];then
+    echo '  <li class="next_post"><a href="../../../'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a></li>'
+  fi
+  echo '</ul>'
+}
+
+
+
+################################################################################
+
+# get markdown from file
+if [ -f "${1//.md/}.md" ];then
+  markdown="$(cat "${1//.md/}.md")"
+
+# get markdown from file
+elif [ -f "$1" ];then
+  markdown="$(cat "$1")"
+
+# get markdown from string
+elif [ "$1" != "" ];then
+  markdown="$(echo -e "$1")"
+
+# get html list of recent posts
+else
+  body_html="$(list_recent_posts)"
+fi
+
+
+# if we have markdown, not html, we need to convert it
+if [ "$body_html" = "" ];then
+  # remove post meta data and keep only the body
+  markdown_meta="${markdown%---*}"
+  markdown_body="${markdown#*---}"
+
+  created="$(echo "$markdown_meta" | grep -m1 '# created'| cut -f2 -d':' | sed 's/^ *//')"
+  # create some page specific meta info that will end up inthe HTML
+  page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
+  page_slug="$(echo "$markdown_meta" | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
+  page_url="${blog_url}/posts/$created/${page_slug}.html"
+  # replace site-wide defaults with post specific meta information
+  blog_keywords="$(echo "$markdown_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_language="$(echo "$markdown_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_descr="$(echo "$markdown_meta"    | grep -m1 '# description'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_author="$(echo "$markdown_meta"   | grep -m1 '# author'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_twitter="$(echo "$markdown_meta"  | grep -m1 '# twitter'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_js_deps="$(echo "$markdown_meta"  | grep -m1 '# JS deps'| cut -f2 -d':' | sed 's/^ *//')"
+
+  #xmessage "$markdown_meta"
+  #xmessage "$markdown_body"
+  echo -e "$markdown_body" | while read line
+  do
+
+    # replace ``` with html pre/code tags, cos the markdown parsers break a lot
+    if [[ "$line" =~ "\`\`\`" ]];then
+      [ "$in_code_block" = true ] && in_code_block=false || in_code_block=true
+      [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code>"
+    fi
+    echo "$line"
+  done > /tmp/markdown
+
+  # convert to html
+  #body_html="$(md2html.sh /tmp/markdown)" # uses github API
+
+  if [ "$body_html" = "" ] || \
+     [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
+     [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
+    body_html="$(echo "$markdown_body" | markdown.pl)" # or markdown.sh
+  fi
+fi
+#xmessage "$body_html"
+create_page
+
+################################################################################

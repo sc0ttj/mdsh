@@ -1,0 +1,43 @@
+#!/bin/bash
+
+
+# Update all index pages across the site which list posts,
+# because a new post may have been added.
+
+# load the users config file from $HOME
+[ -f $HOME/.bl/config ] && source $HOME/.bl/config
+# load the local config file
+[ -f .site_config ] && source .site_config
+
+echo "Updating: index.html"
+. create_page > index.html
+
+# update other pages
+
+# update prev and next section of previously added post (add a 'next post' link)
+post_to_edit="posts/$(cat posts.csv | tail -2 | head -1 | cut -f1-2 -d'|' | sed -e 's:|:/:' -e 's/.md/.html/')"
+post_to_edit_slug="$(basename "$post_to_edit")"
+post_to_edit_slug="${post_to_edit_slug//.html/.md}"
+prev_and_next_pages="$(list_prev_and_next_pages "$post_to_edit_slug")"
+
+#sed "s|<ul class=\"prev-next-posts\">.*</ul>|${prev_and_next_pages}|" "$post_to_edit"
+
+# update category pages
+site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u) "
+for category in $site_categories
+do
+  category_pages="$(list_pages_in_category "${category}")"
+  [ "$category_pages" = "" ] && continue
+  echo "Updating: categories/$category.html"
+  ./create_page "$category_pages" > categories/$category.html
+done
+
+# update (rebuild) all posts pages
+cut -f1-2 -d'|' posts.csv \
+  | tr '|' '/' \
+  | while read mdfile
+    do
+      echo "Updating: posts/${mdfile//.md/.html}"
+      ./create_page "posts/$mdfile" > "posts/${mdfile//.md/.html}"
+    done
+

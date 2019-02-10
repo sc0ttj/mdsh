@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#!/bin/crash - Try again</title>
+<meta name="description" content="Markdown conversion not working well at all...">
+<meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="generator" content="bl" />
+<meta name="medium" content="blog">
+<meta name="copyright" content="John Doe">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="revised" content="Sun Feb 10 23:26:23 +08 2019">
+<meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="owner" content="John Doe">
+<meta name="pagename" content="#!/bin/crash - Try again">
+<meta property="og:title" content="#!/bin/crash - Try again">
+<meta property="og:description" content="Markdown conversion not working well at all...">
+<meta property="og:url" content="http://localhost:8080/posts/2019/02/10/try-again.html">
+<meta property="og:site_name" content="#!/bin/crash - Try again">
+<meta property="og:type" content="website">
+<meta property="og:image" content="http://localhost:8080/pics/rss.png" >
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="#!/bin/crash - Try again" />
+<meta name="twitter:site" content="@foobar" />
+<meta name="twitter:image" content="http://localhost:8080/pics/rss.png" />
+<link rel="author" href="/humans.txt" />
+<link rel="canonical" href="http://localhost:8080/">
+<link rel="alternate" type="application/rss+xml" title="Subscribe to ${blog_title}" href="http://localhost:8080/feed.rss" />
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<style>
+  body {
+    font-family: Ubuntu, serif;
+    font-size: 18px;
+  }
+  pre, code {
+    font-family: Inconsolata, Monaco, monospace, serif;
+    font-size: 18px;
+  }
+</style>
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
+<script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="page_header">
+<h1><a href="/index.html">#!/bin/crash</a></h1>
+<a class="off-screen" href="#content">Skip to content</a>
+<ul>
+<li><a href="http://localhost:8080/categories/blog.html">blog</a></li>
+<li><a href="http://localhost:8080/categories/games.html">games</a></li>
+<li><a href="http://localhost:8080/categories/test.html">test</a></li>
+</ul>
+</div>
+<a id="content"></a>
+<h2>Here is some stuff</h2>
+
+<pre><code>
+#!/bin/bash
+
+if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
+
+  echo
+  echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
+  echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
+  echo 'which creates a Puppy-compatible repo from the repo URLs it receives '
+  echo '(if possible).'
+  echo
+  echo 'More info:'
+  echo
+  echo '/etc/apt/sources.list usually contains lines like:'
+  echo
+  echo '    deb     https://deb.nodesource.com/node_8.x      trusty       main'
+  echo '    deb     http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+  echo '    deb-src http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+  echo
+  echo 'The first bit refers to package type (regular or source), the second'
+  echo 'is the URL where the packages are, the third is OS version, and '
+  echo 'the last is the "repo stream" - often main, contrib, or non-free.'
+  echo
+  echo 'This script will ignore "deb-src" entries, and parse the others'
+  exit 0
+
+fi
+
+if [ ! -f /etc/apt/sources.list ] && [ ! -d /etc/apt/sources.list.d/ ];then
+  [ ! -f /etc/apt/sources.list    ] && echo 'File /etc/apt/sources.list     not found'
+  [ ! -d /etc/apt/sources.list.d/ ] && echo 'Dir  /etc/apt/sources.list.d/  not found'
+  echo 'Exiting'
+  exit 1
+fi
+
+# search inside /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+# ...look for lines starting with 'deb ', ignore others
+# ...(use grep -h, to remove the preppended filenames if grepping multiple files)
+# ...remove any arch stuff from the entries, ppa2pup will handle that,
+# ...convert spaces to | chars, so we can process each line as a whole later
+apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
+  | sed \
+    -e "s/^deb //g" \
+    -e "s/^tor+//g" \
+    -e 's/\[arch=[a-z,0-9].*\] //g' \
+    -e 's/ /|/g'\
+)"
+
+echo "Repos to process:"
+echo
+echo "${apt_sources_list//|/ }"
+
+
+# for each repo in $apt_sources_list, use `ppa2pup` to install the repo
+for line in $apt_sources_list
+do
+  [ "$line" = "" ] && continue
+  [ "$line" = "
+" ] && continue
+  echo
+  echo "Processing:  ${line//|/ }"
+  echo
+
+  # ask user to update repo
+  read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
+
+  if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
+    echo
+    ppa2pup ${line//|/ }
+    retval=$?
+  fi
+  echo
+done
+
+exit $retval
+</code></pre>
+
+<p>^ Added those HTML tags manually... Hopefully that works..</p>
+<ul class="prev-next-posts">
+  <li class="prev_post"><a href="../../../2019/02/10/this-might-work.html">This might work</a></li>
+  <li class="next_post"><a href="../../../2019/02/10/what-to-do-after-creating-a-post.html">What to do after creating a post</a></li>
+</ul>
+<div class="footer">
+<p>sc0ttj 2019</p>
+</div>
+</body>
+</html>
