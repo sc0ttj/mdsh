@@ -26,16 +26,12 @@ current_year=$(date -u +"%Y")
 ################################################################################
 
 function setup {
+  # blog post pages
+  mkdir -p ./posts/$current_year/{01,02,03,04,05,06,07,08,09,10,11,12}/
   # shared site assets
   mkdir -p ./assets/{css,img,js}
   # categories pages
   mkdir -p ./categories/
-  for category in $blog_categories
-  do
-    ./create_page > ./categories/${category}.html "$(list_categories)"
-  done
-  # blog post pages
-  mkdir -p ./posts/$current_year/{01,02,03,04,05,06,07,08,09,10,11,12}/
   # tags pages
   mkdir -p ./tags/
   # create the main index page for the site.. it will list recent posts

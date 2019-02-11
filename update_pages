@@ -4,6 +4,11 @@
 # Update all index pages across the site which list posts,
 # because a new post may have been added.
 
+# Usage:  update_pages [-all]
+
+# if -all is give, all HTML pages will be re-built, not just the index
+# pages (categories. tags, archive, home/recent posts, etc)
+
 # load the users config file from $HOME
 [ -f $HOME/.bl/config ] && source $HOME/.bl/config
 # load the local config file
@@ -12,32 +17,63 @@
 echo "Updating: index.html"
 . create_page > index.html
 
+if [ "$1" = "-all" ];then
+  # update (rebuild) all posts pages
+  cut -f1-2 -d'|' posts.csv \
+    | tr '|' '/' \
+    | while read mdfile
+      do
+        echo "Updating: posts/${mdfile//.md/.html}"
+        ./create_page "posts/$mdfile" > "posts/${mdfile//.md/.html}"
+      done
+fi
+
 # update other pages
 
 # update prev and next section of previously added post (add a 'next post' link)
-post_to_edit="posts/$(cat posts.csv | tail -2 | head -1 | cut -f1-2 -d'|' | sed -e 's:|:/:' -e 's/.md/.html/')"
-post_to_edit_slug="$(basename "$post_to_edit")"
-post_to_edit_slug="${post_to_edit_slug//.html/.md}"
-prev_and_next_pages="$(list_prev_and_next_pages "$post_to_edit_slug")"
-
+#post_to_edit="posts/$(cat posts.csv | tail -2 | head -1 | cut -f1-2 -d'|' | sed -e 's:|:/:' -e 's/.md/.html/')"
+#post_to_edit_slug="$(basename "$post_to_edit")"
+#post_to_edit_slug="${post_to_edit_slug//.html/.md}"
+#prev_and_next_pages="$(list_prev_and_next_pages "$post_to_edit_slug")"
 #sed "s|<ul class=\"prev-next-posts\">.*</ul>|${prev_and_next_pages}|" "$post_to_edit"
 
+
+# update main archive page
+all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u)"
+if [ "$all_posts" != "" ];then
+  echo "Updating: archive.html"
+  all_post_html='<ul class="posts">'
+  for post in $all_posts
+  do
+    post_title="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
+    post_date=$(dirname "$post")
+    post_date="${post_date//posts\//}"
+    post="posts/$post"
+    [ ! -f "$post" ] && continue
+    all_post_html="${all_post_html}
+    <li>${post_date} - <a href=\"${blog_url}/${post//.md/.html}\">${post_title}</a></li>"
+  done
+  all_post_html="${all_post_html}</ul>"
+    ./create_page "$all_post_html" > archive.html
+fi
+
 # update category pages
-site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u) "
+category_posts=''
+site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
 for category in $site_categories
 do
-  category_pages="$(list_pages_in_category "${category}")"
-  [ "$category_pages" = "" ] && continue
+  category_posts="$(list_posts_in_category "${category}")"
+  [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
-  ./create_page "$category_pages" > categories/$category.html
+  ./create_page "$category_posts" > categories/$category.html
 done
 
-# update (rebuild) all posts pages
-cut -f1-2 -d'|' posts.csv \
-  | tr '|' '/' \
-  | while read mdfile
-    do
-      echo "Updating: posts/${mdfile//.md/.html}"
-      ./create_page "posts/$mdfile" > "posts/${mdfile//.md/.html}"
-    done
-
+# update tags pages
+site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
+for tag in $site_tags
+do
+  tagged_posts="$(list_posts_matching_tag "${tag}")"
+  [ "$tagged_posts" = "" ] && continue
+  echo "Updating: tags/$tag.html"
+  ./create_page "$tagged_posts" > tags/$tag.html
+done
