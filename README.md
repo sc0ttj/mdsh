@@ -18,12 +18,16 @@ Write your blog straight from the terminal.
 
 `mdshell /path/to/file.md` - interactive shell for creatin markdown documents
 
-## TODO
+DONE
 
 - archive.html - lists all posts
 - tags/$tagname.html - lists all posts matching tag
-- update posts page - add post tags as links to tage page
+- add [-all] option to `update`, and only update posts if it is given (else only update index pages [tags, categories, archive, etc])
+
+## TODO
+
+- tags/index.html - links to all tag pages available.
+- update posts page - add tags as links to posts, link to tags/<tagname>.html
 - fix posts.csv - include time (not only date)
-- fix order or recents (use posts.csv)
+- fix order of recents (use posts.csv)
 - publish.sh - uses git to add, commit, revert, push (publish) the site changes
-- add [-all] option to `update`, and only update posts if it is given (else only update index pages)

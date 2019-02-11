@@ -10,27 +10,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#!/bin/crash - </title>
-<meta name="description" content="">
+<title>#!/bin/crash - Added an archive.html page</title>
+<meta name="description" content="A nicer way to list all content on the blog.">
 <meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
-<meta name="copyright" content="">
-<meta name="language" content="">
+<meta name="copyright" content="John Doe">
+<meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Mon Feb 11 10:18:25 +08 2019">
+<meta name="revised" content="Mon Feb 11 10:18:24 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
-<meta name="owner" content="">
-<meta name="pagename" content="#!/bin/crash - ">
-<meta property="og:title" content="#!/bin/crash - ">
-<meta property="og:description" content="">
-<meta property="og:url" content="http://localhost:8080/posts//.html">
-<meta property="og:site_name" content="#!/bin/crash - ">
+<meta name="owner" content="John Doe">
+<meta name="pagename" content="#!/bin/crash - Added an archive.html page">
+<meta property="og:title" content="#!/bin/crash - Added an archive.html page">
+<meta property="og:description" content="A nicer way to list all content on the blog.">
+<meta property="og:url" content="http://localhost:8080/posts/2019/02/11/added-an-archive-html-page.html">
+<meta property="og:site_name" content="#!/bin/crash - Added an archive.html page">
 <meta property="og:type" content="website">
 <meta property="og:image" content="http://localhost:8080/pics/rss.png" >
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="#!/bin/crash - " />
-<meta name="twitter:site" content="" />
+<meta name="twitter:title" content="#!/bin/crash - Added an archive.html page" />
+<meta name="twitter:site" content="@foobar" />
 <meta name="twitter:image" content="http://localhost:8080/pics/rss.png" />
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="http://localhost:8080/">
@@ -48,6 +48,7 @@
 </style>
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
 <script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>
 </head>
 <body>
@@ -61,11 +62,21 @@
 </ul>
 </div>
 <a id="content"></a>
-<ul class="posts">
-<li><a href="http://localhost:8080/posts/2019/02/10/fixing-the-markdown-parsers.html">Fixing the markdown parsers</a></li>
-<li><a href="http://localhost:8080/posts/2019/02/10/markdown-parsing-works-ok-now.html">Markdown parsing works OK now</a></li>
-<li><a href="http://localhost:8080/posts/2019/02/10/try-again.html">Try again</a></li>
+<h2>Archive.html</h2>
+
+<p>I've added some new stuff to <code>update_pages</code>:</p>
+
+<ul>
+<li>It will now generate an <code>archive.html</code> page, which lists all posts on the site, oldest at the top.</li>
+<li>It will also generate tag pages.</li>
 </ul>
+
+<h3>Tag pages</h3>
+
+<p>For each tag you add to a post, <code>update_pages</code> wil generate a <code>tags/&lt;tag-name&gt;.html</code> page, which lists all posts tagged with the relevant tag.</p>
+
+<p>Example: You create a post with the tag 'games', and a <code>tags/games.html</code> page will be generated, listing that post.</p>
+
 <div class="footer">
 <p>sc0ttj 2019</p>
 </div>
