@@ -26,7 +26,7 @@ DONE
 
 ## TODO
 
-- generate the `h2` headers a the top of each post automatically
+- generate the `h2` headers at the top of each post automatically
 
   - then we can insert `date`, `tags`, `author`, `category` etc below the title
   - do it in `create_page`, if `$1` is a post md file

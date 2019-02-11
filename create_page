@@ -130,6 +130,32 @@ function print_site_header {
   echo '</div>'
 }
 
+function print_post_header {
+  if [ "$post_category" = "" ];then
+    return 0
+  fi
+
+  echo '<div class="post-header">'
+
+  echo '<div class="post-meta">'
+  echo '<span class="category">'"${post_category}"'</span>'
+  echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
+  echo '<span class="date">'"$created"'</span>'
+  echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
+  echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
+  echo '</div>'
+
+  echo '<div class="tags">'
+  for tag in $(echo "${blog_keywords//,/}")
+  do
+    echo '<span>'"${tag}"'</span>'
+  done
+  echo '</div>'
+
+  echo '</div>'
+}
+
+
 function print_site_footer {
   if [ "$page_slug" != "" ];then
     echo "$(list_prev_and_next_pages "${page_slug}.md")"
@@ -237,6 +263,10 @@ else
   body_html="$(list_recent_posts)"
 fi
 
+if [ "$1" = "-all" ];then
+  body_html="$(list_recent_posts)"
+  markdown=""
+fi
 
 # if we have markdown, not html, we need to convert it
 if [ "$body_html" = "" ];then
@@ -249,6 +279,8 @@ if [ "$body_html" = "" ];then
   page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
   page_slug="$(echo "$markdown_meta" | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
   page_url="${blog_url}/posts/$created/${page_slug}.html"
+  post_category="$(echo "$markdown_meta"    | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//')"
+  post_time_to_read="$(echo "$markdown_meta"    | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
   # replace site-wide defaults with post specific meta information
   blog_keywords="$(echo "$markdown_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
   blog_language="$(echo "$markdown_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
@@ -278,7 +310,14 @@ if [ "$body_html" = "" ];then
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
     body_html="$(echo "$markdown_body" | markdown.pl)" # or markdown.sh
   fi
+
+  # if we have a post header, add that to the page too
+  post_header="$(print_post_header)"
+  if [ "$post_header" != "" ];then
+    body_html="${body_html//<\/h2>/<\/h2>$post_header}"
+  fi
 fi
+
 #xmessage "$body_html"
 create_page
 

@@ -15,3 +15,11 @@
 2019/02/10|try-again.md|Try again||blog|markdown,shell
 2019/02/10|what-to-do-after-creating-a-post.md|What to do after creating a post||blog|blog,shell
 2019/02/11|added-an-archive-html-page.md|Added an archive.html page||blog|blog,shell
+2019/02/11|adding-post-headers.md|Adding post headers||blog|blog,shell
+2019/02/11|another-attempt-at-creating-post-headers.md|Another attempt at creating post headers||blog|blog,shell,sed
+2019/02/11|automatically-add-titles-to-posts.md|Automatically add titles to posts||blog|blog,shell
+2019/02/11|foo.md|foo||test|test
+2019/02/11|foo.md|foo||test|test,blog
+2019/02/11|my-new-post.md|My new post||blog|blog,shell
+2019/02/11|post-headers.md|Post headers||blog|blog,sed
+2019/02/11|using-sed.md|Using Sed||blog|blog,shell,sed
