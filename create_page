@@ -146,7 +146,7 @@ function print_post_header {
   echo '</div>'
 
   echo '<div class="tags">'
-  for tag in $(echo "${blog_keywords//,/}")
+  for tag in ${blog_keywords//,/ }
   do
     echo '<span>'"${tag}"'</span>'
   done
