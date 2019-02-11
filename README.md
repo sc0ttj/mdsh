@@ -26,8 +26,13 @@ DONE
 
 ## TODO
 
-- tags/index.html - links to all tag pages available.
+- generate the `h2` headers a the top of each post automatically
+
+  - then we can insert `date`, `tags`, `author`, `category` etc below the title
+  - do it in `create_page`, if `$1` is a post md file
+
+- create tags/index.html - links to all tag pages available.
 - update posts page - add tags as links to posts, link to tags/<tagname>.html
 - fix posts.csv - include time (not only date)
 - fix order of recents (use posts.csv)
-- publish.sh - uses git to add, commit, revert, push (publish) the site changes
+- create publish.sh - uses git to add, commit, revert, push (publish) the site changes
