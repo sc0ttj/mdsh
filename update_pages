@@ -57,6 +57,10 @@ if [ "$all_posts" != "" ];then
     ./create_page "$all_post_html" > archive.html
 fi
 
+# update categories index page
+echo "Updating: categories.html"
+./create_page "<h2>Categories</h2>\n$(list_categories)" > categories.html
+
 # update category pages
 category_posts=''
 site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
@@ -67,6 +71,10 @@ do
   echo "Updating: categories/$category.html"
   ./create_page "$category_posts" > categories/$category.html
 done
+
+# update tags index page
+echo "Updating: tags.html"
+./create_page "<h2>Tags</h2>\n$(list_tags)" > tags.html
 
 # update tags pages
 site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"

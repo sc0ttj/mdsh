@@ -53,39 +53,15 @@ function list_categories {
   IFS=,
   for category in $(cut -f5 -d'|' ./posts.csv | sort -u)
   do
+    category="${category//,/}"
     category="${category//  /}"
     category="${category//^ /}"
     category="${category// $/}"
-    echo '<li><a href="categories/'$(./slugify.sh ${category})'.html">'${category}'</a></li>'
+    echo '<li><a href="'${blog_url}'/categories/'$(./slugify.sh "${category}")'.html">'${category}'</a></li>'
   done
   IFS=$OLDIFS
   echo '</ul>'
 }
-
-function list_prev_and_next_pages {
-  local current_post="$(grep "|${1//.md/}.md|" ./posts.csv)"
-  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}.md|" ./posts.csv | grep -v "$current_post")"
-  if [ "$prev_current_next_posts" = "" ];then
-    prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}|" ./posts.csv)"
-  fi
-  local prev_post=$(echo "$prev_current_next_posts" | head -1)
-  local next_post=$(echo "$prev_current_next_posts" | tail -1)
-
-  local prev_date="$(echo "$prev_post" | cut -f1 -d'|')"
-  local next_date="$(echo "$next_post" | cut -f1 -d'|')"
-  local prev_slug="$(echo "$prev_post" | cut -f2 -d'|')"
-  local next_slug="$(echo "$next_post" | cut -f2 -d'|')"
-  local prev_title="$(echo "$prev_post" | cut -f3 -d'|')"
-  local next_title="$(echo "$next_post" | cut -f3 -d'|')"
-
-  echo '<ul class="prev-next-posts">'
-  echo '  <li class="prev_post"><a href="posts/'$prev_date'/'${prev_slug//.md/}'.html">'$prev_title'</a></li>'
-  if [ "$next_title" != "$prev_title" ];then
-    echo '  <li class="next_post"><a href="posts/'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a></li>'
-  fi
-  echo '</ul>'
-}
-
 
 function generate_rss_feed {
   :
@@ -95,27 +71,7 @@ function generate_search_page {
   :  # fuzzy filtering (like my ProjectCMS lang page)
 }
 
-function generate_page_header {
-  # from post meta...
-  # include post title
-  # then author, datetime, cateogry, time to read
-  :
-}
 
-function generate_page_body {
-  #
-  # usage: generate_page_body <post|recent|related|category|tag>
-  #
-
-  # do one of these:
-   # generate a blog post from markdown,
-   # or run mdshell to create a new postm
-   # or list most recent posts,
-   # or list related pages,
-   # or list posts matching category,
-   # or list posts matching tag.
-   :
-}
 
 function git_add_files {
   # stage the given files.. If no file given, commit all files

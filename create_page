@@ -128,6 +128,12 @@ function print_site_header {
   do
     echo '<li><a href="'${blog_url}'/categories/'$category'.html">'$category'</a></li>'
   done
+  if [ -f categories.html ];then
+    echo '<li><a href="'${blog_url}'/categories.html">categories</a></li>'
+  fi
+  if [ -f tags.html ];then
+    echo '<li><a href="'${blog_url}'/tags.html">tags</a></li>'
+  fi
   if [ -f archive.html ];then
     echo '<li><a href="'${blog_url}'/archive.html">archive</a></li>'
   fi
@@ -250,6 +256,24 @@ function list_prev_and_next_pages {
     echo '<a href="../../../'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a>'
     echo '</li>'
   fi
+  echo '</ul>'
+}
+
+function list_categories {
+  echo '<ul class="categories">'
+  for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)
+  do
+    echo '<li><a href="'${blog_url}'/categories/'$(./slugify.sh "${category}")'.html">'${category}'</a></li>'
+  done
+  echo '</ul>'
+}
+
+function list_tags {
+  echo '<ul class="tags">'
+  for tag in $(cut -f6 -d'|' ./posts.csv | tr ',' '\n' | tr ' ' '\n' | sort -u)
+  do
+    echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a></li>'
+  done
   echo '</ul>'
 }
 
