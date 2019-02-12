@@ -39,10 +39,10 @@ fi
 
 
 # update main archive page
-all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u)"
+all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
 if [ "$all_posts" != "" ];then
   echo "Updating: archive.html"
-  all_post_html='<ul class="posts">'
+  all_post_html='<h2>Archive</h2><ul class="posts">'
   for post in $all_posts
   do
     post_title="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
@@ -62,7 +62,7 @@ category_posts=''
 site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
 for category in $site_categories
 do
-  category_posts="$(list_posts_in_category "${category}")"
+  category_posts="<h2>Category: $category</h2>$(list_posts_in_category "${category}")"
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
   ./create_page "$category_posts" > categories/$category.html
@@ -72,7 +72,7 @@ done
 site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
 for tag in $site_tags
 do
-  tagged_posts="$(list_posts_matching_tag "${tag}")"
+  tagged_posts="<h2>Tag: $tag</h2>$(list_posts_matching_tag "$tag")"
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
   ./create_page "$tagged_posts" > tags/$tag.html

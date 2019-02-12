@@ -29,10 +29,12 @@ function create_page {
   print_site_javascripts
   echo "</head>"
   echo "<body>"
+  echo '<div class="main-container">'
   echo "$site_header"
   echo '<a id="content"></a>'
   echo "$body_html"
   print_site_footer
+  echo "</div>"
   echo "</body>"
   echo "</html>"
 }
@@ -126,6 +128,9 @@ function print_site_header {
   do
     echo '<li><a href="'${blog_url}'/categories/'$category'.html">'$category'</a></li>'
   done
+  if [ -f archive.html ];then
+    echo '<li><a href="'${blog_url}'/archive.html">archive</a></li>'
+  fi
   echo '</ul>'
   echo '</div>'
 }
@@ -138,7 +143,7 @@ function print_post_header {
   echo '<div class="post-header">'
 
   echo '<div class="post-meta">'
-  echo '<span class="category">'"${post_category}"'</span>'
+  echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$created"'</span>'
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
@@ -148,7 +153,7 @@ function print_post_header {
   echo '<div class="tags">'
   for tag in ${blog_keywords//,/ }
   do
-    echo '<span>'"${tag}"'</span>'
+    echo '<span><a href="'${blog_url}'/tags/'"${tag}"'.html">'"$tag"'</a></span>'
   done
   echo '</div>'
 
@@ -161,7 +166,7 @@ function print_site_footer {
     echo "$(list_prev_and_next_pages "${page_slug}.md")"
   fi
   echo '<div class="footer">'
-  echo '<p>'$blog_footer'</p>'
+  echo "<p>${blog_footer}</p>"
   echo '</div>'
 }
 
@@ -184,7 +189,7 @@ function list_recent_posts {
 
 function list_posts_matching_tag {
   local tag="$1"
-  matching_posts="$(grep -lRE "# tags.*$tag[, ]" posts/*/*/*/*.md)"
+  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.md)"
   echo '<ul class="posts">'
   for post in $matching_posts
   do
@@ -235,9 +240,15 @@ function list_prev_and_next_pages {
   local next_title="$(echo "$next_post" | cut -f3 -d'|')"
 
   echo '<ul class="prev-next-posts">'
-  echo '  <li class="prev_post"><a href="../../../'$prev_date'/'${prev_slug//.md/}'.html">'$prev_title'</a></li>'
+  echo '<li class="prev_post">'
+  echo '<span>Previous post: </span> '
+  echo '<a href="../../../'$prev_date'/'${prev_slug//.md/}'.html">'$prev_title'</a>'
+  echo '</li>'
   if [ "$next_title" != "$prev_title" ];then
-    echo '  <li class="next_post"><a href="../../../'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a></li>'
+    echo '<li class="next_post">'
+    echo '<span>Next post:</span> '
+    echo '<a href="../../../'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a>'
+    echo '</li>'
   fi
   echo '</ul>'
 }
@@ -260,11 +271,13 @@ elif [ "$1" != "" ];then
 
 # get html list of recent posts
 else
-  body_html="$(list_recent_posts)"
+  body_html="<h2>Recent posts:</h2>
+$(list_recent_posts)"
 fi
 
 if [ "$1" = "-all" ];then
-  body_html="$(list_recent_posts)"
+  body_html="<h2>Recent posts:</h2>
+$(list_recent_posts)"
   markdown=""
 fi
 
@@ -279,7 +292,7 @@ if [ "$body_html" = "" ];then
   page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
   page_slug="$(echo "$markdown_meta" | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
   page_url="${blog_url}/posts/$created/${page_slug}.html"
-  post_category="$(echo "$markdown_meta"    | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//')"
+  post_category="$(echo "$markdown_meta"    | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
   post_time_to_read="$(echo "$markdown_meta"    | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
   # replace site-wide defaults with post specific meta information
   blog_keywords="$(echo "$markdown_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
@@ -314,7 +327,7 @@ if [ "$body_html" = "" ];then
   # if we have a post header, add that to the page too
   post_header="$(print_post_header)"
   if [ "$post_header" != "" ];then
-    body_html="${body_html//<\/h2>/<\/h2>$post_header}"
+    body_html="${body_html/<\/h2>/<\/h2>$post_header}"
   fi
 fi
 

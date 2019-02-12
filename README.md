@@ -36,3 +36,12 @@ DONE
 - fix posts.csv - include time (not only date)
 - fix order of recents (use posts.csv)
 - create publish.sh - uses git to add, commit, revert, push (publish) the site changes
+
+## Ideas:
+
+Footer:
+
+- main categories, like in header
+- social media buttons/links
+- links to about, sitemap, privacy page, terms of service, contact page,
+- search box

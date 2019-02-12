@@ -51,12 +51,12 @@ function list_categories {
   echo '<ul class="categories">'
   OLDIFS=$IFS
   IFS=,
-  for category in $(echo "${blog_categories}" | sed 's/, /,/g')
+  for category in $(cut -f5 -d'|' ./posts.csv | sort -u)
   do
     category="${category//  /}"
     category="${category//^ /}"
     category="${category// $/}"
-    echo '  <li><a href="categories/'$(./slugify.sh ${category})'.html">'${category}'</a></li>'
+    echo '<li><a href="categories/'$(./slugify.sh ${category})'.html">'${category}'</a></li>'
   done
   IFS=$OLDIFS
   echo '</ul>'

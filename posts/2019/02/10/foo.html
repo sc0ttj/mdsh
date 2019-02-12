@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Tue Feb 12 00:12:54 +08 2019">
+<meta name="revised" content="Tue Feb 12 22:36:31 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - foo">
@@ -52,6 +52,7 @@
 <script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>
 </head>
 <body>
+<div class="main-container">
 <div class="page_header">
 <h1><a href="/index.html">#!/bin/crash</a></h1>
 <a class="off-screen" href="#content">Skip to content</a>
@@ -59,19 +60,20 @@
 <li><a href="http://localhost:8080/categories/blog.html">blog</a></li>
 <li><a href="http://localhost:8080/categories/games.html">games</a></li>
 <li><a href="http://localhost:8080/categories/test.html">test</a></li>
+<li><a href="http://localhost:8080/archive.html">archive</a></li>
 </ul>
 </div>
 <a id="content"></a>
 <h2>Foo</h2><div class="post-header">
 <div class="post-meta">
-<span class="category">test</span>
+<span class="category"><a href="http://localhost:8080/categories/test.html">test</a></span>
 <span class="time-to-read">1 min</span>
 <span class="date">2019/02/10</span>
 <span class="author">John Doe</span>
 <span class="twitter">@foobar</span>
 </div>
 <div class="tags">
-<span>test</span>
+<span><a href="http://localhost:8080/tags/test.html">test</a></span>
 </div>
 </div>
 
@@ -83,11 +85,18 @@ baz
 
 <p>More</p>
 <ul class="prev-next-posts">
-  <li class="prev_post"><a href="../../../2019/02/10/fixing-the-markdown-parsers.html">Fixing the markdown parsers</a></li>
-  <li class="next_post"><a href="../../../2019/02/11/my-new-post.html">My new post</a></li>
+<li class="prev_post">
+<span>Previous post: </span> 
+<a href="../../../2019/02/10/fixing-the-markdown-parsers.html">Fixing the markdown parsers</a>
+</li>
+<li class="next_post">
+<span>Next post:</span> 
+<a href="../../../2019/02/10/markdown-parsing-works-ok-now.html">Markdown parsing works OK now</a>
+</li>
 </ul>
 <div class="footer">
-<p>sc0ttj 2019</p>
+<p>© #!/bin/crash 2019</p>
+</div>
 </div>
 </body>
 </html>
