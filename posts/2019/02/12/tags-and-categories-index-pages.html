@@ -10,27 +10,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#!/bin/crash - </title>
-<meta name="description" content="">
+<title>#!/bin/crash - Tags and Categories index pages</title>
+<meta name="description" content="A more consistent and flexible navigation setup for the blog.">
 <meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
-<meta name="copyright" content="">
-<meta name="language" content="">
+<meta name="copyright" content="John Doe">
+<meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Wed Feb 13 00:26:32 +08 2019">
+<meta name="revised" content="Wed Feb 13 00:26:30 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
-<meta name="owner" content="">
-<meta name="pagename" content="#!/bin/crash - ">
-<meta property="og:title" content="#!/bin/crash - ">
-<meta property="og:description" content="">
-<meta property="og:url" content="http://localhost:8080/posts//.html">
-<meta property="og:site_name" content="#!/bin/crash - ">
+<meta name="owner" content="John Doe">
+<meta name="pagename" content="#!/bin/crash - Tags and Categories index pages">
+<meta property="og:title" content="#!/bin/crash - Tags and Categories index pages">
+<meta property="og:description" content="A more consistent and flexible navigation setup for the blog.">
+<meta property="og:url" content="http://localhost:8080/posts/2019/02/12/tags-and-categories-index-pages.html">
+<meta property="og:site_name" content="#!/bin/crash - Tags and Categories index pages">
 <meta property="og:type" content="website">
 <meta property="og:image" content="http://localhost:8080/pics/rss.png" >
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="#!/bin/crash - " />
-<meta name="twitter:site" content="" />
+<meta name="twitter:title" content="#!/bin/crash - Tags and Categories index pages" />
+<meta name="twitter:site" content="@foobar" />
 <meta name="twitter:image" content="http://localhost:8080/pics/rss.png" />
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="http://localhost:8080/">
@@ -48,6 +48,7 @@
 </style>
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
 <script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>
 </head>
 <body>
@@ -65,11 +66,30 @@
 </ul>
 </div>
 <a id="content"></a>
-<p><h2>Tag: sed</h2><ul class="posts">
-<li><a href="http://localhost:8080/posts/2019/02/11/another-attempt-at-creating-post-headers.html">Another attempt at creating post headers</a></li>
-<li><a href="http://localhost:8080/posts/2019/02/11/post-headers.html">Post headers</a></li>
-<li><a href="http://localhost:8080/posts/2019/02/11/using-sed.html">Using Sed</a></li>
-</ul></p>
+<h2>Tags and Categories index pages</h2><div class="post-header">
+<div class="post-meta">
+<span class="category"><a href="http://localhost:8080/categories/blog.html">blog</a></span>
+<span class="time-to-read">2 mins</span>
+<span class="date">2019/02/12</span>
+<span class="author">John Doe</span>
+<span class="twitter">@foobar</span>
+</div>
+<div class="tags">
+<span><a href="http://localhost:8080/tags/blog.html">blog</a></span>
+</div>
+</div>
+
+<p>I've updated the <code>create_page</code> and <code>update_pages</code> scripts to build two new pages: <code>categories.html</code> and <code>tags.html</code>.</p>
+
+<p>These are simple index pages which list all tags/categories on the site, and which live in the root directory, alongside the main <code>index.html</code> file.</p>
+
+<p>I've also updated the auto-generated site header and menus to include these pages (along with the categories archive page links already in there).</p>
+<ul class="prev-next-posts">
+<li class="prev_post">
+<span>Previous post: </span> 
+<a href="../../../2019/02/12/improving-the-post-headers.html">Improving the post headers</a>
+</li>
+</ul>
 <div class="footer">
 <p>© #!/bin/crash 2019</p>
 </div>
