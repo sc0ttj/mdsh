@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#!/bin/crash - About `mdshell`</title>
+<meta name="description" content="A simple script I wrote for creating dynamically generated webpages using only the terminal.">
+<meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="generator" content="bl" />
+<meta name="medium" content="blog">
+<meta name="copyright" content="John Doe">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="revised" content="Wed Feb 13 22:49:25 +08 2019">
+<meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="owner" content="John Doe">
+<meta name="pagename" content="#!/bin/crash - About `mdshell`">
+<meta property="og:title" content="#!/bin/crash - About `mdshell`">
+<meta property="og:description" content="A simple script I wrote for creating dynamically generated webpages using only the terminal.">
+<meta property="og:url" content="http://localhost:8080/posts/2019/02/13/about-mdshell.html">
+<meta property="og:site_name" content="#!/bin/crash - About `mdshell`">
+<meta property="og:type" content="website">
+<meta property="og:image" content="http://localhost:8080/pics/rss.png" >
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="#!/bin/crash - About `mdshell`" />
+<meta name="twitter:site" content="@foobar" />
+<meta name="twitter:image" content="http://localhost:8080/pics/rss.png" />
+<link rel="author" href="/humans.txt" />
+<link rel="canonical" href="http://localhost:8080/">
+<link rel="alternate" type="application/rss+xml" title="Subscribe to ${blog_title}" href="http://localhost:8080/feed.rss" />
+<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<style>
+  body {
+    font-family: Ubuntu, serif;
+    font-size: 18px;
+  }
+  pre, code {
+    font-family: Inconsolata, Monaco, monospace, serif;
+    font-size: 18px;
+  }
+</style>
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
+<script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="main-container">
+<div class="page_header">
+<h1><a href="/index.html">#!/bin/crash</a></h1>
+<a class="off-screen" href="#content">Skip to content</a>
+<ul>
+<li><a href="http://localhost:8080/index.html">home</a></li>
+<li><a href="http://localhost:8080/archive.html">archive</a></li>
+<li><a href="http://localhost:8080/categories.html">categories</a></li>
+<li><a href="http://localhost:8080/tags.html">tags</a></li>
+</ul>
+</div>
+<a id="content"></a>
+<h2>About <code>mdshell</code></h2><div class="post-header">
+<div class="post-meta">
+<span class="category"><a href="http://localhost:8080/categories/blog.html">blog</a></span>
+<span class="time-to-read">2 mins</span>
+<span class="date">2019/02/13</span>
+<span class="author">John Doe</span>
+<span class="twitter">@foobar</span>
+</div>
+<div class="tags">
+<span><a href="http://localhost:8080/tags/blog.html">blog</a></span>
+<span><a href="http://localhost:8080/tags/markdown.html">markdown</a></span>
+<span><a href="http://localhost:8080/tags/shell.html">shell</a></span>
+</div>
+</div>
+
+<p>The <code>mdshell</code> script is a part of this blogging software thing I'm making.</p>
+
+<p>It lets you create web pages super fast, using Markdown and embedded sub-shells.</p>
+
+<p>The <em>results</em> of the sub-shell commands are included in the final output.</p>
+
+<p>For example, if you write the following in your blog post when using <code>mdshell</code>:</p>
+
+<p><code>
+\n</code></p>
+
+<p>Then the actual output in the final HTML file will be:</p>
+
+<p><code>
+Linux
+</code></p>
+
+<p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.</p>
+
+<p>Another example, showing how to list folder contents:</p>
+
+<p><code>
+\n</code></p>
+
+<p>Would produce the following final output:</p>
+
+<p><code>
+bin
+blog_ideas.txt
+Choices
+colored-completion-prefix
+default.jpg
+Desktop
+Documents
+dotfiles
+Downloads
+File-Sharing
+index.md
+mdshell.gif
+mdshell-opt.gif
+mdshell.ttyrecord
+network
+pkg
+puppy_arcade_readme.txt
+README.md
+Sites
+small.md
+spot
+src
+Startup
+test1.html
+test.md
+tree.html
+www
+</code></p>
+
+<p>(or something like that, depending on what's in your home dir, obviously)</p>
+
+<h3>Using HTML in <code>mdshell</code></h3>
+
+<p>The <code>mdshell</code> also lets you write HTML straight into the post, and it will also work fine.</p>
+
+<p>This is useful if Markdown alone cannot produce the custom HTML layouts/elements that you need.</p>
+
+<h3>Using python (or whatever) in <code>mdshell</code></h3>
+
+<p>Simply put your code or commands inside a sub-shell as usual.. The following would run a Python script, the results of which would end up in your page HTML:</p>
+
+<p><code>
+\n</code></p>
+
+<p>You could of course also call <code>node</code> scripts too - useful ones being things like server-side chart rendering.. You could, for example, have a server-side ChartJS or Chartist command which, when called in a sub-shell, returns the chart HTML/SVG (etc, etc).</p>
+
+<h3>Summary of <code>mdshell</code></h3>
+
+<p>It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..</p>
+
+<p>I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works", and best of all, I don't need any extra software AT ALL - just my terminal.</p>
+
+<p>Nice.</p>
+<ul class="prev-next-posts">
+<li class="prev_post">
+<span>Previous post: </span> 
+<a href="../../../2019/02/12/using-git-to-manage-your-blog.html">Using Git to manage your blog</a>
+</li>
+<li class="next_post">
+<span>Next post:</span> 
+<a href="../../../2019/02/13/better-site-headers.html">Better site headers</a>
+</li>
+</ul>
+<div class="footer">
+<p>© #!/bin/crash 2019</p>
+</div>
+</div>
+</body>
+</html>
