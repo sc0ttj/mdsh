@@ -36,7 +36,7 @@ It lets you create web pages super fast, using Markdown and embedded sub-shells.
 
 The _results_ of the sub-shell commands are included in the final output.
 
-For example, if you write the following in your blog post when using `mdshell`:
+For example, if you write the following in your blog post when using `mdshell` (removing the space ater the $):
 
 ```
 $ (uname)
@@ -98,18 +98,24 @@ This is useful if Markdown alone cannot produce the custom HTML layouts/elements
 
 ### Using python (or whatever) in `mdshell`
 
-Simply put your code or commands inside a sub-shell as usual.. The following would run a Python script, the results of which would end up in your page HTML:
+Simply put your code or commands inside a sub-shell as usual..
 
-````
-\n```
+The following would run a Python script, the results of which would end up in your page HTML:
 
-You could of course also call `node` scripts too - useful ones being things like server-side chart rendering.. You could, for example, have a server-side ChartJS or Chartist command which, when called in a sub-shell, returns the chart HTML/SVG (etc, etc).
+```
+python /path/to/script.py
+```
+
+You could also call `node` scripts - for things like server-side chart rendering..
+
+You could, for example, have installed the ChartJS or Chartist node packages which, when called in a sub-shell, would return the charts HTML/SVG.
 
 ### Summary of `mdshell`
 
 It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..
 
-I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works", and best of all, I don't need any extra software AT ALL - just my terminal.
+I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works".
+
+And best of all, I don't need any extra software AT ALL - just my terminal.
 
 Nice.
-````
