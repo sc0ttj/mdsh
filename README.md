@@ -26,18 +26,17 @@ DONE
 
 ## TODO
 
-- generate the `h2` headers at the top of each post automatically
+Update page header:
 
-  - then we can insert `date`, `tags`, `author`, `category` etc below the title
-  - do it in `create_page`, if `$1` is a post md file
+- auto-include in main menu all `*.html` files in the root dir (index.html, tags.html, categories.html, archive.html, about.html, etc)
 
-- create tags/index.html - links to all tag pages available.
-- update posts page - add tags as links to posts, link to tags/<tagname>.html
-- fix posts.csv - include time (not only date)
-- fix order of recents (use posts.csv)
-- create publish.sh - uses git to add, commit, revert, push (publish) the site changes
+Update mdshell:
 
-## Ideas:
+- generate 3 files: a proper markdown (file.md), the source (file.mdsh) and file.txt
+- the 'source' file (file.mdsh) should contain exactly what was entered in the terminal, and the meta info at the top
+- the file.md file should contain only the body post, and only valid markdown
+- a plain text version (file.txt) should be generated from the mdsh version
+- maybe... a bbcode version should be generated from the mdsh version
 
 Footer:
 
@@ -45,3 +44,11 @@ Footer:
 - social media buttons/links
 - links to about, sitemap, privacy page, terms of service, contact page,
 - search box
+
+RSS feed: generate it in update_pages
+
+Randoms:
+
+- fix posts.csv - include time (not only date)
+- fix order of recents (use posts.csv)
+- create publish.sh - uses git to add, commit, revert, push (publish) the site changes

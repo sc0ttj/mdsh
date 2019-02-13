@@ -123,20 +123,23 @@ function print_site_header {
   echo '<h1><a href="/index.html">'$blog_title'</a></h1>'
   echo '<a class="off-screen" href="#content">Skip to content</a>'
   echo '<ul>'
-  local site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)"
-  for category in $site_categories
+
+  # include index page(s) .. homepage first, then the others
+  echo '<li><a href="'${blog_url}'/index.html">home</a></li>'
+  index_pages=$(ls -1 *.html)
+  for index_page in $(echo "$index_pages" | grep -v 'index.html')
   do
-    echo '<li><a href="'${blog_url}'/categories/'$category'.html">'$category'</a></li>'
+    index_name="${index_page//.html/}"
+    echo '<li><a href="'${blog_url}'/'$index_page'">'$index_name'</a></li>'
   done
-  if [ -f categories.html ];then
-    echo '<li><a href="'${blog_url}'/categories.html">categories</a></li>'
-  fi
-  if [ -f tags.html ];then
-    echo '<li><a href="'${blog_url}'/tags.html">tags</a></li>'
-  fi
-  if [ -f archive.html ];then
-    echo '<li><a href="'${blog_url}'/archive.html">archive</a></li>'
-  fi
+
+  # include individual categories
+  #local site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)"
+  #for category in $site_categories
+  #do
+  #  echo '<li><a href="'${blog_url}'/categories/'$category'.html">'$category'</a></li>'
+  #done
+
   echo '</ul>'
   echo '</div>'
 }
