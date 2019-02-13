@@ -10,26 +10,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#!/bin/crash</title>
-<meta name="description" content="My wonderful blog about lots of things.">
+<title>#!/bin/crash - Better site headers</title>
+<meta name="description" content="A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.">
 <meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Wed Feb 13 22:28:56 +08 2019">
+<meta name="revised" content="Wed Feb 13 22:17:02 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
-<meta name="pagename" content="#!/bin/crash">
-<meta property="og:title" content="#!/bin/crash">
-<meta property="og:description" content="My wonderful blog about lots of things.">
-<meta property="og:url" content="http://localhost:8080">
-<meta property="og:site_name" content="#!/bin/crash">
+<meta name="pagename" content="#!/bin/crash - Better site headers">
+<meta property="og:title" content="#!/bin/crash - Better site headers">
+<meta property="og:description" content="A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.">
+<meta property="og:url" content="http://localhost:8080/posts/2019/02/13/better-site-headers.html">
+<meta property="og:site_name" content="#!/bin/crash - Better site headers">
 <meta property="og:type" content="website">
 <meta property="og:image" content="http://localhost:8080/pics/rss.png" >
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="#!/bin/crash" />
+<meta name="twitter:title" content="#!/bin/crash - Better site headers" />
 <meta name="twitter:site" content="@foobar" />
 <meta name="twitter:image" content="http://localhost:8080/pics/rss.png" />
 <link rel="author" href="/humans.txt" />
@@ -64,18 +64,39 @@
 </ul>
 </div>
 <a id="content"></a>
-<h2>Recent posts:</h2>
-<ul class="posts">
-  <li><a href="http://localhost:8080/posts/2019/02/13/how-to-edit-existing-pages.html">How to edit existing pages</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/13/better-site-headers.html">Better site headers</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/12/using-git-to-manage-your-blog.html">Using Git to manage your blog</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/12/tags-and-categories-index-pages.html">Tags and Categories index pages</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/12/improving-the-post-headers.html">Improving the post headers</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/11/post-headers.html">Post headers</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/11/foo.html">foo</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/11/using-sed.html">Using Sed</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/11/another-attempt-at-creating-post-headers.html">Another attempt at creating post headers</a></li>
-  <li><a href="http://localhost:8080/posts/2019/02/11/adding-post-headers.html">Adding post headers</a></li>
+<h2>Better site headers</h2><div class="post-header">
+<div class="post-meta">
+<span class="category"><a href="http://localhost:8080/categories/blog.html">blog</a></span>
+<span class="time-to-read">1 min</span>
+<span class="date">2019/02/13</span>
+<span class="author">John Doe</span>
+<span class="twitter">@foobar</span>
+</div>
+<div class="tags">
+<span><a href="http://localhost:8080/tags/blog.html">blog</a></span>
+</div>
+</div>
+
+<p>I've updated the <code>create_page</code> script so that the <code>print_site_header</code> function now does the following:</p>
+
+<ul>
+<li>always include the homepage as the first link in the main navigation menu</li>
+<li>include all other HTML pages found in the root directory</li>
+</ul>
+
+<p>So far, the following HTML files live in the root directory, and get included in the main site header as links:</p>
+
+<ul>
+<li>archive.html - lists all posts on the site, newest at the top, oldest at the bottom</li>
+<li>categories.html - lists all categories, links to specific category pages in <code>./categories/</code></li>
+<li>index.html - the main homepage, listed first in the site header, as "home"</li>
+<li>tags.html - lists all tags, links to specific tag pages in <code>./tags/</code></li>
+</ul>
+<ul class="prev-next-posts">
+<li class="prev_post">
+<span>Previous post: </span> 
+<a href="../../../2019/02/12/using-git-to-manage-your-blog.html">Using Git to manage your blog</a>
+</li>
 </ul>
 <div class="footer">
 <p>© #!/bin/crash 2019</p>
