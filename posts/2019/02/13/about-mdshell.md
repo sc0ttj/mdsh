@@ -1,30 +1,46 @@
-# title:        About `mdshell`
-# slug name:    about-mdshell
-# description:  A simple script I wrote for creating dynamically generated webpages using only the terminal.
+# title: About `mdshell`
+
+# slug name: about-mdshell
+
+# description: A simple script I wrote for creating dynamically generated webpages using only the terminal.
+
 # time to read: 2 mins
-# category:     blog
-# tags:         blog,markdown,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/13
-# modified:     2019/02/13
+
+# category: blog
+
+# tags: blog,markdown,shell
+
+# author: John Doe
+
+# email: foo@bar.com
+
+# twitter: @foobar
+
+# language: en
+
+# JS deps: cash-dom
+
+# created: 2019/02/13
+
+# modified: 2019/02/13
 
 ---
-## About `mdshell`
+
+## About mdshell
 
 The `mdshell` script is a part of this blogging software thing I'm making.
 
+### Adding dynamic content using `mdshell`
+
 It lets you create web pages super fast, using Markdown and embedded sub-shells.
 
-The *results* of the sub-shell commands are included in the final output.
+The _results_ of the sub-shell commands are included in the final output.
 
 For example, if you write the following in your blog post when using `mdshell`:
 
 ```
-\n```
+$ (uname)
+```
 
 Then the actual output in the final HTML file will be:
 
@@ -37,7 +53,8 @@ This is an easy way to embed functions and commands inside your markdown, and to
 Another example, showing how to list folder contents:
 
 ```
-\n```
+$ (ls $HOME)
+```
 
 Would produce the following final output:
 
@@ -83,7 +100,7 @@ This is useful if Markdown alone cannot produce the custom HTML layouts/elements
 
 Simply put your code or commands inside a sub-shell as usual.. The following would run a Python script, the results of which would end up in your page HTML:
 
-```
+````
 \n```
 
 You could of course also call `node` scripts too - useful ones being things like server-side chart rendering.. You could, for example, have a server-side ChartJS or Chartist command which, when called in a sub-shell, returns the chart HTML/SVG (etc, etc).
@@ -95,5 +112,4 @@ It's a super easy way to write blog posts in the terminal, using anything from p
 I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works", and best of all, I don't need any extra software AT ALL - just my terminal.
 
 Nice.
-
-
+````

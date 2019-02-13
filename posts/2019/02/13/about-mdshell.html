@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Wed Feb 13 22:49:25 +08 2019">
+<meta name="revised" content="Wed Feb 13 23:01:29 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - About `mdshell`">
@@ -64,7 +64,7 @@
 </ul>
 </div>
 <a id="content"></a>
-<h2>About <code>mdshell</code></h2><div class="post-header">
+<h2>About mdshell</h2><div class="post-header">
 <div class="post-meta">
 <span class="category"><a href="http://localhost:8080/categories/blog.html">blog</a></span>
 <span class="time-to-read">2 mins</span>
@@ -81,6 +81,8 @@
 
 <p>The <code>mdshell</code> script is a part of this blogging software thing I'm making.</p>
 
+<h3>Adding dynamic content using <code>mdshell</code></h3>
+
 <p>It lets you create web pages super fast, using Markdown and embedded sub-shells.</p>
 
 <p>The <em>results</em> of the sub-shell commands are included in the final output.</p>
@@ -88,7 +90,8 @@
 <p>For example, if you write the following in your blog post when using <code>mdshell</code>:</p>
 
 <p><code>
-\n</code></p>
+$ (uname)
+</code></p>
 
 <p>Then the actual output in the final HTML file will be:</p>
 
@@ -101,7 +104,8 @@ Linux
 <p>Another example, showing how to list folder contents:</p>
 
 <p><code>
-\n</code></p>
+$ (ls $HOME)
+</code></p>
 
 <p>Would produce the following final output:</p>
 
@@ -147,7 +151,7 @@ www
 
 <p>Simply put your code or commands inside a sub-shell as usual.. The following would run a Python script, the results of which would end up in your page HTML:</p>
 
-<p><code>
+<p><code>`
 \n</code></p>
 
 <p>You could of course also call <code>node</code> scripts too - useful ones being things like server-side chart rendering.. You could, for example, have a server-side ChartJS or Chartist command which, when called in a sub-shell, returns the chart HTML/SVG (etc, etc).</p>
@@ -158,7 +162,8 @@ www
 
 <p>I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works", and best of all, I don't need any extra software AT ALL - just my terminal.</p>
 
-<p>Nice.</p>
+<p>Nice.
+````</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 
