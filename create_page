@@ -348,7 +348,7 @@ if [ "$body_html" = "" ];then
   if [ "$body_html" = "" ] || \
      [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
-    body_html="$(echo "$markdown_body" | markdown.pl)" # or markdown.sh
+    body_html="$(echo "$markdown_body" | ./markdown.pl)" # or markdown.sh
   fi
 
   # if we have a post header, add that to the page too
