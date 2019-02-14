@@ -192,7 +192,7 @@ function list_recent_posts {
   do
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
     [ "$post_name" = "" ] && post_name=$(basename ${post//.md/})
-    echo '  <li><a href="'${blog_url}'/'${post//.md/.html}'">'${post_name}'</a></li>'
+    echo '  <li><a href="'${blog_url}'/posts/'${post//.md/.html}'">'${post_name}'</a></li>'
   done
   echo '</ul>'
 }
