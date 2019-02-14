@@ -183,7 +183,8 @@ function print_site_footer {
 
 function list_recent_posts {
   # list relative paths to the 10 most recent posts in ./posts dir
-  local recent_posts="$(find posts/ -type f -name "*.md" -exec stat -c "%y %n" {} + | sort -r | head -10 | cut -f4 -d' ')"
+  local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -10 | tr '|' '/')"
+  # local recent_posts="$(find posts/ -type f -name "*.md" -exec stat -c "%y %n" {} + | sort -r | head -10 | cut -f4 -d' ')"
   local post_name
   # then list each one
   echo '<ul class="posts">'
