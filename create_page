@@ -355,7 +355,7 @@ if [ "$body_html" = "" ];then
   # if we have a post header, add that to the page too
   post_header="$(print_post_header)"
   if [ "$post_header" != "" ];then
-    body_html="${body_html/<\/h2>/<\/h2>$post_header}"
+    body_html="${body_html/<\/h2>/</h2>$post_header}"
   fi
 fi
 
