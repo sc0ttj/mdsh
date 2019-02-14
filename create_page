@@ -120,7 +120,7 @@ function print_site_javascripts {
 
 function print_site_header {
   echo '<div class="page_header">'
-  echo '<h1><a href="/index.html">'$blog_title'</a></h1>'
+  echo '<h1><a href="'${blog_url}'/index.html">'$blog_title'</a></h1>'
   echo '<a class="off-screen" href="#content">Skip to content</a>'
   echo '<ul>'
 
