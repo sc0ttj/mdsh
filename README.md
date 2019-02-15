@@ -22,11 +22,18 @@ Write your blog straight from the terminal.
 
 Update mdshell:
 
-- generate 3 files: a proper markdown (file.md), the source (file.mdsh) and file.txt
-- the 'source' file (file.mdsh) should contain exactly what was entered in the terminal, and the meta info at the top
+- generate 3 files:
+
+  - a proper markdown (file.md)
+  - the source (file.mdsh)
+  - and a plain text (file.txt)
+
 - the file.md file should contain only the body post, and only valid markdown
-- a plain text version (file.txt) should be generated from the mdsh version
 - maybe... a bbcode version should be generated from the mdsh version
+
+Post footer:
+
+- put post author, contact, tags and category in post footer
 
 Footer:
 
@@ -40,5 +47,4 @@ RSS feed: generate it in update_pages
 Randoms:
 
 - fix posts.csv - include time (not only date)
-- fix order of recents (use posts.csv)
 - create publish.sh - uses git to add, commit, revert, push (publish) the site changes

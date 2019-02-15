@@ -21,10 +21,12 @@ if [ "$1" = "-all" ];then
   # update (rebuild) all posts pages
   cut -f1-2 -d'|' posts.csv \
     | tr '|' '/' \
-    | while read mdfile
+    | while read mdshfile
       do
-        echo "Updating: posts/${mdfile//.mdsh/.html}"
-        ./create_page "posts/$mdfile" > "posts/${mdfile//.mdsh/.html}"
+        if [ -f "posts/$mdshfile" ];then
+          echo "Updating: posts/${mdshfile//.mdsh/.html}"
+          ./create_page "posts/$mdshfile" > "posts/${mdshfile//.mdsh/.html}"
+        fi
       done
 fi
 

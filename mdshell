@@ -34,7 +34,7 @@ was_multi_line_string=false
 command=''
 command_line_count=0
 
-if [ ! -f "$1" ];then
+if [ ! -f "$1" ] && [ "$1" != "-all" ];then
   mkdir -p "$(dirname "$1")"
   touch "$1"
 fi
@@ -122,14 +122,23 @@ do
       fi
       [ "$was_multi_line_string" = false ] && line_is_bash=false
       [ "$multi_line_string" = false ] && line_is_bash=false
-      [ $retval -eq 0 ] && text="$text\n$pre_text$result$post_text" && line_is_bash=false
+      # if the command was successful
+      if [ $retval -eq 0 ];then
+        # save its results to the markdown
+        markdown="$markdown\n$pre_text$result$post_text"
+        # save the literal input in $source
+        source="${source}${command}"
+        # the sub-shell must have ended, so next line is not bash (by default)
+        line_is_bash=false
+      fi
     fi
 
   elif [ "$line_is_bash" = false ];then
 
       command_line_count=0
       command=""
-      text="$text\n$line"
+      markdown="$markdown\n$line"
+      source="$source\n$line"
       multi_line_string=false
       [ -z "${prev_line}" ] && [ -z "$line" ] && break
 
@@ -153,15 +162,23 @@ do
   [ ${retval:-1} -eq 0 ] && result=''
 done
 
-echo -e "$text" >> "$1"
+# append body to the source file
+mdsh_file="${1}"
+echo -e "$source" >> "$mdsh_file"
 
-html_file="${1//.mdsh/.html}"
-html_file="${1//.md/.html}"
+# create the markdown file
+markdown_file="${1//.mdsh/}.md"
+echo -e "$markdown" > "$markdown_file"
+
 # create the HTML page
+html_file="${1//.mdsh/}.html"
 ./create_page "$1" > "$html_file"
 
-echo "Page created:     $html_file"
-echo "Source saved as:  $1"
+echo "Saved as:"
+echo
+echo "HTML page:      $html_file"
+echo "Markdown file:  $markdown_file"
+echo "Source file:    $1"
 echo
 
 unset prev_line

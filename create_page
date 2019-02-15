@@ -232,7 +232,7 @@ function list_posts_in_category {
 
 function list_prev_and_next_pages {
   local current_post="$(grep "|${1//.mdsh/}.mdsh|" ./posts.csv)"
-  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.mdsh/}.md|" ./posts.csv | grep -v "$current_post")"
+  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.mdsh/}.mdsh|" ./posts.csv | grep -v "$current_post")"
   if [ "$prev_current_next_posts" = "" ];then
     prev_current_next_posts="$(grep -A1 -B1 "|${1//.mdsh/}|" ./posts.csv)"
   fi
@@ -287,11 +287,30 @@ function list_tags {
 
 # get markdown from file
 if [ -f "${1//.mdsh/}.mdsh" ];then
-  markdown="$(cat "${1//.mdsh/}.mdsh")"
+  # get the meta info from the .mdsh file
+  markdown_meta="$(cat "${1//.mdsh/}.mdsh")"
+  # remove post meta data and keep only the body
+  markdown_meta="${markdown_meta%---*}"
+  # get the valid markdown (with *output* of sub-shells) from .md file
+  markdown="$(cat "${1//.mdsh/}.md")"
 
 # get markdown from file
+elif [ -f "${1//.md/}.md" ];then
+  # get the meta info from the .mdsh file
+  markdown_meta="$(cat "${1//.md/}.mdsh")"
+  # remove post meta data and keep only the body
+  markdown_meta="${markdown_meta%---*}"
+  # get the valid markdown (with *output* of sub-shells) from .md file
+  markdown="$(cat "${1//.md/}.md")"
+
+
 elif [ -f "$1" ];then
-  markdown="$(cat "$1")"
+  # get the meta info from the .mdsh file
+  markdown_meta="$(cat "$1")"
+  # remove post meta data and keep only the body
+  markdown_meta="${markdown_meta%---*}"
+  # get the valid markdown (with *output* of sub-shells) from .md file
+  markdown="$(cat "${1//.mdsh/}.md")"
 
 # get markdown from string
 elif [ "$1" != "" ];then
@@ -311,17 +330,13 @@ fi
 
 # if we have markdown, not html, we need to convert it
 if [ "$body_html" = "" ];then
-  # remove post meta data and keep only the body
-  markdown_meta="${markdown%---*}"
-  markdown_body="$(echo "${markdown#*---}")"
-
   created="$(echo "$markdown_meta" | grep -m1 '# created'| cut -f2 -d':' | sed 's/^ *//')"
   # create some page specific meta info that will end up inthe HTML
   page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
-  page_slug="$(echo "$markdown_meta" | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
+  page_slug="$(echo "$markdown_meta"                | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
+  post_category="$(echo "$markdown_meta"            | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
+  post_time_to_read="$(echo "$markdown_meta"        | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
   page_url="${blog_url}/posts/$created/${page_slug}.html"
-  post_category="$(echo "$markdown_meta"    | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
-  post_time_to_read="$(echo "$markdown_meta"    | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
   # replace site-wide defaults with post specific meta information
   blog_keywords="$(echo "$markdown_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
   blog_language="$(echo "$markdown_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
@@ -333,31 +348,32 @@ if [ "$body_html" = "" ];then
   #xmessage "$markdown_meta"
   #xmessage "$markdown_body"
 
-  # if markdown comes from post mdsh file, save the actual markdown
-  if [ -f "${1//.mdsh/}.mdsh" ];then
-    echo "$markdown_body" > "${1//.mdsh/}.md"
-  fi
+  echo -n '' > /tmp/markdown
 
   # do some pre-processing of the markdown before converting to html
-  echo -e "$markdown_body" | while read line
+  OLDIFS=$IFS
+  IFS="
+"
+  for line in $(echo "${markdown}")
   do
     # replace ``` with html pre/code tags, cos the markdown parsers break a lot
-    if [[ "$line" =~ "\`\`\`" ]];then
-      [ "$in_code_block" = true ] && in_code_block=false || in_code_block=true
+    if [[ "$line" =~ '```' ]];then
+      [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
       [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code>"
     fi
-    echo "$line"
-  done > /tmp/markdown
+    echo "$line" >> /tmp/markdown
+  done
+  IFS="$OLDIFS"
 
   # get the pre-processed markdown, we will convert that to html
-  [ -f /tmp/markdown ] && markdown_body="$(cat /tmp/markdown)"
+  [ -f /tmp/markdown ] && markdown="$(cat /tmp/markdown)"
 
   # convert to html
   if [ "$body_html" = "" ] || \
      [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
     #body_html="$(md2html.sh /tmp/markdown)" # uses github API
-    body_html="$(echo "$markdown_body" | ./markdown.pl)" # or markdown.sh
+    body_html="$(echo "$markdown" | ./markdown.pl)" # or markdown.sh
   fi
 
   # if we have a post header, add that to the page too

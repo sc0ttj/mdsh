@@ -1,4 +1,3 @@
-
 ## How to edit existing pages
 
 To create a new page, you use `create_page` with no options - the `mdshell` script will run and you can write your post in the terminal.
@@ -7,18 +6,12 @@ But what if you make a mistake while writing your post? With `mdshell` it is imp
 
 So how to edit a pre-existing post?
 
-Easy. Simply open the relevant `.md` file in a text editor, make your changes and save.
+Easy. Simply open the relevant `.mdsh` file in a text editor, make your changes and save.
 
-Finally, to rebuild the new HTML file from your edited/fixed markdown, just run this command:
-
-```
-./create_page posts/<year>/<month>/<day>/some-file.md > posts/<year>/<month>/<day>/some-file.html
-```
-
-Example:
+Finally, to rebuild the new HTML file from your edited/fixed markdown, just run something like this:
 
 ```
-./create_page posts/2019/02/13/better-site-headers.md > posts/2019/02/13/better-site-headers.html
+./create_page posts/2019/02/13/better-site-headers.mdsh > posts/2019/02/13/better-site-headers.html
 ```
 
 Done! That is how to edit existing posts and rebuild the HTML pages.

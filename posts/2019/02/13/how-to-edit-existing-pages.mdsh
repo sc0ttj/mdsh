@@ -8,7 +8,7 @@
 # email:        foo@bar.com
 # twitter:      @foobar
 # language:     en
-# JS deps:      cash-dom 
+# JS deps:      cash-dom
 # created:      2019/02/13
 # modified:     2019/02/13
 
@@ -21,18 +21,14 @@ But what if you make a mistake while writing your post? With `mdshell` it is imp
 
 So how to edit a pre-existing post?
 
-Easy. Simply open the relevant `.md` file in a text editor, make your changes and save.
+Easy. Simply open the relevant `.mdsh` file in a text editor, make your changes and save.
 
 Finally, to rebuild the new HTML file from your edited/fixed markdown, just run this command:
-
-```
-./create_page posts/<year>/<month>/<day>/some-file.md > posts/<year>/<month>/<day>/some-file.html
-```
 
 Example:
 
 ```
-./create_page posts/2019/02/13/better-site-headers.md > posts/2019/02/13/better-site-headers.html
+./create_page posts/2019/02/13/better-site-headers.mdsh > posts/2019/02/13/better-site-headers.html
 ```
 
 Done! That is how to edit existing posts and rebuild the HTML pages.

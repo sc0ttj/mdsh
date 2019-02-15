@@ -98,6 +98,9 @@ echo "Now write your markdown below, line by line.
  * Hit ENTER 3 times to exit and save the file. "
 echo
 
+echo "## $title"  > ./posts/$created/${slug}.md
+echo ""          >> ./posts/$created/${slug}.md
+
 echo "## $title"
 echo
 # run interactive shell for writing the content itself, in markdown
