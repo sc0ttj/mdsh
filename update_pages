@@ -23,20 +23,12 @@ if [ "$1" = "-all" ];then
     | tr '|' '/' \
     | while read mdfile
       do
-        echo "Updating: posts/${mdfile//.md/.html}"
-        ./create_page "posts/$mdfile" > "posts/${mdfile//.md/.html}"
+        echo "Updating: posts/${mdfile//.mdsh/.html}"
+        ./create_page "posts/$mdfile" > "posts/${mdfile//.mdsh/.html}"
       done
 fi
 
 # update other pages
-
-# update prev and next section of previously added post (add a 'next post' link)
-#post_to_edit="posts/$(cat posts.csv | tail -2 | head -1 | cut -f1-2 -d'|' | sed -e 's:|:/:' -e 's/.md/.html/')"
-#post_to_edit_slug="$(basename "$post_to_edit")"
-#post_to_edit_slug="${post_to_edit_slug//.html/.md}"
-#prev_and_next_pages="$(list_prev_and_next_pages "$post_to_edit_slug")"
-#sed "s|<ul class=\"prev-next-posts\">.*</ul>|${prev_and_next_pages}|" "$post_to_edit"
-
 
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
@@ -51,7 +43,7 @@ if [ "$all_posts" != "" ];then
     post="posts/$post"
     [ ! -f "$post" ] && continue
     all_post_html="${all_post_html}
-    <li>${post_date} - <a href=\"${blog_url}/${post//.md/.html}\">${post_title}</a></li>"
+    <li>${post_date} - <a href=\"${blog_url}/${post//.mdsh/.html}\">${post_title}</a></li>"
   done
   all_post_html="${all_post_html}</ul>"
     ./create_page "$all_post_html" > archive.html

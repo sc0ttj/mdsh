@@ -18,17 +18,7 @@ Write your blog straight from the terminal.
 
 `mdshell /path/to/file.md` - interactive shell for creatin markdown documents
 
-DONE
-
-- archive.html - lists all posts
-- tags/$tagname.html - lists all posts matching tag
-- add [-all] option to `update`, and only update posts if it is given (else only update index pages [tags, categories, archive, etc])
-
 ## TODO
-
-Update page header:
-
-- auto-include in main menu all `*.html` files in the root dir (index.html, tags.html, categories.html, archive.html, about.html, etc)
 
 Update mdshell:
 

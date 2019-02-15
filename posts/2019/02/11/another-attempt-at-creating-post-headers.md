@@ -1,18 +1,4 @@
-# title:        Another attempt at creating post headers
-# slug name:    another-attempt-at-creating-post-headers
-# description:  Using sed is always a pain
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell,sed
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
 
----
 ## Another attempt at creating post headers
 
 The `sed` command works much better at transforming HTML is the delimeter/separator you use is not a `/`.
@@ -26,5 +12,3 @@ echo "$html" | sed 's|</h2>|</h2> some more text|'
 The code above is meant to append to text after the first `<h2>` tag it encounters in the "$html" string.
 
 IF this post has a post header included, the above worked for me.
-
-

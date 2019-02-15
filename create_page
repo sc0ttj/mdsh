@@ -172,7 +172,7 @@ function print_post_header {
 
 function print_site_footer {
   if [ "$page_slug" != "" ];then
-    echo "$(list_prev_and_next_pages "${page_slug}.md")"
+    echo "$(list_prev_and_next_pages "${page_slug}.mdsh")"
   fi
   echo '<div class="footer">'
   echo "<p>${blog_footer}</p>"
@@ -191,20 +191,20 @@ function list_recent_posts {
   for post in $recent_posts
   do
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
-    [ "$post_name" = "" ] && post_name=$(basename ${post//.md/})
-    echo '  <li><a href="'${blog_url}'/posts/'${post//.md/.html}'">'${post_name}'</a></li>'
+    [ "$post_name" = "" ] && post_name=$(basename ${post//.mdsh/})
+    echo '  <li><a href="'${blog_url}'/posts/'${post//.mdsh/.html}'">'${post_name}'</a></li>'
   done
   echo '</ul>'
 }
 
 function list_posts_matching_tag {
   local tag="$1"
-  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.md)"
+  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh)"
   echo '<ul class="posts">'
   for post in $matching_posts
   do
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
-    echo '<li><a href="'${blog_url}'/'${post//.md/.html}'">'$post_name'</a></li>'
+    echo '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
   done
   echo '</ul>'
 }
@@ -223,7 +223,7 @@ function list_posts_in_category {
       local created="$(grep -m1 "|$title|" ./posts.csv | cut -f1 -d'|')"
       local slug="$(grep -m1 "|$title|" ./posts.csv | cut -f2 -d'|')"
       local title="$(grep -m1 "|$title|" ./posts.csv | cut -f3 -d'|')"
-      echo '  <li><a href="'${blog_url}'/posts/'$created'/'${slug//.md/}'.html">'$title'</a></li>'
+      echo '  <li><a href="'${blog_url}'/posts/'$created'/'${slug//.mdsh/}'.html">'$title'</a></li>'
     done
     IFS=$OLDIFS
     echo '</ul>'
@@ -231,10 +231,10 @@ function list_posts_in_category {
 }
 
 function list_prev_and_next_pages {
-  local current_post="$(grep "|${1//.md/}.md|" ./posts.csv)"
-  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}.md|" ./posts.csv | grep -v "$current_post")"
+  local current_post="$(grep "|${1//.mdsh/}.mdsh|" ./posts.csv)"
+  local prev_current_next_posts="$(grep -A1 -B1 "|${1//.mdsh/}.md|" ./posts.csv | grep -v "$current_post")"
   if [ "$prev_current_next_posts" = "" ];then
-    prev_current_next_posts="$(grep -A1 -B1 "|${1//.md/}|" ./posts.csv)"
+    prev_current_next_posts="$(grep -A1 -B1 "|${1//.mdsh/}|" ./posts.csv)"
   fi
   if [ "$prev_current_next_posts" = "" ];then
     return 1
@@ -252,12 +252,12 @@ function list_prev_and_next_pages {
   echo '<ul class="prev-next-posts">'
   echo '<li class="prev_post">'
   echo '<span>Previous post: </span> '
-  echo '<a href="../../../'$prev_date'/'${prev_slug//.md/}'.html">'$prev_title'</a>'
+  echo '<a href="../../../'$prev_date'/'${prev_slug//.mdsh/}'.html">'$prev_title'</a>'
   echo '</li>'
   if [ "$next_title" != "$prev_title" ];then
     echo '<li class="next_post">'
     echo '<span>Next post:</span> '
-    echo '<a href="../../../'$next_date'/'${next_slug//.md/}'.html">'$next_title'</a>'
+    echo '<a href="../../../'$next_date'/'${next_slug//.mdsh/}'.html">'$next_title'</a>'
     echo '</li>'
   fi
   echo '</ul>'
@@ -286,8 +286,8 @@ function list_tags {
 ################################################################################
 
 # get markdown from file
-if [ -f "${1//.md/}.md" ];then
-  markdown="$(cat "${1//.md/}.md")"
+if [ -f "${1//.mdsh/}.mdsh" ];then
+  markdown="$(cat "${1//.mdsh/}.mdsh")"
 
 # get markdown from file
 elif [ -f "$1" ];then
@@ -313,7 +313,7 @@ fi
 if [ "$body_html" = "" ];then
   # remove post meta data and keep only the body
   markdown_meta="${markdown%---*}"
-  markdown_body="${markdown#*---}"
+  markdown_body="$(echo "${markdown#*---}")"
 
   created="$(echo "$markdown_meta" | grep -m1 '# created'| cut -f2 -d':' | sed 's/^ *//')"
   # create some page specific meta info that will end up inthe HTML
@@ -332,9 +332,15 @@ if [ "$body_html" = "" ];then
 
   #xmessage "$markdown_meta"
   #xmessage "$markdown_body"
+
+  # if markdown comes from post mdsh file, save the actual markdown
+  if [ -f "${1//.mdsh/}.mdsh" ];then
+    echo "$markdown_body" > "${1//.mdsh/}.md"
+  fi
+
+  # do some pre-processing of the markdown before converting to html
   echo -e "$markdown_body" | while read line
   do
-
     # replace ``` with html pre/code tags, cos the markdown parsers break a lot
     if [[ "$line" =~ "\`\`\`" ]];then
       [ "$in_code_block" = true ] && in_code_block=false || in_code_block=true
@@ -343,12 +349,14 @@ if [ "$body_html" = "" ];then
     echo "$line"
   done > /tmp/markdown
 
-  # convert to html
-  #body_html="$(md2html.sh /tmp/markdown)" # uses github API
+  # get the pre-processed markdown, we will convert that to html
+  [ -f /tmp/markdown ] && markdown_body="$(cat /tmp/markdown)"
 
+  # convert to html
   if [ "$body_html" = "" ] || \
      [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
+    #body_html="$(md2html.sh /tmp/markdown)" # uses github API
     body_html="$(echo "$markdown_body" | ./markdown.pl)" # or markdown.sh
   fi
 

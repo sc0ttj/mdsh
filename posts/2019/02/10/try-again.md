@@ -1,18 +1,4 @@
-# title:        Try again
-# slug name:    try-again
-# description:  Markdown conversion not working well at all...
-# time to read: 1 min
-# category:     blog
-# tags:         markdown,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/10
-# modified:     2019/02/10
 
----
 
 ## Here is some stuff
 
@@ -94,5 +80,3 @@ exit $retval
 </code></pre>
 
 ^ Added those HTML tags manually... Hopefully that works..
-
-

@@ -1,18 +1,4 @@
-# title:        App structure
-# slug name:    app-structure
-# description:  How to organise the code
-# time to read: 2 mins
-# category:     blog,bash
-# tags:         blog,bash
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/09
-# modified:     2019/02/09
 
----
 
 ## App structure
 
@@ -33,5 +19,3 @@ After generating this page, it should be added to the relevant places on the sit
 * main site homepage (which lists the 10 most recent posts)
 * archive page (lists all posts)
 * category page (page listing of posts of a particular category)
-
-

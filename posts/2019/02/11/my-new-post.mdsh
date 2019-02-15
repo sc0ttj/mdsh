@@ -1,0 +1,31 @@
+# title:        My new post
+# slug name:    my-new-post
+# description:  blah
+# time to read: 1 min
+# category:     blog
+# tags:         blog,shell
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/11
+# modified:     2019/02/11
+
+---
+
+## my title
+
+this is a paragraph.
+
+```
+here
+is
+code
+```
+
+my OS: Linux foopc 4.9.101-stretch #1 SMP Sat May 26 09:08:29 EDT 2018 i686 GNU/Linux
+
+pkg version: Pkg 1.9.22
+
+

@@ -155,10 +155,12 @@ done
 
 echo -e "$text" >> "$1"
 
+html_file="${1//.mdsh/.html}"
+html_file="${1//.md/.html}"
 # create the HTML page
-./create_page "$1" > "${1//.md/.html}"
+./create_page "$1" > "$html_file"
 
-echo "Page created:     ${1//.md/.html}"
+echo "Page created:     $html_file"
 echo "Source saved as:  $1"
 echo
 

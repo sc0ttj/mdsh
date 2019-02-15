@@ -84,13 +84,13 @@ fi
 
 # write file
 mkdir -p ./posts/$created/
-echo "$meta_data" > ./posts/$created/${slug}.md
-echo ""          >> ./posts/$created/${slug}.md
-echo "---"       >> ./posts/$created/${slug}.md
-echo "## $title" >> ./posts/$created/${slug}.md
+echo "$meta_data" > ./posts/$created/${slug}.mdsh
+echo ""          >> ./posts/$created/${slug}.mdsh
+echo "---"       >> ./posts/$created/${slug}.mdsh
+echo "## $title" >> ./posts/$created/${slug}.mdsh
 
 # final message
-echo "Saved meta data in: posts/$created/${slug}.md"
+echo "Saved meta data in: posts/$created/${slug}.mdsh"
 echo
 echo "Now write your markdown below, line by line.
  * support for embedding executable commands in your markdown
@@ -101,10 +101,10 @@ echo
 echo "## $title"
 echo
 # run interactive shell for writing the content itself, in markdown
-./mdshell posts/$created/${slug}.md
+./mdshell posts/$created/${slug}.mdsh
 
 # update the main database of posts for the site
-echo "$created|${slug}.md|$title|$author|$category|$tags" >> posts.csv
+echo "$created|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv
 sort -u posts.csv | uniq >> posts_sorted.csv
 mv posts_sorted.csv posts.csv
 

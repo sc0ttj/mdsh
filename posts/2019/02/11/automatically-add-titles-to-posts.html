@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Thu 14 Feb 2019 10:10:44 GMT">
+<meta name="revised" content="Fri Feb 15 20:57:29 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - Automatically add titles to posts">
@@ -82,11 +82,9 @@
 
 <p>So, users enter the title of their post when prompted, as usual, and now this title will be automatically added to the top of the post as</p>
 
-<p>```</p>
-
-<h2>Some title here</h2>
-
-<p>```</p>
+<pre><code>
+## Some title here
+</code></pre>
 
 <p>This has two advantages:</p>
 
@@ -96,16 +94,7 @@
 </ul>
 
 <p>The 2nd point is important - it means we <em>always</em> know what is a the top of the post, and so we can programmatically do stuff to it - like adding an auto-generated sub-header below the post title (which might include the posts category, tags, time to read, etc)</p>
-<ul class="prev-next-posts">
-<li class="prev_post">
-<span>Previous post: </span> 
-<a href="../../../2019/02/11/another-attempt-at-creating-post-headers.html">Another attempt at creating post headers</a>
-</li>
-<li class="next_post">
-<span>Next post:</span> 
-<a href="../../../2019/02/11/my-new-post.html">My new post</a>
-</li>
-</ul>
+
 <div class="footer">
 <p>© #!/bin/crash 2019</p>
 </div>

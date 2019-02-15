@@ -1,30 +1,4 @@
-# title: Better site headers
 
-# slug name: better-site-headers
-
-# description: A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.
-
-# time to read: 1 min
-
-# category: blog
-
-# tags: blog
-
-# author: John Doe
-
-# email: foo@bar.com
-
-# twitter: @foobar
-
-# language: en
-
-# JS deps: cash-dom
-
-# created: 2019/02/13
-
-# modified: 2019/02/13
-
----
 
 ## Better site headers
 

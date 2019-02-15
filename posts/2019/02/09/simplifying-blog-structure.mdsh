@@ -1,0 +1,26 @@
+# title:        Simplifying blog structure
+# slug name:    simplifying-blog-structure
+# description:  Using a simple csv file to manage and search site structure and contents
+# time to read: 3 mins
+# author:       sc0ttj
+# contact:      
+# created:      2019/02/09
+# modified:     2019/02/09
+# category:     blog
+# tags:         blog,csv,shell
+
+---
+
+## Simplifying blog structure
+
+I needed a way to simplify the way my scripts searched and listed site content.
+
+So, each time you create a post, it is added to a `posts.csv` file, which lists all site posts, oldest to newest.
+
+The fields in this csv file are: `date|filename|title|category|author|tags`
+
+So, searching for posts by tags, category (etc) will now be as easy as a few `grep` commands.
+
+I may add other fields to `posts.csv` in future.
+
+

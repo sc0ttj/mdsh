@@ -1,29 +1,29 @@
-2019/02/09|app-structure.md|App structure|sc0ttj|blog|blog,bash
-2019/02/09|simplifying-blog-structure.md|Simplifying blog structure|sc0ttj|blog|blog,csv,shell
-2019/02/10|another-test.md|Another test||test|test
-2019/02/10|creating-html-from-markdown.md|Creating HTML from Markdown||blog|shell,blog,markdown
-2019/02/10|creating-html-pages-with-markdown-pl.md|Creating HTML pages with markdown.pl||blog|blog,shell,markdown
-2019/02/10|fixing-the-markdown-parsers.md|Fixing the markdown parsers||blog|markdown,shell
-2019/02/10|foo.md|foo||test|test
-2019/02/10|markdown-parsing-works-ok-now.md|Markdown parsing works OK now||blog|blog,markdown,shell
-2019/02/10|more-tests.md|More tests||test|test
-2019/02/10|rofnafen-sh.md|Rofnafen.sh||games|games,shell
-2019/02/10|test01.md|test01||test|test
-2019/02/10|testing-html-creation.md|Testing HTML creation||test|test
-2019/02/10|testing-md-to-html.md|Testing md to html||test|test
-2019/02/10|this-might-work.md|This might work||test|test
-2019/02/10|try-again.md|Try again||blog|markdown,shell
-2019/02/10|what-to-do-after-creating-a-post.md|What to do after creating a post||blog|blog,shell
-2019/02/11|added-an-archive-html-page.md|Added an archive.html page||blog|blog,shell
-2019/02/11|adding-post-headers.md|Adding post headers||blog|blog,shell
-2019/02/11|another-attempt-at-creating-post-headers.md|Another attempt at creating post headers||blog|blog,shell,sed
-2019/02/11|automatically-add-titles-to-posts.md|Automatically add titles to posts||blog|blog,shell
-2019/02/11|my-new-post.md|My new post||blog|blog,shell
-2019/02/11|post-headers.md|Post headers||blog|blog,sed
-2019/02/11|using-sed.md|Using Sed||blog|blog,shell,sed
-2019/02/12|improving-the-post-headers.md|Improving the post headers||blog|blog,shell
-2019/02/12|tags-and-categories-index-pages.md|Tags and Categories index pages||blog|blog
-2019/02/12|using-git-to-manage-your-blog.md|Using Git to manage your blog||blog|blog,git
-2019/02/13|about-mdshell.md|About `mdshell`||blog|blog,markdown,shell
-2019/02/13|better-site-headers.md|Better site headers||blog|blog
-2019/02/13|how-to-edit-existing-pages.md|How to edit existing pages||blog|blog
+2019/02/09|app-structure.mdsh|App structure|sc0ttj|blog|blog,bash
+2019/02/09|simplifying-blog-structure.mdsh|Simplifying blog structure|sc0ttj|blog|blog,csv,shell
+2019/02/10|another-test.mdsh|Another test||test|test
+2019/02/10|creating-html-from-markdown.mdsh|Creating HTML from Markdown||blog|shell,blog,markdown
+2019/02/10|creating-html-pages-with-markdown-pl.mdsh|Creating HTML pages with markdown.pl||blog|blog,shell,markdown
+2019/02/10|fixing-the-markdown-parsers.mdsh|Fixing the markdown parsers||blog|markdown,shell
+2019/02/10|foo.mdsh|foo||test|test
+2019/02/10|markdown-parsing-works-ok-now.mdsh|Markdown parsing works OK now||blog|blog,markdown,shell
+2019/02/10|more-tests.mdsh|More tests||test|test
+2019/02/10|rofnafen-sh.mdsh|Rofnafen.sh||games|games,shell
+2019/02/10|test01.mdsh|test01||test|test
+2019/02/10|testing-html-creation.mdsh|Testing HTML creation||test|test
+2019/02/10|testing-md-to-html.mdsh|Testing md to html||test|test
+2019/02/10|this-might-work.mdsh|This might work||test|test
+2019/02/10|try-again.mdsh|Try again||blog|markdown,shell
+2019/02/10|what-to-do-after-creating-a-post.mdsh|What to do after creating a post||blog|blog,shell
+2019/02/11|added-an-archive-html-page.mdsh|Added an archive.html page||blog|blog,shell
+2019/02/11|adding-post-headers.mdsh|Adding post headers||blog|blog,shell
+2019/02/11|another-attempt-at-creating-post-headers.mdsh|Another attempt at creating post headers||blog|blog,shell,sed
+2019/02/11|automatically-add-titles-to-posts.mdsh|Automatically add titles to posts||blog|blog,shell
+2019/02/11|my-new-post.mdsh|My new post||blog|blog,shell
+2019/02/11|post-headers.mdsh|Post headers||blog|blog,sed
+2019/02/11|using-sed.mdsh|Using Sed||blog|blog,shell,sed
+2019/02/12|improving-the-post-headers.mdsh|Improving the post headers||blog|blog,shell
+2019/02/12|tags-and-categories-index-pages.mdsh|Tags and Categories index pages||blog|blog
+2019/02/12|using-git-to-manage-your-blog.mdsh|Using Git to manage your blog||blog|blog,git
+2019/02/13|about-mdshell.mdsh|About `mdshell`||blog|blog,markdown,shell
+2019/02/13|better-site-headers.mdsh|Better site headers||blog|blog
+2019/02/13|how-to-edit-existing-pages.mdsh|How to edit existing pages||blog|blog

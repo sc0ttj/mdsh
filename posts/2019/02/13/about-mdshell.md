@@ -1,30 +1,4 @@
-# title: About `mdshell`
 
-# slug name: about-mdshell
-
-# description: A simple script I wrote for creating dynamically generated webpages using only the terminal.
-
-# time to read: 2 mins
-
-# category: blog
-
-# tags: blog,markdown,shell
-
-# author: John Doe
-
-# email: foo@bar.com
-
-# twitter: @foobar
-
-# language: en
-
-# JS deps: cash-dom
-
-# created: 2019/02/13
-
-# modified: 2019/02/13
-
----
 
 ## About mdshell
 

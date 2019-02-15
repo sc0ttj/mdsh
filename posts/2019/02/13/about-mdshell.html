@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Thu 14 Feb 2019 10:10:45 GMT">
+<meta name="revised" content="Fri Feb 15 20:57:30 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - About `mdshell`">
@@ -89,27 +89,27 @@
 
 <p>For example, if you write the following in your blog post when using <code>mdshell</code> (removing the space ater the $):</p>
 
-<p><code>
+<pre><code>
 $ (uname)
-</code></p>
+</code></pre>
 
 <p>Then the actual output in the final HTML file will be:</p>
 
-<p><code>
+<pre><code>
 Linux
-</code></p>
+</code></pre>
 
 <p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.</p>
 
 <p>Another example, showing how to list folder contents:</p>
 
-<p><code>
+<pre><code>
 $ (ls $HOME)
-</code></p>
+</code></pre>
 
 <p>Would produce the following final output:</p>
 
-<p><code>
+<pre><code>
 bin
 blog_ideas.txt
 Choices
@@ -137,7 +137,7 @@ test1.html
 test.md
 tree.html
 www
-</code></p>
+</code></pre>
 
 <p>(or something like that, depending on what's in your home dir, obviously)</p>
 
@@ -153,9 +153,9 @@ www
 
 <p>The following would run a Python script, the results of which would end up in your page HTML:</p>
 
-<p><code>
+<pre><code>
 python /path/to/script.py
-</code></p>
+</code></pre>
 
 <p>You could also call <code>node</code> scripts - for things like server-side chart rendering..</p>
 
@@ -170,16 +170,7 @@ python /path/to/script.py
 <p>And best of all, I don't need any extra software AT ALL - just my terminal.</p>
 
 <p>Nice.</p>
-<ul class="prev-next-posts">
-<li class="prev_post">
-<span>Previous post: </span> 
-<a href="../../../2019/02/12/using-git-to-manage-your-blog.html">Using Git to manage your blog</a>
-</li>
-<li class="next_post">
-<span>Next post:</span> 
-<a href="../../../2019/02/13/better-site-headers.html">Better site headers</a>
-</li>
-</ul>
+
 <div class="footer">
 <p>© #!/bin/crash 2019</p>
 </div>

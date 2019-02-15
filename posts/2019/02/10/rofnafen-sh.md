@@ -1,18 +1,4 @@
-# title: Rofnafen.sh
-# slug name: rofnafen-sh
-# description: A combination of Rofi and Mednafen
-# time to read: 2 mins
-# category: games
-# tags: games,shell
-# author: John Doe
-# email: foo@bar.com
-# twitter: @foobar
-# language: en
-# JS deps: cash-dom, mustache
-# created: 2019/02/10
-# modified: 2019/02/10
 
----
 ## Introducing rofnafen.sh
 
 I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.

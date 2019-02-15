@@ -1,18 +1,4 @@
-# title:        Fixing the markdown parsers
-# slug name:    fixing-the-markdown-parsers
-# description:  How to get around broken markdown parsers
-# time to read: 1 min
-# category:     markdown
-# tags:         blog,markdown,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/10
-# modified:     2019/02/10
 
----
 
 ## Fixing broken markdown parsers
 
@@ -25,5 +11,3 @@ So, when converting markdown to HTML, my script `create_page` now converts the t
 This seems to fix broken code blocks.. But there is still another problem to tackle:
 
 * blackslashes inside the code blocks which precede new lines leave the newlines ignored (the backslashes need to be escaped)
-
-

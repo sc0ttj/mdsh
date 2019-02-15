@@ -1,0 +1,24 @@
+# title:        Tags and Categories index pages
+# slug name:    tags-and-categories-index-pages
+# description:  A more consistent and flexible navigation setup for the blog.
+# time to read: 2 mins
+# category:     blog
+# tags:         blog
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/12
+# modified:     2019/02/12
+
+---
+## Tags and Categories index pages
+
+I've updated the `create_page` and `update_pages` scripts to build two new pages: `categories.html` and `tags.html`.
+
+These are simple index pages which list all tags/categories on the site, and which live in the root directory, alongside the main `index.html` file.
+
+I've also updated the auto-generated site header and menus to include these pages (along with the categories archive page links already in there).
+
+
