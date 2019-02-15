@@ -1,0 +1,32 @@
+# title:        Error in choosing valid markdown file (doh!)
+# slug name:    error-in-choosing-valid-markdown-file-doh
+# description:  A simple problem hopefully fixed...
+# time to read: 1 min
+# category:     test
+# tags:         test
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/15
+# modified:     2019/02/15
+
+---
+## Error in choosing valid markdown file (doh!)
+
+I was converting the mdsh contents (which now contain only the sub-shells, not their output) into HTML.
+
+But I want the *output* of those commands to be in the final HTML.
+
+So I've fixed `create_page`, so that it (hopefully!) works now..
+
+Here's the test:
+
+```
+$(uname)
+```
+
+^ we should see `uname` in the `.mdsh` file, and `Linux` in the `.md` and `.html` files...
+
+

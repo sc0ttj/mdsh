@@ -1,0 +1,38 @@
+# title:        tester
+# slug name:    tester
+# description:  testy test test test
+# time to read: 1 min
+# category:     test
+# tags:         test
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/15
+# modified:     2019/02/15
+
+---
+## tester
+
+some para
+
+do a uname:
+
+```
+$(uname)
+```
+
+^ should say `Linux`
+
+do multi line cat:
+
+```
+$(cat /root/bin/rofnafen.sh)
+```
+
+^ rofnafen
+
+...
+
+
