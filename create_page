@@ -313,12 +313,12 @@ function list_prev_and_next_posts {
   local next_title="$(echo "$next_post" | cut -f3 -d'|')"
 
   echo '<ul class="prev-next-posts">'
-  echo '<li class="prev_post">'
+  echo '<li class="prev-post">'
   echo '<span>Previous post: </span> '
   echo '<a href="../../../'$prev_date'/'${prev_slug//.mdsh/}'.html">'$prev_title'</a>'
   echo '</li>'
   if [ "$next_title" != "$prev_title" ];then
-    echo '<li class="next_post">'
+    echo '<li class="next-post">'
     echo '<span>Next post:</span> '
     echo '<a href="../../../'$next_date'/'${next_slug//.mdsh/}'.html">'$next_title'</a>'
     echo '</li>'
