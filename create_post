@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# generates simple 'meta data' for blog posts
+# create a blog post
+
+# Just follow the on screen instructions, enter the required post
+# meta information, then add your markdown content in the terminal.
 #
 # Usage:   create_post [-all]
 #
@@ -82,12 +85,16 @@ if [ "$answer" = 'n' ] || [ "$answer" = 'N' ];then
   exit 1
 fi
 
-# write file
+# write meta info to mdsh file
 mkdir -p ./posts/$created/
 echo "$meta_data" > ./posts/$created/${slug}.mdsh
 echo ""          >> ./posts/$created/${slug}.mdsh
 echo "---"       >> ./posts/$created/${slug}.mdsh
 echo "## $title" >> ./posts/$created/${slug}.mdsh
+
+# create a matching valid markdown file
+echo "## $title"  > ./posts/$created/${slug}.md
+echo ""          >> ./posts/$created/${slug}.md
 
 # final message
 echo "Saved meta data in: posts/$created/${slug}.mdsh"
@@ -98,8 +105,10 @@ echo "Now write your markdown below, line by line.
  * Hit ENTER 3 times to exit and save the file. "
 echo
 
-echo "## $title"  > ./posts/$created/${slug}.md
-echo ""          >> ./posts/$created/${slug}.md
+
+#
+# begin interactive mdshell (user can create the markdown document line by line)
+#
 
 echo "## $title"
 echo
@@ -114,12 +123,3 @@ mv posts_sorted.csv posts.csv
 ./update_pages
 
 exit 0
-
-
-#### for another script
-
-# convert $meta_data to HTML, for meta info in <head>
-# convert $meta_data to HTML, for article header
-# convert $meta_data to HTML, for main index
-# convert $meta_data to HTML, for navigation/menu
-
