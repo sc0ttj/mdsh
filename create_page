@@ -246,7 +246,7 @@ function list_tags {
 
 function list_recent_posts {
   # list relative paths to the 10 most recent posts in ./posts dir
-  local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -10 | tr '|' '/')"
+  local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | tr '|' '/')"
   # local recent_posts="$(find posts/ -type f -name "*.md" -exec stat -c "%y %n" {} + | sort -r | head -10 | cut -f4 -d' ')"
   local post_name
   # then list each one
@@ -262,7 +262,7 @@ function list_recent_posts {
 
 function list_posts_matching_tag {
   local tag="$1"
-  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh)"
+  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -r)"
   echo '<ul class="posts">'
   for post in $matching_posts
   do
@@ -274,7 +274,7 @@ function list_posts_matching_tag {
 
 function list_posts_in_category {
   local category="$1"
-  local titles="$(grep "|$category|" ./posts.csv | cut -f3 -d'|')"
+  local titles="$(grep "|$category|" ./posts.csv | cut -f1,3 -d'|' | sort -r | cut -f2 -d'|')"
 
   if [ "$titles" != "" ];then
     echo '<ul class="posts">'
