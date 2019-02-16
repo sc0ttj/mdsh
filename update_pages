@@ -44,8 +44,7 @@ if [ "$all_posts" != "" ];then
     post_date="${post_date//posts\//}"
     post="posts/$post"
     [ ! -f "$post" ] && continue
-    all_post_html="${all_post_html}
-    <li>${post_date} - <a href=\"${blog_url}/${post//.mdsh/.html}\">${post_title}</a></li>"
+    all_post_html="${all_post_html}<li>${post_date} - <a href=\"${blog_url}/${post//.mdsh/.html}\">${post_title}</a></li>"
   done
   all_post_html="${all_post_html}</ul>"
     ./create_page "$all_post_html" > archive.html

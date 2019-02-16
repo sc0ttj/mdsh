@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:34 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:29 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - Rofnafen.sh">
@@ -79,16 +79,21 @@
 </div>
 </div>
 
-<p>I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.
-It uses <code>rofi</code>, the desktop launcher, and <code>mednafen</code> the mutli-system emulator.
-I have added key bindings so I can hit <code>Ctrl-SPACE</code> and start typing a system (PSX, SNES, etc), 
-then hit ENTER and start typing a game name, then hit ENTER again to play :)
-As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine. </p>
+<p>I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.</p>
+
+<p>It uses <code>rofi</code>, the desktop launcher, and <code>mednafen</code> the mutli-system emulator.</p>
+
+<p>I have added key bindings so I can hit <code>Ctrl-SPACE</code> and start typing a system (PSX, SNES, etc), 
+then hit ENTER and start typing a game name, then hit ENTER again to play :)</p>
+
+<p>As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine. </p>
 
 <pre><code>
 #!/bin/sh
+
 romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
 [ -d "$2" ] && romdir="$2"
+
 # choose a system dir to look in for roms
 find "$romdir" \
     -maxdepth 1 \
@@ -99,10 +104,14 @@ find "$romdir" \
   | rofi -dmenu \
       -p 'Enter name: ' \
       -i -mesg 'Choose a system to play' > /tmp/rofi_system_name
+
 system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
+
 if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
  exit 1
 fi
+
+
 # looks for, list and choose a rom
 find $romdir/$system_name \
     -maxdepth 2 \
@@ -114,14 +123,20 @@ find $romdir/$system_name \
   | sed -e 's#.*/##g' \
   | sort -u \
   | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
+
 # rom name, escape [ and ]
-romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\\[/g' -e 's/\]/\\]/g')"
+romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
 [ "$romname" = "" ] && exit 1
+
 romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
+
+
 if [ ! -f "$romfile" ];then
   rofi -dmenu -mesg "Rom file '$romname' not found!"
   exit 1
 fi
+
+
 case $system_name in
   *)
     # run the chosen game

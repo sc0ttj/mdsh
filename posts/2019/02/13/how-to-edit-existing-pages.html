@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:37 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:32 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - How to edit existing pages">
@@ -77,11 +77,15 @@
 </div>
 </div>
 
-<p>To create a new page, you use <code>create_page</code> with no options - the <code>mdshell</code> script will run and you can write your post in the terminal.
-But what if you make a mistake while writing your post? With <code>mdshell</code> it is impossible to 'go back' (up) a line and fix any mistakes, because as soon as you hit ENTER you're on a new line, and can't go back (<code>mdshell</code> takes the input from the terminal, and writes it to a markdown file, line by line).
-So how to edit a pre-existing post?
-Easy. Simply open the relevant <code>.mdsh</code> file in a text editor, make your changes and save.
-Finally, to rebuild the new HTML file from your edited/fixed markdown, just run something like this:</p>
+<p>To create a new page, you use <code>create_page</code> with no options - the <code>mdshell</code> script will run and you can write your post in the terminal.</p>
+
+<p>But what if you make a mistake while writing your post? With <code>mdshell</code> it is impossible to 'go back' (up) a line and fix any mistakes, because as soon as you hit ENTER you're on a new line, and can't go back (<code>mdshell</code> takes the input from the terminal, and writes it to a markdown file, line by line).</p>
+
+<p>So how to edit a pre-existing post?</p>
+
+<p>Easy. Simply open the relevant <code>.mdsh</code> file in a text editor, make your changes and save.</p>
+
+<p>Finally, to rebuild the new HTML file from your edited/fixed markdown, just run something like this:</p>
 
 <pre><code>
 ./create_page posts/2019/02/13/better-site-headers.mdsh > posts/2019/02/13/better-site-headers.html

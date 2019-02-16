@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:34 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:29 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - Try again">
@@ -80,7 +80,9 @@
 
 <pre><code>
 #!/bin/bash
+
 if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
+
   echo
   echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
   echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
@@ -101,13 +103,16 @@ if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
   echo
   echo 'This script will ignore "deb-src" entries, and parse the others'
   exit 0
+
 fi
+
 if [ ! -f /etc/apt/sources.list ] && [ ! -d /etc/apt/sources.list.d/ ];then
   [ ! -f /etc/apt/sources.list    ] && echo 'File /etc/apt/sources.list     not found'
   [ ! -d /etc/apt/sources.list.d/ ] && echo 'Dir  /etc/apt/sources.list.d/  not found'
   echo 'Exiting'
   exit 1
 fi
+
 # search inside /etc/apt/sources.list /etc/apt/sources.list.d/*.list
 # ...look for lines starting with 'deb ', ignore others
 # ...(use grep -h, to remove the preppended filenames if grepping multiple files)
@@ -120,9 +125,12 @@ apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.
     -e 's/\[arch=[a-z,0-9].*\] //g' \
     -e 's/ /|/g'\
 )"
+
 echo "Repos to process:"
 echo
 echo "${apt_sources_list//|/ }"
+
+
 # for each repo in $apt_sources_list, use `ppa2pup` to install the repo
 for line in $apt_sources_list
 do
@@ -132,8 +140,10 @@ do
   echo
   echo "Processing:  ${line//|/ }"
   echo
+
   # ask user to update repo
   read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
+
   if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
     echo
     ppa2pup ${line//|/ }
@@ -141,6 +151,7 @@ do
   fi
   echo
 done
+
 exit $retval
 </code></pre>
 

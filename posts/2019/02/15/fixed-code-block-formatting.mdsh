@@ -1,0 +1,27 @@
+# title:        Fixed code block formatting
+# slug name:    fixed-code-block-formatting
+# description:  Embedding scripts and code snippets works as before...
+# time to read: 1 min
+# category:     blog
+# tags:         blog
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/15
+# modified:     2019/02/15
+
+---
+## Fixed code block formatting
+
+I've fixed the code block formatting so that shell code with escaped new lines format OK.
+
+In other words, breaking up long line into multiple line commands using backspace caused formatting issues.. Now it doesn't.
+
+Here is an example, a script called `apt2pup`:
+
+```$(cat /root/bin/apt2pup)
+```
+
+

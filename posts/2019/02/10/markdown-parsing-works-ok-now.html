@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:33 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:28 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - Markdown parsing works OK now">
@@ -79,9 +79,11 @@
 </div>
 </div>
 
-<p>After getting it working somewhat, I realised that my pre-parsing fix (manually replacing triple backticks with HTML code tags) allows me to use <code>markdown.pl</code> without issues, which is nice, cos it formats the code well, with no need to escape backslashes to preserve formatting.
-So, I have made <code>markdown.pl</code> the default parser, but left some code in <code>create_page</code> which can use other stuff too - <code>markdown.sh</code> and <code>md2html.sh</code>.
-The <code>md2html.sh</code> script uses the GitHub API, but you might hit rate limits or not have a network connection, and it has issues with formatting newlines in code blocks, so it's not the default parser.</p>
+<p>After getting it working somewhat, I realised that my pre-parsing fix (manually replacing triple backticks with HTML code tags) allows me to use <code>markdown.pl</code> without issues, which is nice, cos it formats the code well, with no need to escape backslashes to preserve formatting.</p>
+
+<p>So, I have made <code>markdown.pl</code> the default parser, but left some code in <code>create_page</code> which can use other stuff too - <code>markdown.sh</code> and <code>md2html.sh</code>.</p>
+
+<p>The <code>md2html.sh</code> script uses the GitHub API, but you might hit rate limits or not have a network connection, and it has issues with formatting newlines in code blocks, so it's not the default parser.</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 

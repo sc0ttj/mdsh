@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:38 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:33 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - It works! Easier post editing and converting is on the way...">
@@ -79,18 +79,26 @@
 </div>
 </div>
 
-<p>After the last fix, and as described in previous posts, each time you create a post, this blog tool thing will now save 3 files:
-- <code>file.mdsh</code> - a custom format, contains post meta info, markdown, html, embedded sub-shell commands
-- <code>file.md</code> - a valid markdown file, contains only post body and the <strong>results</strong> of any embedded sub-shell commands
-- <code>file.html</code> - a valid HTML file generated from the <code>.md</code> file
-So, as of this post, it will be easier to:
-- convert the posts into PDF, bbcode, or some other format
-- edit existings posts - just edit the md file and run <code>update_pages -all</code></p>
+<p>After the last fix, and as described in previous posts, each time you create a post, this blog tool thing will now save 3 files:</p>
+
+<ul>
+<li><code>file.mdsh</code> - a custom format, contains post meta info, markdown, html, embedded sub-shell commands</li>
+<li><code>file.md</code> - a valid markdown file, contains only post body and the <strong>results</strong> of any embedded sub-shell commands</li>
+<li><code>file.html</code> - a valid HTML file generated from the <code>.md</code> file</li>
+</ul>
+
+<p>So, as of this post, it will be easier to:</p>
+
+<ul>
+<li>convert the posts into PDF, bbcode, or some other format</li>
+<li>edit existings posts - just edit the md file and run <code>update_pages -all</code></li>
+</ul>
 
 <h3>To do</h3>
 
-<p>I still need to update <code>mdshell</code> so it can re-parse existing <code>.mdsh</code> files, not just take input form the user via the terminal.
-After that is implemented, you will be able to edit any existing <code>.mdsh</code> files and generate the <code>.md</code> and <code>.html</code> from those.</p>
+<p>I still need to update <code>mdshell</code> so it can re-parse existing <code>.mdsh</code> files, not just take input form the user via the terminal.</p>
+
+<p>After that is implemented, you will be able to edit any existing <code>.mdsh</code> files and generate the <code>.md</code> and <code>.html</code> from those.</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 

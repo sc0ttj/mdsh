@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:37 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:31 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - About `mdshell`">
@@ -83,9 +83,11 @@
 
 <h3>Adding dynamic content using <code>mdshell</code></h3>
 
-<p>It lets you create web pages super fast, using Markdown and embedded sub-shells.
-The <em>results</em> of the sub-shell commands are included in the final output.
-For example, if you write the following in your blog post when using <code>mdshell</code> (removing the space ater the $):</p>
+<p>It lets you create web pages super fast, using Markdown and embedded sub-shells.</p>
+
+<p>The <em>results</em> of the sub-shell commands are included in the final output.</p>
+
+<p>For example, if you write the following in your blog post when using <code>mdshell</code> (removing the space ater the $):</p>
 
 <pre><code>
 $ (uname)
@@ -97,8 +99,9 @@ $ (uname)
 Linux
 </code></pre>
 
-<p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.
-Another example, showing how to list folder contents:</p>
+<p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.</p>
+
+<p>Another example, showing how to list folder contents:</p>
 
 <pre><code>
 $ (ls $HOME)
@@ -140,27 +143,33 @@ www
 
 <h3>Using HTML in <code>mdshell</code></h3>
 
-<p>The <code>mdshell</code> also lets you write HTML straight into the post, and it will also work fine.
-This is useful if Markdown alone cannot produce the custom HTML layouts/elements that you need.</p>
+<p>The <code>mdshell</code> also lets you write HTML straight into the post, and it will also work fine.</p>
+
+<p>This is useful if Markdown alone cannot produce the custom HTML layouts/elements that you need.</p>
 
 <h3>Using python (or whatever) in <code>mdshell</code></h3>
 
-<p>Simply put your code or commands inside a sub-shell as usual..
-The following would run a Python script, the results of which would end up in your page HTML:</p>
+<p>Simply put your code or commands inside a sub-shell as usual..</p>
+
+<p>The following would run a Python script, the results of which would end up in your page HTML:</p>
 
 <pre><code>
 python /path/to/script.py
 </code></pre>
 
-<p>You could also call <code>node</code> scripts - for things like server-side chart rendering..
-You could, for example, have installed the ChartJS or Chartist node packages which, when called in a sub-shell, would return the charts HTML/SVG.</p>
+<p>You could also call <code>node</code> scripts - for things like server-side chart rendering..</p>
+
+<p>You could, for example, have installed the ChartJS or Chartist node packages which, when called in a sub-shell, would return the charts HTML/SVG.</p>
 
 <h3>Summary of <code>mdshell</code></h3>
 
-<p>It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..
-I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works".
-And best of all, I don't need any extra software AT ALL - just my terminal.
-Nice.</p>
+<p>It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..</p>
+
+<p>I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works".</p>
+
+<p>And best of all, I don't need any extra software AT ALL - just my terminal.</p>
+
+<p>Nice.</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 

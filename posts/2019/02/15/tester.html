@@ -18,7 +18,7 @@
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 01:28:38 +08 2019">
+<meta name="revised" content="Sat Feb 16 10:59:33 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - tester">
@@ -77,20 +77,24 @@
 </div>
 </div>
 
-<p>some para
-do a uname:</p>
+<p>some para</p>
+
+<p>do a uname:</p>
 
 <pre><code>
 Linux
 </code></pre>
 
-<p>^ should say <code>Linux</code>
-do multi line cat:</p>
+<p>^ should say <code>Linux</code></p>
+
+<p>do multi line cat:</p>
 
 <pre><code>
 #!/bin/sh
+
 romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
 [ -d "$2" ] && romdir="$2"
+
 # choose a system dir to look in for roms
 find "$romdir" \
     -maxdepth 1 \
@@ -101,10 +105,14 @@ find "$romdir" \
   | rofi -dmenu \
       -p 'Enter name: ' \
       -i -mesg 'Choose a system to play' > /tmp/rofi_system_name
+
 system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
+
 if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
  exit 1
 fi
+
+
 # looks for, list and choose a rom
 find $romdir/$system_name \
     -maxdepth 2 \
@@ -116,14 +124,20 @@ find $romdir/$system_name \
   | sed -e 's#.*/##g' \
   | sort -u \
   | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
+
 # rom name, escape [ and ]
 romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
 [ "$romname" = "" ] && exit 1
+
 romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
+
+
 if [ ! -f "$romfile" ];then
   rofi -dmenu -mesg "Rom file '$romname' not found!"
   exit 1
 fi
+
+
 case $system_name in
   *)
     # run the chosen game
@@ -133,12 +147,17 @@ case $system_name in
 esac
 </code></pre>
 
-<p>^ rofnafen
-...</p>
+<p>^ rofnafen</p>
+
+<p>...</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 
 <a href="../../../2019/02/15/rof-test.html">rof test</a>
+</li>
+<li class="next_post">
+<span>Next post:</span> 
+<a href="../../../2019/02/15/test.html">test</a>
 </li>
 </ul>
 <div class="footer">
