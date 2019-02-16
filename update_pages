@@ -1,13 +1,12 @@
 #!/bin/bash
 
-
 # Update all index pages across the site which list posts,
 # because a new post may have been added.
 
 # Usage:  update_pages [-all]
 
 # if -all is give, all HTML pages will be re-built, not just the index
-# pages (categories. tags, archive, home/recent posts, etc)
+# pages (categories, tags, archive, home/recent posts, etc)
 
 # load the users config file from $HOME
 [ -f $HOME/.bl/config ] && source $HOME/.bl/config
@@ -17,6 +16,7 @@
 echo "Updating: index.html"
 . create_page > index.html
 
+# if -all was given, update all posts as well
 if [ "$1" = "-all" ];then
   # update (rebuild) all posts pages
   cut -f1-2 -d'|' posts.csv \
@@ -30,7 +30,9 @@ if [ "$1" = "-all" ];then
       done
 fi
 
+#
 # update other pages
+#
 
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
@@ -78,3 +80,5 @@ do
   echo "Updating: tags/$tag.html"
   ./create_page "$tagged_posts" > tags/$tag.html
 done
+
+exit 0
