@@ -17,7 +17,7 @@ body_html=''
 #
 
 # create an HTML page
-function create_page {
+function create_page_html {
   local lang="${blog_language:-en}"
   local site_header="$(print_site_header)"
   local prev_and_next_posts=''
@@ -36,10 +36,14 @@ function create_page {
   echo "</head>"
   echo "<body>"
   echo '<div class="main-container">'
+  echo '<div class="body-container">'
   echo "$site_header"
+  echo '<div class="main-content">'
   echo '<a id="content"></a>'
   echo "$body_html"
+  echo "</div>"
   print_post_footer
+  echo "</div>"
   print_site_footer
   echo "</div>"
   echo "</body>"
@@ -69,7 +73,7 @@ function print_site_meta {
 <meta property="og:url" content="'${page_url:-$blog_url}'">
 <meta property="og:site_name" content="'${page_title:-$blog_title}'">
 <meta property="og:type" content="website">
-<meta property="og:image" content="'${blog_url}'/pics/rss.png" >
+<meta property="og:image" content="'${blog_url}'/assets/img/rss.png">
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="'${page_title:-$blog_title}'" />
 <meta name="twitter:site" content="'${blog_twitter}'" />
@@ -80,24 +84,24 @@ function print_site_meta {
   echo '<link rel="author" href="/humans.txt" />
 <link rel="canonical" href="'${blog_url}'/">
 <link rel="alternate" type="application/rss+xml" title="Subscribe to ${blog_title}" href="'${blog_url}'/feed.rss" />
-<link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">'
+<link rel="icon" href="'${blog_url}'/favicon.ico" type="image/vnd.microsoft.icon">'
 }
 
 function print_site_inline_styles {
   echo '<style>
   body {
     font-family: Ubuntu, serif;
-    font-size: 18px;
+    font-size: 16px;
   }
   pre, code {
     font-family: Inconsolata, Monaco, monospace, serif;
-    font-size: 18px;
+    font-size: 14px;
   }
 </style>'
 }
 
 function print_site_stylesheets {
-  echo '<link rel="stylesheet" href="/assets/css/main.css">'
+  echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css">'
   echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
 }
 
@@ -122,11 +126,11 @@ function print_site_javascripts {
     echo '<script id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
   done
   # add site-wide app.js, if it exists
-  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="/assets/js/app.js" type="text/javascript"></script>'
+  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="assets/js/app.js" type="text/javascript"></script>'
 }
 
 function print_site_header {
-  echo '<div class="page_header">'
+  echo '<div class="page-header">'
   echo '<h1><a href="'${blog_url}'/index.html">'$blog_title'</a></h1>'
   echo '<a class="off-screen" href="#content">Skip to content</a>'
   echo '<ul>'
@@ -435,6 +439,6 @@ if [ "$body_html" = "" ];then
 fi
 
 #xmessage "$body_html"
-create_page
+create_page_html
 
 ################################################################################
