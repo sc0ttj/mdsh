@@ -10,26 +10,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#!/bin/crash - foo</title>
-<meta name="description" content="bar">
+<title>#!/bin/crash - Missing post header</title>
+<meta name="description" content="A bug that I've just (hopefully) fixed.">
 <meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 11:56:40 +08 2019">
+<meta name="revised" content="Sat Feb 16 11:56:46 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
-<meta name="pagename" content="#!/bin/crash - foo">
-<meta property="og:title" content="#!/bin/crash - foo">
-<meta property="og:description" content="bar">
-<meta property="og:url" content="/mdsh/posts/2019/02/10/foo.html">
-<meta property="og:site_name" content="#!/bin/crash - foo">
+<meta name="pagename" content="#!/bin/crash - Missing post header">
+<meta property="og:title" content="#!/bin/crash - Missing post header">
+<meta property="og:description" content="A bug that I've just (hopefully) fixed.">
+<meta property="og:url" content="/mdsh/posts/2019/02/16/missing-post-header.html">
+<meta property="og:site_name" content="#!/bin/crash - Missing post header">
 <meta property="og:type" content="website">
 <meta property="og:image" content="/mdsh/pics/rss.png" >
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="#!/bin/crash - foo" />
+<meta name="twitter:title" content="#!/bin/crash - Missing post header" />
 <meta name="twitter:site" content="@foobar" />
 <meta name="twitter:image" content="/mdsh/pics/rss.png" />
 <link rel="author" href="/humans.txt" />
@@ -64,34 +64,30 @@
 </ul>
 </div>
 <a id="content"></a>
-<h2>Foo</h2><div class="post-header">
+<h2>Missing post header</h2><div class="post-header">
 <div class="post-meta">
-<span class="category"><a href="/mdsh/categories/test.html">test</a></span>
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
 <span class="time-to-read">1 min</span>
-<span class="date">2019/02/10</span>
+<span class="date">2019/02/16</span>
 <span class="author">John Doe</span>
 <span class="twitter">@foobar</span>
 </div>
 <div class="tags">
-<span><a href="/mdsh/tags/test.html">test</a></span>
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
 </div>
 </div>
 
-<p>bar</p>
+<p>This post should have a <code>h2</code> title called "Missing post header" .. The previous post (now fixed) was generated but had a missing header.</p>
 
-<pre><code>
-baz
-</code></pre>
+<p>This was because <code>mdshell</code> was not appending to the <code>.md</code> file, but overwriting it with the post contents.</p>
 
-<p>More</p>
+<p>This was wrong, cos <code>create_post</code> already creates the <code>.md</code> file, with a <code>h2</code> header at the top.</p>
+
+<p>Should be fixed now.</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 
-<a href="../../../2019/02/10/fixing-the-markdown-parsers.html">Fixing the markdown parsers</a>
-</li>
-<li class="next_post">
-<span>Next post:</span> 
-<a href="../../../2019/02/10/markdown-parsing-works-ok-now.html">Markdown parsing works OK now</a>
+<a href="../../../2019/02/16/ifs-and-the-read-command.html">IFS and the read command</a>
 </li>
 </ul>
 <div class="footer">

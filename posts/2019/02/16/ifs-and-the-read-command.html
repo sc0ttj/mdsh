@@ -10,26 +10,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>#!/bin/crash - foo</title>
-<meta name="description" content="bar">
+<title>#!/bin/crash - IFS and the read command</title>
+<meta name="description" content="Or, how I parse markdown to generate valid HTML">
 <meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
 <meta name="copyright" content="John Doe">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 16 11:56:40 +08 2019">
+<meta name="revised" content="Sat Feb 16 11:56:45 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
-<meta name="pagename" content="#!/bin/crash - foo">
-<meta property="og:title" content="#!/bin/crash - foo">
-<meta property="og:description" content="bar">
-<meta property="og:url" content="/mdsh/posts/2019/02/10/foo.html">
-<meta property="og:site_name" content="#!/bin/crash - foo">
+<meta name="pagename" content="#!/bin/crash - IFS and the read command">
+<meta property="og:title" content="#!/bin/crash - IFS and the read command">
+<meta property="og:description" content="Or, how I parse markdown to generate valid HTML">
+<meta property="og:url" content="/mdsh/posts/2019/02/16/ifs-and-the-read-command.html">
+<meta property="og:site_name" content="#!/bin/crash - IFS and the read command">
 <meta property="og:type" content="website">
 <meta property="og:image" content="/mdsh/pics/rss.png" >
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="#!/bin/crash - foo" />
+<meta name="twitter:title" content="#!/bin/crash - IFS and the read command" />
 <meta name="twitter:site" content="@foobar" />
 <meta name="twitter:image" content="/mdsh/pics/rss.png" />
 <link rel="author" href="/humans.txt" />
@@ -64,34 +64,51 @@
 </ul>
 </div>
 <a id="content"></a>
-<h2>Foo</h2><div class="post-header">
+<h2><code>IFS</code> and the <code>read</code> command</h2><div class="post-header">
 <div class="post-meta">
-<span class="category"><a href="/mdsh/categories/test.html">test</a></span>
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
 <span class="time-to-read">1 min</span>
-<span class="date">2019/02/10</span>
+<span class="date">2019/02/16</span>
 <span class="author">John Doe</span>
 <span class="twitter">@foobar</span>
 </div>
 <div class="tags">
-<span><a href="/mdsh/tags/test.html">test</a></span>
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
+<span><a href="/mdsh/tags/shell.html">shell</a></span>
 </div>
 </div>
 
-<p>bar</p>
+<p>In order to (finally) get the <code>.mdsh</code> files to generate valid markdown, and from there to convert to valid HTML, while <strong>also</strong> preserving code block formatting (new lines, indentations, etc), I had to set IFS and use the <code>-er</code> options of the read command.</p>
 
-<pre><code>
-baz
-</code></pre>
+<h3>About <code>IFS</code></h3>
 
-<p>More</p>
+<blockquote>
+  <p>The Internal Field Separator (IFS) that is used for word splitting after expansion and to split lines into words with the read builtin command.</p>
+</blockquote>
+
+<p>The <code>IFS</code> variable is a special Bash/shell variable which commands like <code>read</code> use to workout what counts as a field separator.</p>
+
+<p>By default, it is usually set to new lines and spaces.</p>
+
+<p>In order to parse our the markdown generated from our <code>.mdsh</code> files, we set IFS to parse new lines only (ignoring spaces).</p>
+
+<h3>About the <code>read</code> command</h3>
+
+<p>The <code>read</code> command is built-in to bash, and used to read input from the terminal input, or stdin.</p>
+
+<p>In order to read the markdown we generated line by line, while also preserving formatting, we need to set <code>IFS</code> as described above, <strong>and</strong> to set the <code>-er</code> params for <code>rread</code> so that backslashes are interpreted literally.</p>
+
+<p>After doing that, these paras you're reading will be converted to p tags in the HTML, and the code blocks will preserve their formatting too.</p>
+
+<p>See previous posts for examples of embedded code blocks for examples.</p>
 <ul class="prev-next-posts">
 <li class="prev_post">
 <span>Previous post: </span> 
-<a href="../../../2019/02/10/fixing-the-markdown-parsers.html">Fixing the markdown parsers</a>
+<a href="../../../2019/02/15/test.html">test</a>
 </li>
 <li class="next_post">
 <span>Next post:</span> 
-<a href="../../../2019/02/10/markdown-parsing-works-ok-now.html">Markdown parsing works OK now</a>
+<a href="../../../2019/02/16/missing-post-header.html">Missing post header</a>
 </li>
 </ul>
 <div class="footer">

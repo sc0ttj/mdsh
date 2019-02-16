@@ -1,3 +1,4 @@
+## Fixed code block formatting
 
 I've fixed the code block formatting so that shell code with escaped new lines format OK.
 
@@ -81,5 +82,3 @@ done
 
 exit $retval
 ```
-
-

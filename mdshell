@@ -166,9 +166,9 @@ done
 mdsh_file="${1}"
 echo -e "$source" >> "$mdsh_file"
 
-# create the markdown file
+# append to the markdown file
 markdown_file="${1//.mdsh/}.md"
-echo -e "$markdown" > "$markdown_file"
+echo -e "$markdown" >> "$markdown_file"
 
 # create the HTML page
 html_file="${1//.mdsh/}.html"
