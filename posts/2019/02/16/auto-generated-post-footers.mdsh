@@ -1,0 +1,26 @@
+# title:        Auto-generated post footers
+# slug name:    auto-generated-post-footers
+# description:  This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.
+# time to read: 1 min
+# category:     blog
+# tags:         blog
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom
+# created:      2019/02/16
+# modified:     2019/02/16
+
+---
+## Auto-generated post footers
+
+I've added a new feature - a very simple one.
+
+The "post header" containing category, time to read, author etc (see above) is now also added to the bottom of each post, above the main site footer.
+
+This way, it will be very easy to create different layouts in CSS, by hiding/showing post info above/below the post.
+
+It's a bit inefficient, but simple and flexible.
+
+
