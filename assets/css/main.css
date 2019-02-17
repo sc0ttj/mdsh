@@ -176,8 +176,18 @@ a.skip-to-content:focus {
 .prev-next-posts,
 .post-footer {
   padding: 0;
-  padding-left: 72px;
-  padding-right: 72px;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+@media (min-width: 640px) {
+  .main-content,
+  .prev-next-posts,
+  .post-footer {
+    padding: 0;
+    padding-left: 72px;
+    padding-right: 72px;
+  }
 }
 
 /* post header */
@@ -216,6 +226,14 @@ ul.tags {
   list-style-position: inside;
   margin-left: 0;
   padding-left: 0;
+}
+
+/* target all post lists on the site */
+ul.posts li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* post footer */

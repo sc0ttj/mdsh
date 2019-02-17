@@ -38,7 +38,7 @@ fi
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
 if [ "$all_posts" != "" ];then
   echo "Updating: archive.html"
-  all_post_html='<h2>Archive</h2><ul class="posts">'
+  all_post_html='<h2>Archive</h2><ul class="archive-posts posts">'
   for post in $all_posts
   do
     post_title="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
