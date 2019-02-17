@@ -1,26 +1,24 @@
 html,
 body {
   box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.4em;
   min-height: 100vh;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
+/* body bg color */
 body {
   background-color: #333;
 }
 
-p,
-span,
-div,
-ul,
-ol,
-li {
-  box-sizing: border-box;
-  font-size: 16px;
-  line-height: 1.2em;
+/* extra line height for para text */
+p {
+  line-height: 1.6em;
 }
 
+/* heades and inline code elems */
 code {
   background-color: #eee;
   color: #000;
@@ -29,11 +27,52 @@ code {
   margin: 0;
 }
 
+h1,
+h1 code {
+  font-size: 32px;
+}
+
+h2,
+h2 code {
+  font-size: 24px;
+}
+
+h3,
+h3 code {
+  font-size: 20px;
+}
+
+h4,
+h4 code {
+  font-size: 18px;
+}
+
+p code,
+li code {
+  font-size: 16px;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+p code,
+li code,
+span code {
+  /* enable padding in inline snippets */
+  display: inline-block;
+  line-height: 18px;
+  padding: 1px 6px;
+  margin-left: 2px;
+  margin-right: 1px;
+  vertical-align: middle;
+}
+
+/* code blocks */
 pre {
   background-color: #eee;
   color: #000;
   font-size: 15px;
-  font-weight: normal;
   line-height: 18px;
   overflow-x: auto;
   padding: 12px;
@@ -42,6 +81,7 @@ pre {
   word-wrap: break-word;
 }
 
+/* off screen text in site header */
 .off-screen {
   clip: rect(1px 1px 1px 1px); /* IE 6/7 */
   clip: rect(1px, 1px, 1px, 1px);
@@ -109,8 +149,31 @@ pre {
   padding-right: 8px;
 }
 
+.skip-to-content:focus {
+  background: #fff;
+  border: 2px solid #bbb;
+  color: #000;
+  clip: initial;
+  display: block;
+  height: auto;
+  overflow: initial;
+  padding: 12px 24px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  z-index: 10;
+}
+
+a.skip-to-content,
+a.skip-to-content:hover,
+a.skip-to-content:focus {
+  color: #222;
+}
+
 /* add padding to sections inside main container */
 .main-content,
+.prev-next-posts,
 .post-footer {
   padding: 0;
   padding-left: 72px;
@@ -143,6 +206,16 @@ pre {
   content: "Published: ";
   display: inline-block;
   width: 100px;
+}
+
+/* main content */
+ul.posts,
+ul.categories,
+ul.tags {
+  list-style: none;
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* post footer */
@@ -183,20 +256,14 @@ pre {
 }
 
 .prev-next-posts {
-  border-top: 1px solid #bbb;
-  padding-top: 16px;
-  margin: 0 auto;
-  margin-top: 18px;
-  padding-bottom: 18px;
-  text-align: left;
-  min-width: 320px;
-  width: 70%;
+  font-style: italic;
+  list-style: none;
+  margin-bottom: 32px;
 }
 
-.prev-post span,
-.next-post span {
+.prev-next-posts span {
   display: inline-block;
-  width: 120px;
+  width: 96px;
 }
 
 /* tags */

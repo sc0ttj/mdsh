@@ -132,7 +132,7 @@ function print_site_javascripts {
 function print_site_header {
   echo '<div class="page-header">'
   echo '<h1><a href="'${blog_url}'/index.html">'$blog_title'</a></h1>'
-  echo '<a class="off-screen" href="#content">Skip to content</a>'
+  echo '<a class="off-screen skip-to-content" href="#content">Skip to content</a>'
   echo '<ul>'
 
   # include index page(s) .. homepage first, then the others
@@ -314,12 +314,12 @@ function list_prev_and_next_posts {
 
   echo '<ul class="prev-next-posts">'
   echo '<li class="prev-post">'
-  echo '<span>Previous post: </span> '
+  echo '<span>Previous: </span> '
   echo '<a href="../../../'$prev_date'/'${prev_slug//.mdsh/}'.html">'$prev_title'</a>'
   echo '</li>'
   if [ "$next_title" != "$prev_title" ];then
     echo '<li class="next-post">'
-    echo '<span>Next post:</span> '
+    echo '<span>Next:</span> '
     echo '<a href="../../../'$next_date'/'${next_slug//.mdsh/}'.html">'$next_title'</a>'
     echo '</li>'
   fi
