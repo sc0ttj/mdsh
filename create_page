@@ -365,12 +365,12 @@ elif [ "$1" != "" ];then
 
 # get html list of recent posts
 else
-  body_html="<h2>Recent posts:</h2>
+  body_html="<h2>Recent posts</h2>
 $(list_recent_posts)"
 fi
 
 if [ "$1" = "-all" ];then
-  body_html="<h2>Recent posts:</h2>
+  body_html="<h2>Recent posts</h2>
 $(list_recent_posts)"
   markdown=""
 fi
