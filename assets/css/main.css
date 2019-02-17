@@ -218,6 +218,14 @@ a.skip-to-content:focus {
   width: 100px;
 }
 
+/* tags */
+.post-header .tags:before,
+.post-footer .tags:before {
+  content: "Tags: ";
+  display: inline-block;
+  width: 95px;
+}
+
 /* main content */
 ul.posts,
 ul.categories,
@@ -282,13 +290,6 @@ ul.posts li {
 .prev-next-posts span {
   display: inline-block;
   width: 96px;
-}
-
-/* tags */
-.tags:before {
-  content: "Tags: ";
-  display: inline-block;
-  width: 95px;
 }
 
 .footer {
