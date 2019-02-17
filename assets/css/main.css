@@ -103,10 +103,14 @@ pre {
   max-width: 800px;
   margin: 0px auto;
   padding: 0;
-  padding-bottom: 3em; /* height of footer */
-  padding-top: 1px; /* pushes container to top of page */
+  padding-bottom: 0; /* height of footer .. OR -1px and add padding-bottom to .body-container */
+  padding-top: -1px; /* pushes container to top of page */
   position: relative;
   width: 100%;
+}
+
+.body-container {
+  padding-bottom: 62px;
 }
 
 /* main site header */
@@ -171,25 +175,6 @@ a.skip-to-content:focus {
   color: #222;
 }
 
-/* add padding to sections inside main container */
-.main-content,
-.prev-next-posts,
-.post-footer {
-  padding: 0;
-  padding-left: 18px;
-  padding-right: 18px;
-}
-
-@media (min-width: 640px) {
-  .main-content,
-  .prev-next-posts,
-  .post-footer {
-    padding: 0;
-    padding-left: 72px;
-    padding-right: 72px;
-  }
-}
-
 /* post header */
 .post-header {
   font-style: italic;
@@ -227,6 +212,24 @@ a.skip-to-content:focus {
 }
 
 /* main content */
+
+/* add padding to sections inside main container */
+.post-content,
+.post-footer {
+  padding: 0;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+@media (min-width: 640px) {
+  .post-content,
+  .post-footer {
+    padding: 0;
+    padding-left: 72px;
+    padding-right: 72px;
+  }
+}
+
 ul.posts,
 ul.categories,
 ul.tags {
@@ -238,6 +241,7 @@ ul.tags {
 
 /* target all post lists on the site */
 ul.posts li {
+  /* auto trunate and append ... */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -284,7 +288,7 @@ ul.posts li {
 .prev-next-posts {
   font-style: italic;
   list-style: none;
-  margin-bottom: 32px;
+  padding: 0;
 }
 
 .prev-next-posts span {

@@ -38,8 +38,7 @@ function create_page_html {
   echo '<div class="main-container">'
   echo '<div class="body-container">'
   echo "$site_header"
-  echo '<div class="main-content">'
-  echo '<a id="content"></a>'
+  echo '<div id="content" class="post-content">'
   echo "$body_html"
   echo "</div>"
   print_post_footer
@@ -156,27 +155,23 @@ function print_site_header {
 }
 
 function print_post_header {
-  if [ "$post_category" = "" ];then
-    return 0
-  fi
+  # exit if we are not building a blog post
+  [ "$page_slug" = "" ] && return 0
 
   echo '<div class="post-header">'
-
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$created"'</span>'
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
-  echo '</div>'
-
   echo '<div class="tags">'
   for tag in ${blog_keywords//,/ }
   do
     echo '<span><a href="'${blog_url}'/tags/'"${tag}"'.html">'"$tag"'</a></span>'
   done
   echo '</div>'
-
+  echo '</div>'
   echo '</div>'
 }
 
@@ -185,30 +180,27 @@ function print_post_footer {
   [ "$page_slug" = "" ] && return 0
 
   echo '<div class="post-footer">'
-
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$created"'</span>'
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
-  echo '</div>'
-
   echo '<div class="tags">'
   for tag in ${blog_keywords//,/ }
   do
     echo '<span><a href="'${blog_url}'/tags/'"${tag}"'.html">'"$tag"'</a></span>'
   done
   echo '</div>'
-
+  echo '</div>'
+  if [ "$page_slug" != "" ];then
+    echo "$(list_prev_and_next_posts "${page_slug}.mdsh")"
+  fi
   echo '</div>'
 }
 
 
 function print_site_footer {
-  if [ "$page_slug" != "" ];then
-    echo "$(list_prev_and_next_posts "${page_slug}.mdsh")"
-  fi
   echo '<div class="footer">'
   echo "<p>${blog_footer}</p>"
   echo '</div>'
