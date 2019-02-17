@@ -9,6 +9,12 @@ markdown=''
 mardown_meta=''
 mardown_body=''
 body_html=''
+output_file=''
+
+# we will write to file if $2 is a file, else to stdout
+if [ -f "$2" ];then
+  output_file="$2"
+fi
 
 ################################################################################
 
@@ -101,6 +107,11 @@ function print_site_inline_styles {
 
 function print_site_stylesheets {
   echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css">'
+    local filename="$(basename "$output_file" 2>/dev/null)"
+    filename="assets/css/${filename//.html/.css}"
+  if [ -f "$filename" ];then
+    echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'">'
+  fi
   echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
 }
 
@@ -431,6 +442,10 @@ if [ "$body_html" = "" ];then
 fi
 
 #xmessage "$body_html"
-create_page_html
+if [ -f "$output_file" ];then
+  create_page_html > "$output_file"
+else
+  create_page_html
+fi
 
 ################################################################################

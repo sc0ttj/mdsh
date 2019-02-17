@@ -13,8 +13,12 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
+
+
 echo "Updating: index.html"
 . create_page > index.html
+
+
 
 # if -all was given, update all posts as well
 if [ "$1" = "-all" ];then
@@ -30,9 +34,6 @@ if [ "$1" = "-all" ];then
       done
 fi
 
-#
-# update other pages
-#
 
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
@@ -49,12 +50,14 @@ if [ "$all_posts" != "" ];then
     all_post_html="${all_post_html}<li><span>${post_date}</span> <a href=\"${blog_url}/${post//.mdsh/.html}\">${post_title}</a></li>"
   done
   all_post_html="${all_post_html}</ul>"
-    ./create_page "$all_post_html" > archive.html
+    ./create_page "$all_post_html" archive.html
 fi
+
+
 
 # update categories index page
 echo "Updating: categories.html"
-./create_page "<h2>Categories</h2>\n$(list_categories)" > categories.html
+./create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
 
 # update category pages
 category_posts=''
@@ -64,12 +67,14 @@ do
   category_posts="<h2>Category: $category</h2>$(list_posts_in_category "${category}")"
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
-  ./create_page "$category_posts" > categories/$category.html
+  ./create_page "$category_posts" categories/$category.html
 done
+
+
 
 # update tags index page
 echo "Updating: tags.html"
-./create_page "<h2>Tags</h2>\n$(list_tags)" > tags.html
+./create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
 site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
@@ -78,7 +83,7 @@ do
   tagged_posts="<h2>Tag: $tag</h2>$(list_posts_matching_tag "$tag")"
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
-  ./create_page "$tagged_posts" > tags/$tag.html
+  ./create_page "$tagged_posts" tags/$tag.html
 done
 
 exit 0
