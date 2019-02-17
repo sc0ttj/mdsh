@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#!/bin/crash - Adding a stylesheet</title>
+<meta name="description" content="Styling this blog to look nicer, and how it works.">
+<meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="generator" content="bl" />
+<meta name="medium" content="blog">
+<meta name="copyright" content="John Doe">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="revised" content="Sun Feb 17 22:33:03 +08 2019">
+<meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="owner" content="John Doe">
+<meta name="pagename" content="#!/bin/crash - Adding a stylesheet">
+<meta property="og:title" content="#!/bin/crash - Adding a stylesheet">
+<meta property="og:description" content="Styling this blog to look nicer, and how it works.">
+<meta property="og:url" content="/mdsh/posts/2019/02/17/adding-a-stylesheet.html">
+<meta property="og:site_name" content="#!/bin/crash - Adding a stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/mdsh/assets/img/rss.png">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="#!/bin/crash - Adding a stylesheet" />
+<meta name="twitter:site" content="@foobar" />
+<meta name="twitter:image" content="/mdsh/pics/rss.png" />
+<link rel="author" href="/humans.txt" />
+<link rel="canonical" href="/mdsh/">
+<link rel="alternate" type="application/rss+xml" title="Subscribe to ${blog_title}" href="/mdsh/feed.rss" />
+<link rel="icon" href="/mdsh/favicon.ico" type="image/vnd.microsoft.icon">
+<style>
+  body {
+    font-family: Ubuntu, serif;
+    font-size: 16px;
+  }
+  pre, code {
+    font-family: Inconsolata, Monaco, monospace, serif;
+    font-size: 14px;
+  }
+</style>
+<link rel="stylesheet" href="/mdsh/assets/css/main.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
+<script id="appjs" defer src="assets/js/app.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="main-container">
+<div class="body-container">
+<div class="page-header">
+<h1><a href="/mdsh/index.html">#!/bin/crash</a></h1>
+<a class="off-screen skip-to-content" href="#content">Skip to content</a>
+<ul>
+<li><a href="/mdsh/index.html">home</a></li>
+<li><a href="/mdsh/archive.html">archive</a></li>
+<li><a href="/mdsh/categories.html">categories</a></li>
+<li><a href="/mdsh/tags.html">tags</a></li>
+</ul>
+</div>
+<div id="content" class="post-content">
+<h2>Adding a stylesheet</h2><div class="post-header">
+<div class="post-meta">
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+<span class="time-to-read">3 mins</span>
+<span class="date">2019/02/17</span>
+<span class="author">John Doe</span>
+<span class="twitter">@foobar</span>
+<div class="tags">
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
+<span><a href="/mdsh/tags/css.html">css</a></span>
+</div>
+</div>
+</div>
+
+<p>I've added a stylesheet for this site, <code>assets/css/main.css</code>.</p>
+
+<p>The main classes are:</p>
+
+<p><code>.main-container</code> - all site content goes in this container</p>
+
+<p><code>.body-container</code> - contains everything except the site footer</p>
+
+<p><code>.footer</code> - the site footer</p>
+
+<p><code>.page-header</code> - the main header at the top of every page</p>
+
+<p><code>.post-content</code> - contains the post title and body content</p>
+
+<p><code>.post-header</code> - contains post meta info (author, category, etc)</p>
+
+<p><code>.post-footer</code> - same as post header, but appears <strong>below</strong> post body content</p>
+
+<p>There are other classes inside those, the most important of which are:</p>
+
+<p><code>.post-meta</code> - inside <code>.post-header</code> and <code>.post-footer</code>, contains the post meta info</p>
+
+<p><code>.prev-next-posts</code> - inside <code>.post-footer</code> only, last item before <code>.footer</code></p>
+
+<p>All of the lists of posts on the site will have the class <code>.posts</code>, with added classes to differentiate them from each other:</p>
+
+<p><code>.archive-posts</code> - the list of posts on the archive page</p>
+
+<p><code>.recent-posts</code> - the list of posts on the homepage</p>
+
+<p><code>.posts-in-category</code> - the list of posts in <code>category/&lt;category-name&gt;.html</code></p>
+
+<p><code>.posts-matching-tag</code> - the list of posts in <code>tags/&lt;tag-name&gt;.html</code></p>
+
+<p>The classes above can be targed in your CSS to style the page, and you can create additional stylesheets that will be automatically included on your generated pages by giving those stylesheets filenames with match the html files on your site. For example, when you generate <code>categories.html</code>, the additional css file <code>assets/css/categories.css</code> will be included in the <code>&lt;head&gt;</code> of the page, if it exists.</p>
+
+<p>So, you can edit the styles in <code>assests/css/main.css</code>, or create a stylesheet for individual pages - just make sure the HTML files have stylesheets with matching filenames in <code>assets/css/</code>.</p>
+
+<p>Here is the contents of the main stylesheet (so far):</p>
+
+<pre><code>
+html,
+body {
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.4em;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* body bg color */
+body {
+  background-color: #333;
+}
+
+/* extra line height for para text */
+p {
+  line-height: 1.6em;
+}
+
+/* heades and inline code elems */
+code {
+  background-color: #eee;
+  color: #000;
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h1 code {
+  font-size: 32px;
+}
+
+h2,
+h2 code {
+  font-size: 24px;
+}
+
+h3,
+h3 code {
+  font-size: 20px;
+}
+
+h4,
+h4 code {
+  font-size: 18px;
+}
+
+p code,
+li code {
+  font-size: 16px;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+p code,
+li code,
+span code {
+  /* enable padding in inline snippets */
+  display: inline-block;
+  line-height: 18px;
+  padding: 1px 6px;
+  margin-left: 2px;
+  margin-right: 1px;
+  vertical-align: middle;
+}
+
+/* code blocks */
+pre {
+  background-color: #eee;
+  color: #000;
+  font-size: 15px;
+  line-height: 18px;
+  overflow-x: auto;
+  padding: 12px;
+  padding-top: 0;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+/* off screen text in site header */
+.off-screen {
+  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  left: -999em;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; /* added line */
+  width: 1px;
+}
+
+/* wraps around all content */
+.main-container {
+  background-color: #fff;
+  color: #222;
+  height: 100%;
+  min-height: 100%;
+  min-height: 100vh;
+  max-width: 800px;
+  margin: 0px auto;
+  padding: 0;
+  padding-bottom: 0; /* height of footer .. OR -1px and add padding-bottom to .body-container */
+  padding-top: -1px; /* pushes container to top of page */
+  position: relative;
+  width: 100%;
+}
+
+.body-container {
+  padding-bottom: 62px;
+}
+
+/* main site header */
+.page-header {
+  background-color: #101010;
+  color: #fff;
+  font-weight: bold;
+  margin-top: -1px;
+  padding: 18px;
+  padding-bottom: 1px;
+}
+
+.page-header h1 {
+  margin-top: 6px;
+}
+
+.page-header a {
+  text-decoration: none;
+}
+
+.page-header a,
+.page-header a:visited {
+  color: #f0f0f0;
+}
+
+.page-header a:hover,
+.page-header a:focus {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.page-header ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.page-header li {
+  display: inline-block;
+  padding-right: 8px;
+}
+
+.skip-to-content:focus {
+  background: #fff;
+  border: 2px solid #bbb;
+  color: #000;
+  clip: initial;
+  display: block;
+  height: auto;
+  overflow: initial;
+  padding: 12px 24px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: auto;
+  z-index: 10;
+}
+
+a.skip-to-content,
+a.skip-to-content:hover,
+a.skip-to-content:focus {
+  color: #222;
+}
+
+/* post header */
+.post-header {
+  font-style: italic;
+}
+
+.post-header .post-meta .category,
+.post-header .post-meta .author,
+.post-header .post-meta .twitter {
+  display: none;
+}
+
+.post-header .post-meta .time-to-read,
+.post-header .post-meta .date {
+  display: block;
+}
+
+.post-header .post-meta .time-to-read:before {
+  content: "Time to read: ";
+  display: inline-block;
+  width: 100px;
+}
+
+.post-header .post-meta .date:before {
+  content: "Published: ";
+  display: inline-block;
+  width: 100px;
+}
+
+/* tags */
+.post-header .tags:before,
+.post-footer .tags:before {
+  content: "Tags: ";
+  display: inline-block;
+  width: 95px;
+}
+
+/* main content */
+
+/* add padding to sections inside main container */
+.post-content,
+.post-footer {
+  padding: 0;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+@media (min-width: 640px) {
+  .post-content,
+  .post-footer {
+    padding: 0;
+    padding-left: 72px;
+    padding-right: 72px;
+  }
+}
+
+ul.posts,
+ul.categories,
+ul.tags {
+  list-style: none;
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* target all post lists on the site */
+ul.posts li {
+  /* auto trunate and append ... */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* post footer */
+.post-footer {
+  font-style: italic;
+  margin: 0 auto;
+  margin-top: 12px;
+}
+
+.post-footer .post-meta .category:before {
+  content: "Category: ";
+  display: inline-block;
+  width: 100px;
+}
+
+.post-footer .post-meta .category {
+  display: block;
+}
+
+.post-footer .post-meta .twitter,
+.post-footer .post-meta .time-to-read,
+.post-footer .post-meta .date {
+  display: none;
+}
+
+.post-footer .post-meta .author:before {
+  content: "Author: ";
+  display: inline-block;
+  width: 100px;
+}
+
+.post-footer .post-meta .author {
+  display: inline-block;
+}
+
+.post-footer .tags {
+  display: none;
+}
+
+.prev-next-posts {
+  font-style: italic;
+  list-style: none;
+  padding: 0;
+}
+
+.prev-next-posts span {
+  display: inline-block;
+  width: 96px;
+}
+
+.footer {
+  position: absolute;
+  background-color: #101010;
+  color: #fff;
+  bottom: 0;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+</code></pre>
+</div>
+<div class="post-footer">
+<div class="post-meta">
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+<span class="time-to-read">3 mins</span>
+<span class="date">2019/02/17</span>
+<span class="author">John Doe</span>
+<span class="twitter">@foobar</span>
+<div class="tags">
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
+<span><a href="/mdsh/tags/css.html">css</a></span>
+</div>
+</div>
+<ul class="prev-next-posts">
+<li class="prev-post">
+<span>Previous: </span> 
+<a href="../../../2019/02/16/missing-post-header.html">Missing post header</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer">
+<p>© #!/bin/crash 2019</p>
+</div>
+</div>
+</body>
+</html>

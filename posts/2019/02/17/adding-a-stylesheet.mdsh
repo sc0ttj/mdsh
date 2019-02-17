@@ -1,0 +1,61 @@
+# title:        Adding a stylesheet
+# slug name:    adding-a-stylesheet
+# description:  Styling this blog to look nicer, and how it works.
+# time to read: 3 mins
+# category:     blog
+# tags:         blog,css
+# author:       John Doe
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/17
+# modified:     2019/02/17
+
+---
+## Adding a stylesheet
+
+I've added a stylesheet for this site, `assets/css/main.css`.
+
+The main classes are:
+
+`.main-container` - all site content goes in this container
+
+`.body-container` - contains everything except the site footer
+
+`.footer` - the site footer
+
+`.page-header` - the main header at the top of every page
+
+`.post-content` - contains the post title and body content
+
+`.post-header` - contains post meta info (author, category, etc)
+
+`.post-footer` - same as post header, but appears **below** post body content
+
+There are other classes inside those, the most important of which are:
+
+`.post-meta` - inside `.post-header` and `.post-footer`, contains the post meta info
+
+`.prev-next-posts` - inside `.post-footer` only, last item before `.footer`
+
+All of the lists of posts on the site will have the class `.posts`, with added classes to differentiate them from each other:
+
+`.archive-posts` - the list of posts on the archive page
+
+`.recent-posts` - the list of posts on the homepage
+
+`.posts-in-category` - the list of posts in `category/<category-name>.html`
+
+`.posts-matching-tag` - the list of posts in `tags/<tag-name>.html`
+
+The classes above can be targed in your CSS to style the page, and you can create additional stylesheets that will be automatically included on your generated pages by giving those stylesheets filenames with match the html files on your site. For example, when you generate `categories.html`, the additional css file `assets/css/categories.css` will be included in the `<head>` of the page, if it exists.
+
+So, you can edit the styles in `assests/css/main.css`, or create a stylesheet for individual pages - just make sure the HTML files have stylesheets with matching filenames in `assets/css/`.
+
+Here is the contents of the main stylesheet (so far):
+
+```$(cat assets/css/main.css)
+```
+
+
