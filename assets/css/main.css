@@ -22,8 +22,7 @@ li {
 /* reduce padding on left of <li> elems */
 ul,
 ol {
-  padding-left: 2px;
-  list-style-position: inside;
+  padding-left: 15px;
 }
 
 /* heades and inline code elems */
