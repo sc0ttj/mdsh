@@ -19,6 +19,13 @@ li {
   line-height: 1.6em;
 }
 
+/* reduce padding on left of <li> elems */
+ul,
+ol {
+  padding-left: 2px;
+  list-style-position: inside;
+}
+
 /* heades and inline code elems */
 code {
   background-color: #f9f9f9;
