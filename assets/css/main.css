@@ -20,8 +20,8 @@ p {
 
 /* heades and inline code elems */
 code {
-  background-color: #eee;
-  color: #000;
+  background-color: #f9f9f9;
+  color: #222;
   display: inline;
   padding: 0;
   margin: 0;
@@ -60,18 +60,21 @@ p code,
 li code,
 span code {
   /* enable padding in inline snippets */
+  border: 1px solid #e6e6e6;
   display: inline-block;
-  line-height: 18px;
-  padding: 1px 6px;
+  line-height: 1em;
+  padding: 1px 2px;
   margin-left: 2px;
   margin-right: 1px;
+  margin-bottom: 2px;
   vertical-align: middle;
 }
 
 /* code blocks */
 pre {
-  background-color: #eee;
-  color: #000;
+  border: 1px solid #e6e6e6;
+  background-color: #f9f9f9;
+  color: #222;
   font-size: 15px;
   line-height: 18px;
   overflow-x: auto;
