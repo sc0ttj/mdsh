@@ -1,6 +1,6 @@
 {
-  "theme_color": "#222222",
-  "background_color": "#222222",
+  "theme_color": "#101010",
+  "background_color": "#ffffff",
   "description": "Blog description goes here",
   "display": "standalone",
   "icons": [
