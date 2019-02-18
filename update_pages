@@ -90,4 +90,11 @@ do
   ./create_page "$tagged_posts" tags/$tag.html
 done
 
+# update 404 page
+echo "Updating: 404.html"
+./create_page '<h2>Page not found</h2>
+<p>Sorry, the page you are looking for could not be found!</p>
+<hr>
+<p>Please use the menu to find something else.</p>' > 404.html
+
 exit 0

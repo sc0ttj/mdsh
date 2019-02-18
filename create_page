@@ -202,7 +202,7 @@ function print_site_header {
   # include index page(s) .. homepage first, then the others
   echo '<li><a href="'${blog_url}'/index.html">home</a></li>'
   index_pages=$(ls -1 *.html)
-  for index_page in $(echo "$index_pages" | grep -v 'index.html')
+  for index_page in $(echo "$index_pages" | grep -vE 'index.html|404.html|^*.html')
   do
     index_name="${index_page//.html/}"
     echo '<li><a href="'${blog_url}'/'$index_page'">'$index_name'</a></li>'
@@ -218,6 +218,8 @@ function print_site_header {
   echo '</ul>'
   echo '</div>'
 }
+
+################################################################################
 
 function print_post_header {
   # exit if we are not building a blog post
