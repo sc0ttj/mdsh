@@ -217,7 +217,7 @@ function print_site_inline_styles {
 function print_site_stylesheets {
   echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css">'
     local filename="$(basename "$output_file" 2>/dev/null)"
-    filename="assets/css/${filename//.html/.css}"
+    filename="assets/css/${filename//.html/.css}?version=$(date +%s)"
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'">'
   fi

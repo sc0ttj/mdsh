@@ -240,6 +240,11 @@ a.skip-to-content:focus {
   }
 }
 
+.post-content {
+  /* padding above main post title */
+  padding-top: 1em;
+}
+
 ul.posts,
 ul.categories,
 ul.tags {
