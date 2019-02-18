@@ -213,6 +213,10 @@
         <p>Create a <code>.html</code> page in the root dir - all
         html in the root dir are automatically included in the site
         header menu.</p>
+        <p><b>To rebuild an HTML page from an existing markdown
+        document:</b></p>
+        <p><code>./create_page path/to/file.md &gt;
+        output_file.html</code></p>
         <p><b>To create custom HTML pages:</b></p>
         <pre><code># create a variable containing some HTML
 my_custom_html="&lt;h1&gt;Some header&lt;/h1&gt;
@@ -221,8 +225,17 @@ my_custom_html="&lt;h1&gt;Some header&lt;/h1&gt;
 # pass the html to create_page, redirect to our new html file
 ./create_page "$my_custom_html" &gt; my-custom-page.html</code></pre>
         <p><b>To edit site layouts or HTML:</b></p>
-        <p>Edit the HTML inside <code>create_page</code> - there
-        are some functions in there which produce the site HTML</p>
+        <p>Edit the HTML inside <code>create_page</code> or the CSS
+        in <code>assets/css/main.css</code>, there are some
+        functions in there which produce the site HTML</p>
+        <p><b>Delete a post/page</b></p>
+        <p>Delete any files you no longer want published (
+        <code>.html</code>, <code>.md</code> and <code>.mdsh</code>
+        files), and then run <code>./update_pages -all</code>.</p>
+        <p><b>Unpublish a post/page</b></p>
+        <p>Comment out the relevant post in <code>posts.csv</code>,
+        and run <code>./update_pages -all</code>. This will hide
+        the page from site indexes and listings.</p>
       </div>
     </div>
     <div class="footer">
