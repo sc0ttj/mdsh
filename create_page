@@ -45,7 +45,7 @@ function create_page_html {
   echo '<div class="body-container">'
   echo "$site_header"
   echo '<div id="content" class="post-content">'
-  echo "$body_html"
+  echo -e "$body_html"
   echo "</div>"
   print_post_footer
   echo "</div>"
@@ -361,15 +361,18 @@ elif [ -f "$1" ];then
   markdown_meta="${markdown_meta%---*}"
   # get the valid markdown (with *output* of sub-shells) from .md file
   markdown="$(cat "${1//.mdsh/}.md")"
+  body_html=''
 
 # get markdown from string
 elif [ "$1" != "" ];then
-  markdown="$1"
+  body_html="$(echo -e "$1")"
+  markdown=''
 
 # get html list of recent posts
 else
   body_html="<h2>Recent posts</h2>
 $(list_recent_posts)"
+  markdown=''
 fi
 
 if [ "$1" = "-all" ];then
@@ -379,7 +382,7 @@ $(list_recent_posts)"
 fi
 
 # if we have markdown, not html, we need to convert it
-if [ "$body_html" = "" ];then
+if [ "$markdown" != "" ];then
   created="$(echo "$markdown_meta" | grep -m1 '# created'| cut -f2 -d':' | sed 's/^ *//')"
   # create some page specific meta info that will end up inthe HTML
   page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
@@ -434,11 +437,12 @@ if [ "$body_html" = "" ];then
     body_html="$(echo -e "$markdown" | ./markdown.pl)" # or markdown.sh
   fi
 
-  # if we have a post header, add that to the page too
-  post_header="$(print_post_header)"
-  if [ "$post_header" != "" ];then
-    body_html="${body_html/<\/h2>/</h2>$post_header}"
-  fi
+fi
+
+# if we have a post header, add that to the page too
+post_header="$(print_post_header)"
+if [ "$post_header" != "" ];then
+  body_html="${body_html/<\/h2>/</h2>$post_header}"
 fi
 
 #xmessage "$body_html"
