@@ -22,27 +22,27 @@ echo
 
 # get user input to create the meta data
 echo -n "Title:        "
-read title
+read -er title
 echo -n "Description:  "
-read description
+read -er description
 echo -n "Time to read: "
-read time_to_read
+read -er time_to_read
 echo -n "Category:     "
-read category
+read -er category
 echo -n "Tags (comma separated words or phrases): "
-read tags
+read -er tags
 # if -all given, as kfor all meta info
 if [ "$1" = "-all" ];then
   echo -n "Author:       "
-  read author
+  read -er author
   echo -n "Email:        "
-  read email
+  read -er email
   echo -n "Twitter:      "
-  read twitter
+  read -er twitter
   echo -n "Language:     "
-  read language
+  read -er language
   echo -n "JS deps (comma separated package names): "
-  read js_deps
+  read -er js_deps
 fi
 # generate some more meta info
 slug=$(slugify.sh "$title")

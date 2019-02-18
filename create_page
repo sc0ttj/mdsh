@@ -5,6 +5,12 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
+post_title=''
+post_slug=''
+post_category=''
+post_created=''
+post_time_to_read=''
+post_url=''
 markdown=''
 mardown_meta=''
 mardown_body=''
@@ -61,7 +67,7 @@ function print_site_meta {
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>'${page_title:-$blog_title}'</title>
+<title>'${post_title:-$blog_title}'</title>
 <meta name="description" content="'${blog_descr}'">
 <meta name="subject" content="blog, '${blog_categories}'">
 <meta name="generator" content="bl" />
@@ -72,15 +78,15 @@ function print_site_meta {
 <meta name="revised" content="'$(date)'">
 <meta name="topic" content="'${blog_categories}'">
 <meta name="owner" content="'${blog_author}'">
-<meta name="pagename" content="'${page_title:-$blog_title}'">
-<meta property="og:title" content="'${page_title:-$blog_title}'">
+<meta name="pagename" content="'${post_title:-$blog_title}'">
+<meta property="og:title" content="'${post_title:-$blog_title}'">
 <meta property="og:description" content="'${blog_descr}'">
-<meta property="og:url" content="'${page_url:-$blog_url}'">
-<meta property="og:site_name" content="'${page_title:-$blog_title}'">
+<meta property="og:url" content="'${post_url:-$blog_url}'">
+<meta property="og:site_name" content="'${post_title:-$blog_title}'">
 <meta property="og:type" content="website">
 <meta property="og:image" content="'${blog_url}'/assets/img/rss.png">
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="'${page_title:-$blog_title}'" />
+<meta name="twitter:title" content="'${post_title:-$blog_title}'" />
 <meta name="twitter:site" content="'${blog_twitter}'" />
 <meta name="twitter:image" content="'${blog_url}'/pics/rss.png" />'
   if [ "${blog_google_analytics_id}" != "" ];then
@@ -167,13 +173,13 @@ function print_site_header {
 
 function print_post_header {
   # exit if we are not building a blog post
-  [ "$page_slug" = "" ] && return 0
+  [ "$post_slug" = "" ] && return 0
 
   echo '<div class="post-header">'
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
-  echo '<span class="date">'"$created"'</span>'
+  echo '<span class="date">'"$post_created"'</span>'
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
   echo '<div class="tags">'
@@ -188,13 +194,13 @@ function print_post_header {
 
 function print_post_footer {
   # exit if we are not building a blog post
-  [ "$page_slug" = "" ] && return 0
+  [ "$post_slug" = "" ] && return 0
 
   echo '<div class="post-footer">'
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
-  echo '<span class="date">'"$created"'</span>'
+  echo '<span class="date">'"$post_created"'</span>'
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
   echo '<div class="tags">'
@@ -204,8 +210,8 @@ function print_post_footer {
   done
   echo '</div>'
   echo '</div>'
-  if [ "$page_slug" != "" ];then
-    echo "$(list_prev_and_next_posts "${page_slug}.mdsh")"
+  if [ "$post_slug" != "" ];then
+    echo "$(list_prev_and_next_posts "${post_slug}.mdsh")"
   fi
   echo '</div>'
 }
@@ -246,6 +252,49 @@ function list_tags {
 #
 # functions for listing posts in various ways
 #
+
+function set_post_info {
+  local md_meta
+  # get the meta info from the .mdsh file
+  if [ -f "${1//.mdsh/}.mdsh" ];then
+    md_meta="$(cat "${1//.mdsh/}.mdsh")"
+  elif [ -f "${1//.md/}.mdsh" ];then
+    md_meta="$(cat "${1//.md/}.mdsh")"
+  else
+    return 1
+  fi
+  # remove post meta data and keep only the body
+  md_meta="${md_meta%---*}"
+  # set some page specific meta info that will end up in the HTML
+  post_title="$blog_title - $(echo "$md_meta" | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
+  post_slug="$(echo "$md_meta"                | grep -m1 '# slug '       | cut -f2 -d':' | sed -e 's/^ *//')"
+  post_category="$(echo "$md_meta"            | grep -m1 '# category'    | cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
+  post_created="$(echo "$md_meta"             | grep -m1 '# created'     | cut -f2 -d':' | sed 's/^ *//')"
+  post_time_to_read="$(echo "$md_meta"        | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
+  post_url="${blog_url}/posts/$post_created/${post_slug}.html"
+  # replace site-wide defaults with post specific meta information
+  blog_keywords="$(echo "$md_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_language="$(echo "$md_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_descr="$(echo "$md_meta"    | grep -m1 '# description'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_author="$(echo "$md_meta"   | grep -m1 '# author'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_twitter="$(echo "$md_meta"  | grep -m1 '# twitter'| cut -f2 -d':' | sed 's/^ *//')"
+  blog_js_deps="$(echo "$md_meta"  | grep -m1 '# JS deps'| cut -f2 -d':' | sed 's/^ *//')"
+}
+
+function print_post_preview {
+  [ ! "$1" ] && return 1
+
+  set_post_info "$1"
+
+  # exit if we are not building a blog post
+  [ "$post_slug" = "" ] && return 0
+
+  echo '<div class="post-preview">'
+  echo '<h3><a href="'"${post_title}"'"></a></h3> - <datetime>'"${post_created}"'</datetime>'
+  echo '<p>'"${post_time_to_read}"'</p>'
+  echo '<p>'"${post_descr}"'</p>'
+  echo '</div>'
+}
 
 function list_recent_posts {
   # list relative paths to the 10 most recent posts in ./posts dir
@@ -335,72 +384,37 @@ function list_prev_and_next_posts {
 # begin processing the given file or string
 #
 
+body_html=''
+markdown=''
+
 # get markdown from file
 if [ -f "${1//.mdsh/}.mdsh" ];then
-  # get the meta info from the .mdsh file
-  markdown_meta="$(cat "${1//.mdsh/}.mdsh")"
-  # remove post meta data and keep only the body
-  markdown_meta="${markdown_meta%---*}"
-  # get the valid markdown (with *output* of sub-shells) from .md file
   markdown="$(cat "${1//.mdsh/}.md")"
 
 # get markdown from file
 elif [ -f "${1//.md/}.md" ];then
-  # get the meta info from the .mdsh file
-  markdown_meta="$(cat "${1//.md/}.mdsh")"
-  # remove post meta data and keep only the body
-  markdown_meta="${markdown_meta%---*}"
-  # get the valid markdown (with *output* of sub-shells) from .md file
   markdown="$(cat "${1//.md/}.md")"
 
-
-elif [ -f "$1" ];then
-  # get the meta info from the .mdsh file
-  markdown_meta="$(cat "$1")"
-  # remove post meta data and keep only the body
-  markdown_meta="${markdown_meta%---*}"
-  # get the valid markdown (with *output* of sub-shells) from .md file
-  markdown="$(cat "${1//.mdsh/}.md")"
-  body_html=''
-
-# get markdown from string
-elif [ "$1" != "" ];then
+# get html from string
+elif [ "$1" != "" ] && [ "$1" != "-all" ];then
   body_html="$(echo -e "$1")"
-  markdown=''
 
 # get html list of recent posts
 else
   body_html="<h2>Recent posts</h2>
 $(list_recent_posts)"
-  markdown=''
 fi
 
 if [ "$1" = "-all" ];then
   body_html="<h2>Recent posts</h2>
 $(list_recent_posts)"
-  markdown=""
 fi
 
 # if we have markdown, not html, we need to convert it
 if [ "$markdown" != "" ];then
-  created="$(echo "$markdown_meta" | grep -m1 '# created'| cut -f2 -d':' | sed 's/^ *//')"
-  # create some page specific meta info that will end up inthe HTML
-  page_title="$blog_title - $(echo "$markdown_meta" | grep -m1 '# title' | cut -f2 -d':' | sed 's/^ *//')"
-  page_slug="$(echo "$markdown_meta"                | grep -m1 '# slug ' | cut -f2 -d':' | sed -e 's/^ *//')"
-  post_category="$(echo "$markdown_meta"            | grep -m1 '# category'| cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
-  post_time_to_read="$(echo "$markdown_meta"        | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
-  page_url="${blog_url}/posts/$created/${page_slug}.html"
-  # replace site-wide defaults with post specific meta information
-  blog_keywords="$(echo "$markdown_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_language="$(echo "$markdown_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_descr="$(echo "$markdown_meta"    | grep -m1 '# description'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_author="$(echo "$markdown_meta"   | grep -m1 '# author'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_twitter="$(echo "$markdown_meta"  | grep -m1 '# twitter'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_js_deps="$(echo "$markdown_meta"  | grep -m1 '# JS deps'| cut -f2 -d':' | sed 's/^ *//')"
 
-  #xmessage "$markdown_meta"
-  #xmessage "$markdown_body"
-
+  # set some variables to put into the post HTML
+  set_post_info "$1"
 
   #
   # do some pre-processing of the markdown before converting to html
@@ -451,5 +465,17 @@ if [ -f "$output_file" ];then
 else
   create_page_html
 fi
+
+unset post_title
+unset post_slug
+unset post_category
+unset post_created
+unset post_time_to_read
+unset post_url
+unset markdown
+unset mardown_meta
+unset mardown_body
+unset body_html
+unset output_file
 
 ################################################################################
