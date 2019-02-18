@@ -14,7 +14,8 @@ body {
 }
 
 /* extra line height for para text */
-p {
+p,
+li {
   line-height: 1.6em;
 }
 
