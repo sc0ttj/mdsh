@@ -24,6 +24,43 @@ fi
 
 ################################################################################
 
+# Usage:  set_post_info path/to/post.mdsh
+#
+#         Used by other functions to set the post info used in various
+#         bits of generated HTML.
+
+function set_post_info {
+  local md_meta
+  # get the meta info from the .mdsh file
+  if [ -f "${1//.mdsh/}.mdsh" ];then
+    md_meta="$(cat "${1//.mdsh/}.mdsh")"
+  elif [ -f "${1//.md/}.mdsh" ];then
+    md_meta="$(cat "${1//.md/}.mdsh")"
+  else
+    return 1
+  fi
+  # remove post meta data and keep only the body
+  md_meta="${md_meta%---*}"
+  # set some page specific meta info that will end up in the HTML
+  post_title="$(echo "$md_meta"        | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
+  post_slug="$(echo "$md_meta"         | grep -m1 '# slug '       | cut -f2 -d':' | sed -e 's/^ *//')"
+  post_descr="$(echo "$md_meta"        | grep -m1 '# description' | cut -f2 -d':' | sed 's/^ *//')"
+  post_category="$(echo "$md_meta"     | grep -m1 '# category'    | cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
+  post_created="$(echo "$md_meta"      | grep -m1 '# created'     | cut -f2 -d':' | sed 's/^ *//')"
+  post_time_to_read="$(echo "$md_meta" | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
+  post_tags="$(echo "$md_meta"         | grep -m1 '# tags'        | cut -f2 -d':' | sed 's/^ *//')"
+  post_language="$(echo "$md_meta"     | grep -m1 '# language'    | cut -f2 -d':' | sed 's/^ *//')"
+  post_author="$(echo "$md_meta"       | grep -m1 '# author'      | cut -f2 -d':' | sed 's/^ *//')"
+  post_twitter="$(echo "$md_meta"      | grep -m1 '# twitter'     | cut -f2 -d':' | sed 's/^ *//')"
+  post_js_deps="$(echo "$md_meta"      | grep -m1 '# JS deps'     | cut -f2 -d':' | sed 's/^ *//')"
+  # set furll title and url
+  [ "$post_title" != "" ] && post_title="$blog_title - $post_title"
+  post_url="${blog_url}/posts/$post_created/${post_slug}.html"
+}
+
+
+################################################################################
+
 #
 # functions for building HTML pages
 #
@@ -63,32 +100,37 @@ function create_page_html {
 
 
 function print_site_meta {
+  local page_title="$blog_title"
+  # set a nice page title
+  if [ "$post_title" != "" ];then
+    page_title="$post_title"
+  fi
   echo '<meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="X-DNS-Prefetch-Control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>'${post_title:-$blog_title}'</title>
-<meta name="description" content="'${blog_descr}'">
+<title>'${page_title}'</title>
+<meta name="description" content="'${post_descr:-$blog_descr}'">
 <meta name="subject" content="blog, '${blog_categories}'">
 <meta name="generator" content="bl" />
 <meta name="medium" content="blog">
-<meta name="copyright" content="'${blog_author}'">
-<meta name="language" content="'${blog_language}'">
+<meta name="copyright" content="'${post_author:-$blog_author}'">
+<meta name="language" content="'${post_language:-$blog_language}'">
 <meta name="robots" content="index,follow">
 <meta name="revised" content="'$(date)'">
 <meta name="topic" content="'${blog_categories}'">
-<meta name="owner" content="'${blog_author}'">
-<meta name="pagename" content="'${post_title:-$blog_title}'">
-<meta property="og:title" content="'${post_title:-$blog_title}'">
-<meta property="og:description" content="'${blog_descr}'">
+<meta name="owner" content="'${post_author:-$blog_author}'">
+<meta name="pagename" content="'${page_title}'">
+<meta property="og:title" content="'${page_title}'">
+<meta property="og:description" content="'${post_descr:-$blog_descr}'">
 <meta property="og:url" content="'${post_url:-$blog_url}'">
-<meta property="og:site_name" content="'${post_title:-$blog_title}'">
+<meta property="og:site_name" content="'${page_title}'">
 <meta property="og:type" content="website">
 <meta property="og:image" content="'${blog_url}'/assets/img/rss.png">
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="'${post_title:-$blog_title}'" />
-<meta name="twitter:site" content="'${blog_twitter}'" />
-<meta name="twitter:image" content="'${blog_url}'/pics/rss.png" />'
+<meta name="twitter:title" content="'${page_title}'" />
+<meta name="twitter:site" content="'${post_twitter:-$blog_twitter}'" />
+<meta name="twitter:image" content="'${blog_url}'/assets/img/rss.png" />'
   if [ "${blog_google_analytics_id}" != "" ];then
     echo '<meta name="google-analytics" content="'${blog_google_analytics_id}'">'
   fi
@@ -136,8 +178,14 @@ function print_site_javascripts {
  })();
 </script>'
   fi
+  # get JS deps from unpkg
+  local js_deps="$blog_js_deps"
+  # if building a post, append the post specific deps
+  if [ "$post_js_deps" != "" ];then
+    js_deps="$blog__js_deps $post_js_deps"
+  fi
   # add JS packages from unpkg.com
-  for pkgname in $(echo "$blog_js_deps" | tr ',' ' ')
+  for pkgname in $(echo "$js_deps" | tr ',' ' ')
   do
     echo '<script id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
   done
@@ -183,7 +231,7 @@ function print_post_header {
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
   echo '<div class="tags">'
-  for tag in ${blog_keywords//,/ }
+  for tag in ${post_tags//,/ }
   do
     echo '<span><a href="'${blog_url}'/tags/'"${tag}"'.html">'"$tag"'</a></span>'
   done
@@ -204,7 +252,7 @@ function print_post_footer {
   echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
   echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
   echo '<div class="tags">'
-  for tag in ${blog_keywords//,/ }
+  for tag in ${post_tags//,/ }
   do
     echo '<span><a href="'${blog_url}'/tags/'"${tag}"'.html">'"$tag"'</a></span>'
   done
@@ -253,34 +301,6 @@ function list_tags {
 # functions for listing posts in various ways
 #
 
-function set_post_info {
-  local md_meta
-  # get the meta info from the .mdsh file
-  if [ -f "${1//.mdsh/}.mdsh" ];then
-    md_meta="$(cat "${1//.mdsh/}.mdsh")"
-  elif [ -f "${1//.md/}.mdsh" ];then
-    md_meta="$(cat "${1//.md/}.mdsh")"
-  else
-    return 1
-  fi
-  # remove post meta data and keep only the body
-  md_meta="${md_meta%---*}"
-  # set some page specific meta info that will end up in the HTML
-  post_title="$blog_title - $(echo "$md_meta" | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
-  post_slug="$(echo "$md_meta"                | grep -m1 '# slug '       | cut -f2 -d':' | sed -e 's/^ *//')"
-  post_category="$(echo "$md_meta"            | grep -m1 '# category'    | cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
-  post_created="$(echo "$md_meta"             | grep -m1 '# created'     | cut -f2 -d':' | sed 's/^ *//')"
-  post_time_to_read="$(echo "$md_meta"        | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
-  post_url="${blog_url}/posts/$post_created/${post_slug}.html"
-  # replace site-wide defaults with post specific meta information
-  blog_keywords="$(echo "$md_meta" | grep -m1 '# tags'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_language="$(echo "$md_meta" | grep -m1 '# language'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_descr="$(echo "$md_meta"    | grep -m1 '# description'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_author="$(echo "$md_meta"   | grep -m1 '# author'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_twitter="$(echo "$md_meta"  | grep -m1 '# twitter'| cut -f2 -d':' | sed 's/^ *//')"
-  blog_js_deps="$(echo "$md_meta"  | grep -m1 '# JS deps'| cut -f2 -d':' | sed 's/^ *//')"
-}
-
 function print_post_preview {
   [ ! "$1" ] && return 1
 
@@ -290,8 +310,20 @@ function print_post_preview {
   [ "$post_slug" = "" ] && return 0
 
   echo '<div class="post-preview">'
-  echo '<h3><a href="'"${post_title}"'"></a></h3> - <datetime>'"${post_created}"'</datetime>'
-  echo '<p>'"${post_time_to_read}"'</p>'
+  echo '<h3><a href="'"${post_title}"'"></a></h3> <datetime>'"${post_created}"'</datetime>'
+  echo '<ul class="post-meta">'
+  echo '<li>'"${post_time_to_read}"'</li>'
+  echo '<li>'"${post_created}"'</li>'
+  echo '<li>'"${post_author}"'</li>'
+  echo '<li>'"${post_twitter}"'</li>'
+  echo '<li>'"${post_category}"'</li>'
+  echo '</ul>'
+  echo '<ul class="tags">'
+  for tag in $blog_keywords
+  do
+    echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a></li>'
+  done
+  echo '</ul>'
   echo '<p>'"${post_descr}"'</p>'
   echo '</div>'
 }
