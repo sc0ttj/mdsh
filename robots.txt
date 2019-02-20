@@ -1,0 +1,6 @@
+User-agent: *
+Allow: *.html$
+Disallow: */assets/
+Disallow: */cgi-bin/
+Disallow: /tmp/
+Sitemap: https://sc0ttj.github.io/mdsh/sitemap.xml
