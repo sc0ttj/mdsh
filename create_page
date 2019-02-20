@@ -203,7 +203,7 @@ function print_site_meta {
 
 function print_site_inline_styles {
   echo '<style>
-  body {
+  body, input, select, textarea, button {
     font-family: Ubuntu, serif;
     font-size: 16px;
   }

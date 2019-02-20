@@ -320,3 +320,27 @@ ul.posts li {
   text-align: center;
   width: 100%;
 }
+
+/* forms */
+
+.contact-form label {
+  display: inline-block;
+  min-width: 70px;
+  vertical-align: top;
+}
+
+.contact-form input,
+.contact-form textarea {
+  appearance: none;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 8px;
+  margin: 4px;
+  min-width: 240px;
+}
+
+.contact-form textarea {
+  height: 100px;
+}
