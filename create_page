@@ -185,16 +185,16 @@ function print_site_meta {
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="'${blog_url}'/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="'${blog_url}'/manifest.webmanifest">
-<link rel="icon" href="'${blog_url}'/assets/icons/favicon.ico" type="image/vnd.microsoft.icon">
-<link rel="apple-touch-icon" sizes="180x180" href="'${blog_url}'/assets/icons/apple-touch-icon.png">
-<link rel="shortcut icon" href="'${blog_url}'/assets/icons/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="'${blog_url}'/assets/icons/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="'${blog_url}'/assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="'${blog_url}'/assets/icons/android-chrome-192x192.png">
-<link rel="mask-icon" href="'${blog_url}'/assets/icons/safari-pinned-tab.svg" color="#444444">
+<link rel="manifest" href="'${blog_url}'/manifest.webmanifest?v='$(date)'">
+<link rel="icon" href="'${blog_url}'/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v='$(date)'">
+<link rel="apple-touch-icon" sizes="180x180" href="'${blog_url}'/assets/icons/apple-touch-icon.png?v='$(date)'">
+<link rel="shortcut icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$(date)'">
+<link rel="icon" type="image/png" sizes="16x16" href="'${blog_url}'/assets/icons/favicon-16x16.png?v='$(date)'">
+<link rel="icon" type="image/png" sizes="32x32" href="'${blog_url}'/assets/icons/favicon-32x32.png?v='$(date)'">
+<link rel="icon" type="image/png" sizes="192x192" href="'${blog_url}'/assets/icons/android-chrome-192x192.png?v='$(date)'">
+<link rel="mask-icon" color="#444444" href="'${blog_url}'/assets/icons/safari-pinned-tab.svg?v='$(date)'">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="'${blog_url}'/assets/icons/browserconfig.xml">
+<meta name="msapplication-config" content="'${blog_url}'/assets/icons/browserconfig.xml?v='$(date)'">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="'${blog_title}'">
@@ -215,13 +215,13 @@ function print_site_inline_styles {
 }
 
 function print_site_stylesheets {
-  echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css">'
+  echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$(date)'">'
     local filename="$(basename "$output_file" 2>/dev/null)"
     filename="assets/css/${filename//.html/.css}?version=$(date +%s)"
   if [ -f "$filename" ];then
-    echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'">'
+    echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$(date)'">'
   fi
-  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
+  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'?v='$(date)'">'
 }
 
 function print_site_javascripts {
@@ -248,10 +248,10 @@ function print_site_javascripts {
   # add JS packages from unpkg.com
   for pkgname in $(echo "$js_deps" | tr ',' ' ')
   do
-    echo '<script id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
+    echo '<script class="unpkg" id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
   done
   # add site-wide app.js, if it exists
-  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="assets/js/app.js" type="text/javascript"></script>'
+  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$(date)'" type="text/javascript"></script>'
 }
 
 function print_site_header {
