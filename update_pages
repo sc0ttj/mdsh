@@ -14,26 +14,34 @@
 [ -f .site_config ] && source .site_config
 
 
+cp posts.csv /tmp/posts.csv
 
-echo "Updating: index.html"
-. create_page > index.html
+cut -f1-2 -d'|' /tmp/posts.csv \
+  | while read line
+    do
+      mdshfile="${line//|//}"
 
+      if [ ! -f "posts/$mdshfile" ];then
+        # the .mdsh file doesnt exist, remove post from posts list
+        echo "Removing: posts/$mdshfile"
+        grep -v "^$line" posts.csv > /tmp/posts.csv
+        mv /tmp/posts.csv posts.csv
 
+      else
+        # mdsh file exists
+        # so if the .md file doesnt exist, rebuilt it
 
-# if -all was given, update all posts as well
-if [ "$1" = "-all" ];then
-  # update (rebuild) all posts pages
-  cut -f1-2 -d'|' posts.csv \
-    | tr '|' '/' \
-    | while read mdshfile
-      do
-        if [ -f "posts/$mdshfile" ];then
+        if [ "$1" = "-all" ];then
+          # update (rebuild) all posts pages
           echo "Updating: posts/${mdshfile//.mdsh/.html}"
           ./create_page "posts/$mdshfile" "posts/${mdshfile//.mdsh/.html}"
         fi
-      done
-fi
+      fi
 
+    done
+
+echo "Updating: index.html"
+. create_page > index.html
 
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
