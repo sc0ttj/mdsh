@@ -384,11 +384,28 @@ function print_post_preview {
   echo '<ul class="tags">'
   for tag in $blog_keywords
   do
-    echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a></li>'
+    echo '<li><a href="'${blog_url}'/tags/'${tag}'.html">'${tag}'</a></li>'
   done
   echo '</ul>'
   echo '<p>'"${post_descr}"'</p>'
   echo '</div>'
+}
+
+function list_posts_in {
+  [ -z "$1" ] && return 1
+  local post_dir="$1"
+  local matching_posts="$(grep "^$post_dir/" posts.csv | cut -f1,2 -d'|' | tr '|' '/' | sort -r)"
+#  local matching_posts="$(find $posts_dir -type f -name "*.mdsh" | sort -r)"
+  local post_name
+  echo '<ul class="posts">'
+  for post in $matching_posts
+  do
+#    post="$(echo "$post" | sed 's|^./||')"
+    post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
+    [ "$post_name" = "" ] && post_name=$(basename ${post//.mdsh/})
+    echo '<li><a href="'${blog_url}'/posts/'${post//.mdsh/.html}'">'${post_name}'</a></li>'
+  done
+  echo '</ul>'
 }
 
 function list_recent_posts {

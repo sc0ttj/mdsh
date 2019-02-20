@@ -21,7 +21,7 @@ cut -f1-2 -d'|' /tmp/posts.csv \
     do
 
       # skip comments
-      [ "$(echo "$line" | grep -v "^#")" != "" ] && continue
+      [ "$(echo "$line" | grep "^#")" != "" ] && continue
 
       mdshfile="${line//|//}"
 
@@ -46,6 +46,28 @@ cut -f1-2 -d'|' /tmp/posts.csv \
 
 echo "Updating: index.html"
 . create_page > index.html
+
+# update yearly indexes
+for year in $(ls -1 posts)
+do
+  [ ! -d posts/$year ] && continue
+  yearly_posts="<h2>Posts in $year</h2>$(list_posts_in "$year")"
+  [ "$yearly_posts" = "" ] && continue
+  echo "Updating: posts/$year/index.html"
+  touch posts/$year/index.html
+  ./create_page "$yearly_posts" posts/$year/index.html
+
+  # update monthly indexes
+  for month in $(ls -1 posts/$year)
+  do
+    [ ! -d posts/$year/$month ] && continue
+    monthly_posts="<h2>Posts in $(date -d $month '+%B') $year</h2>$(list_posts_in "$year/$month")"
+    [ "$monthly_posts" = "" ] && continue
+    echo "Updating: posts/$year/$month/index.html"
+    touch posts/$year/$month/index.html
+    ./create_page "$monthly_posts" posts/$year/$month/index.html
+  done
+done
 
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | grep -v "^#" | tr '|' '/' | sort -u | sort -r)"
