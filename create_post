@@ -44,6 +44,18 @@ if [ "$1" = "-all" ];then
   echo -n "JS deps (comma separated package names): "
   read -er js_deps
 fi
+
+# slugiy the tags
+OLDIFS=$IFS
+IFS=","
+for tag in $tags
+do
+  fixed_tags="$fixed_tags $(slugify.sh $tag | sed 's/^-//'),"
+done
+IFS=$OLD_IFS
+fixed_tags="$(echo "$fixed_tags" | sed -e 's/^ //' -e 's/,$//')"
+tags="$fixed_tags"
+
 # generate some more meta info
 slug=$(slugify.sh "$title")
 created="$(date -u +"%Y/%m/%d")"
