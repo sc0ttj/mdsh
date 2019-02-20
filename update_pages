@@ -19,6 +19,10 @@ cp posts.csv /tmp/posts.csv
 cut -f1-2 -d'|' /tmp/posts.csv \
   | while read line
     do
+
+      # skip comments
+      [ "$(echo "$line" | grep -v "^#")" != "" ] && continue
+
       mdshfile="${line//|//}"
 
       if [ ! -f "posts/$mdshfile" ];then
@@ -29,7 +33,7 @@ cut -f1-2 -d'|' /tmp/posts.csv \
 
       else
         # mdsh file exists
-        # so if the .md file doesnt exist, rebuilt it
+        # so if the .md file doesnt exist, rebuild it
 
         if [ "$1" = "-all" ];then
           # update (rebuild) all posts pages
@@ -44,13 +48,13 @@ echo "Updating: index.html"
 . create_page > index.html
 
 # update main archive page
-all_posts="$(cut -f1,2 -d'|' ./posts.csv | tr '|' '/' | sort -u | sort -r)"
+all_posts="$(cut -f1,2 -d'|' ./posts.csv | grep -v "^#" | tr '|' '/' | sort -u | sort -r)"
 if [ "$all_posts" != "" ];then
   echo "Updating: archive.html"
   all_post_html='<h2>Archive</h2><ul class="archive-posts posts">'
   for post in $all_posts
   do
-    post_title="$(grep -m1 "|$(basename $post)|" posts.csv | cut -f3 -d'|')"
+    post_title="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
     post_date=$(dirname "$post")
     post_date="${post_date//posts\//}"
     post="posts/$post"
