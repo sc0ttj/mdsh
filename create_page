@@ -53,8 +53,6 @@ function set_post_info {
   post_author="$(echo "$md_meta"       | grep -m1 '# author'      | cut -f2 -d':' | sed 's/^ *//')"
   post_twitter="$(echo "$md_meta"      | grep -m1 '# twitter'     | cut -f2 -d':' | sed 's/^ *//')"
   post_js_deps="$(echo "$md_meta"      | grep -m1 '# JS deps'     | cut -f2 -d':' | sed 's/^ *//')"
-  # set furll title and url
-  [ "$post_title" != "" ] && post_title="$blog_title - $post_title"
   post_url="${blog_url}/posts/$post_created/${post_slug}.html"
 }
 

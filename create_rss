@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Generate an RSS 2.0 feed directly from your existing web site
 
@@ -45,18 +45,23 @@
 # as updated content in the feed, or generally edit a file without
 # changing the modification date.
 
-num_files=10
-site="www.pixelbeat.org"
-author="P@draigBrady.com (Pádraig Brady)"
+if [ -f .site_config ];then
+  source .site_config
+fi
+
+num_files=18
+TITLE="${blog_title}"
+site="${blog_domain}${blog_url}"
+author="${blog_author}"
 suggested_update_freq=1440 #mins
 
 : ${TITLE=$site}
 : ${DESCRIPTION="latest from $site"}
 
 #files starting with . | files without a . | files ending in .c .cpp ...
-include_re='(^|/)[.].+|(^|/)[^.]+$|[.](c|cpp|py|sh|rc|tips|fortune|html)$' #only show these files
+include_re='(^|/)[.].+|(^|/)[^.]+$|[.](c|cpp|py|sh|rc|htm|html)$' #only show these files
 
-exclude_re='(\.git/|priv/|tmp/|.htaccess|xvpics|timeline\.html|modified\.html|head\.html|header\.html|footer\.html|footer-home\.html|adds\.html|last\.html|fslint/(NEWS\.html|md5sum)|README)' #don't show these paths
+exclude_re='(create_|update_pages|publish|slugify\.sh|markdown.\pl|mdshell|generate_sitemap\.sh|\.git/|tmp/|.htaccess|index\.html|archive.html|categories/|categories\.html|contact\.html|tags/|tags\.html|404\.html)|README)' #dont show these paths
 
 default_files="index.html index.shtml index.php"
 
@@ -78,7 +83,7 @@ echo "
 <title>$TITLE</title>
 <ttl>$suggested_update_freq</ttl>
 <link>http://$site/$1</link>
-<generator>http://www.pixelbeat.org/scripts/bashfeed</generator>
+<generator>http://$site/create_rss</generator>
 <description>$DESCRIPTION</description>
 <managingEditor>$author</managingEditor>
 <lastBuildDate>$time</lastBuildDate>

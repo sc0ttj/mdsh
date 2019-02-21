@@ -131,4 +131,8 @@ echo "Updating: 404.html"
 <hr>
 <p>Please use the menu to find something else.</p>' > 404.html
 
+
+echo "Updating: feed.rss"
+./create_rss > feed.rss
+
 exit 0
