@@ -221,7 +221,7 @@ function print_site_stylesheets {
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$(date)'">'
   fi
-  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'?v='$(date)'">'
+  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
 }
 
 function print_site_javascripts {
