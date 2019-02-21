@@ -24,7 +24,7 @@
 <meta name="copyright" content="&copy; #!/bin/crash">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Wed Feb 20 23:26:07 +08 2019">
+<meta name="revised" content="Thu Feb 21 10:02:35 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="John Doe">
 <meta name="pagename" content="#!/bin/crash - IFS and the read command">
@@ -52,7 +52,7 @@
   "headline": "#!/bin/crash - IFS and the read command",
   "headlineAlternative": "#!/bin/crash - IFS and the read command",
   "datePublished": "2019/02/16",
-  "dateModified": "Wed Feb 20 23:26:07 +08 2019",
+  "dateModified": "Thu Feb 21 10:02:35 +08 2019",
   "description": "Or, how I parse markdown to generate valid HTML",
   "keywords": "blog,shell",
   "image": {
@@ -82,16 +82,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=Wed Feb 20 23:26:07 +08 2019">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=Thu Feb 21 10:02:35 +08 2019">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=Wed Feb 20 23:26:07 +08 2019">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=Thu Feb 21 10:02:35 +08 2019">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="#!/bin/crash">
@@ -106,10 +106,10 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=Wed Feb 20 23:26:07 +08 2019">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext?v=Wed Feb 20 23:26:07 +08 2019">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=Thu Feb 21 10:02:35 +08 2019">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=Wed Feb 20 23:26:07 +08 2019" type="text/javascript"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=Thu Feb 21 10:02:35 +08 2019" type="text/javascript"></script>
 </head>
 <body>
 <div class="main-container">
