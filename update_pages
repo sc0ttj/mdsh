@@ -69,6 +69,15 @@ do
   done
 done
 
+
+# update 404 page
+echo "Updating: 404.html"
+./create_page '<h2>Page not found</h2>
+<p>Sorry, the page you are looking for could not be found!</p>
+<hr>
+<p>Please use the menu to find something else.</p>' > 404.html
+
+
 # update main archive page
 all_posts="$(cut -f1,2 -d'|' ./posts.csv | grep -v "^#" | tr '|' '/' | sort -u | sort -r)"
 if [ "$all_posts" != "" ];then
@@ -89,7 +98,6 @@ if [ "$all_posts" != "" ];then
 fi
 
 
-
 # update categories index page
 echo "Updating: categories.html"
 touch categories.html
@@ -108,6 +116,35 @@ do
 done
 
 
+# update contact page
+echo "Updating: contact.html"
+#"<form action=\"https://formspree.io/you@email.com\" method=\"post\">"                 # formspree
+#"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
+#"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
+./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+<form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
+  <div class=\"email\">
+    <label for=\"email\">Email</label>
+    <input id=\"email\" type=\"email\" name=\"_replyto\" placeholder=\"Your email\">
+  </div>
+  <div class=\"subject\">
+    <label for=\"subject\">Subject</label>
+    <input id=\"subject\" type=\"subject\" name=\"_subject\" placeholder=\"Subject here...\">
+  </div>
+  <div class=\"message\">
+    <label for=\"message\">Message</label>
+    <textarea id=\"message\" name=\"message\" placeholder=\"Your Message...\"></textarea>
+  </div>
+  <button type=\"submit\">Send</button>
+</form>
+<script type=\"text/javascript\"> // SPAM safe
+  // build the string
+  var str = '${blog_email//@/____}';
+  str = str.replace('____', '@');
+  // add it to the page
+  document.getElementById('contact-form').setAttribute('action', 'https://formspree.io/' + str);
+</script>" > contact.html
+
 
 # update tags index page
 echo "Updating: tags.html"
@@ -124,15 +161,7 @@ do
   ./create_page "$tagged_posts" tags/$tag.html
 done
 
-# update 404 page
-echo "Updating: 404.html"
-./create_page '<h2>Page not found</h2>
-<p>Sorry, the page you are looking for could not be found!</p>
-<hr>
-<p>Please use the menu to find something else.</p>' > 404.html
-
-
 echo "Updating: feed.rss"
-./create_rss > feed.rss
+./create_rss posts/ > feed.rss
 
 exit 0

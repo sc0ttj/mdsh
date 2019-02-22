@@ -327,6 +327,7 @@ ul.posts li {
   display: inline-block;
   min-width: 70px;
   vertical-align: top;
+  line-height: 2.75em;
 }
 
 .contact-form input,
@@ -338,9 +339,23 @@ ul.posts li {
   font-size: 16px;
   padding: 8px;
   margin: 4px;
-  min-width: 240px;
+  min-width: 280px;
 }
 
 .contact-form textarea {
-  height: 100px;
+  min-height: 100px;
+}
+
+.contact-form button[type="submit"] {
+  color: #fff;
+  cursor: pointer;
+  background-color: #222;
+  border: 0;
+  padding: 8px;
+  margin-left: 78px;
+}
+
+.contact-form button[type="submit"]:hover,
+.contact-form button[type="submit"]:focus {
+  background-color: #000;
 }
