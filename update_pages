@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Update all index pages across the site which list posts,
+# Update all index pages across the site which list posts, tags and categories
 # because a new post may have been added.
 
 # Usage:  update_pages [-all]

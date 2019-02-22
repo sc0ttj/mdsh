@@ -65,6 +65,7 @@ exclude_re='(create_|update_pages|publish|slugify\.sh|markdown.\pl|mdshell|gener
 
 default_files="index.html index.shtml index.php"
 
+
 ############# No user serviceable parts below ###################
 
 for file in $default_files; do
@@ -92,7 +93,7 @@ echo "
 
 xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]"; }
 
-find $1 -type f -printf "%p\t%T@\n" |
+find "$1" -type f -printf "%p\t%T@\n" |
 sed 's/^\.\///' | # strip leading ./ when "$1" is empty
 sort -k2,2nr |
 cut -f1 |

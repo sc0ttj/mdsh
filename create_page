@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script for creating HTML pages from markdown files or HTML strings
+
 # load the users config file from $HOME
 [ -f $HOME/.bl/config ] && source $HOME/.bl/config
 # load the local config file

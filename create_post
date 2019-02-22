@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# create a blog post
+# create a blog post by writing markdown and shell in your terminal
 
 # Just follow the on screen instructions, enter the required post
 # meta information, then add your markdown content in the terminal.
+# When finished writing your Markdown, hit ENTER 3 times to exit
+# and save the file.
 #
 # Usage:   create_post [-all]
 #
@@ -112,7 +114,8 @@ echo ""          >> ./posts/$created/${slug}.md
 echo "Saved meta data in: posts/$created/${slug}.mdsh"
 echo
 echo "Now write your markdown below, line by line.
- * support for embedding executable commands in your markdown
+ * supports TAB completion
+ * supports embedding executable commands in your markdown
  * just start a sub-shell \$() and the results will be in the final markdown.
  * Hit ENTER 3 times to exit and save the file. "
 echo
