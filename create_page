@@ -373,22 +373,23 @@ function list_tags {
 function print_post_preview {
   [ ! "$1" ] && return 1
 
-  set_post_info "$1"
+   # $1 is the mdsh file
+   set_post_info "$1"
 
   # exit if we are not building a blog post
   [ "$post_slug" = "" ] && return 0
 
   echo '<div class="post-preview">'
-  echo '<h3><a href="'"${post_title}"'"></a></h3> <datetime>'"${post_created}"'</datetime>'
+  echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <datetime>'"${post_created}"'</datetime>'
   echo '<ul class="post-meta">'
   echo '<li>'"${post_time_to_read}"'</li>'
   echo '<li>'"${post_created}"'</li>'
   echo '<li>'"${post_author}"'</li>'
   echo '<li>'"${post_twitter}"'</li>'
-  echo '<li>'"${post_category}"'</li>'
+  echo '<li><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></li>'
   echo '</ul>'
   echo '<ul class="tags">'
-  for tag in $blog_keywords
+  for tag in ${post_tags//,/ }
   do
     echo '<li><a href="'${blog_url}'/tags/'${tag}'.html">'${tag}'</a></li>'
   done
@@ -519,13 +520,25 @@ elif [ "$1" != "" ] && [ "$1" != "-all" ];then
 
 # get html list of recent posts
 else
-  body_html="<h2>Recent posts</h2>
-$(list_recent_posts)"
+  post_file=''
+  body_html=''
+  recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"
+  for post in $recent_posts
+  do
+    post_file="posts/${post//|//}"
+    body_html="${body_html}$(print_post_preview "$post_file")"
+  done
 fi
 
 if [ "$1" = "-all" ];then
-  body_html="<h2>Recent posts</h2>
-$(list_recent_posts)"
+  post_file=''
+  body_html=''
+  recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"
+  for post in $recent_posts
+  do
+    post_file="posts/${post//|//}"
+    body_html="${body_html}$(print_post_preview "$post_file")"
+  done
 fi
 
 # if we have markdown, not html, we need to convert it

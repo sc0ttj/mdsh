@@ -365,3 +365,48 @@ ul.posts li {
 .contact-form button[type="submit"]:focus {
   background-color: #000;
 }
+
+.post-preview {
+  border-bottom: 1px solid #ccc;
+}
+
+.post-preview h2,
+.post-preview datetime {
+  display: inline-block;
+}
+
+.post-preview h2 {
+  margin-right: 4px;
+  margin-bottom: 8px;
+}
+
+.post-preview .post-meta {
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .post-meta li {
+  display: inline-block;
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .post-meta li:nth-child(2),
+.post-preview .post-meta li:nth-child(3),
+.post-preview .post-meta li:nth-child(4),
+.post-preview .post-meta li:nth-child(5) {
+  display: none;
+}
+
+.post-preview .tags {
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .tags li {
+  display: inline-block;
+}
