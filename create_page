@@ -18,6 +18,8 @@ mardown_meta=''
 mardown_body=''
 body_html=''
 output_file=''
+current_date="$(date)"
+timestamp=$(date +%s)
 
 # we will write to file if $2 is a file, else to stdout
 if [ -f "$2" ];then
@@ -123,7 +125,7 @@ function print_site_meta {
 <meta name="copyright" content="&copy; '${blog_title}'">
 <meta name="language" content="'${post_language:-$blog_language}'">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="'$(date)'">
+<meta name="revised" content="'$current_date'">
 <meta name="topic" content="'${blog_categories}'">
 <meta name="owner" content="'${post_author:-$blog_author}'">
 <meta name="pagename" content="'${page_title}'">
@@ -137,7 +139,7 @@ function print_site_meta {
 <meta property="og:type" content="article">
 <meta property="og:locale" content="'${post_language:-$blog_language}'">
 <meta property="og:image" content="'${blog_url}'/assets/icons/rss.png">
-<meta property="article:published_time" content="'${post_created:-$(date)}'">
+<meta property="article:published_time" content="'${post_created:-$current_date}'">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="'${page_title}'" />
@@ -150,8 +152,8 @@ function print_site_meta {
   "@type": "Article",
   "headline": "'${post_title:-$blog_title}'",
   "headlineAlternative": "'${post_title:-$blog_title}'",
-  "datePublished": "'${post_created:-$(date)}'",
-  "dateModified": "'$(date)'",
+  "datePublished": "'${post_created:-$current_date}'",
+  "dateModified": "'$current_date'",
   "description": "'${post_descr:-$blog_descr}'",
   "keywords": "'${post_tags:-$blog_keywords}'",
   "image": {
@@ -185,16 +187,16 @@ function print_site_meta {
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="'${blog_url}'/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="'${blog_url}'/manifest.webmanifest?v='$(date)'">
-<link rel="icon" href="'${blog_url}'/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v='$(date)'">
-<link rel="apple-touch-icon" sizes="180x180" href="'${blog_url}'/assets/icons/apple-touch-icon.png?v='$(date)'">
-<link rel="shortcut icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$(date)'">
-<link rel="icon" type="image/png" sizes="16x16" href="'${blog_url}'/assets/icons/favicon-16x16.png?v='$(date)'">
-<link rel="icon" type="image/png" sizes="32x32" href="'${blog_url}'/assets/icons/favicon-32x32.png?v='$(date)'">
-<link rel="icon" type="image/png" sizes="192x192" href="'${blog_url}'/assets/icons/android-chrome-192x192.png?v='$(date)'">
-<link rel="mask-icon" color="#444444" href="'${blog_url}'/assets/icons/safari-pinned-tab.svg?v='$(date)'">
+<link rel="manifest" href="'${blog_url}'/manifest.webmanifest?v='$timestamp'">
+<link rel="icon" href="'${blog_url}'/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v='$timestamp'">
+<link rel="apple-touch-icon" sizes="180x180" href="'${blog_url}'/assets/icons/apple-touch-icon.png?v='$timestamp'">
+<link rel="shortcut icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$timestamp'">
+<link rel="icon" type="image/png" sizes="16x16" href="'${blog_url}'/assets/icons/favicon-16x16.png?v='$timestamp'">
+<link rel="icon" type="image/png" sizes="32x32" href="'${blog_url}'/assets/icons/favicon-32x32.png?v='$timestamp'">
+<link rel="icon" type="image/png" sizes="192x192" href="'${blog_url}'/assets/icons/android-chrome-192x192.png?v='$timestamp'">
+<link rel="mask-icon" color="#444444" href="'${blog_url}'/assets/icons/safari-pinned-tab.svg?v='$timestamp'">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="'${blog_url}'/assets/icons/browserconfig.xml?v='$(date)'">
+<meta name="msapplication-config" content="'${blog_url}'/assets/icons/browserconfig.xml?v='$timestamp'">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="'${blog_title}'">
@@ -215,11 +217,11 @@ function print_site_inline_styles {
 }
 
 function print_site_stylesheets {
-  echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$(date)'">'
+  echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$timestamp'">'
     local filename="$(basename "$output_file" 2>/dev/null)"
     filename="assets/css/${filename//.html/.css}?version=$(date +%s)"
   if [ -f "$filename" ];then
-    echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$(date)'">'
+    echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$timestamp'">'
   fi
   echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
 }
@@ -251,7 +253,7 @@ function print_site_javascripts {
     echo '<script class="unpkg" id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
   done
   # add site-wide app.js, if it exists
-  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$(date)'" type="text/javascript"></script>'
+  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$timestamp'" type="text/javascript"></script>'
 }
 
 function print_site_header {

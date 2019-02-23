@@ -352,7 +352,13 @@ ul.posts li {
   background-color: #222;
   border: 0;
   padding: 8px;
-  margin-left: 78px;
+  margin-left: 4px;
+}
+
+@media (min-width: 416px) {
+  .contact-form button[type="submit"] {
+    margin-left: 78px;
+  }
 }
 
 .contact-form button[type="submit"]:hover,

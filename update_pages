@@ -123,24 +123,25 @@ echo "Updating: contact.html"
 #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
 ./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
+  <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
   <div class=\"email\">
     <label for=\"email\">Email</label>
-    <input id=\"email\" type=\"email\" name=\"_replyto\" placeholder=\"Your email\">
+    <input id=\"email\" type=\"email\" name=\"_replyto\" placeholder=\"Your email\"></input>
   </div>
   <div class=\"subject\">
     <label for=\"subject\">Subject</label>
-    <input id=\"subject\" type=\"subject\" name=\"_subject\" placeholder=\"Subject here...\">
+    <input id=\"subject\" type=\"text\" name=\"_subject\" placeholder=\"Subject here...\"></input>
   </div>
   <div class=\"message\">
     <label for=\"message\">Message</label>
     <textarea id=\"message\" name=\"message\" placeholder=\"Your Message...\"></textarea>
   </div>
-  <button type=\"submit\">Send</button>
+  <button id=\"send\" type=\"submit\">Send</button>
 </form>
-<script type=\"text/javascript\"> // SPAM safe
-  // build the string
-  var str = '${blog_email//@/____}';
-  str = str.replace('____', '@');
+<script type=\"text/javascript\">
+  // build the contact string
+  var str = '${blog_email//@/__ __}';
+  str = str.replace('__ __', '@');
   // add it to the page
   document.getElementById('contact-form').setAttribute('action', 'https://formspree.io/' + str);
 </script>" > contact.html
