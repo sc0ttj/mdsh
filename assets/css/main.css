@@ -368,6 +368,7 @@ ul.posts li {
 
 .post-preview {
   border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
 }
 
 .post-preview h2,
@@ -394,6 +395,10 @@ ul.posts li {
   content: "Time to read: ";
   display: inline-block;
   margin-right: 2px;
+}
+
+.post-preview .tags {
+  font-style: italic;
 }
 
 .post-preview .tags:before {
