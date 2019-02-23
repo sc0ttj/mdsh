@@ -381,12 +381,23 @@ ul.posts li {
 }
 
 .post-preview .post-meta {
+  font-style: italic;
   padding: 0;
   margin: 0;
 }
 
 .post-preview .post-meta li {
   display: inline-block;
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .tags:before {
+  content: "Tags: ";
 }
 
 .post-preview .post-meta li:nth-child(1):before {

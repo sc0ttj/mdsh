@@ -47,7 +47,7 @@ function set_post_info {
   md_meta="${md_meta%---*}"
   # set some page specific meta info that will end up in the HTML
   post_title="$(echo "$md_meta"        | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
-  post_slug="$(echo "$md_meta"         | grep -m1 '# slug '       | cut -f2 -d':' | sed -e 's/^ *//')"
+  post_slug="$(echo "$md_meta"         | grep -m1 '# slug '       | cut -f2 -d':' | sed 's/^ *//')"
   post_descr="$(echo "$md_meta"        | grep -m1 '# description' | cut -f2 -d':' | sed 's/^ *//')"
   post_category="$(echo "$md_meta"     | grep -m1 '# category'    | cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
   post_created="$(echo "$md_meta"      | grep -m1 '# created'     | cut -f2 -d':' | sed 's/^ *//')"
@@ -394,7 +394,17 @@ function print_post_preview {
     echo '<li><a href="'${blog_url}'/tags/'${tag}'.html">'${tag}'</a></li>'
   done
   echo '</ul>'
-  echo '<p>'"${post_descr}"'</p>'
+  # show only a summary (using the meta description)
+  #echo '<p>'"${post_descr}"'</p>'
+  # show full post content, excluding main header (already in post preview)
+  echo "$(cat posts/$post_created/${post_slug}.md | grep -v '^## ' | while read -er line
+    do
+      if [[ "$line" =~ '```' ]];then
+        [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
+        [ "$in_code_block" = false ] && line='</code></pre>' || line='<pre><code>'
+      fi
+      echo -e "$line"
+    done | markdown.pl | grep -v '<h2>')"
   echo '</div>'
 }
 
@@ -587,7 +597,8 @@ fi
 # if we have a post header, add that to the page too
 post_header="$(print_post_header)"
 if [ "$post_header" != "" ];then
-  body_html="${body_html/<\/h2>/</h2>$post_header}"
+  body_html="${body_html/<\/h2>/</h2>
+$post_header}"
 fi
 
 #xmessage "$body_html"

@@ -24,7 +24,7 @@
 <meta name="copyright" content="&copy; #!/bin/crash">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sat Feb 23 18:17:45 +08 2019">
+<meta name="revised" content="Sun Feb 24 00:35:28 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="sc0ttj">
 <meta name="pagename" content="#!/bin/crash">
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sat Feb 23 18:17:45 +08 2019">
+<meta property="article:published_time" content="Sun Feb 24 00:35:28 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="#!/bin/crash" />
@@ -51,8 +51,8 @@
   "@type": "Article",
   "headline": "#!/bin/crash",
   "headlineAlternative": "#!/bin/crash",
-  "datePublished": "Sat Feb 23 18:17:45 +08 2019",
-  "dateModified": "Sat Feb 23 18:17:45 +08 2019",
+  "datePublished": "Sun Feb 24 00:35:28 +08 2019",
+  "dateModified": "Sun Feb 24 00:35:28 +08 2019",
   "description": "My wonderful blog about lots of things.",
   "keywords": "blog, news, feed, latest updates",
   "image": {
@@ -82,16 +82,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550917065">
-<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550917065">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550917065">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550917065">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550917065">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550917065">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550917065">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550917065">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550939728">
+<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550939728">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550939728">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550939728">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550939728">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550939728">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550939728">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550939728">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550917065">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550939728">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="#!/bin/crash">
@@ -106,10 +106,10 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550917065">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550939728">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550917065" type="text/javascript"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550939728" type="text/javascript"></script>
 </head>
 <body>
 <div class="main-container">
@@ -140,7 +140,355 @@
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 <li><a href="/mdsh/tags/css.html">css</a></li>
 </ul>
-<p>Styling this blog to look nicer, and how it works.</p>
+<p>I've added a stylesheet for this site, <code>assets/css/main.css</code>.</p>
+
+<p>The main classes are:</p>
+
+<p><code>.main-container</code> - all site content goes in this container</p>
+
+<p><code>.body-container</code> - contains everything except the site footer</p>
+
+<p><code>.footer</code> - the site footer</p>
+
+<p><code>.page-header</code> - the main header at the top of every page</p>
+
+<p><code>.post-content</code> - contains the post title and body content</p>
+
+<p><code>.post-header</code> - contains post meta info (author, category, etc)</p>
+
+<p><code>.post-footer</code> - same as post header, but appears <strong>below</strong> post body content</p>
+
+<p>There are other classes inside those, the most important of which are:</p>
+
+<p><code>.post-meta</code> - inside <code>.post-header</code> and <code>.post-footer</code>, contains the post meta info</p>
+
+<p><code>.prev-next-posts</code> - inside <code>.post-footer</code> only, last item before <code>.footer</code></p>
+
+<p>All of the lists of posts on the site will have the class <code>.posts</code>, with added classes to differentiate them from each other:</p>
+
+<p><code>.archive-posts</code> - the list of posts on the archive page</p>
+
+<p><code>.recent-posts</code> - the list of posts on the homepage</p>
+
+<p><code>.posts-in-category</code> - the list of posts in <code>category/&lt;category-name&gt;.html</code></p>
+
+<p><code>.posts-matching-tag</code> - the list of posts in <code>tags/&lt;tag-name&gt;.html</code></p>
+
+<p>The classes above can be targed in your CSS to style the page, and you can create additional stylesheets that will be automatically included on your generated pages by giving those stylesheets filenames with match the html files on your site. For example, when you generate <code>categories.html</code>, the additional css file <code>assets/css/categories.css</code> will be included in the <code>&lt;head&gt;</code> of the page, if it exists.</p>
+
+<p>So, you can edit the styles in <code>assests/css/main.css</code>, or create a stylesheet for individual pages - just make sure the HTML files have stylesheets with matching filenames in <code>assets/css/</code>.</p>
+
+<p>Here is the contents of the main stylesheet (so far):</p>
+
+<pre><code>
+html,
+body {
+box-sizing: border-box;
+font-size: 16px;
+line-height: 1.4em;
+min-height: 100vh;
+margin: 0;
+padding: 0;
+}
+
+/* body bg color */
+body {
+background-color: #333;
+}
+
+/* extra line height for para text */
+p {
+line-height: 1.6em;
+}
+
+/* heades and inline code elems */
+code {
+background-color: #eee;
+color: #000;
+display: inline;
+padding: 0;
+margin: 0;
+}
+
+h1,
+h1 code {
+font-size: 32px;
+}
+
+h2,
+h2 code {
+font-size: 24px;
+}
+
+h3,
+h3 code {
+font-size: 20px;
+}
+
+h4,
+h4 code {
+font-size: 18px;
+}
+
+p code,
+li code {
+font-size: 16px;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+p code,
+li code,
+span code {
+/* enable padding in inline snippets */
+display: inline-block;
+line-height: 18px;
+padding: 1px 6px;
+margin-left: 2px;
+margin-right: 1px;
+vertical-align: middle;
+}
+
+/* code blocks */
+pre {
+background-color: #eee;
+color: #000;
+font-size: 15px;
+line-height: 18px;
+overflow-x: auto;
+padding: 12px;
+padding-top: 0;
+word-break: break-all;
+word-wrap: break-word;
+}
+
+/* off screen text in site header */
+.off-screen {
+clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+clip: rect(1px, 1px, 1px, 1px);
+height: 1px;
+left: -999em;
+overflow: hidden;
+position: absolute;
+white-space: nowrap; /* added line */
+width: 1px;
+}
+
+/* wraps around all content */
+.main-container {
+background-color: #fff;
+color: #222;
+height: 100%;
+min-height: 100%;
+min-height: 100vh;
+max-width: 800px;
+margin: 0px auto;
+padding: 0;
+padding-bottom: 0; /* height of footer .. OR -1px and add padding-bottom to .body-container */
+padding-top: -1px; /* pushes container to top of page */
+position: relative;
+width: 100%;
+}
+
+.body-container {
+padding-bottom: 62px;
+}
+
+/* main site header */
+.page-header {
+background-color: #101010;
+color: #fff;
+font-weight: bold;
+margin-top: -1px;
+padding: 18px;
+padding-bottom: 1px;
+}
+
+.page-header h1 {
+margin-top: 6px;
+}
+
+.page-header a {
+text-decoration: none;
+}
+
+.page-header a,
+.page-header a:visited {
+color: #f0f0f0;
+}
+
+.page-header a:hover,
+.page-header a:focus {
+color: #fff;
+text-decoration: underline;
+}
+
+.page-header ul {
+list-style: none;
+margin-left: 0;
+padding-left: 0;
+}
+
+.page-header li {
+display: inline-block;
+padding-right: 8px;
+}
+
+.skip-to-content:focus {
+background: #fff;
+border: 2px solid #bbb;
+color: #000;
+clip: initial;
+display: block;
+height: auto;
+overflow: initial;
+padding: 12px 24px;
+position: absolute;
+top: 12px;
+left: 12px;
+width: auto;
+z-index: 10;
+}
+
+a.skip-to-content,
+a.skip-to-content:hover,
+a.skip-to-content:focus {
+color: #222;
+}
+
+/* post header */
+.post-header {
+font-style: italic;
+}
+
+.post-header .post-meta .category,
+.post-header .post-meta .author,
+.post-header .post-meta .twitter {
+display: none;
+}
+
+.post-header .post-meta .time-to-read,
+.post-header .post-meta .date {
+display: block;
+}
+
+.post-header .post-meta .time-to-read:before {
+content: "Time to read: ";
+display: inline-block;
+width: 100px;
+}
+
+.post-header .post-meta .date:before {
+content: "Published: ";
+display: inline-block;
+width: 100px;
+}
+
+/* tags */
+.post-header .tags:before,
+.post-footer .tags:before {
+content: "Tags: ";
+display: inline-block;
+width: 95px;
+}
+
+/* main content */
+
+/* add padding to sections inside main container */
+.post-content,
+.post-footer {
+padding: 0;
+padding-left: 18px;
+padding-right: 18px;
+}
+
+@media (min-width: 640px) {
+.post-content,
+.post-footer {
+padding: 0;
+padding-left: 72px;
+padding-right: 72px;
+}
+}
+
+ul.posts,
+ul.categories,
+ul.tags {
+list-style: none;
+list-style-position: inside;
+margin-left: 0;
+padding-left: 0;
+}
+
+/* target all post lists on the site */
+ul.posts li {
+/* auto trunate and append ... */
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: 100%;
+}
+
+/* post footer */
+.post-footer {
+font-style: italic;
+margin: 0 auto;
+margin-top: 12px;
+}
+
+.post-footer .post-meta .category:before {
+content: "Category: ";
+display: inline-block;
+width: 100px;
+}
+
+.post-footer .post-meta .category {
+display: block;
+}
+
+.post-footer .post-meta .twitter,
+.post-footer .post-meta .time-to-read,
+.post-footer .post-meta .date {
+display: none;
+}
+
+.post-footer .post-meta .author:before {
+content: "Author: ";
+display: inline-block;
+width: 100px;
+}
+
+.post-footer .post-meta .author {
+display: inline-block;
+}
+
+.post-footer .tags {
+display: none;
+}
+
+.prev-next-posts {
+font-style: italic;
+list-style: none;
+padding: 0;
+}
+
+.prev-next-posts span {
+display: inline-block;
+width: 96px;
+}
+
+.footer {
+position: absolute;
+background-color: #101010;
+color: #fff;
+bottom: 0;
+margin: 0 auto;
+text-align: center;
+width: 100%;
+}
+</code></pre>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/16/missing-post-header.html">Missing post header</a></h2> <datetime>2019/02/16</datetime>
 <ul class="post-meta">
@@ -153,7 +501,13 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>A bug that I've just (hopefully) fixed.</p>
+<p>This post should have a <code>h2</code> title called "Missing post header" .. The previous post (now fixed) was generated but had a missing header.</p>
+
+<p>This was because <code>mdshell</code> was not appending to the <code>.md</code> file, but overwriting it with the post contents.</p>
+
+<p>This was wrong, cos <code>create_post</code> already creates the <code>.md</code> file, with a <code>h2</code> header at the top.</p>
+
+<p>Should be fixed now.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/16/ifs-and-the-read-command.html">IFS and the read command</a></h2> <datetime>2019/02/16</datetime>
 <ul class="post-meta">
@@ -167,7 +521,29 @@
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 <li><a href="/mdsh/tags/shell.html">shell</a></li>
 </ul>
-<p>Or, how I parse markdown to generate valid HTML</p>
+<p>In order to (finally) get the <code>.mdsh</code> files to generate valid markdown, and from there to convert to valid HTML, while <strong>also</strong> preserving code block formatting (new lines, indentations, etc), I had to set IFS and use the <code>-er</code> options of the read command.</p>
+
+<h3>About <code>IFS</code></h3>
+
+<blockquote>
+  <p>The Internal Field Separator (IFS) that is used for word splitting after expansion and to split lines into words with the read builtin command.</p>
+</blockquote>
+
+<p>The <code>IFS</code> variable is a special Bash/shell variable which commands like <code>read</code> use to workout what counts as a field separator.</p>
+
+<p>By default, it is usually set to new lines and spaces.</p>
+
+<p>In order to parse our the markdown generated from our <code>.mdsh</code> files, we set IFS to parse new lines only (ignoring spaces).</p>
+
+<h3>About the <code>read</code> command</h3>
+
+<p>The <code>read</code> command is built-in to bash, and used to read input from the terminal input, or stdin.</p>
+
+<p>In order to read the markdown we generated line by line, while also preserving formatting, we need to set <code>IFS</code> as described above, <strong>and</strong> to set the <code>-er</code> params for <code>rread</code> so that backslashes are interpreted literally.</p>
+
+<p>After doing that, these paras you're reading will be converted to p tags in the HTML, and the code blocks will preserve their formatting too.</p>
+
+<p>See previous posts for examples of embedded code blocks for examples.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/16/auto-generated-post-footers.html">Auto-generated post footers</a></h2> <datetime>2019/02/16</datetime>
 <ul class="post-meta">
@@ -180,7 +556,13 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.</p>
+<p>I've added a new feature - a very simple one.</p>
+
+<p>The "post header" containing category, time to read, author etc (see above) is now also added to the bottom of each post, above the main site footer.</p>
+
+<p>This way, it will be very easy to create different layouts in CSS, by hiding/showing post info above/below the post.</p>
+
+<p>It's a bit inefficient, but simple and flexible.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/test.html">test</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -193,7 +575,88 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>test</p>
+<p>foo</p>
+
+<p>bar</p>
+
+<pre><code>
+#!/bin/bash
+
+if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
+
+echo
+echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
+echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
+echo 'which creates a Puppy-compatible repo from the repo URLs it receives '
+echo '(if possible).'
+echo
+echo 'More info:'
+echo
+echo '/etc/apt/sources.list usually contains lines like:'
+echo
+echo '    deb     https://deb.nodesource.com/node_8.x      trusty       main'
+echo '    deb     http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+echo '    deb-src http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+echo
+echo 'The first bit refers to package type (regular or source), the second'
+echo 'is the URL where the packages are, the third is OS version, and '
+echo 'the last is the "repo stream" - often main, contrib, or non-free.'
+echo
+echo 'This script will ignore "deb-src" entries, and parse the others'
+exit 0
+
+fi
+
+if [ ! -f /etc/apt/sources.list ] && [ ! -d /etc/apt/sources.list.d/ ];then
+[ ! -f /etc/apt/sources.list    ] && echo 'File /etc/apt/sources.list     not found'
+[ ! -d /etc/apt/sources.list.d/ ] && echo 'Dir  /etc/apt/sources.list.d/  not found'
+echo 'Exiting'
+exit 1
+fi
+
+# search inside /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+# ...look for lines starting with 'deb ', ignore others
+# ...(use grep -h, to remove the preppended filenames if grepping multiple files)
+# ...remove any arch stuff from the entries, ppa2pup will handle that,
+# ...convert spaces to | chars, so we can process each line as a whole later
+apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
+| sed \
+-e "s/^deb //g" \
+-e "s/^tor+//g" \
+-e 's/\[arch=[a-z,0-9].*\] //g' \
+-e 's/ /|/g'\
+)"
+
+echo "Repos to process:"
+echo
+echo "${apt_sources_list//|/ }"
+
+
+# for each repo in $apt_sources_list, use `ppa2pup` to install the repo
+for line in $apt_sources_list
+do
+[ "$line" = "" ] && continue
+[ "$line" = "
+" ] && continue
+echo
+echo "Processing:  ${line//|/ }"
+echo
+
+# ask user to update repo
+read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
+
+if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
+echo
+ppa2pup ${line//|/ }
+retval=$?
+fi
+echo
+done
+
+exit $retval
+</code></pre>
+
+<p>more</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/tester.html">tester</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -206,7 +669,79 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>testy test test test</p>
+<p>some para</p>
+
+<p>do a uname:</p>
+
+<pre><code>
+Linux
+</code></pre>
+
+<p>^ should say <code>Linux</code></p>
+
+<p>do multi line cat:</p>
+
+<pre><code>
+#!/bin/sh
+
+romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
+[ -d "$2" ] && romdir="$2"
+
+# choose a system dir to look in for roms
+find "$romdir" \
+-maxdepth 1 \
+-mindepth 1 \
+-type d \
+| sed "s#.*/##g" \
+| sort -u \
+| rofi -dmenu \
+-p 'Enter name: ' \
+-i -mesg 'Choose a system to play' > /tmp/rofi_system_name
+
+system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
+
+if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
+exit 1
+fi
+
+
+# looks for, list and choose a rom
+find $romdir/$system_name \
+-maxdepth 2 \
+-mindepth 1 \
+-type f \
+-iname "*.cue" -or -iname "*.ccd" -or -iname "*.iso" -or -iname "*.zip" \
+-or -iname "*.smc" -or -iname "*.smd" -or -iname "*.gb" -or -iname "*.gbc" \
+-or -iname "*.gba" \
+| sed -e 's#.*/##g' \
+| sort -u \
+| rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
+
+# rom name, escape [ and ]
+romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
+[ "$romname" = "" ] && exit 1
+
+romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
+
+
+if [ ! -f "$romfile" ];then
+rofi -dmenu -mesg "Rom file '$romname' not found!"
+exit 1
+fi
+
+
+case $system_name in
+*)
+# run the chosen game
+mednafen "$romfile"
+exit $?
+;;
+esac
+</code></pre>
+
+<p>^ rofnafen</p>
+
+<p>...</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/rof-test.html">rof test</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -219,7 +754,65 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>test</p>
+<pre><code>
+#!/bin/sh
+
+romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
+[ -d "$2" ] && romdir="$2"
+
+# choose a system dir to look in for roms
+find "$romdir" \
+-maxdepth 1 \
+-mindepth 1 \
+-type d \
+| sed "s#.*/##g" \
+| sort -u \
+| rofi -dmenu \
+-p 'Enter name: ' \
+-i -mesg 'Choose a system to play' > /tmp/rofi_system_name
+
+system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
+
+if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
+exit 1
+fi
+
+
+# looks for, list and choose a rom
+find $romdir/$system_name \
+-maxdepth 2 \
+-mindepth 1 \
+-type f \
+-iname "*.cue" -or -iname "*.ccd" -or -iname "*.iso" -or -iname "*.zip" \
+-or -iname "*.smc" -or -iname "*.smd" -or -iname "*.gb" -or -iname "*.gbc" \
+-or -iname "*.gba" \
+| sed -e 's#.*/##g' \
+| sort -u \
+| rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
+
+# rom name, escape [ and ]
+romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
+[ "$romname" = "" ] && exit 1
+
+romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
+
+
+if [ ! -f "$romfile" ];then
+rofi -dmenu -mesg "Rom file '$romname' not found!"
+exit 1
+fi
+
+
+case $system_name in
+*)
+# run the chosen game
+mednafen "$romfile"
+exit $?
+;;
+esac
+</code></pre>
+
+<p>more..</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html">It works! Easier post editing and converting is on the way...</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -234,7 +827,26 @@
 <li><a href="/mdsh/tags/markdown.html">markdown</a></li>
 <li><a href="/mdsh/tags/mdsh.html">mdsh</a></li>
 </ul>
-<p>After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.</p>
+<p>After the last fix, and as described in previous posts, each time you create a post, this blog tool thing will now save 3 files:</p>
+
+<ul>
+<li><code>file.mdsh</code> - a custom format, contains post meta info, markdown, html, embedded sub-shell commands</li>
+<li><code>file.md</code> - a valid markdown file, contains only post body and the <strong>results</strong> of any embedded sub-shell commands</li>
+<li><code>file.html</code> - a valid HTML file generated from the <code>.md</code> file</li>
+</ul>
+
+<p>So, as of this post, it will be easier to:</p>
+
+<ul>
+<li>convert the posts into PDF, bbcode, or some other format</li>
+<li>edit existings posts - just edit the md file and run <code>update_pages -all</code></li>
+</ul>
+
+<h3>To do</h3>
+
+<p>I still need to update <code>mdshell</code> so it can re-parse existing <code>.mdsh</code> files, not just take input form the user via the terminal.</p>
+
+<p>After that is implemented, you will be able to edit any existing <code>.mdsh</code> files and generate the <code>.md</code> and <code>.html</code> from those.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/generating-valid-markdown.html">Generating valid markdown</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -247,7 +859,21 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>A new feature of this blogging thing</p>
+<p>Here is a sub-shell, calling the <code>uname</code> command:</p>
+
+<pre><code>
+Linux
+</code></pre>
+
+<p>If this all works OK, we should end up with 3 files:</p>
+
+<ul>
+<li><code>file.md</code> - a valid markdown file containing the <em>resulting output</em> of any embedded sub-shells</li>
+<li><code>file.mdsh</code> - a custom format, containing meta info at the top, then the post content as input by the user</li>
+<li><code>file.html</code> - a valid HTML file of the post</li>
+</ul>
+
+<p>The first attempt failed, as I had a typo i the script.. Hopefully it will work this time...</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/fixed-code-block-formatting.html">Fixed code block formatting</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -260,7 +886,88 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>Embedding scripts and code snippets works as before...</p>
+<p>I've fixed the code block formatting so that shell code with escaped new lines format OK.</p>
+
+<p>In other words, breaking up long line into multiple line commands using backspace caused formatting issues.. Now it doesn't.</p>
+
+<p>Here is an example, a script called <code>apt2pup</code>:</p>
+
+<pre><code>
+#!/bin/bash
+
+if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
+
+echo
+echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
+echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
+echo 'which creates a Puppy-compatible repo from the repo URLs it receives '
+echo '(if possible).'
+echo
+echo 'More info:'
+echo
+echo '/etc/apt/sources.list usually contains lines like:'
+echo
+echo '    deb     https://deb.nodesource.com/node_8.x      trusty       main'
+echo '    deb     http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+echo '    deb-src http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
+echo
+echo 'The first bit refers to package type (regular or source), the second'
+echo 'is the URL where the packages are, the third is OS version, and '
+echo 'the last is the "repo stream" - often main, contrib, or non-free.'
+echo
+echo 'This script will ignore "deb-src" entries, and parse the others'
+exit 0
+
+fi
+
+if [ ! -f /etc/apt/sources.list ] && [ ! -d /etc/apt/sources.list.d/ ];then
+[ ! -f /etc/apt/sources.list    ] && echo 'File /etc/apt/sources.list     not found'
+[ ! -d /etc/apt/sources.list.d/ ] && echo 'Dir  /etc/apt/sources.list.d/  not found'
+echo 'Exiting'
+exit 1
+fi
+
+# search inside /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+# ...look for lines starting with 'deb ', ignore others
+# ...(use grep -h, to remove the preppended filenames if grepping multiple files)
+# ...remove any arch stuff from the entries, ppa2pup will handle that,
+# ...convert spaces to | chars, so we can process each line as a whole later
+apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
+| sed \
+-e "s/^deb //g" \
+-e "s/^tor+//g" \
+-e 's/\[arch=[a-z,0-9].*\] //g' \
+-e 's/ /|/g'\
+)"
+
+echo "Repos to process:"
+echo
+echo "${apt_sources_list//|/ }"
+
+
+# for each repo in $apt_sources_list, use `ppa2pup` to install the repo
+for line in $apt_sources_list
+do
+[ "$line" = "" ] && continue
+[ "$line" = "
+" ] && continue
+echo
+echo "Processing:  ${line//|/ }"
+echo
+
+# ask user to update repo
+read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
+
+if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
+echo
+ppa2pup ${line//|/ }
+retval=$?
+fi
+echo
+done
+
+exit $retval
+</code></pre>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/error-in-file-naming.html">Error in file naming</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -273,7 +980,15 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>One of those things...</p>
+<p>I've fixed some file naming stuff, so hopefully, this post should be saved as valid markdown, html, and our custom <code>.mdsh</code> format (which allows markdown, html and embedded sub-shell commands)..</p>
+
+<p>Lets test it.. Lets call the <code>uname</code> command, and we should get its <em>output</em> saved in the <code>.md</code> file, the command itself saved in the <code>.mdsh</code> file, and valid HTML in the <code>.html</code> file:</p>
+
+<pre><code>
+Linux
+</code></pre>
+
+<p>Fingers crossed...</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html">Error in choosing valid markdown file (doh!)</a></h2> <datetime>2019/02/15</datetime>
 <ul class="post-meta">
@@ -286,7 +1001,19 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/test.html">test</a></li>
 </ul>
-<p>A simple problem hopefully fixed...</p>
+<p>I was converting the mdsh contents (which now contain only the sub-shells, not their output) into HTML.</p>
+
+<p>But I want the <em>output</em> of those commands to be in the final HTML.</p>
+
+<p>So I've fixed <code>create_page</code>, so that it (hopefully!) works now..</p>
+
+<p>Here's the test:</p>
+
+<pre><code>
+Linux
+</code></pre>
+
+<p>^ we should see <code>uname</code> in the <code>.mdsh</code> file, and <code>Linux</code> in the <code>.md</code> and <code>.html</code> files...</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html">How to edit existing pages</a></h2> <datetime>2019/02/13</datetime>
 <ul class="post-meta">
@@ -299,7 +1026,21 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>Here is the not-so-nice method currently being used to edit pre-existing posts</p>
+<p>To create a new page, you use <code>create_page</code> with no options - the <code>mdshell</code> script will run and you can write your post in the terminal.</p>
+
+<p>But what if you make a mistake while writing your post? With <code>mdshell</code> it is impossible to 'go back' (up) a line and fix any mistakes, because as soon as you hit ENTER you're on a new line, and can't go back (<code>mdshell</code> takes the input from the terminal, and writes it to a markdown file, line by line).</p>
+
+<p>So how to edit a pre-existing post?</p>
+
+<p>Easy. Simply open the relevant <code>.mdsh</code> file in a text editor, make your changes and save.</p>
+
+<p>Finally, to rebuild the new HTML file from your edited/fixed markdown, just run something like this:</p>
+
+<pre><code>
+./create_page posts/2019/02/13/better-site-headers.mdsh > posts/2019/02/13/better-site-headers.html
+</code></pre>
+
+<p>Done! That is how to edit existing posts and rebuild the HTML pages.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/13/better-site-headers.html">Better site headers</a></h2> <datetime>2019/02/13</datetime>
 <ul class="post-meta">
@@ -312,7 +1053,21 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.</p>
+<p>I've updated the <code>create_page</code> script so that the <code>print_site_header</code> function now does the following:</p>
+
+<ul>
+<li>always include the homepage as the first link in the main navigation menu</li>
+<li>include all other HTML pages found in the root directory</li>
+</ul>
+
+<p>So far, the following HTML files live in the root directory, and get included in the main site header as links:</p>
+
+<ul>
+<li>archive.html - lists all posts on the site, newest at the top, oldest at the bottom</li>
+<li>categories.html - lists all categories, links to specific category pages in <code>./categories/</code></li>
+<li>index.html - the main homepage, listed first in the site header, as "home"</li>
+<li>tags.html - lists all tags, links to specific tag pages in <code>./tags/</code></li>
+</ul>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/13/about-mdshell.html">About `mdshell`</a></h2> <datetime>2019/02/13</datetime>
 <ul class="post-meta">
@@ -327,7 +1082,97 @@
 <li><a href="/mdsh/tags/markdown.html">markdown</a></li>
 <li><a href="/mdsh/tags/shell.html">shell</a></li>
 </ul>
-<p>A simple script I wrote for creating dynamically generated webpages using only the terminal.</p>
+<p>The <code>mdshell</code> script is a part of this blogging software thing I'm making.</p>
+
+<h3>Adding dynamic content using <code>mdshell</code></h3>
+
+<p>It lets you create web pages super fast, using Markdown and embedded sub-shells.</p>
+
+<p>The <em>results</em> of the sub-shell commands are included in the final output.</p>
+
+<p>For example, if you write the following in your blog post when using <code>mdshell</code> (removing the space ater the $):</p>
+
+<pre><code>
+$ (uname)
+</code></pre>
+
+<p>Then the actual output in the final HTML file will be:</p>
+
+<pre><code>
+Linux
+</code></pre>
+
+<p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.</p>
+
+<p>Another example, showing how to list folder contents:</p>
+
+<pre><code>
+$ (ls $HOME)
+</code></pre>
+
+<p>Would produce the following final output:</p>
+
+<pre><code>
+bin
+blog_ideas.txt
+Choices
+colored-completion-prefix
+default.jpg
+Desktop
+Documents
+dotfiles
+Downloads
+File-Sharing
+index.md
+mdshell.gif
+mdshell-opt.gif
+mdshell.ttyrecord
+network
+pkg
+puppy_arcade_readme.txt
+README.md
+Sites
+small.md
+spot
+src
+Startup
+test1.html
+test.md
+tree.html
+www
+</code></pre>
+
+<p>(or something like that, depending on what's in your home dir, obviously)</p>
+
+<h3>Using HTML in <code>mdshell</code></h3>
+
+<p>The <code>mdshell</code> also lets you write HTML straight into the post, and it will also work fine.</p>
+
+<p>This is useful if Markdown alone cannot produce the custom HTML layouts/elements that you need.</p>
+
+<h3>Using python (or whatever) in <code>mdshell</code></h3>
+
+<p>Simply put your code or commands inside a sub-shell as usual..</p>
+
+<p>The following would run a Python script, the results of which would end up in your page HTML:</p>
+
+<pre><code>
+python /path/to/script.py
+</code></pre>
+
+<p>You could also call <code>node</code> scripts - for things like server-side chart rendering..</p>
+
+<p>You could, for example, have installed the ChartJS or Chartist node packages which, when called in a sub-shell, would return the charts HTML/SVG.</p>
+
+<h3>Summary of <code>mdshell</code></h3>
+
+<p>It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..</p>
+
+<p>I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works".</p>
+
+<p>And best of all, I don't need any extra software AT ALL - just my terminal.</p>
+
+<p>Nice.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/12/using-git-to-manage-your-blog.html">Using Git to manage your blog</a></h2> <datetime>2019/02/12</datetime>
 <ul class="post-meta">
@@ -341,7 +1186,18 @@
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 <li><a href="/mdsh/tags/git.html">git</a></li>
 </ul>
-<p>Saving, publishing, reverting changes are all made easy with Git.</p>
+<p>A console based static site generator like this one needs a console-based solution for uploading/publishing/unpublishing the generated blog pages.</p>
+
+<p>The <code>git</code> command will make this easy - and even better, GitHub will host our page for us.</p>
+
+<p>We just need to do a few things:</p>
+
+<ul>
+<li>create some nice <code>git</code> based commands for saving, reverting, publishing and unpublishing your site content</li>
+<li>setup a GitHub repo, create a <code>gh-pages</code> branch, and use it!</li>
+</ul>
+
+<p>..that will get us most of the way to having a very powerful set of features for managing our blog versions and deployments. Nice.</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/12/tags-and-categories-index-pages.html">Tags and Categories index pages</a></h2> <datetime>2019/02/12</datetime>
 <ul class="post-meta">
@@ -354,7 +1210,11 @@
 <ul class="tags">
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 </ul>
-<p>A more consistent and flexible navigation setup for the blog.</p>
+<p>I've updated the <code>create_page</code> and <code>update_pages</code> scripts to build two new pages: <code>categories.html</code> and <code>tags.html</code>.</p>
+
+<p>These are simple index pages which list all tags/categories on the site, and which live in the root directory, alongside the main <code>index.html</code> file.</p>
+
+<p>I've also updated the auto-generated site header and menus to include these pages (along with the categories archive page links already in there).</p>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/12/improving-the-post-headers.html">Improving the post headers</a></h2> <datetime>2019/02/12</datetime>
 <ul class="post-meta">
@@ -368,7 +1228,12 @@
 <li><a href="/mdsh/tags/blog.html">blog</a></li>
 <li><a href="/mdsh/tags/shell.html">shell</a></li>
 </ul>
-<p>A nicer way to find related posts</p>
+<p>I've improved the post headers a little bit. The changes are:</p>
+
+<ul>
+<li>listed category (under post header) is now a link to the relevant category page</li>
+<li>each tag listed under the post header is now a link to the relevant tags page</li>
+</ul>
 </div>
 </div>
 </div>
