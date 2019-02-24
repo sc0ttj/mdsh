@@ -26,6 +26,7 @@ This is a fast way of producing documentation for any installed programs or comm
 - Automatically generates index and listings pages for categories, tags, and more.
 - Can generate a valid RSS feed and XML sitemap!
 - Includes a "Contact" page that works out of the box! (uses [formspree.io](http://formspree.io) to send you emails)
+- Includes blazing fast site/page search (uses [Jets](https://jets.js.org/), requires JavaScript)
 - Supports fullscreen, native app experience on mobile/smartphone if added to Homescreen
 - Optionally use [Google Fonts](https://fonts.google.com/) to choose custom web fonts
 - Optionally use [Unpkg.com](http://unpkg.com) to manage JavaScript libraries/dependencies
