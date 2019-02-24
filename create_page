@@ -571,8 +571,11 @@ if [ "$markdown" != "" ];then
   do
     # replace ``` with html pre/code tags, cos the markdown parsers break a lot
     if [[ "$line" =~ '```' ]];then
+      code_class=''
+      code_lang="$(echo ${line//\`\`\`/})"
+      [ "$code_lang" != "" ] && code_class=" class=\"${code_lang}\""
       [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
-      [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code>"
+      [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code${code_class}>"
     fi
     echo -e "$line" >> /tmp/fixed_markdown
   done<<<$(cat /tmp/markdown)
