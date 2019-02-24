@@ -10,8 +10,19 @@
 <generator>http://sc0ttj.github.io/mdsh/create_rss</generator>
 <description>latest from sc0ttj.github.io/mdsh</description>
 <managingEditor>sc0ttj</managingEditor>
-<lastBuildDate>Sun, 24 Feb 2019 21:04:43 +0800</lastBuildDate>
+<lastBuildDate>Sun, 24 Feb 2019 21:41:23 +0800</lastBuildDate>
 <language>en</language>
+
+
+<item>
+    <title>Adding a site search feature</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/24/adding-a-site-search-feature.html</guid>
+    <pubDate>Sun, 24 Feb 2019 21:41:17 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/24/adding-a-site-search-feature.html#1551015677</link>
+    <category>blog,</category>
+    <category>javascript</category>
+    <description><![CDATA[I'm using Jets (https<!--1551015677-->]]></description>
+</item>
 
 
 <item>
@@ -183,16 +194,6 @@
     <link>http://sc0ttj.github.io/mdsh/posts/2019/02/12/improving-the-post-headers.html#1550983259</link>
     <category>blog,shell</category>
     <description><![CDATA[A nicer way to find related posts<!--1550983259-->]]></description>
-</item>
-
-
-<item>
-    <title>Tags and Categories index pages</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/12/tags-and-categories-index-pages.html</guid>
-    <pubDate>Sun, 24 Feb 2019 12:40:59 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/12/tags-and-categories-index-pages.html#1550983259</link>
-    <category>blog</category>
-    <description><![CDATA[A more consistent and flexible navigation setup for the blog.<!--1550983259-->]]></description>
 </item>
 
 </channel>

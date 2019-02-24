@@ -1,0 +1,26 @@
+## Adding a site search feature
+
+
+I wanted `mdsh` to have a nice site search feature, and not have to use Google Custom Search Engine or similar.
+
+I did not want a search that takes users away from the site, and I needed one which searched the site itself - not some extra JSON file of something (I don't want to have to update multiple files, I want to keep things DRY).
+
+In the end, I decided to use [Jets](https://github.com/NeXTs/Jets.js).
+
+The implementation works as follows:
+
+- if the visitors browser does not support JS, they will not see the site search
+- if JS is supported, a search box will be visible in the top-right of the page
+- some JS code in `app.js` will determine which HTML element to search inside
+- typing into the search box will hide element in the given container which don't match the search terms
+- on the archive page, the container used is `.archive-posts`
+- on the categories page, the container is `.categories-list`
+- on the tags page, the container used is `.tags-list`
+- on the homepage, the container used is '#content'
+- the search box is disabled on other pages (which dont contain lists of things to search)
+
+Possible improvements:
+
+- use Google Custom Search Engine as a no JS fallback
+
+

@@ -24,7 +24,7 @@
 <meta name="copyright" content="&copy; #!/bin/crash">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sun Feb 24 21:04:37 +08 2019">
+<meta name="revised" content="Sun Feb 24 21:41:17 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="sc0ttj">
 <meta name="pagename" content="#!/bin/crash">
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sun Feb 24 21:04:37 +08 2019">
+<meta property="article:published_time" content="Sun Feb 24 21:41:17 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="#!/bin/crash" />
@@ -51,8 +51,8 @@
   "@type": "Article",
   "headline": "#!/bin/crash",
   "headlineAlternative": "#!/bin/crash",
-  "datePublished": "Sun Feb 24 21:04:37 +08 2019",
-  "dateModified": "Sun Feb 24 21:04:37 +08 2019",
+  "datePublished": "Sun Feb 24 21:41:17 +08 2019",
+  "dateModified": "Sun Feb 24 21:41:17 +08 2019",
   "description": "My wonderful blog about lots of things.",
   "keywords": "blog, news, feed, latest updates",
   "image": {
@@ -82,16 +82,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551013477">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551013477">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551013477">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551013477">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551013477">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551013477">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551013477">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551013477">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551015677">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551015677">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551015677">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551015677">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551015677">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551015677">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551015677">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551015677">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551013477">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551015677">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="#!/bin/crash">
@@ -106,11 +106,11 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551013477">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551015677">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom"></script>
 <script class="unpkg" id="unpkg-jets" defer src="//unpkg.com/jets"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551013477"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551015677"></script>
 </head>
 <body>
 <div class="main-container">
@@ -184,6 +184,44 @@ echo '&lt;/div&gt;'
 </code></pre>
 
 <p>^ this function can be found in the <code>create_pages</code> script, and is run when the <code>update_pages</code> script re-builds the homepage (which happens automatically each time you create a new post, but can also be done manually by running <code>./update_pages [-all]</code>).</p>
+</div><div class="post-preview">
+<h2><a href="/mdsh/posts/2019/02/24/adding-a-site-search-feature.html">Adding a site search feature</a></h2> <time datetime="2019-02-24">2019/02/24</time>
+<ul class="post-meta">
+<li>1 min</li>
+<li>2019/02/24</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/blog.html">blog</a></li>
+<li><a href="/mdsh/tags/javascript.html">javascript</a></li>
+</ul>
+<p>I wanted <code>mdsh</code> to have a nice site search feature, and not have to use Google Custom Search Engine or similar.</p>
+
+<p>I did not want a search that takes users away from the site, and I needed one which searched the site itself - not some extra JSON file of something (I don't want to have to update multiple files, I want to keep things DRY).</p>
+
+<p>In the end, I decided to use <a href="https://github.com/NeXTs/Jets.js">Jets</a>.</p>
+
+<p>The implementation works as follows:</p>
+
+<ul>
+<li>if the visitors browser does not support JS, they will not see the site search</li>
+<li>if JS is supported, a search box will be visible in the top-right of the page</li>
+<li>some JS code in <code>app.js</code> will determine which HTML element to search inside</li>
+<li>typing into the search box will hide element in the given container which don't match the search terms</li>
+<li>on the archive page, the container used is <code>.archive-posts</code></li>
+<li>on the categories page, the container is <code>.categories-list</code></li>
+<li>on the tags page, the container used is <code>.tags-list</code></li>
+<li>on the homepage, the container used is '#content'</li>
+<li>the search box is disabled on other pages (which dont contain lists of things to search)</li>
+</ul>
+
+<p>Possible improvements:</p>
+
+<ul>
+<li>use Google Custom Search Engine as a no JS fallback</li>
+</ul>
 </div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html">Generating an XML sitemap</a></h2> <time datetime="2019-02-23">2019/02/23</time>
 <ul class="post-meta">
@@ -1211,111 +1249,6 @@ Linux
 <li>index.html - the main homepage, listed first in the site header, as "home"</li>
 <li>tags.html - lists all tags, links to specific tag pages in <code>./tags/</code></li>
 </ul>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/13/about-mdshell.html">About `mdshell`</a></h2> <time datetime="2019-02-13">2019/02/13</time>
-<ul class="post-meta">
-<li>2 mins</li>
-<li>2019/02/13</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/blog.html">blog</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/blog.html">blog</a></li>
-<li><a href="/mdsh/tags/markdown.html">markdown</a></li>
-<li><a href="/mdsh/tags/shell.html">shell</a></li>
-</ul>
-<p>The <code>mdshell</code> script is a part of this blogging software thing I'm making.</p>
-
-<h3>Adding dynamic content using <code>mdshell</code></h3>
-
-<p>It lets you create web pages super fast, using Markdown and embedded sub-shells.</p>
-
-<p>The <em>results</em> of the sub-shell commands are included in the final output.</p>
-
-<p>For example, if you write the following in your blog post when using <code>mdshell</code> (removing the space ater the $):</p>
-
-<pre><code>
-$ (uname)
-</code></pre>
-
-<p>Then the actual output in the final HTML file will be:</p>
-
-<pre><code>
-Linux
-</code></pre>
-
-<p>This is an easy way to embed functions and commands inside your markdown, and to auto-generate your web pages with the results of those commands/functions.</p>
-
-<p>Another example, showing how to list folder contents:</p>
-
-<pre><code>
-$ (ls $HOME)
-</code></pre>
-
-<p>Would produce the following final output:</p>
-
-<pre><code>
-bin
-blog_ideas.txt
-Choices
-colored-completion-prefix
-default.jpg
-Desktop
-Documents
-dotfiles
-Downloads
-File-Sharing
-index.md
-mdshell.gif
-mdshell-opt.gif
-mdshell.ttyrecord
-network
-pkg
-puppy_arcade_readme.txt
-README.md
-Sites
-small.md
-spot
-src
-Startup
-test1.html
-test.md
-tree.html
-www
-</code></pre>
-
-<p>(or something like that, depending on what's in your home dir, obviously)</p>
-
-<h3>Using HTML in <code>mdshell</code></h3>
-
-<p>The <code>mdshell</code> also lets you write HTML straight into the post, and it will also work fine.</p>
-
-<p>This is useful if Markdown alone cannot produce the custom HTML layouts/elements that you need.</p>
-
-<h3>Using python (or whatever) in <code>mdshell</code></h3>
-
-<p>Simply put your code or commands inside a sub-shell as usual..</p>
-
-<p>The following would run a Python script, the results of which would end up in your page HTML:</p>
-
-<pre><code>
-python /path/to/script.py
-</code></pre>
-
-<p>You could also call <code>node</code> scripts - for things like server-side chart rendering..</p>
-
-<p>You could, for example, have installed the ChartJS or Chartist node packages which, when called in a sub-shell, would return the charts HTML/SVG.</p>
-
-<h3>Summary of <code>mdshell</code></h3>
-
-<p>It's a super easy way to write blog posts in the terminal, using anything from plain Markdown to dynamic shell-based scripts, to plain HTML - or a mix of all of those..</p>
-
-<p>I've yet to work out a more convenient way of writing blog posts that is no-frills, flexible, and "just works".</p>
-
-<p>And best of all, I don't need any extra software AT ALL - just my terminal.</p>
-
-<p>Nice.</p>
 </div>
 </div>
 </div>
