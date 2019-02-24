@@ -110,7 +110,7 @@ function print_site_meta {
   echo '<meta charset="utf-8">
 <!-- browser/device compatibility stuff -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta http-equiv="x-dns-prefetch-control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="HandheldFriendly" content="True"/>
 <meta name="format-detection" content="telephone=no">
@@ -188,7 +188,7 @@ function print_site_meta {
 <link rel="canonical" href="'${blog_url}'/">
 <!-- App icons and favicons -->
 <link rel="manifest" href="'${blog_url}'/manifest.webmanifest?v='$timestamp'">
-<link rel="icon" href="'${blog_url}'/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v='$timestamp'">
+<link rel="icon" type="image/vnd.microsoft.icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$timestamp'">
 <link rel="apple-touch-icon" sizes="180x180" href="'${blog_url}'/assets/icons/apple-touch-icon.png?v='$timestamp'">
 <link rel="shortcut icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$timestamp'">
 <link rel="icon" type="image/png" sizes="16x16" href="'${blog_url}'/assets/icons/favicon-16x16.png?v='$timestamp'">
@@ -219,7 +219,7 @@ function print_site_inline_styles {
 function print_site_stylesheets {
   echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$timestamp'">'
     local filename="$(basename "$output_file" 2>/dev/null)"
-    filename="assets/css/${filename//.html/.css}?version=$(date +%s)"
+    filename="assets/css/${filename//.html/.css}?v='$timestamp'"
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$timestamp'">'
   fi
@@ -230,7 +230,7 @@ function print_site_javascripts {
   # optional google analytics
   if [ "$blog_google_analytics_id" != '' ];then
     echo '<!-- google analytics -->
-<script type="text/javascript" id="google-analytics">
+<scrip id="google-analytics">
  var _gaq = _gaq || [];
  _gaq.push(["_setAccount", "'${blog_google_analytics_id:-none}'"]);
  _gaq.push(["_trackPageview"]);
@@ -250,10 +250,10 @@ function print_site_javascripts {
   # add JS packages from unpkg.com
   for pkgname in $(echo "$js_deps" | tr ',' ' ')
   do
-    echo '<script class="unpkg" id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'" type="text/javascript"></script>'
+    echo '<script class="unpkg" id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'"></script>'
   done
   # add site-wide app.js, if it exists
-  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$timestamp'" type="text/javascript"></script>'
+  [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$timestamp'"></script>'
 }
 
 function print_site_header {
@@ -380,7 +380,7 @@ function print_post_preview {
   [ "$post_slug" = "" ] && return 0
 
   echo '<div class="post-preview">'
-  echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <datetime>'"${post_created}"'</datetime>'
+  echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <time datetime="'"${post_created//\//-}"'">'"${post_created}"'</time>'
   echo '<ul class="post-meta">'
   echo '<li>'"${post_time_to_read}"'</li>'
   echo '<li>'"${post_created}"'</li>'

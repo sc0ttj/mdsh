@@ -377,7 +377,7 @@ ul.posts li {
 }
 
 .post-preview h2,
-.post-preview datetime {
+.post-preview time {
   display: inline-block;
 }
 

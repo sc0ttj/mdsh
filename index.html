@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <!-- browser/device compatibility stuff -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta http-equiv="x-dns-prefetch-control" content="on">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="HandheldFriendly" content="True"/>
 <meta name="format-detection" content="telephone=no">
@@ -24,7 +24,7 @@
 <meta name="copyright" content="&copy; #!/bin/crash">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sun Feb 24 12:15:15 +08 2019">
+<meta name="revised" content="Sun Feb 24 12:39:14 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="sc0ttj">
 <meta name="pagename" content="#!/bin/crash">
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sun Feb 24 12:15:15 +08 2019">
+<meta property="article:published_time" content="Sun Feb 24 12:39:14 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="#!/bin/crash" />
@@ -51,8 +51,8 @@
   "@type": "Article",
   "headline": "#!/bin/crash",
   "headlineAlternative": "#!/bin/crash",
-  "datePublished": "Sun Feb 24 12:15:15 +08 2019",
-  "dateModified": "Sun Feb 24 12:15:15 +08 2019",
+  "datePublished": "Sun Feb 24 12:39:14 +08 2019",
+  "dateModified": "Sun Feb 24 12:39:14 +08 2019",
   "description": "My wonderful blog about lots of things.",
   "keywords": "blog, news, feed, latest updates",
   "image": {
@@ -82,16 +82,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550981715">
-<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550981715">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550981715">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550981715">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550981715">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550981715">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550981715">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550981715">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550983154">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1550983154">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550983154">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550983154">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550983154">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550983154">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550983154">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550983154">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550981715">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550983154">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="#!/bin/crash">
@@ -106,10 +106,10 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550981715">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550983154">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
-<script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550981715" type="text/javascript"></script>
+<script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550983154"></script>
 </head>
 <body>
 <div class="main-container">
@@ -128,7 +128,7 @@
 </div>
 <div id="content" class="post-content">
 <div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/24/generating-better-homepages.html">Generating better homepages</a></h2> <datetime>2019/02/24</datetime>
+<h2><a href="/mdsh/posts/2019/02/24/generating-better-homepages.html">Generating better homepages</a></h2> <time datetime="2019-02-24">2019/02/24</time>
 <ul class="post-meta">
 <li>2 mins</li>
 <li>2019/02/24</li>
@@ -183,7 +183,7 @@ echo '&lt;/div&gt;'
 
 <p>^ this function can be found in the <code>create_pages</code> script, and is run when the <code>update_pages</code> script re-builds the homepage (which happens automatically each time you create a new post, but can also be done manually by running <code>./update_pages [-all]</code>).</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html">Generating an XML sitemap</a></h2> <datetime>2019/02/23</datetime>
+<h2><a href="/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html">Generating an XML sitemap</a></h2> <time datetime="2019-02-23">2019/02/23</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/23</li>
@@ -251,7 +251,7 @@ git push origin gh-pages
 exit 0
 </code></pre>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/23/generating-an-rss-feed.html">Generating an RSS feed</a></h2> <datetime>2019/02/23</datetime>
+<h2><a href="/mdsh/posts/2019/02/23/generating-an-rss-feed.html">Generating an RSS feed</a></h2> <time datetime="2019-02-23">2019/02/23</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/23</li>
@@ -269,7 +269,7 @@ exit 0
 
 <p>Here is the script: <a href="/mdsh/create_rss">create_rss</a></p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/17/adding-a-stylesheet.html">Adding a stylesheet</a></h2> <datetime>2019/02/17</datetime>
+<h2><a href="/mdsh/posts/2019/02/17/adding-a-stylesheet.html">Adding a stylesheet</a></h2> <time datetime="2019-02-17">2019/02/17</time>
 <ul class="post-meta">
 <li>3 mins</li>
 <li>2019/02/17</li>
@@ -631,7 +631,7 @@ width: 100%;
 }
 </code></pre>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/16/missing-post-header.html">Missing post header</a></h2> <datetime>2019/02/16</datetime>
+<h2><a href="/mdsh/posts/2019/02/16/missing-post-header.html">Missing post header</a></h2> <time datetime="2019-02-16">2019/02/16</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/16</li>
@@ -650,7 +650,7 @@ width: 100%;
 
 <p>Should be fixed now.</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/16/ifs-and-the-read-command.html">IFS and the read command</a></h2> <datetime>2019/02/16</datetime>
+<h2><a href="/mdsh/posts/2019/02/16/ifs-and-the-read-command.html">IFS and the read command</a></h2> <time datetime="2019-02-16">2019/02/16</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/16</li>
@@ -686,7 +686,7 @@ width: 100%;
 
 <p>See previous posts for examples of embedded code blocks for examples.</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/16/auto-generated-post-footers.html">Auto-generated post footers</a></h2> <datetime>2019/02/16</datetime>
+<h2><a href="/mdsh/posts/2019/02/16/auto-generated-post-footers.html">Auto-generated post footers</a></h2> <time datetime="2019-02-16">2019/02/16</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/16</li>
@@ -705,7 +705,7 @@ width: 100%;
 
 <p>It's a bit inefficient, but simple and flexible.</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/test.html">test</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/test.html">test</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1</li>
 <li>2019/02/15</li>
@@ -799,7 +799,7 @@ exit $retval
 
 <p>more</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/tester.html">tester</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/tester.html">tester</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -884,7 +884,7 @@ esac
 
 <p>...</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/rof-test.html">rof test</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/rof-test.html">rof test</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -955,7 +955,7 @@ esac
 
 <p>more..</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html">It works! Easier post editing and converting is on the way...</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html">It works! Easier post editing and converting is on the way...</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>2 mins</li>
 <li>2019/02/15</li>
@@ -989,7 +989,7 @@ esac
 
 <p>After that is implemented, you will be able to edit any existing <code>.mdsh</code> files and generate the <code>.md</code> and <code>.html</code> from those.</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/generating-valid-markdown.html">Generating valid markdown</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/generating-valid-markdown.html">Generating valid markdown</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -1016,7 +1016,7 @@ Linux
 
 <p>The first attempt failed, as I had a typo i the script.. Hopefully it will work this time...</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/fixed-code-block-formatting.html">Fixed code block formatting</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/fixed-code-block-formatting.html">Fixed code block formatting</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -1110,7 +1110,7 @@ done
 exit $retval
 </code></pre>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/error-in-file-naming.html">Error in file naming</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/error-in-file-naming.html">Error in file naming</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -1131,7 +1131,7 @@ Linux
 
 <p>Fingers crossed...</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html">Error in choosing valid markdown file (doh!)</a></h2> <datetime>2019/02/15</datetime>
+<h2><a href="/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html">Error in choosing valid markdown file (doh!)</a></h2> <time datetime="2019-02-15">2019/02/15</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/15</li>
@@ -1156,7 +1156,7 @@ Linux
 
 <p>^ we should see <code>uname</code> in the <code>.mdsh</code> file, and <code>Linux</code> in the <code>.md</code> and <code>.html</code> files...</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html">How to edit existing pages</a></h2> <datetime>2019/02/13</datetime>
+<h2><a href="/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html">How to edit existing pages</a></h2> <time datetime="2019-02-13">2019/02/13</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/13</li>
@@ -1183,7 +1183,7 @@ Linux
 
 <p>Done! That is how to edit existing posts and rebuild the HTML pages.</p>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/13/better-site-headers.html">Better site headers</a></h2> <datetime>2019/02/13</datetime>
+<h2><a href="/mdsh/posts/2019/02/13/better-site-headers.html">Better site headers</a></h2> <time datetime="2019-02-13">2019/02/13</time>
 <ul class="post-meta">
 <li>1 min</li>
 <li>2019/02/13</li>
@@ -1210,7 +1210,7 @@ Linux
 <li>tags.html - lists all tags, links to specific tag pages in <code>./tags/</code></li>
 </ul>
 </div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/13/about-mdshell.html">About `mdshell`</a></h2> <datetime>2019/02/13</datetime>
+<h2><a href="/mdsh/posts/2019/02/13/about-mdshell.html">About `mdshell`</a></h2> <time datetime="2019-02-13">2019/02/13</time>
 <ul class="post-meta">
 <li>2 mins</li>
 <li>2019/02/13</li>
