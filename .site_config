@@ -9,6 +9,6 @@ blog_author="sc0ttj"
 blog_email="foo@bar.com"
 blog_twitter="@foobar"
 blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
-blog_js_deps="cash-dom "
+blog_js_deps="cash-dom jets"
 blog_google_analytics_id=""
 blog_footer="© ${blog_title} $(date -u +"%Y")"

@@ -259,6 +259,10 @@ function print_site_javascripts {
 function print_site_header {
   echo '<div class="page-header">'
   echo '<h1><a href="'${blog_url}'/index.html">'$blog_title'</a></h1>'
+  # enable site search
+  if [ "$(echo "$blog_js_deps" | grep 'jets')" != "" ];then
+    echo '<input type="search" class="site-search" id="site-search" placeholder="search.." />'
+  fi
   echo '<a class="off-screen skip-to-content" href="#content">Skip to content</a>'
   echo '<ul>'
 
@@ -343,7 +347,7 @@ function print_site_footer {
 #
 
 function list_categories {
-  echo '<ul class="categories">'
+  echo '<ul class="categories-list">'
   for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)
   do
     post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh | sort -u | wc -l 2>/dev/null)
@@ -354,7 +358,7 @@ function list_categories {
 }
 
 function list_tags {
-  echo '<ul class="tags">'
+  echo '<ul class="tags-list">'
   for tag in $(cut -f6 -d'|' ./posts.csv | tr ',' '\n' | tr ' ' '\n' | sort -u)
   do
     post_count=$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
