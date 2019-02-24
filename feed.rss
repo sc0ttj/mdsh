@@ -10,189 +10,189 @@
 <generator>http://sc0ttj.github.io/mdsh/create_rss</generator>
 <description>latest from sc0ttj.github.io/mdsh</description>
 <managingEditor>sc0ttj</managingEditor>
-<lastBuildDate>Sun, 24 Feb 2019 11:55:38 +0800</lastBuildDate>
+<lastBuildDate>Sun, 24 Feb 2019 12:15:22 +0800</lastBuildDate>
 <language>en</language>
-
-
-<item>
-    <title>Generating an XML sitemap</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html</guid>
-    <pubDate>Sun, 24 Feb 2019 11:55:30 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html#1550980530</link>
-    <category>blog,</category>
-    <category>xml</category>
-    <description><![CDATA[Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.<!--1550980530-->]]></description>
-</item>
 
 
 <item>
     <title>Generating better homepages</title>
     <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html</guid>
-    <pubDate>Sun, 24 Feb 2019 11:51:30 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html#1550980290</link>
+    <pubDate>Sun, 24 Feb 2019 12:15:15 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html#1550981715</link>
     <category>blog</category>
-    <description><![CDATA[The auto generated homepages have been greatly improved - by default they now list your sites most recent posts in full, instead of listing only the titles of each. This is a much nicer experience for users who land on your homepage.<!--1550980290-->]]></description>
+    <description><![CDATA[The auto generated homepages have been greatly improved - by default they now list your sites most recent posts in full, instead of listing only the titles of each. This is a much nicer experience for users who land on your homepage.<!--1550981715-->]]></description>
+</item>
+
+
+<item>
+    <title>Generating an XML sitemap</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:14 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html#1550981714</link>
+    <category>blog,</category>
+    <category>xml</category>
+    <description><![CDATA[Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.<!--1550981714-->]]></description>
 </item>
 
 
 <item>
     <title>Generating an RSS feed</title>
     <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:37:26 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html#1550975846</link>
+    <pubDate>Sun, 24 Feb 2019 12:15:14 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html#1550981714</link>
     <category>blog,</category>
     <category>rss</category>
-    <description><![CDATA[<!--1550975846-->]]></description>
-</item>
-
-
-<item>
-    <title>tester</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html#1550973710</link>
-    <category>test</category>
-    <description><![CDATA[testy test test test<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>Auto-generated post footers</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html#1550973710</link>
-    <category>blog</category>
-    <description><![CDATA[This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>IFS and the read command</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html#1550973710</link>
-    <category>blog,shell</category>
-    <description><![CDATA[Or, how I parse markdown to generate valid HTML<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>Missing post header</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html#1550973710</link>
-    <category>blog</category>
-    <description><![CDATA[A bug that I've just (hopefully) fixed.<!--1550973710-->]]></description>
+    <description><![CDATA[An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.<!--1550981714-->]]></description>
 </item>
 
 
 <item>
     <title>Adding a stylesheet</title>
     <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html#1550973710</link>
+    <pubDate>Sun, 24 Feb 2019 12:15:14 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html#1550981714</link>
     <category>blog,css</category>
-    <description><![CDATA[Styling this blog to look nicer, and how it works.<!--1550973710-->]]></description>
+    <description><![CDATA[Styling this blog to look nicer, and how it works.<!--1550981714-->]]></description>
 </item>
 
 
 <item>
-    <title>Fixed code block formatting</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html#1550973710</link>
+    <title>Missing post header</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:14 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html#1550981714</link>
     <category>blog</category>
-    <description><![CDATA[Embedding scripts and code snippets works as before...<!--1550973710-->]]></description>
+    <description><![CDATA[A bug that I've just (hopefully) fixed.<!--1550981714-->]]></description>
 </item>
 
 
 <item>
-    <title>Generating valid markdown</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html#1550973710</link>
-    <category>test</category>
-    <description><![CDATA[A new feature of this blogging thing<!--1550973710-->]]></description>
+    <title>IFS and the read command</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:14 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html#1550981714</link>
+    <category>blog,shell</category>
+    <description><![CDATA[Or, how I parse markdown to generate valid HTML<!--1550981714-->]]></description>
 </item>
 
 
 <item>
-    <title>It works! Easier post editing and converting is on the way...</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html#1550973710</link>
-    <category>blog,markdown,mdsh</category>
-    <description><![CDATA[After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>rof test</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html#1550973710</link>
-    <category>test</category>
-    <description><![CDATA[test<!--1550973710-->]]></description>
+    <title>Auto-generated post footers</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:13 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html#1550981713</link>
+    <category>blog</category>
+    <description><![CDATA[This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.<!--1550981713-->]]></description>
 </item>
 
 
 <item>
     <title>test</title>
     <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html#1550973710</link>
+    <pubDate>Sun, 24 Feb 2019 12:15:13 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html#1550981713</link>
     <category>test</category>
-    <description><![CDATA[test<!--1550973710-->]]></description>
+    <description><![CDATA[test<!--1550981713-->]]></description>
 </item>
 
 
 <item>
-    <title>Better site headers</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html#1550973710</link>
-    <category>blog</category>
-    <description><![CDATA[A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>How to edit existing pages</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html#1550973710</link>
-    <category>blog</category>
-    <description><![CDATA[Here is the not-so-nice method currently being used to edit pre-existing posts<!--1550973710-->]]></description>
-</item>
-
-
-<item>
-    <title>Error in choosing valid markdown file (doh!)</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html#1550973710</link>
+    <title>tester</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:13 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html#1550981713</link>
     <category>test</category>
-    <description><![CDATA[A simple problem hopefully fixed...<!--1550973710-->]]></description>
+    <description><![CDATA[testy test test test<!--1550981713-->]]></description>
+</item>
+
+
+<item>
+    <title>rof test</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:13 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html#1550981713</link>
+    <category>test</category>
+    <description><![CDATA[test<!--1550981713-->]]></description>
+</item>
+
+
+<item>
+    <title>It works! Easier post editing and converting is on the way...</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:13 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html#1550981713</link>
+    <category>blog,markdown,mdsh</category>
+    <description><![CDATA[After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.<!--1550981713-->]]></description>
+</item>
+
+
+<item>
+    <title>Generating valid markdown</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html#1550981712</link>
+    <category>test</category>
+    <description><![CDATA[A new feature of this blogging thing<!--1550981712-->]]></description>
+</item>
+
+
+<item>
+    <title>Fixed code block formatting</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html#1550981712</link>
+    <category>blog</category>
+    <description><![CDATA[Embedding scripts and code snippets works as before...<!--1550981712-->]]></description>
 </item>
 
 
 <item>
     <title>Error in file naming</title>
     <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html#1550973710</link>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html#1550981712</link>
     <category>test</category>
-    <description><![CDATA[One of those things...<!--1550973710-->]]></description>
+    <description><![CDATA[One of those things...<!--1550981712-->]]></description>
 </item>
 
 
 <item>
-    <title>Post headers</title>
-    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/11/post-headers.html</guid>
-    <pubDate>Sun, 24 Feb 2019 10:01:50 +0800</pubDate>
-    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/11/post-headers.html#1550973710</link>
-    <category>blog,sed</category>
-    <description><![CDATA[Making posts more informative<!--1550973710-->]]></description>
+    <title>Error in choosing valid markdown file (doh!)</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html#1550981712</link>
+    <category>test</category>
+    <description><![CDATA[A simple problem hopefully fixed...<!--1550981712-->]]></description>
+</item>
+
+
+<item>
+    <title>How to edit existing pages</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html#1550981712</link>
+    <category>blog</category>
+    <description><![CDATA[Here is the not-so-nice method currently being used to edit pre-existing posts<!--1550981712-->]]></description>
+</item>
+
+
+<item>
+    <title>Better site headers</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:12 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html#1550981712</link>
+    <category>blog</category>
+    <description><![CDATA[A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.<!--1550981712-->]]></description>
+</item>
+
+
+<item>
+    <title>Using Git to manage your blog</title>
+    <guid>http://sc0ttj.github.io/mdsh/posts/2019/02/12/using-git-to-manage-your-blog.html</guid>
+    <pubDate>Sun, 24 Feb 2019 12:15:11 +0800</pubDate>
+    <link>http://sc0ttj.github.io/mdsh/posts/2019/02/12/using-git-to-manage-your-blog.html#1550981711</link>
+    <category>blog,git</category>
+    <description><![CDATA[Saving, publishing, reverting changes are all made easy with Git.<!--1550981711-->]]></description>
 </item>
 
 </channel>
