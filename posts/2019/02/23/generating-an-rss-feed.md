@@ -1,8 +1,17 @@
+## Generating an RSS feed
+
+Here is the bash script used by this site to generate rss feeds.
+
+The usage (in `update_pages`) is `./create_rss posts/ > feed.rss`.
+
+Here is the script:
+
+```
 #!/bin/bash
 
 # Generate an RSS 2.0 feed directly from your existing web site
 
-# Author    - Pádraig Brady P@draigBrady.com
+# Author    - Pádraig Brady <P@draigBrady.com>
 # Licence   - LGPLV2
 # Releases  -
 #   1.0     - Jun 19 2006 - Initial release
@@ -72,15 +81,15 @@ for file in $default_files; do
     replace_default_files="$replace_default_files; s/\(.*\)$file$/\1/;t"
 done
 
-echo '<?xml version="1.0" encoding="utf-8"?>
+echo "<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="rss2.css" ?>
 
 <rss version="2.0">
-<channel>'
+<channel>"
 
 time=`date --rfc-2822`
 
-echo "
+echo '
 <title>$TITLE</title>
 <ttl>$suggested_update_freq</ttl>
 <link>http://$site/$1</link>
@@ -89,11 +98,12 @@ echo "
 <managingEditor>$author</managingEditor>
 <lastBuildDate>$time</lastBuildDate>
 <language>`echo $LANG | sed 's/\(..\)_.*/\1/'`</language>
-"
+'
 
 xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]"; }
 
-find "$1" -type f -printf "%p\t%T@\n" |
+find "$1" -type f -printf "%p	%T@
+" |
 sed 's/^\.\///' | # strip leading ./ when "$1" is empty
 sort -k2,2nr |
 cut -f1 |
@@ -128,14 +138,16 @@ while read file; do
     tags=""
     if [ ! -z "$keywords" ]; then
         for keyword in $keywords; do
-            tags=`echo -ne "$tags<category>$keyword</category>\n    "`
+            tags=`echo -ne "$tags<category>$keyword</category>
+    "`
         done
     fi
     if [ "$page_author" ]; then
         if [ "$page_author" = "$author" ]; then
             page_author=""
         else
-            page_author=`echo -ne "<author>$page_author</author>\n    "`
+            page_author=`echo -ne "<author>$page_author</author>
+    "`
         fi
     fi
 echo "
@@ -150,3 +162,4 @@ echo "
 done &&
 echo '</channel>
 </rss>'
+```

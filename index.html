@@ -24,7 +24,7 @@
 <meta name="copyright" content="&copy; #!/bin/crash">
 <meta name="language" content="en">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="Sun Feb 24 00:46:27 +08 2019">
+<meta name="revised" content="Sun Feb 24 01:08:09 +08 2019">
 <meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
 <meta name="owner" content="sc0ttj">
 <meta name="pagename" content="#!/bin/crash">
@@ -38,7 +38,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sun Feb 24 00:46:27 +08 2019">
+<meta property="article:published_time" content="Sun Feb 24 01:08:09 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="#!/bin/crash" />
@@ -51,8 +51,8 @@
   "@type": "Article",
   "headline": "#!/bin/crash",
   "headlineAlternative": "#!/bin/crash",
-  "datePublished": "Sun Feb 24 00:46:27 +08 2019",
-  "dateModified": "Sun Feb 24 00:46:27 +08 2019",
+  "datePublished": "Sun Feb 24 01:08:09 +08 2019",
+  "dateModified": "Sun Feb 24 01:08:09 +08 2019",
   "description": "My wonderful blog about lots of things.",
   "keywords": "blog, news, feed, latest updates",
   "image": {
@@ -82,16 +82,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550940387">
-<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550940387">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550940387">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550940387">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550940387">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550940387">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550940387">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550940387">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550941689">
+<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550941689">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550941689">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550941689">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550941689">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550941689">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550941689">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550941689">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550940387">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550941689">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="#!/bin/crash">
@@ -106,10 +106,10 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550940387">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550941689">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550940387" type="text/javascript"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550941689" type="text/javascript"></script>
 </head>
 <body>
 <div class="main-container">
@@ -128,6 +128,250 @@
 </div>
 <div id="content" class="post-content">
 <div class="post-preview">
+<h2><a href="/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html">Generating an XML sitemap</a></h2> <datetime>2019/02/23</datetime>
+<ul class="post-meta">
+<li>1 min</li>
+<li>2019/02/23</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/blog.html">blog</a></li>
+<li><a href="/mdsh/tags/xml.html">xml</a></li>
+</ul>
+<p>Here is a script which generates a valid XML sitemap, which Google (and others) will use to index your site:</p>
+
+<pre><code>
+#!/bin/bash
+
+# generate an XML sitemap for this site
+
+# script adapted from: http://www.lostsaloon.com/technology/how-to-create-an-xml-sitemap-using-wget-and-shell-script/
+
+. .site_config
+
+sitedomain=https://sc0ttj.github.io/mdsh/
+
+mv sitemap.xml sitemap_prev.xml
+
+echo "Generating sitemap.xml, please wait.."
+
+wget --spider --recursive --level=inf --no-verbose --output-file=linklist.txt "$sitedomain"
+grep -i URL linklist.txt | awk -F 'URL:' '
+{print $2}' | awk '{$1=$1};1' | awk '{print $1}' | sort -u | sed '/^$/d' > sortedurls.txt
+
+header='<?xml version="1.0" encoding="UTF-8"?><urlset
+xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">'
+
+echo $header > sitemap.xml
+
+while read p; do
+case "$p" in
+*/ | *.html | *.htm)
+echo '<url><loc>'$p'</loc></url>' >> sitemap.xml
+;;
+*)
+;;
+esac
+done < sortedurls.txt
+
+echo "</urlset>" >> sitemap.xml
+
+rm linklist.txt sortedurls.txt &>/dev/null
+
+[ ! -f sitemap.xml ] && exit 1
+
+rm sitemap_prev.xml
+
+echo "Publishing sitemap.."
+echo
+git add sitemap.xml
+git commit -m 'Updated sitemap'
+git push origin gh-pages
+
+exit 0
+</code></pre>
+</div><div class="post-preview">
+<h2><a href="/mdsh/posts/2019/02/23/generating-an-rss-feed.html">Generating an RSS feed</a></h2> <datetime>2019/02/23</datetime>
+<ul class="post-meta">
+<li>1 min</li>
+<li>2019/02/23</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/blog.html">blog</a></li>
+<li><a href="/mdsh/tags/rss.html">rss</a></li>
+</ul>
+<p>Here is the bash script used by this site to generate rss feeds.</p>
+
+<p>The usage (in <code>update_pages</code>) is <code>./create_rss posts/ &gt; feed.rss</code>.</p>
+
+<p>Here is the script:</p>
+
+<pre><code>
+#!/bin/bash
+
+# Generate an RSS 2.0 feed directly from your existing web site
+
+# Author    - Pádraig Brady <P@draigBrady.com>
+# Licence   - LGPLV2
+# Releases  -
+#   1.0     - Jun 19 2006 - Initial release
+#   1.1     - Jun 26 2006 - Exclude files with "Exclude from bashfeed"
+#                           HTML comment within the first 10 lines.
+#   1.2     - May 01 2007 - Add author elements (from html if present)
+#   1.4     - May 04 2011
+#    http://github.com/pixelb/scripts/commits/master/scripts/bashfeed
+
+# Just run this script from the root directory of your web site and
+# it will generate feed items for the newest files. Generally I do this
+# just before I sync my local web site copy to my public server.
+
+# One can generate a feed for a subset of the site by still running
+# from the root directory, and passing a subdirectory to start at.
+
+# To change the feed TITLE and DESCRIPTION, set those environment
+# variables before running the script.
+
+# Which files are selected and excluded can be configured below.
+# Note for html files it will extract the following elements if present
+#   <head>
+#     <title>Item title</title>
+#     <meta name="description" content="One line item description">
+#     <meta name="keywords" content="Item tags">
+#   </head>
+
+# Note this script will keep the same item guid for an updated file.
+# Just updating the pubDate will not cause liferea 1.0.11 at least
+# to mark the item as updated (or update the timestamp even).
+# One must change the description or title also, and so
+# I set the (hidden) description to the file timestamp.
+#
+# Testing with thunderbird 1.0.8 shows that it indexes on link
+# and so wont ever show updates to other fields. Therefore I append #seconds
+# to the link to force it to create a new entry for an updated item.
+#
+# Note you may find the http://www.pixelbeat.org/scripts/fix script
+# useful for doing edits to files that you don't want to show up
+# as updated content in the feed, or generally edit a file without
+# changing the modification date.
+
+if [ -f .site_config ];then
+source .site_config
+fi
+
+num_files=18
+TITLE="${blog_title}"
+site="${blog_domain}${blog_url}"
+author="${blog_author}"
+suggested_update_freq=1440 #mins
+
+: ${TITLE=$site}
+: ${DESCRIPTION="latest from $site"}
+
+#files starting with . | files without a . | files ending in .c .cpp ...
+include_re='(^|/)[.].+|(^|/)[^.]+$|[.](c|cpp|py|sh|rc|htm|html)$' #only show these files
+
+exclude_re='(create_|update_pages|publish|slugify\.sh|markdown.\pl|mdshell|generate_sitemap\.sh|\.git/|tmp/|.htaccess|index\.html|archive.html|categories/|categories\.html|contact\.html|tags/|tags\.html|404\.html)|README)' #dont show these paths
+
+default_files="index.html index.shtml index.php"
+
+
+############# No user serviceable parts below ###################
+
+for file in $default_files; do
+replace_default_files="$replace_default_files; s/\(.*\)$file$/\1/;t"
+done
+
+echo "<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="rss2.css" ?>
+
+<rss version="2.0">
+<channel>"
+
+time=`date --rfc-2822`
+
+echo '
+<title>$TITLE</title>
+<ttl>$suggested_update_freq</ttl>
+<link>http://$site/$1</link>
+<generator>http://$site/create_rss</generator>
+<description>$DESCRIPTION</description>
+<managingEditor>$author</managingEditor>
+<lastBuildDate>$time</lastBuildDate>
+<language>`echo $LANG | sed 's/\(..\)_.*/\1/'`</language>
+'
+
+xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]"; }
+
+find "$1" -type f -printf "%p   %T@
+" |
+sed 's/^\.\///' | # strip leading ./ when "$1" is empty
+sort -k2,2nr |
+cut -f1 |
+grep -E  "$include_re" |
+grep -Ev "$exclude_re" |
+while read file; do
+if ! head "$file" | grep -Fiq '<!--Exclude from bashfeed-->'; then
+echo "$file"
+i=$((i+1))
+[ $i -eq $num_files ] && break
+fi
+done |
+while read file; do
+pubDate=`date --reference="$file" --rfc-2822`
+force_update=`date --reference="$file" "+%s"`
+title=""; keywords=""; description=""
+if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
+title=`sed -n 's/.*<title>\(.*\)<\/title>.*/\1/ip;T;q' < "$file"`
+keywords=`sed -n 's/.*<META.*NAME="keywords".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+description=`sed -n 's/.*<META.*NAME="description".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+page_author=`sed -n 's/.*<META.*NAME="author".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+extracted_text="$title $keywords $description$ $page_author"
+if echo "$extracted_text" | xml_unescaped; then
+echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
+exit 1
+fi
+elif [ -x "$file" ]; then # I always have a 1 line description on line 3 of my scripts
+description=`sed -n '3s/# \(.*\)/\1/p' "$file"`
+fi
+file=`echo "$file" | sed "$replace_default_files"`
+[ -z "$title" ] && title="$file"
+tags=""
+if [ ! -z "$keywords" ]; then
+for keyword in $keywords; do
+tags=`echo -ne "$tags<category>$keyword</category>
+"`
+done
+fi
+if [ "$page_author" ]; then
+if [ "$page_author" = "$author" ]; then
+page_author=""
+else
+page_author=`echo -ne "<author>$page_author</author>
+"`
+fi
+fi
+echo "
+<item>
+<title>$title</title>
+<guid>http://$site/$file</guid>
+<pubDate>$pubDate</pubDate>
+<link>http://$site/$file#$force_update</link>
+$page_author$tags<description><![CDATA[$description<!--$force_update-->]]></description>
+</item>
+"
+done &&
+echo '</channel>
+</rss>'
+</code></pre>
+</div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/02/17/adding-a-stylesheet.html">Adding a stylesheet</a></h2> <datetime>2019/02/17</datetime>
 <ul class="post-meta">
 <li>3 mins</li>
@@ -1198,42 +1442,6 @@ python /path/to/script.py
 </ul>
 
 <p>..that will get us most of the way to having a very powerful set of features for managing our blog versions and deployments. Nice.</p>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/12/tags-and-categories-index-pages.html">Tags and Categories index pages</a></h2> <datetime>2019/02/12</datetime>
-<ul class="post-meta">
-<li>2 mins</li>
-<li>2019/02/12</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/blog.html">blog</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/blog.html">blog</a></li>
-</ul>
-<p>I've updated the <code>create_page</code> and <code>update_pages</code> scripts to build two new pages: <code>categories.html</code> and <code>tags.html</code>.</p>
-
-<p>These are simple index pages which list all tags/categories on the site, and which live in the root directory, alongside the main <code>index.html</code> file.</p>
-
-<p>I've also updated the auto-generated site header and menus to include these pages (along with the categories archive page links already in there).</p>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/12/improving-the-post-headers.html">Improving the post headers</a></h2> <datetime>2019/02/12</datetime>
-<ul class="post-meta">
-<li>1 min</li>
-<li>2019/02/12</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/blog.html">blog</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/blog.html">blog</a></li>
-<li><a href="/mdsh/tags/shell.html">shell</a></li>
-</ul>
-<p>I've improved the post headers a little bit. The changes are:</p>
-
-<ul>
-<li>listed category (under post header) is now a link to the relevant category page</li>
-<li>each tag listed under the post header is now a link to the relevant tags page</li>
-</ul>
 </div>
 </div>
 </div>

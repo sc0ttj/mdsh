@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<!-- browser/device compatibility stuff -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="HandheldFriendly" content="True"/>
+<meta name="format-detection" content="telephone=no">
+<!-- page info -->
+<title>Generating an RSS feed</title>
+<meta name="description" content="An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.">
+<meta name="keywords" content="blog, rss">
+<meta name="news_keywords" content="blog, rss">
+<meta name="subject" content="blog, blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="generator" content="bl" />
+<meta name="medium" content="blog">
+<meta name="copyright" content="&copy; #!/bin/crash">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="revised" content="Sun Feb 24 01:08:09 +08 2019">
+<meta name="topic" content="blog, bash, shell, javascript, css, programming, puppy linux, test, games">
+<meta name="owner" content="sc0ttj">
+<meta name="pagename" content="Generating an RSS feed">
+ <!-- Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- Facebook -->
+<meta property="og:title" content="Generating an RSS feed">
+<meta property="og:description" content="An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.">
+<meta property="og:url" content="/mdsh/posts/2019/02/23/generating-an-rss-feed.html">
+<meta property="og:site_name" content="Generating an RSS feed">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="/mdsh/assets/icons/rss.png">
+<meta property="article:published_time" content="2019/02/23">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Generating an RSS feed" />
+<meta name="twitter:site" content="@foobar" />
+<meta name="twitter:image" content="/mdsh/assets/icons/rss.png" />
+<!-- Linked data -->
+<script id="meta-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Article",
+  "headline": "Generating an RSS feed",
+  "headlineAlternative": "Generating an RSS feed",
+  "datePublished": "2019/02/23",
+  "dateModified": "Sun Feb 24 01:08:09 +08 2019",
+  "description": "An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.",
+  "keywords": "blog, rss",
+  "image": {
+    "@type": "ImageObject",
+    "height": "512",
+    "width": "512",
+    "url": "/mdsh/assets/icons/android-chrome-512x512.png"
+  },
+  "author": "sc0ttj",
+  "publisher": {
+    "@type": "Organization",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/mdsh/assets/icons/android-chrome-512x512.png"
+    },
+    "name": "#!/bin/crash"
+  },
+  "mainEntityOfPage": "/mdsh/posts/2019/02/23/generating-an-rss-feed.html",
+  "articleBody": "Generating an RSS feed - An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader."
+}
+</script>
+
+
+<!-- RSS feed -->
+<link rel="alternate" type="application/rss+xml" title="Subscribe to #!/bin/crash" href="/mdsh/feed.rss" />
+<!-- SEO stuff -->
+<link rel="author" href="/humans.txt" />
+<link rel="canonical" href="/mdsh/">
+<!-- App icons and favicons -->
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1550941689">
+<link rel="icon" href="/mdsh/assets/icons/favicon.ico" type="image/vnd.microsoft.icon?v=1550941689">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1550941689">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1550941689">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1550941689">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1550941689">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1550941689">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1550941689">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1550941689">
+<meta name="theme-color" content="#101010">
+<!-- Fallback app name, for legacy browsers -->
+<meta name="application-name" content="#!/bin/crash">
+
+<style>
+  body, input, select, textarea, button {
+    font-family: Ubuntu, serif;
+    font-size: 16px;
+  }
+  pre, code {
+    font-family: Inconsolata, Monaco, monospace, serif;
+    font-size: 14px;
+  }
+</style>
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1550941689">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
+<script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom" type="text/javascript"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1550941689" type="text/javascript"></script>
+</head>
+<body>
+<div class="main-container">
+<div class="body-container">
+<div class="page-header">
+<h1><a href="/mdsh/index.html">#!/bin/crash</a></h1>
+<a class="off-screen skip-to-content" href="#content">Skip to content</a>
+<ul>
+<li><a href="/mdsh/index.html">home</a></li>
+<li><a href="/mdsh/about.html">about</a></li>
+<li><a href="/mdsh/archive.html">archive</a></li>
+<li><a href="/mdsh/categories.html">categories</a></li>
+<li><a href="/mdsh/contact.html">contact</a></li>
+<li><a href="/mdsh/tags.html">tags</a></li>
+</ul>
+</div>
+<div id="content" class="post-content">
+<h2>Generating an RSS feed</h2>
+<div class="post-header">
+<div class="post-meta">
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+<span class="time-to-read">1 min</span>
+<span class="date">2019/02/23</span>
+<span class="author">sc0ttj</span>
+<span class="twitter">@foobar</span>
+<div class="tags">
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
+<span><a href="/mdsh/tags/rss.html">rss</a></span>
+</div>
+</div>
+</div>
+
+<p>Here is the bash script used by this site to generate rss feeds.</p>
+
+<p>The usage (in <code>update_pages</code>) is <code>./create_rss posts/ &gt; feed.rss</code>.</p>
+
+<p>Here is the script:</p>
+
+<pre><code>
+#!/bin/bash
+
+# Generate an RSS 2.0 feed directly from your existing web site
+
+# Author    - Pádraig Brady <P@draigBrady.com>
+# Licence   - LGPLV2
+# Releases  -
+#   1.0     - Jun 19 2006 - Initial release
+#   1.1     - Jun 26 2006 - Exclude files with "Exclude from bashfeed"
+#                           HTML comment within the first 10 lines.
+#   1.2     - May 01 2007 - Add author elements (from html if present)
+#   1.4     - May 04 2011
+#    http://github.com/pixelb/scripts/commits/master/scripts/bashfeed
+
+# Just run this script from the root directory of your web site and
+# it will generate feed items for the newest files. Generally I do this
+# just before I sync my local web site copy to my public server.
+
+# One can generate a feed for a subset of the site by still running
+# from the root directory, and passing a subdirectory to start at.
+
+# To change the feed TITLE and DESCRIPTION, set those environment
+# variables before running the script.
+
+# Which files are selected and excluded can be configured below.
+# Note for html files it will extract the following elements if present
+#   <head>
+#     <title>Item title</title>
+#     <meta name="description" content="One line item description">
+#     <meta name="keywords" content="Item tags">
+#   </head>
+
+# Note this script will keep the same item guid for an updated file.
+# Just updating the pubDate will not cause liferea 1.0.11 at least
+# to mark the item as updated (or update the timestamp even).
+# One must change the description or title also, and so
+# I set the (hidden) description to the file timestamp.
+#
+# Testing with thunderbird 1.0.8 shows that it indexes on link
+# and so wont ever show updates to other fields. Therefore I append #seconds
+# to the link to force it to create a new entry for an updated item.
+#
+# Note you may find the http://www.pixelbeat.org/scripts/fix script
+# useful for doing edits to files that you don't want to show up
+# as updated content in the feed, or generally edit a file without
+# changing the modification date.
+
+if [ -f .site_config ];then
+  source .site_config
+fi
+
+num_files=18
+TITLE="${blog_title}"
+site="${blog_domain}${blog_url}"
+author="${blog_author}"
+suggested_update_freq=1440 #mins
+
+: ${TITLE=$site}
+: ${DESCRIPTION="latest from $site"}
+
+#files starting with . | files without a . | files ending in .c .cpp ...
+include_re='(^|/)[.].+|(^|/)[^.]+$|[.](c|cpp|py|sh|rc|htm|html)$' #only show these files
+
+exclude_re='(create_|update_pages|publish|slugify\.sh|markdown.\pl|mdshell|generate_sitemap\.sh|\.git/|tmp/|.htaccess|index\.html|archive.html|categories/|categories\.html|contact\.html|tags/|tags\.html|404\.html)|README)' #dont show these paths
+
+default_files="index.html index.shtml index.php"
+
+
+############# No user serviceable parts below ###################
+
+for file in $default_files; do
+    replace_default_files="$replace_default_files; s/\(.*\)$file$/\1/;t"
+done
+
+echo "<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="rss2.css" ?>
+
+<rss version="2.0">
+<channel>"
+
+time=`date --rfc-2822`
+
+echo '
+<title>$TITLE</title>
+<ttl>$suggested_update_freq</ttl>
+<link>http://$site/$1</link>
+<generator>http://$site/create_rss</generator>
+<description>$DESCRIPTION</description>
+<managingEditor>$author</managingEditor>
+<lastBuildDate>$time</lastBuildDate>
+<language>`echo $LANG | sed 's/\(..\)_.*/\1/'`</language>
+'
+
+xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]"; }
+
+find "$1" -type f -printf "%p   %T@
+" |
+sed 's/^\.\///' | # strip leading ./ when "$1" is empty
+sort -k2,2nr |
+cut -f1 |
+grep -E  "$include_re" |
+grep -Ev "$exclude_re" |
+while read file; do
+    if ! head "$file" | grep -Fiq '<!--Exclude from bashfeed-->'; then
+        echo "$file"
+        i=$((i+1))
+        [ $i -eq $num_files ] && break
+    fi
+done |
+while read file; do
+    pubDate=`date --reference="$file" --rfc-2822`
+    force_update=`date --reference="$file" "+%s"`
+    title=""; keywords=""; description=""
+    if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
+        title=`sed -n 's/.*<title>\(.*\)<\/title>.*/\1/ip;T;q' < "$file"`
+        keywords=`sed -n 's/.*<META.*NAME="keywords".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+        description=`sed -n 's/.*<META.*NAME="description".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+        page_author=`sed -n 's/.*<META.*NAME="author".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+        extracted_text="$title $keywords $description$ $page_author"
+        if echo "$extracted_text" | xml_unescaped; then
+          echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
+          exit 1
+        fi
+    elif [ -x "$file" ]; then # I always have a 1 line description on line 3 of my scripts
+        description=`sed -n '3s/# \(.*\)/\1/p' "$file"`
+    fi
+    file=`echo "$file" | sed "$replace_default_files"`
+    [ -z "$title" ] && title="$file"
+    tags=""
+    if [ ! -z "$keywords" ]; then
+        for keyword in $keywords; do
+            tags=`echo -ne "$tags<category>$keyword</category>
+    "`
+        done
+    fi
+    if [ "$page_author" ]; then
+        if [ "$page_author" = "$author" ]; then
+            page_author=""
+        else
+            page_author=`echo -ne "<author>$page_author</author>
+    "`
+        fi
+    fi
+echo "
+<item>
+    <title>$title</title>
+    <guid>http://$site/$file</guid>
+    <pubDate>$pubDate</pubDate>
+    <link>http://$site/$file#$force_update</link>
+    $page_author$tags<description><![CDATA[$description<!--$force_update-->]]></description>
+</item>
+"
+done &&
+echo '</channel>
+</rss>'
+</code></pre>
+</div>
+<div class="post-footer">
+<div class="post-meta">
+<span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+<span class="time-to-read">1 min</span>
+<span class="date">2019/02/23</span>
+<span class="author">sc0ttj</span>
+<span class="twitter">@foobar</span>
+<div class="tags">
+<span><a href="/mdsh/tags/blog.html">blog</a></span>
+<span><a href="/mdsh/tags/rss.html">rss</a></span>
+</div>
+</div>
+<ul class="prev-next-posts">
+<li class="prev-post">
+<span>Previous: </span> 
+<a href="../../../2019/02/17/adding-a-stylesheet.html">Adding a stylesheet</a>
+</li>
+<li class="next-post">
+<span>Next:</span> 
+<a href="../../../2019/02/23/generating-an-xml-sitemap.html">Generating an XML sitemap</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer">
+<p>© #!/bin/crash 2019</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# title:        Generating an RSS feed
+# slug name:    generating-an-rss-feed
+# description:  An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.
+# time to read: 1 min
+# category:     blog,rss
+# tags:         blog, rss
+# author:       sc0ttj
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom 
+# created:      2019/02/23
+# modified:     2019/02/23
+
+---
+## Generating an RSS feed
+
+Here is the bash script used by this site to generate rss feeds.
+
+The usage (in `update_pages`) is `./create_rss posts/ > feed.rss`.
+
+Here is the script:
+
+```$(cat create_rss )
+```
+
+

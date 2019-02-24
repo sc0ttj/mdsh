@@ -39,3 +39,5 @@
 2019/02/16|ifs-and-the-read-command.mdsh|IFS and the read command||blog|blog,shell
 2019/02/16|missing-post-header.mdsh|Missing post header||blog|blog
 2019/02/17|adding-a-stylesheet.mdsh|Adding a stylesheet||blog|blog,css
+2019/02/23|generating-an-rss-feed.mdsh|Generating an RSS feed||blog,rss|blog, rss
+2019/02/23|generating-an-xml-sitemap.mdsh|Generating an XML sitemap||blog|blog, xml
