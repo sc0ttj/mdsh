@@ -8,7 +8,7 @@
 # email:        foo@bar.com
 # twitter:      @foobar
 # language:     en
-# JS deps:      cash-dom 
+# JS deps:      cash-dom
 # created:      2019/02/23
 # modified:     2019/02/23
 
@@ -19,9 +19,4 @@ Here is the bash script used by this site to generate rss feeds.
 
 The usage (in `update_pages`) is `./create_rss posts/ > feed.rss`.
 
-Here is the script:
-
-```$(cat create_rss )
-```
-
-
+Here is the script: [create_rss](/mdsh/create_rss)
