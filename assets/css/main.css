@@ -37,26 +37,31 @@ code {
 h1,
 h1 code {
   font-size: 32px;
+  line-height: 1.2em;
 }
 
 h2,
 h2 code {
   font-size: 24px;
+  line-height: 1.2em;
 }
 
 h3,
 h3 code {
   font-size: 20px;
+  line-height: 1.2em;
 }
 
 h4,
 h4 code {
   font-size: 18px;
+  line-height: 1.2em;
 }
 
 p code,
 li code {
   font-size: 16px;
+  line-height: 1.2em;
 }
 
 h1 code,
