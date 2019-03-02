@@ -1,0 +1,31 @@
+# title:        Adding authors pages
+# slug name:    adding-authors-pages
+# description:  Listing all blog post authors, and the posts they've written, in a nice searchable way is now possible in `mdsh`.
+# time to read: 1 min
+# category:     blog
+# tags:         blog
+# author:       sc0ttj
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom jets
+# created:      2019/03/02
+# modified:     2019/03/02
+
+---
+## Adding authors pages
+
+Author pages are now automatically generated when adding posts, in addition to the indexes already generated.
+
+This means, that users can go to the [authors page](/mdsh/authors/index.html) to see a list of all authors who've written posts on this blog.
+
+Clicking on the author will take you to the [list of posts they've written](/mdsh/authors/sc0ttj.html).
+
+This should make it a little easier to find what you need on the site.
+
+### Further Improvements
+
+- List the authors index somewhere (in page header, or elsewhere)
+- In post header/footer, make authors name clickable (go to authors page, listing all their posts)
+
+

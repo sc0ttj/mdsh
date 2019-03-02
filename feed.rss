@@ -10,8 +10,42 @@
 <generator>https://sc0ttj.github.io/mdsh/create_rss</generator>
 <description>latest from sc0ttj.github.io/mdsh</description>
 <managingEditor>foo@bar.com (sc0ttj)</managingEditor>
-<lastBuildDate>Sat, 02 Mar 2019 19:45:17 +0800</lastBuildDate>
+<lastBuildDate>Sat, 02 Mar 2019 21:53:36 +0800</lastBuildDate>
 <language>en</language>
+
+
+<item>
+    <title>Searching this website</title>
+    <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/searching-this-website.html</guid>
+    <pubDate>Sat, 02 Mar 2019 21:53:29 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/searching-this-website.html#1551534809</link>
+    <category>blog,</category>
+    <category>javascript</category>
+    <description><![CDATA[I've made it easier to search the website, by enabling Jets powered site search on more pages.<!--1551534809-->]]></description>
+</item>
+
+
+<item>
+    <title>Fixing RSS generation</title>
+    <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html</guid>
+    <pubDate>Sat, 02 Mar 2019 21:44:32 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html#1551534272</link>
+    <category>bsd,</category>
+    <category>linux,</category>
+    <category>gnu,</category>
+    <category>osx</category>
+    <description><![CDATA[The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.<!--1551534272-->]]></description>
+</item>
+
+
+<item>
+    <title>Adding authors pages</title>
+    <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/adding-authors-pages.html</guid>
+    <pubDate>Sat, 02 Mar 2019 21:50:08 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/adding-authors-pages.html#1551534608</link>
+    <category>blog</category>
+    <description><![CDATA[Listing all blog post authors, and the posts they've written, in a nice searchable way is now possible in `mdsh`.<!--1551534608-->]]></description>
+</item>
 
 
 <item>
@@ -164,36 +198,6 @@
     <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html#1551521335</link>
     <category>test</category>
     <description><![CDATA[One of those things...<!--1551521335-->]]></description>
-</item>
-
-
-<item>
-    <title>Error in choosing valid markdown file (doh!)</title>
-    <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-choosing-valid-markdown-file-doh.html#1551521335</link>
-    <category>test</category>
-    <description><![CDATA[A simple problem hopefully fixed...<!--1551521335-->]]></description>
-</item>
-
-
-<item>
-    <title>How to edit existing pages</title>
-    <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/13/how-to-edit-existing-pages.html#1551521335</link>
-    <category>blog</category>
-    <description><![CDATA[Here is the not-so-nice method currently being used to edit pre-existing posts<!--1551521335-->]]></description>
-</item>
-
-
-<item>
-    <title>Better site headers</title>
-    <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/13/better-site-headers.html#1551521335</link>
-    <category>blog</category>
-    <description><![CDATA[A good site header includes a navigation menu - which should list all important pages/sections of a website. I've sorted a better way of auto-generating these site headers.<!--1551521335-->]]></description>
 </item>
 
 </channel>
