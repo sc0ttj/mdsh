@@ -45,8 +45,6 @@
 # as updated content in the feed, or generally edit a file without
 # changing the modification date.
 
-set -a
-
 if [ -f .site_config ];then
   source .site_config
 fi
