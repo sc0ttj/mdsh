@@ -1,7 +1,11 @@
-blog_title="#!/bin/crash"
+################################################################################
+
+# site defaults
+
+blog_title="mdsh"
 blog_language="en"
-blog_descr="My wonderful blog about lots of things."
-blog_keywords="blog, news, feed, latest updates"
+blog_descr="mdsh - a simple static site generator for modern websites, written in Bash."
+blog_keywords="mdsh, static site generator, project page, open source, blog, news, feed"
 blog_categories="blog, bash, shell, javascript, css, programming, puppy linux, test, games"
 blog_domain="sc0ttj.github.io"
 blog_url="/mdsh" # no trailing slash
@@ -12,3 +16,14 @@ blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&sub
 blog_js_deps="cash-dom jets"
 blog_google_analytics_id=""
 blog_footer="© ${blog_title} $(date -u +"%Y")"
+
+################################################################################
+
+# nicer command-line interface (CLI)
+
+alias create_page='./create_page'
+alias create_post='./create_post'
+alias create_rss='./create_rss'
+alias generate_sitemap.sh='./generate_sitemap'
+alias update_pages='./update_pages'
+alias publish='./publish'
