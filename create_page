@@ -351,7 +351,7 @@ function list_categories {
   for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)
   do
     post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh | sort -u | wc -l 2>/dev/null)
-    [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count//^ /})</span>"
+    [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/categories/'$(./slugify.sh "${category}")'.html">'${category}'</a> '$post_count'</li>'
   done
   echo '</ul>'
@@ -362,7 +362,7 @@ function list_tags {
   for tag in $(cut -f6 -d'|' ./posts.csv | tr ',' '\n' | tr ' ' '\n' | sort -u)
   do
     post_count=$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
-    [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count//^ /})</span>"
+    [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
   done
   echo '</ul>'
