@@ -125,7 +125,6 @@ function print_site_meta {
 <meta name="copyright" content="&copy; '${blog_title}'">
 <meta name="language" content="'${post_language:-$blog_language}'">
 <meta name="robots" content="index,follow">
-<meta name="revised" content="'$current_date'">
 <meta name="topic" content="'${blog_categories}'">
 <meta name="owner" content="'${post_author:-$blog_author}'">
 <meta name="pagename" content="'${page_title}'">
