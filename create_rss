@@ -45,6 +45,8 @@
 # as updated content in the feed, or generally edit a file without
 # changing the modification date.
 
+set -a
+
 if [ -f .site_config ];then
   source .site_config
 fi
@@ -106,23 +108,21 @@ while read file; do
     fi
 done |
 while read file; do
-    pubDate=`date -r "$file" +"%a, %d %b %Y %T %z"`
-    force_update=`date -r "$file" "+%s"`
+    timestamp=$(stat -f "%m" "$file")
+    pubDate=`date -r "$timestamp" +"%a, %d %b %Y %T %z"`
+    force_update=`date -r "$timestamp" "+%s"`
     title=""; keywords=""; description=""
     if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
-        title=`sed -n 's/.*<title>\(.*\)<\/title>.*/\1/ip;T;q' < "$file"`
-        keywords=`sed -n 's/.*<META.*NAME="keywords".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
-        description=`sed -n 's/.*<META.*NAME="description".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
-        page_author=`sed -n 's/.*<META.*NAME="author".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
+        title="`grep '<title>' "$file" | sed -e 's|<title>||' -e 's|</title>||'`"
+        keywords="`grep -i '<meta name="keywords"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
+        description="`grep -i '<meta name="description"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
+        page_author="`grep -i '<meta name="author"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
         extracted_text="$title $keywords $description$ $page_author"
         if echo "$extracted_text" | xml_unescaped; then
           echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
           exit 1
         fi
-    elif [ -x "$file" ]; then # I always have a 1 line description on line 3 of my scripts
-        description=`sed -n '3s/# \(.*\)/\1/p' "$file"`
     fi
-    file=`echo "$file" | sed "$replace_default_files"`
     [ -z "$title" ] && title="$file"
     tags=""
     if [ ! -z "$keywords" ]; then
