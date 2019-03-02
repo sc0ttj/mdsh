@@ -59,27 +59,16 @@ suggested_update_freq=1440 #mins
 : ${TITLE=$site}
 : ${DESCRIPTION="latest from $site"}
 
-#files starting with . | files without a . | files ending in .c .cpp ...
-include_re='(^|/)[.].+|(^|/)[^.]+$|[.](c|cpp|py|sh|rc|htm|html)$' #only show these files
+# get OS type (Linux, Darwin, ??)
+os_type="$(uname)"
 
-exclude_re='(create_|update_pages|publish|slugify\.sh|markdown.\pl|mdshell|generate_sitemap\.sh|\.git/|tmp/|.htaccess|index\.html|archive.html|categories/|categories\.html|contact\.html|tags/|tags\.html|404\.html)|README)' #dont show these paths
-
-default_files="index.html index.shtml index.php"
-
-
-############# No user serviceable parts below ###################
-
-for file in $default_files; do
-    replace_default_files="$replace_default_files; s/\(.*\)$file$/\1/;t"
-done
+buildDate=`date +"%a, %d %b %Y %T %z"`
 
 echo '<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="rss2.css" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 <atom:link href="http://'"$site"'/feed.rss" rel="self" type="application/rss+xml" />'
-
-time=`date +"%a, %d %b %Y %T %z"`
 
 echo "
 <title>$TITLE</title>
@@ -88,7 +77,7 @@ echo "
 <generator>https://$site/create_rss</generator>
 <description>$DESCRIPTION</description>
 <managingEditor>$email ($author)</managingEditor>
-<lastBuildDate>$time</lastBuildDate>
+<lastBuildDate>$buildDate</lastBuildDate>
 <language>`echo $LANG | sed 's/\(..\)_.*/\1/'`</language>
 "
 
@@ -96,47 +85,50 @@ xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]";
 
 find ./posts -type f -name "*.html" | grep -v "index.html" | sort -r |
 sed 's/^\.\///' | # strip leading ./ when "$1" is empty
-grep -E  "$include_re" |
-grep -Ev "$exclude_re" |
 while read file; do
-    if ! head "$file" | grep -Fiq '<!--Exclude from bashfeed-->'; then
-        echo "$file"
-        i=$((i+1))
-        [ $i -eq $num_files ] && break
-    fi
+  if ! head "$file" | grep -Fiq '<!--Exclude from bashfeed-->'; then
+      echo "$file"
+      i=$((i+1))
+      [ $i -eq $num_files ] && break
+  fi
 done |
 while read file; do
+  if [ "$os_type" = "Linux" ];then
+    # use GNU date
     pubDate=`date -r "$file" +"%a, %d %b %Y %T %z"`
     force_update=`date -r "$file" "+%s"`
-    title=""; keywords=""; description=""
-    if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
-        title=`sed -n 's/.*<title>\(.*\)<\/title>.*/\1/ip;T;q' < "$file"`
-        keywords=`sed -n 's/.*<META.*NAME="keywords".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
-        description=`sed -n 's/.*<META.*NAME="description".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
-        page_author=`sed -n 's/.*<META.*NAME="author".*CONTENT="\(.*\)".*/\1/ip;T;q' < "$file"`
-        extracted_text="$title $keywords $description$ $page_author"
-        if echo "$extracted_text" | xml_unescaped; then
-          echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
-          exit 1
-        fi
-    elif [ -x "$file" ]; then # I always have a 1 line description on line 3 of my scripts
-        description=`sed -n '3s/# \(.*\)/\1/p' "$file"`
-    fi
-    file=`echo "$file" | sed "$replace_default_files"`
-    [ -z "$title" ] && title="$file"
-    tags=""
-    if [ ! -z "$keywords" ]; then
-        for keyword in $keywords; do
-            tags=`echo -ne "$tags<category>$keyword</category>\n    "`
-        done
-    fi
-    if [ "$page_author" ]; then
-        if [ "$page_author" = "$author" ]; then
-            page_author=""
-        else
-            page_author=`echo -ne "<author>$page_author</author>\n    "`
-        fi
-    fi
+  else # Mac, BSD
+    # use BSD date
+    timestamp=$(stat -f "%m" "$file")
+    pubDate=`date -r "$timestamp" +"%a, %d %b %Y %T %z"`
+    force_update=`date -r "$timestamp" "+%s"`
+  fi
+  title=""; keywords=""; description=""
+  if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
+      title="`grep '<title>' "$file" | sed -e 's|<title>||' -e 's|</title>||'`"
+      keywords="`grep -i '<meta name="keywords"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
+      description="`grep -i '<meta name="description"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
+      page_author="`grep -i '<meta name="author"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
+      extracted_text="$title $keywords $description$ $page_author"
+      if echo "$extracted_text" | xml_unescaped; then
+        echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
+        exit 1
+      fi
+  fi
+  [ -z "$title" ] && title="$file"
+  tags=""
+  if [ ! -z "$keywords" ]; then
+      for keyword in $keywords; do
+          tags=`echo -ne "$tags<category>$keyword</category>\n    "`
+      done
+  fi
+  if [ "$page_author" ]; then
+      if [ "$page_author" = "$author" ]; then
+          page_author=""
+      else
+          page_author=`echo -ne "<author>$page_author</author>\n    "`
+      fi
+  fi
 echo "
 <item>
     <title>$title</title>
