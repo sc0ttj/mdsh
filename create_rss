@@ -10,7 +10,7 @@
 #                           HTML comment within the first 10 lines.
 #   1.2     - May 01 2007 - Add author elements (from html if present)
 #   1.4     - May 04 2011
-#    http://github.com/pixelb/scripts/commits/master/scripts/bashfeed
+#    https://github.com/pixelb/scripts/commits/master/scripts/bashfeed
 
 # Just run this script from the root directory of your web site and
 # it will generate feed items for the newest files. Generally I do this
@@ -40,7 +40,7 @@
 # and so wont ever show updates to other fields. Therefore I append #seconds
 # to the link to force it to create a new entry for an updated item.
 #
-# Note you may find the http://www.pixelbeat.org/scripts/fix script
+# Note you may find the https://www.pixelbeat.org/scripts/fix script
 # useful for doing edits to files that you don't want to show up
 # as updated content in the feed, or generally edit a file without
 # changing the modification date.
@@ -52,6 +52,7 @@ fi
 num_files=18
 TITLE="${blog_title}"
 site="${blog_domain}${blog_url}"
+email="${blog_email}"
 author="${blog_author}"
 suggested_update_freq=1440 #mins
 
@@ -74,29 +75,27 @@ done
 
 echo '<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/css" href="rss2.css" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="http://'"$site"'/feed.rss" rel="self" type="application/rss+xml" />'
 
-<rss version="2.0">
-<channel>'
-
-time=`date --rfc-2822`
+time=`date +"%a, %d %b %Y %T %z"`
 
 echo "
 <title>$TITLE</title>
 <ttl>$suggested_update_freq</ttl>
-<link>http://$site/$1</link>
-<generator>http://$site/create_rss</generator>
+<link>https://$site/$1</link>
+<generator>https://$site/create_rss</generator>
 <description>$DESCRIPTION</description>
-<managingEditor>$author</managingEditor>
+<managingEditor>$email ($author)</managingEditor>
 <lastBuildDate>$time</lastBuildDate>
 <language>`echo $LANG | sed 's/\(..\)_.*/\1/'`</language>
 "
 
 xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]"; }
 
-find "$1" -type f -printf "%p\t%T@\n" |
+find ./posts -type f -name "*.html" | grep -v "index.html" | sort -r |
 sed 's/^\.\///' | # strip leading ./ when "$1" is empty
-sort -k2,2nr |
-cut -f1 |
 grep -E  "$include_re" |
 grep -Ev "$exclude_re" |
 while read file; do
@@ -107,8 +106,8 @@ while read file; do
     fi
 done |
 while read file; do
-    pubDate=`date --reference="$file" --rfc-2822`
-    force_update=`date --reference="$file" "+%s"`
+    pubDate=`date -r "$file" +"%a, %d %b %Y %T %z"`
+    force_update=`date -r "$file" "+%s"`
     title=""; keywords=""; description=""
     if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
         title=`sed -n 's/.*<title>\(.*\)<\/title>.*/\1/ip;T;q' < "$file"`
@@ -141,9 +140,9 @@ while read file; do
 echo "
 <item>
     <title>$title</title>
-    <guid>http://$site/$file</guid>
+    <guid>https://$site/$file</guid>
     <pubDate>$pubDate</pubDate>
-    <link>http://$site/$file#$force_update</link>
+    <link>https://$site/$file#$force_update</link>
     $page_author$tags<description><![CDATA[$description<!--$force_update-->]]></description>
 </item>
 "
