@@ -2,5 +2,8 @@ User-agent: *
 Allow: *.html$
 Disallow: */assets/
 Disallow: */cgi-bin/
-Disallow: /tmp/
+Disallow: /categories/
+Disallow: /plugins/
+Disallow: /tags/
+Disallow: /users/
 Sitemap: https://sc0ttj.github.io/mdsh/sitemap.xml
