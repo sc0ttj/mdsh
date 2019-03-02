@@ -61,7 +61,7 @@ do
   for month in $(ls -1 posts/$year)
   do
     [ ! -d posts/$year/$month ] && continue
-    monthly_posts="<h2>Posts in $(date -d $month '+%B') $year</h2>$(list_posts_in "$year/$month")"
+    monthly_posts="<h2>Posts in $(date -d $year-$month-01 '+%B') $year</h2>$(list_posts_in "$year/$month")"
     [ "$monthly_posts" = "" ] && continue
     echo "Updating: posts/$year/$month/index.html"
     touch posts/$year/$month/index.html
