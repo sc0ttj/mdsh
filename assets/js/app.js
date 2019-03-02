@@ -9,6 +9,7 @@ $(function() {
   // site search, using Jets (https://jets.js.org/)
   if (Jets) {
     // check which page we are on - check which elems exist on the page
+    var authors = document.getElementsByClassName("authors-list")[0]; // authors page
     var categories = document.getElementsByClassName("categories-list")[0]; // categories page
     var tags = document.getElementsByClassName("tags-list")[0]; // tags pge
     var postPreviews = document.getElementsByClassName("post-preview")[0]; // homepage
@@ -16,7 +17,10 @@ $(function() {
     var contentToSearch = "";
 
     // set the container elem to search
-    if (categories) {
+    if (authors) {
+      // authors page
+      contentToSearch = ".authors-list";
+    } else if (categories) {
       // categories page
       contentToSearch = ".categories-list";
     } else if (tags) {

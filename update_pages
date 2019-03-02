@@ -98,6 +98,33 @@ if [ "$all_posts" != "" ];then
 fi
 
 
+# update authors index page
+touch authors/index.html
+./create_page "<h2>Authors</h2>\n$(list_authors)" authors/index.html
+# update authors pages
+[ ! -d ./authors/ ] && mkdir ./authors/
+cut -f4 -d'|' ./posts.csv | tr ',' '\n' | grep -v "^$" | sort -u | while read author
+do
+  file="authors/$(./slugify.sh "$author").html"
+  echo "Updating: $file"
+  [ ! -f $file ] && touch $file
+  ./create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
+done
+
+
+# update category pages
+category_posts=''
+site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
+for category in $site_categories
+do
+  category_posts="<h2>Category: $category</h2>$(list_posts_in_category "${category}")"
+  [ "$category_posts" = "" ] && continue
+  echo "Updating: categories/$category.html"
+  touch categories/$category.html
+  ./create_page "$category_posts" categories/$category.html
+done
+
+
 # update categories index page
 echo "Updating: categories.html"
 touch categories.html

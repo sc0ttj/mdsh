@@ -247,7 +247,7 @@ function print_site_javascripts {
     js_deps="$blog__js_deps $post_js_deps"
   fi
   # add JS packages from unpkg.com
-  for pkgname in $(echo "$js_deps" | tr ',' ' ')
+  for pkgname in $(echo "$js_deps" | tr ',' ' ' | sort -u)
   do
     echo '<script class="unpkg" id="unpkg-'$pkgname'" defer src="//unpkg.com/'$pkgname'"></script>'
   done
@@ -367,6 +367,17 @@ function list_tags {
   echo '</ul>'
 }
 
+function list_authors {
+  echo '<ul class="authors-list">'
+  for author in $(cut -f4 -d'|' ./posts.csv | tr ',' '\n' grep -v "^$" | sort -u)
+  do
+    post_count=$(grep -lRE "# author.*$author[,]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
+    [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
+    echo '<li><a href="'${blog_url}'/authors/'$(./slugify.sh "${author}")'.html">'${author}'</a> '$post_count'</li>'
+  done
+  echo '</ul>'
+}
+
 ################################################################################
 
 #
@@ -440,6 +451,18 @@ function list_recent_posts {
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
     [ "$post_name" = "" ] && post_name=$(basename ${post//.mdsh/})
     echo '<li><a href="'${blog_url}'/posts/'${post//.mdsh/.html}'">'${post_name}'</a></li>'
+  done
+  echo '</ul>'
+}
+
+function list_posts_by_author {
+  local author="$1"
+  matching_posts="$(grep -lRE "# author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -r)"
+  echo '<ul class="posts-by-author posts">'
+  for post in $matching_posts
+  do
+    post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
+    echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
   done
   echo '</ul>'
 }

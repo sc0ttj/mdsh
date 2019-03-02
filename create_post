@@ -13,8 +13,7 @@
 #          You can give `-all` to set all meta info, allowing you
 #          to override site defaults.
 
-# load the users config file from $HOME
-[ -f $HOME/.bl/config ] && source $HOME/.bl/config
+
 # load the local config file
 [ -f .site_config ] && source .site_config
 
@@ -36,15 +35,15 @@ read -er tags
 # if -all given, as kfor all meta info
 if [ "$1" = "-all" ];then
   echo -n "Author:       "
-  read -er author
+  read -er -i "$blog_author" author
   echo -n "Email:        "
-  read -er email
+  read -er -i "$blog_email" email
   echo -n "Twitter:      "
-  read -er twitter
+  read -er -i "$blog_twitter" twitter
   echo -n "Language:     "
-  read -er language
+  read -er -i "$blog_language" language
   echo -n "JS deps (comma separated package names): "
-  read -er js_deps
+  read -er -i "$blog_js_deps" js_deps
 fi
 
 # slugiy the tags
@@ -52,7 +51,7 @@ OLDIFS=$IFS
 IFS=","
 for tag in $tags
 do
-  fixed_tags="$fixed_tags $(slugify.sh $tag | sed 's/^-//'),"
+  fixed_tags="$fixed_tags $(./slugify.sh $tag | sed 's/^-//'),"
 done
 IFS=$OLD_IFS
 fixed_tags="$(echo "$fixed_tags" | sed -e 's/^ //' -e 's/,$//')"
