@@ -13,6 +13,13 @@ $(function() {
     var categories = document.getElementsByClassName("categories-list")[0]; // categories page
     var tags = document.getElementsByClassName("tags-list")[0]; // tags pge
     var posts = document.getElementsByClassName("post-preview")[0]; // homepage
+    var postsMatchingCategory = document.getElementsByClassName(
+      "posts-in-category"
+    )[0]; // categories/<name>.html
+    var postsMatchingTag = document.getElementsByClassName(
+      "posts-matching-tag"
+    )[0]; // tags/<name>.html
+
     var contentToSearch = "";
 
     // set the container elem to search
@@ -25,12 +32,18 @@ $(function() {
     } else if (tags) {
       // tags page
       contentToSearch = ".tags-list";
+    } else if (postsMatchingCategory) {
+      // posts in category
+      contentToSearch = ".posts-in-category";
+    } else if (postsMatchingTag) {
+      // posts matching tag
+      contentToSearch = ".posts-matching-tag";
     } else if (posts) {
       // homepage
       contentToSearch = "#content";
     }
 
-    console.log("contentToSearch", contentToSearch);
+    //console.log("contentToSearch", contentToSearch);
 
     if (contentToSearch !== "") {
       // make the site search input visible
