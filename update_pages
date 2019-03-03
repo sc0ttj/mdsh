@@ -8,8 +8,6 @@
 # if -all is give, all HTML pages will be re-built, not just the index
 # pages (categories, tags, archive, home/recent posts, etc)
 
-# load the users config file from $HOME
-[ -f $HOME/.bl/config ] && source $HOME/.bl/config
 # load the local config file
 [ -f .site_config ] && source .site_config
 
@@ -144,16 +142,19 @@ done
 
 
 # update contact page
-echo "Updating: contact.html"
-#"<form action=\"https://formspree.io/you@email.com\" method=\"post\">"                 # formspree
-#"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
-#"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
+if [ "$blog_email" != "" ];then
+  echo "Updating: contact.html"
 
-contact_twitter=''
-if [ "$blog_twitter" != "" ];then
-  contact_twitter="<p>You can also contact me on Twitter <a href=\"https://twitter.com/$blog_twitter\" target=\"_blank\">$blog_twitter</a>.</p>"
-fi
-./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+  contact_twitter=''
+  if [ "$blog_twitter" != "" ];then
+    contact_twitter="<p>You can also contact me on Twitter <a href=\"https://twitter.com/$blog_twitter\" target=\"_blank\">$blog_twitter</a>.</p>"
+  fi
+
+  #"<form action=\"https://formspree.io/you@email.com\" method=\"post\">"                 # formspree
+  #"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
+  #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
+
+  ./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
 $contact_twitter
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
   <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
@@ -178,7 +179,7 @@ $contact_twitter
   // add it to the page
   document.getElementById('contact-form').setAttribute('action', 'https://formspree.io/' + str);
 </script>" > contact.html
-
+fi
 
 # update tags index page
 echo "Updating: tags.html"
