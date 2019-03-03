@@ -217,8 +217,8 @@ function print_site_inline_styles {
 
 function print_site_stylesheets {
   echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$timestamp'">'
-    local filename="$(basename "$output_file" 2>/dev/null)"
-    filename="assets/css/${filename//.html/.css}?v='$timestamp'"
+  local filename="$(basename "$output_file" 2>/dev/null)"
+  filename="assets/css/${filename//.html/.css}"
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$timestamp'">'
   fi
@@ -253,6 +253,12 @@ function print_site_javascripts {
   done
   # add site-wide app.js, if it exists
   [ -f ./assets/js/app.js ] && echo '<script id="appjs" defer src="'$blog_url'/assets/js/app.js?v='$timestamp'"></script>'
+  # custom JS for each page
+  local filename="$(basename "$output_file" 2>/dev/null)"
+  filename="assets/js/${filename//.html/.js}"
+  if [ -f "$filename" ];then
+    echo '<script id="js-'$filename'" defer src="'${blog_url}'/'"${filename}"'?v='$timestamp'"></script>'
+  fi
 }
 
 function print_site_header {
@@ -266,7 +272,7 @@ function print_site_header {
   echo '<ul>'
 
   # include index page(s) .. homepage first, then the others
-  echo '<li><a href="'${blog_url}'/index.html">home</a></li>'
+  #echo '<li><a href="'${blog_url}'/index.html">home</a></li>'
   index_pages=$(ls -1 *.html)
   for index_page in $(echo "$index_pages" | grep -vE 'index.html|404.html|^_*.html')
   do
