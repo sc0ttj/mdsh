@@ -10,194 +10,194 @@
 <generator>https://sc0ttj.github.io/mdsh/create_rss</generator>
 <description>latest from sc0ttj.github.io/mdsh</description>
 <managingEditor>foo@bar.com (sc0ttj)</managingEditor>
-<lastBuildDate>Sat, 02 Mar 2019 21:53:36 +0800</lastBuildDate>
+<lastBuildDate>Sun, 03 Mar 2019 08:28:41 +0800</lastBuildDate>
 <language>en</language>
 
 
 <item>
     <title>Searching this website</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/searching-this-website.html</guid>
-    <pubDate>Sat, 02 Mar 2019 21:53:29 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/searching-this-website.html#1551534809</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:32 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/searching-this-website.html#1551572912</link>
     <category>blog,</category>
     <category>javascript</category>
-    <description><![CDATA[I've made it easier to search the website, by enabling Jets powered site search on more pages.<!--1551534809-->]]></description>
+    <description><![CDATA[I've made it easier to search the website, by enabling Jets powered site search on more pages.<!--1551572912-->]]></description>
 </item>
 
 
 <item>
     <title>Fixing RSS generation</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html</guid>
-    <pubDate>Sat, 02 Mar 2019 21:44:32 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html#1551534272</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:32 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html#1551572912</link>
     <category>bsd,</category>
     <category>linux,</category>
     <category>gnu,</category>
     <category>osx</category>
-    <description><![CDATA[The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.<!--1551534272-->]]></description>
+    <description><![CDATA[The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.<!--1551572912-->]]></description>
 </item>
 
 
 <item>
     <title>Adding authors pages</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/02/adding-authors-pages.html</guid>
-    <pubDate>Sat, 02 Mar 2019 21:50:08 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/adding-authors-pages.html#1551534608</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:32 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/02/adding-authors-pages.html#1551572912</link>
     <category>blog</category>
-    <description><![CDATA[Listing all blog post authors, and the posts they've written, in a nice searchable way is now possible in `mdsh`.<!--1551534608-->]]></description>
+    <description><![CDATA[Listing all blog post authors, and the posts they've written, in a nice searchable way is now possible in `mdsh`.<!--1551572912-->]]></description>
 </item>
 
 
 <item>
     <title>Generating better homepages</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:19:12 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html#1551521952</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:32 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/24/generating-better-homepages.html#1551572912</link>
     <category>blog</category>
-    <description><![CDATA[The auto generated homepages have been greatly improved - by default they now list your sites most recent posts in full, instead of listing only the titles of each. This is a much nicer experience for users who land on your homepage.<!--1551521952-->]]></description>
+    <description><![CDATA[The auto generated homepages have been greatly improved - by default they now list your sites most recent posts in full, instead of listing only the titles of each. This is a much nicer experience for users who land on your homepage.<!--1551572912-->]]></description>
 </item>
 
 
 <item>
     <title>Adding a site search feature</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/24/adding-a-site-search-feature.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:19:12 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/24/adding-a-site-search-feature.html#1551521952</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:31 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/24/adding-a-site-search-feature.html#1551572911</link>
     <category>blog,</category>
     <category>javascript</category>
-    <description><![CDATA[I'm using Jets (https<!--1551521952-->]]></description>
+    <description><![CDATA[I'm using Jets (https<!--1551572911-->]]></description>
 </item>
 
 
 <item>
     <title>Generating an XML sitemap</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:19:12 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html#1551521952</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:31 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-xml-sitemap.html#1551572911</link>
     <category>blog,</category>
     <category>xml</category>
-    <description><![CDATA[Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.<!--1551521952-->]]></description>
+    <description><![CDATA[Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.<!--1551572911-->]]></description>
 </item>
 
 
 <item>
     <title>Generating an RSS feed</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:19:12 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html#1551521952</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:31 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/23/generating-an-rss-feed.html#1551572911</link>
     <category>blog,</category>
     <category>rss</category>
-    <description><![CDATA[An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.<!--1551521952-->]]></description>
+    <description><![CDATA[An RSS feed is a great way to tell users about new content - they can easily subscribe to your RSS feed and be notified when a new post had been published. RSS feeds can be viewed in browser or a dedicated news reader.<!--1551572911-->]]></description>
 </item>
 
 
 <item>
     <title>Adding a stylesheet</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:31 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html#1551572911</link>
     <category>blog,css</category>
-    <description><![CDATA[Styling this blog to look nicer, and how it works.<!--1551521335-->]]></description>
+    <description><![CDATA[Styling this blog to look nicer, and how it works.<!--1551572911-->]]></description>
 </item>
 
 
 <item>
     <title>Missing post header</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:31 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/missing-post-header.html#1551572911</link>
     <category>blog</category>
-    <description><![CDATA[A bug that I've just (hopefully) fixed.<!--1551521335-->]]></description>
+    <description><![CDATA[A bug that I've just (hopefully) fixed.<!--1551572911-->]]></description>
 </item>
 
 
 <item>
     <title>IFS and the read command</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:30 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/ifs-and-the-read-command.html#1551572910</link>
     <category>blog,shell</category>
-    <description><![CDATA[Or, how I parse markdown to generate valid HTML<!--1551521335-->]]></description>
+    <description><![CDATA[Or, how I parse markdown to generate valid HTML<!--1551572910-->]]></description>
 </item>
 
 
 <item>
     <title>Auto-generated post footers</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:30 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/16/auto-generated-post-footers.html#1551572910</link>
     <category>blog</category>
-    <description><![CDATA[This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.<!--1551521335-->]]></description>
+    <description><![CDATA[This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.<!--1551572910-->]]></description>
 </item>
 
 
 <item>
     <title>test</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:30 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/test.html#1551572910</link>
     <category>test</category>
-    <description><![CDATA[test<!--1551521335-->]]></description>
+    <description><![CDATA[test<!--1551572910-->]]></description>
 </item>
 
 
 <item>
     <title>tester</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:30 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/tester.html#1551572910</link>
     <category>test</category>
-    <description><![CDATA[testy test test test<!--1551521335-->]]></description>
+    <description><![CDATA[testy test test test<!--1551572910-->]]></description>
 </item>
 
 
 <item>
     <title>rof test</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:30 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/rof-test.html#1551572910</link>
     <category>test</category>
-    <description><![CDATA[test<!--1551521335-->]]></description>
+    <description><![CDATA[test<!--1551572910-->]]></description>
 </item>
 
 
 <item>
     <title>It works! Easier post editing and converting is on the way...</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:29 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html#1551572909</link>
     <category>blog,markdown,mdsh</category>
-    <description><![CDATA[After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.<!--1551521335-->]]></description>
+    <description><![CDATA[After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.<!--1551572909-->]]></description>
 </item>
 
 
 <item>
     <title>Generating valid markdown</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:29 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/generating-valid-markdown.html#1551572909</link>
     <category>test</category>
-    <description><![CDATA[A new feature of this blogging thing<!--1551521335-->]]></description>
+    <description><![CDATA[A new feature of this blogging thing<!--1551572909-->]]></description>
 </item>
 
 
 <item>
     <title>Fixed code block formatting</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:29 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/fixed-code-block-formatting.html#1551572909</link>
     <category>blog</category>
-    <description><![CDATA[Embedding scripts and code snippets works as before...<!--1551521335-->]]></description>
+    <description><![CDATA[Embedding scripts and code snippets works as before...<!--1551572909-->]]></description>
 </item>
 
 
 <item>
     <title>Error in file naming</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html</guid>
-    <pubDate>Sat, 02 Mar 2019 18:08:55 +0800</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html#1551521335</link>
+    <pubDate>Sun, 03 Mar 2019 08:28:29 +0800</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/02/15/error-in-file-naming.html#1551572909</link>
     <category>test</category>
-    <description><![CDATA[One of those things...<!--1551521335-->]]></description>
+    <description><![CDATA[One of those things...<!--1551572909-->]]></description>
 </item>
 
 </channel>
