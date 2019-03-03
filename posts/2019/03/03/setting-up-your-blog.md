@@ -1,0 +1,24 @@
+## Setting up your blog
+
+
+I've added two new scripts, to make setting and managing your blog a little easier.
+
+### `server`
+
+This script will start/stop the local webserver for you. It will work out the correct web root (the folder from which to run the server) by checking the `$blog_url` variable stored in `.site_config`.
+
+#### `server` usage
+
+`server start [port]` - start a server
+
+`server stop` - stop a running server
+
+### `setup`
+
+This script gives an easy, interactive way to set your sites default values. It doesn't require any options, and it writes the settings you choose to `.site_config`.
+
+### To do
+
+I need to update the documentation and [Wiki](https://github.com/sc0ttj/mdsh/wiki/) to reflect these changes.
+
+
