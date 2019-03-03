@@ -37,7 +37,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sun Mar 3 12:42:27 +08 2019">
+<meta property="article:published_time" content="Sun Mar 3 14:03:32 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="mdsh" />
@@ -50,8 +50,8 @@
   "@type": "Article",
   "headline": "mdsh",
   "headlineAlternative": "mdsh",
-  "datePublished": "Sun Mar 3 12:42:27 +08 2019",
-  "dateModified": "Sun Mar 3 12:42:27 +08 2019",
+  "datePublished": "Sun Mar 3 14:03:32 +08 2019",
+  "dateModified": "Sun Mar 3 14:03:32 +08 2019",
   "description": "mdsh - a simple static site generator for modern websites, written in Bash.",
   "keywords": "mdsh, static site generator, project page, open source, blog, news, feed",
   "image": {
@@ -81,16 +81,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551588147">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551588147">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551588147">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551588147">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551588147">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551588147">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551588147">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551588147">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551593012">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551593012">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551593012">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551593012">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551593012">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551593012">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551593012">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551593012">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551588147">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551593012">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -105,11 +105,11 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551588147">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551593012">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom"></script>
 <script class="unpkg" id="unpkg-jets" defer src="//unpkg.com/jets"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551588147"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551593012"></script>
 </head>
 <body>
 <div class="main-container">
@@ -128,6 +128,115 @@
 </div>
 <div id="content" class="post-content">
 <div class="post-preview">
+<h2><a href="/mdsh/posts/2019/03/03/highlighting-search-terms-on-the-page.html">Highlighting search terms on the page</a></h2> <time datetime="2019-03-03">2019/03/03</time>
+<ul class="post-meta">
+<li>1 min</li>
+<li>2019/03/03</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/javascript.html">javascript</a></li>
+</ul>
+<p>Using a <a href="https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js">jQuery plugin found at Stack Overflow</a>, we can add some functionality to <code>cash-dom</code> (Ken Wheelers excellent <a href="https://github.com/kenwheeler/cash">cash-JS</a>, a lightweight jQuery replacement) so that any search terms entered into the site search input (which appears at the top of many pages on this site) are highlighted in yellow.</p>
+
+<p>Here is the code I've added to <code>assets/js/app.js</code>:</p>
+
+<pre><code>
+// add highlighting of searched items as a cash JS method/plugin
+// from: https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js
+$.fn.highlight = function(pat) {
+function innerHighlight(node, pat) {
+var skip = 0;
+
+if (node.nodeType == 3) {
+var pos = node.data.toUpperCase().indexOf(pat);
+
+if (pos >= 0) {
+var spannode = document.createElement("span");
+spannode.className = "highlight";
+var middlebit = node.splitText(pos);
+var endbit = middlebit.splitText(pat.length);
+var middleclone = middlebit.cloneNode(true);
+
+spannode.appendChild(middleclone);
+middlebit.parentNode.replaceChild(spannode, middlebit);
+skip = 1;
+}
+} else if (
+node.nodeType == 1 &&
+node.childNodes &&
+!/(script|style) /i.test(node.tagName)
+) {
+for (var i = 0; i < node.childNodes.length; ++i) {
+i += innerHighlight(node.childNodes[i], pat);
+}
+}
+
+return skip;
+}
+
+return this.each(function() {
+innerHighlight(this, pat.toUpperCase());
+});
+};
+
+$.fn.removeHighlight = function() {
+function newNormalize(node) {
+for (
+var i = 0, children = node.childNodes, nodeCount = children.length;
+i < nodeCount;
+i++
+) {
+var child = children[i];
+
+if (child.nodeType == 1) {
+newNormalize(child);
+continue;
+}
+
+if (child.nodeType != 3) {
+continue;
+}
+
+var next = child.nextSibling;
+
+if (next == null || next.nodeType != 3) {
+continue;
+}
+
+var combined_text = child.nodeValue + next.nodeValue;
+new_node = node.ownerDocument.createTextNode(combined_text);
+node.insertBefore(new_node, child);
+node.removeChild(child);
+node.removeChild(next);
+i--;
+nodeCount--;
+}
+}
+
+return this.find("span.highlight").each(function() {
+var thisParent = this.parentNode;
+thisParent.replaceChild(this.firstChild, this);
+newNormalize(thisParent);
+});
+};
+
+// add the event handler to the search input to call the highlighter
+// pull in the new value
+
+// remove any old highlighted terms
+
+// disable highlighting if empty
+if (searchTerm) {
+// highlight the new term
+}
+});
+</code></pre>
+
+<p>In short, we added a new method to cash-js: <code>$.highlight()</code>, then use it to highlight matching items on the page.</p>
+</div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/03/03/custom-css-and-js-for-every-page.html">Custom CSS and JS for every page</a></h2> <time datetime="2019-03-03">2019/03/03</time>
 <ul class="post-meta">
 <li>1 min</li>
@@ -1181,100 +1290,6 @@ Linux
 </ul>
 
 <p>The first attempt failed, as I had a typo i the script.. Hopefully it will work this time...</p>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/fixed-code-block-formatting.html">Fixed code block formatting</a></h2> <time datetime="2019-02-15">2019/02/15</time>
-<ul class="post-meta">
-<li>1 min</li>
-<li>2019/02/15</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/blog.html">blog</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/blog.html">blog</a></li>
-</ul>
-<p>I've fixed the code block formatting so that shell code with escaped new lines format OK.</p>
-
-<p>In other words, breaking up long line into multiple line commands using backspace caused formatting issues.. Now it doesn't.</p>
-
-<p>Here is an example, a script called <code>apt2pup</code>:</p>
-
-<pre><code>
-#!/bin/bash
-
-if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
-
-  echo
-  echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
-  echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
-  echo 'which creates a Puppy-compatible repo from the repo URLs it receives '
-  echo '(if possible).'
-  echo
-  echo 'More info:'
-  echo
-  echo '/etc/apt/sources.list usually contains lines like:'
-  echo
-  echo '    deb     https://deb.nodesource.com/node_8.x      trusty       main'
-  echo '    deb     http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
-  echo '    deb-src http://apt.postgresql.org/pub/repos/apt  trusty-pgdg  main'
-  echo
-  echo 'The first bit refers to package type (regular or source), the second'
-  echo 'is the URL where the packages are, the third is OS version, and '
-  echo 'the last is the "repo stream" - often main, contrib, or non-free.'
-  echo
-  echo 'This script will ignore "deb-src" entries, and parse the others'
-  exit 0
-
-fi
-
-if [ ! -f /etc/apt/sources.list ] && [ ! -d /etc/apt/sources.list.d/ ];then
-  [ ! -f /etc/apt/sources.list    ] && echo 'File /etc/apt/sources.list     not found'
-  [ ! -d /etc/apt/sources.list.d/ ] && echo 'Dir  /etc/apt/sources.list.d/  not found'
-  echo 'Exiting'
-  exit 1
-fi
-
-# search inside /etc/apt/sources.list /etc/apt/sources.list.d/*.list
-# ...look for lines starting with 'deb ', ignore others
-# ...(use grep -h, to remove the preppended filenames if grepping multiple files)
-# ...remove any arch stuff from the entries, ppa2pup will handle that,
-# ...convert spaces to | chars, so we can process each line as a whole later
-apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
-  | sed \
-    -e "s/^deb //g" \
-    -e "s/^tor+//g" \
-    -e 's/\[arch=[a-z,0-9].*\] //g' \
-    -e 's/ /|/g'\
-)"
-
-echo "Repos to process:"
-echo
-echo "${apt_sources_list//|/ }"
-
-
-# for each repo in $apt_sources_list, use `ppa2pup` to install the repo
-for line in $apt_sources_list
-do
-  [ "$line" = "" ] && continue
-  [ "$line" = "
-" ] && continue
-  echo
-  echo "Processing:  ${line//|/ }"
-  echo
-
-  # ask user to update repo
-  read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
-
-  if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
-    echo
-    ppa2pup ${line//|/ }
-    retval=$?
-  fi
-  echo
-done
-
-exit $retval
-</code></pre>
 </div>
 </div>
 </div>
