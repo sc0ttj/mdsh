@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# dirs
+# blog posts
+mkdir -p ./posts/$current_year/{01,02,03,04,05,06,07,08,09,10,11,12}/
+# shared site assets
+mkdir -p ./assets/{css,icons,img,js}
+# authors pages
+mkdir -p ./authors/
+# categories pages
+mkdir -p ./categories/
+# tags pages
+mkdir -p ./tags/
+
+# colours
+yellow="\033[38;5;3m"
+nc="\033[0m"
+
+# site defaults
 blog_title="mdsh"
 blog_language="en"
 blog_descr="mdsh - a simple static site generator for modern websites, written in Bash."
@@ -15,9 +32,7 @@ blog_js_deps="cash-dom jets"
 blog_google_analytics_id=""
 blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href=\"https://sc0ttj.github.io/mdsh/\">mdsh</a>"
 
-yellow="\033[38;5;3m"
-nc="\033[0m"
-
+# let user set site info
 echo
 echo -ne "${yellow}Enter a blog name:${nc}  "
 read -e -i "$blog_title" blog_title
@@ -69,6 +84,11 @@ echo
 
 echo -ne "${yellow}Enter your Google Analytics ID (blank for none):${nc}  "
 read -e -i "$blog_google_analytics_id" blog_google_analytics_id
+
+
+#
+# write site info to .site_config
+#
 
 echo "##################################################################
 
