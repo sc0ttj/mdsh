@@ -357,6 +357,15 @@ ul.posts li {
   width: 100%;
 }
 
+.footer a {
+  color: #efefef;
+}
+
+.footer a:hover,
+.footer a:focus {
+  color: #fff;
+}
+
 /* forms */
 
 .contact-form {
