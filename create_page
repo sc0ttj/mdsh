@@ -296,8 +296,8 @@ function print_post_header {
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$post_created"'</span>'
-  echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
-  echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
+  echo '<span class="author"><a href="'$blog_url'/authors/'"$(./slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
+  echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
   for tag in ${post_tags//,/ }
   do
@@ -317,8 +317,8 @@ function print_post_footer {
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$post_created"'</span>'
-  echo '<span class="author">'"${post_author:-$blog_author}"'</span>'
-  echo '<span class="twitter">'"${post_twitter:-$blog_twitter}"'</span>'
+  echo '<span class="author"><a href="'$blog_url'/authors/'"$(./slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
+  echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
   for tag in ${post_tags//,/ }
   do
