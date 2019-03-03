@@ -209,6 +209,18 @@ a.skip-to-content:focus {
   }
 }
 
+/* search term highlighting (see assets/js/app.js) */
+
+.highlight {
+  background-color: #fff34d;
+  border-radius: 2px; /* Opera 10.5, IE 9, Saf5, Chrome */
+}
+
+.highlight {
+  padding: 1px;
+  margin: 0 -1px;
+}
+
 /* post header */
 .post-header {
   font-style: italic;
