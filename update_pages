@@ -148,7 +148,13 @@ echo "Updating: contact.html"
 #"<form action=\"https://formspree.io/you@email.com\" method=\"post\">"                 # formspree
 #"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
 #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
+
+contact_twitter=''
+if [ "$blog_twitter" != "" ];then
+  contact_twitter="<p>You can also contact me on Twitter <a href=\"https://twitter.com/$blog_twitter\" target=\"_blank\">$blog_twitter</a>.</p>"
+fi
 ./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+$contact_twitter
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
   <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
   <div class=\"email\">

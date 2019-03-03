@@ -347,6 +347,10 @@ ul.posts li {
 
 /* forms */
 
+.contact-form {
+  margin-bottom: 28px;
+}
+
 .contact-form label {
   display: inline-block;
   min-width: 70px;
