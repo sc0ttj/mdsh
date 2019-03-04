@@ -420,11 +420,16 @@ function print_post_preview {
       if [[ "$line" =~ '```' ]];then
         [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
         [ "$in_code_block" = false ] && line='</code></pre>' || line='<pre><code>'
+      else
+        if [ "$in_code_block" = true ];then
+          line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
+        fi
       fi
       echo -e "$line"
     done | ./markdown.pl | grep -v '<h2>')"
   echo '</div>'
 }
+
 
 function list_posts_in {
   [ -z "$1" ] && return 1
@@ -539,6 +544,30 @@ function list_prev_and_next_posts {
 
 ################################################################################
 
+# https://unix.stackexchange.com/questions/159253/decoding-url-encoding-percent-encoding
+urlencode() {
+    # urlencode <string>
+    local LC_CTYPE=C  # fix multibyte characters (thanks MochiMoppel)
+    local length="${#1}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${1:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            *) printf '%%%02X' "'$c"
+        esac
+    done
+}
+
+urldecode() {
+    # urldecode <string>
+    local LC_CTYPE=C # fix multibyte characters (thanks MochiMoppel)
+    local url_encoded="${1//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
+}
+
+
+################################################################################
+
 #
 # begin processing the given file or string
 #
@@ -606,6 +635,10 @@ if [ "$markdown" != "" ];then
       [ "$code_lang" != "" ] && code_class=" class=\"${code_lang}\""
       [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
       [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code${code_class}>"
+    else
+      if [ "$in_code_block" = true ];then
+        line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
+      fi
     fi
     echo -e "$line" >> /tmp/fixed_markdown
   done<<<$(cat /tmp/markdown)
