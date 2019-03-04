@@ -1,6 +1,5 @@
 ## Setting up your blog
 
-
 I've added two new scripts, to make setting and managing your blog a little easier.
 
 ### `server`
@@ -20,5 +19,3 @@ This script gives an easy, interactive way to set your sites default values. It 
 ### To do
 
 I need to update the documentation and [Wiki](https://github.com/sc0ttj/mdsh/wiki/) to reflect these changes.
-
-

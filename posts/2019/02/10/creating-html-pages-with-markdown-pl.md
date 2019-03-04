@@ -1,5 +1,3 @@
-
-
 ## Using `markdown.pl`
 
 Here is the easiest way to convert your Markdown to HTML:

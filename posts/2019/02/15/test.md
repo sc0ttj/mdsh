@@ -4,8 +4,7 @@ foo
 
 bar
 
-```
-#!/bin/bash
+```#!/bin/bash
 
 if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
 

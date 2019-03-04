@@ -1,0 +1,28 @@
+## Fixing code formatting
+
+I've added `IFS= read -r line` to mdshell, the new bit specifically being the `IFS=` part.
+
+This should preserve code formatting in code blocks, when that code has been pasted straight into the terminal (middle-click).
+
+So let's test it. Here is some code I pasted in from `mdshell`:
+
+```
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ] || [ "$1" = "--help" ];then
+cat << HELP_MSG
+
+ An interactive shell for writing Markdown documents, with
+ support for embedding bash sub-shells $() in your Markdown!
+
+ Usage:  mdshell <path-to-file> # creates the file if it doesn't exist
+
+ Note backtick subshells (``) not supported, only $()
+
+ Example:   Add $(uname) in your Markdown and the saved
+            file will contain your system info.
+
+HELP_MSG
+exit
+fi
+```
+
+It might work...

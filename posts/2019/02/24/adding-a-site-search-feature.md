@@ -1,6 +1,5 @@
 ## Adding a site search feature
 
-
 I wanted `mdsh` to have a nice site search feature, and not have to use Google Custom Search Engine or similar.
 
 I did not want a search that takes users away from the site, and I needed one which searched the site itself - not some extra JSON file of something (I don't want to have to update multiple files, I want to keep things DRY).
@@ -22,5 +21,3 @@ The implementation works as follows:
 Possible improvements:
 
 - use Google Custom Search Engine as a no JS fallback
-
-

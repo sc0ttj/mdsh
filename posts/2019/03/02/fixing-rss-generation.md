@@ -1,6 +1,5 @@
 ## Fixing RSS generation
 
-
 I've made a few changes in the `./create_rss` function, so that it works on both Linux and Mac OS X:
 
 - dont use the `-printf` option with `find`
@@ -26,5 +25,3 @@ fi
 ```
 
 Using this, the command `./create_rss posts/ > feed.rss` that is used in `update_pages` should work on Linux, Mac and BSD.
-
-

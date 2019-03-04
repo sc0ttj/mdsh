@@ -8,7 +8,9 @@ So how to edit a pre-existing post?
 
 Easy. Simply open the relevant `.mdsh` file in a text editor, make your changes and save.
 
-Finally, to rebuild the new HTML file from your edited/fixed markdown, just run something like this:
+Finally, to rebuild the new HTML file from your edited/fixed markdown, just run this command:
+
+Example:
 
 ```
 ./create_page posts/2019/02/13/better-site-headers.mdsh > posts/2019/02/13/better-site-headers.html

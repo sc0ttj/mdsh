@@ -1,5 +1,3 @@
-
-
 ## Creating HTML from Markdown
 
 This is how I am tackling it:

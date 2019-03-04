@@ -20,25 +20,25 @@ set_post_info "$1"
 # exit if we are not building a blog post
 [ "$post_slug" = "" ] && return 0
 
-echo '&lt;div class="post-preview"&gt;'
-echo '&lt;h2&gt;&lt;a href="'"${post_url}"'"&gt;'"${post_title}"'&lt;/a&gt;&lt;/h2&gt; &lt;datetime&gt;'"${post_created}"'&lt;/datetime&gt;'
-echo '&lt;ul class="post-meta"&gt;'
-echo '&lt;li&gt;'"${post_time_to_read}"'&lt;/li&gt;'
-echo '&lt;li&gt;'"${post_created}"'&lt;/li&gt;'
-echo '&lt;li&gt;'"${post_author}"'&lt;/li&gt;'
-echo '&lt;li&gt;'"${post_twitter}"'&lt;/li&gt;'
-echo '&lt;li&gt;&lt;a href="'${blog_url}'/categories/'"${post_category}"'.html"&gt;'"${post_category}"'&lt;/a&gt;&lt;/li&gt;'
-echo '&lt;/ul&gt;'
-echo '&lt;ul class="tags"&gt;'
+echo '<div class="post-preview">'
+echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <datetime>'"${post_created}"'</datetime>'
+echo '<ul class="post-meta">'
+echo '<li>'"${post_time_to_read}"'</li>'
+echo '<li>'"${post_created}"'</li>'
+echo '<li>'"${post_author}"'</li>'
+echo '<li>'"${post_twitter}"'</li>'
+echo '<li><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></li>'
+echo '</ul>'
+echo '<ul class="tags">'
 for tag in ${post_tags//,/ }
 do
-echo '&lt;li&gt;&lt;a href="'${blog_url}'/tags/'${tag}'.html"&gt;'${tag}'&lt;/a&gt;&lt;/li&gt;'
+echo '<li><a href="'${blog_url}'/tags/'${tag}'.html">'${tag}'</a></li>'
 done
-echo '&lt;/ul&gt;'
+echo '</ul>'
 # show only a summary (using the meta description)
-#echo '&lt;p&gt;'"${post_descr}"'&lt;/p&gt;'
+#echo '<p>'"${post_descr}"'</p>'
 # show full post content, excluding main header (already in post preview)
-echo '&lt;/div&gt;'
+echo '</div>'
 }
 ```
 

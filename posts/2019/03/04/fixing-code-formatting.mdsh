@@ -1,0 +1,37 @@
+# title:        Fixing code formatting
+# slug name:    fixing-code-formatting
+# description:  Another IFS based fix for processing input while retaining any whitespace.
+# time to read: 1 min
+# category:     blog
+# tags:         shell
+# author:       sc0ttj
+# email:        foo@bar.com
+# twitter:      @foobar
+# language:     en
+# JS deps:      cash-dom jets
+# created:      2019/03/04
+# modified:     2019/03/04
+
+---
+## Fixing code formatting
+
+I've added `IFS= read -r line` to mdshell, the new bit specifically being the `IFS= ` part.
+
+This should preserve code formatting in code blocks, when that code has been pasted straight into the terminal (middle-click).
+
+So let's test it. Here is some code I pasted in from `mdshell`:
+
+```
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ] || [ "$1" = "--help" ];then
+  echo "
+
+  An interactive shell for writing Markdown documents, with
+  support for adding sub-shells into your Markdown to
+  produce dynamic output.
+
+  Usage:  mdshell <path-to-file> # creates the file if it doesn't exist
+  "
+  exit
+fi
+```
+

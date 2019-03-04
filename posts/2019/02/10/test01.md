@@ -1,5 +1,3 @@
-
-
 ## Foo header
 
 more

@@ -37,7 +37,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/mdsh/assets/icons/rss.png">
-<meta property="article:published_time" content="Sun Mar 3 19:27:03 +08 2019">
+<meta property="article:published_time" content="Mon Mar 4 21:10:48 +08 2019">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="mdsh" />
@@ -50,8 +50,8 @@
   "@type": "Article",
   "headline": "mdsh",
   "headlineAlternative": "mdsh",
-  "datePublished": "Sun Mar 3 19:27:03 +08 2019",
-  "dateModified": "Sun Mar 3 19:27:03 +08 2019",
+  "datePublished": "Mon Mar 4 21:10:48 +08 2019",
+  "dateModified": "Mon Mar 4 21:10:48 +08 2019",
   "description": "mdsh - a simple static site generator for modern websites, written in Bash.",
   "keywords": "mdsh, static site generator, project page, open source, blog, news, feed",
   "image": {
@@ -81,16 +81,16 @@
 <link rel="author" href="/humans.txt" />
 <link rel="canonical" href="/mdsh/">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551612423">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551612423">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551612423">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551612423">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551612423">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551612423">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551612423">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551612423">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1551705048">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1551705048">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1551705048">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1551705048">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1551705048">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1551705048">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1551705048">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1551705048">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551612423">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1551705048">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -105,11 +105,11 @@
     font-size: 14px;
   }
 </style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551612423">
+<link rel="stylesheet" href="/mdsh/assets/css/main.css?v=1551705048">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext">
 <script class="unpkg" id="unpkg-cash-dom" defer src="//unpkg.com/cash-dom"></script>
 <script class="unpkg" id="unpkg-jets" defer src="//unpkg.com/jets"></script>
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551612423"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1551705048"></script>
 </head>
 <body>
 <div class="main-container">
@@ -128,6 +128,107 @@
 </div>
 <div id="content" class="post-content">
 <div class="post-preview">
+<h2><a href="/mdsh/posts/2019/03/04/fixing-code-formatting.html">Fixing code formatting</a></h2> <time datetime="2019-03-04">2019/03/04</time>
+<ul class="post-meta">
+<li>1 min</li>
+<li>2019/03/04</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/shell.html">shell</a></li>
+</ul>
+<p>I've added <code>IFS= read -r line</code> to mdshell, the new bit specifically being the <code>IFS=</code> part.</p>
+
+<p>This should preserve code formatting in code blocks, when that code has been pasted straight into the terminal (middle-click).</p>
+
+<p>So let's test it. Here is some code I pasted in from <code>mdshell</code>:</p>
+
+<pre><code>
+if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ] || [ "$1" = "--help" ];then
+  echo "
+
+  An interactive shell for writing Markdown documents, with
+  support for adding sub-shells into your Markdown to
+  produce dynamic output.
+
+  Usage:  mdshell &lt;path-to-file&gt; # creates the file if it doesn't exist
+  "
+  exit
+fi
+</code></pre>
+</div><div class="post-preview">
+<h2><a href="/mdsh/posts/2019/03/04/enabling-easier-markdown-re-building.html">Enabling easier Markdown re-building</a></h2> <time datetime="2019-03-04">2019/03/04</time>
+<ul class="post-meta">
+<li>2 mins</li>
+<li>2019/03/04</li>
+<li>sc0ttj</li>
+<li>@foobar</li>
+<li><a href="/mdsh/categories/blog.html">blog</a></li>
+</ul>
+<ul class="tags">
+<li><a href="/mdsh/tags/shell.html">shell</a></li>
+<li><a href="/mdsh/tags/markdown.html">markdown</a></li>
+</ul>
+<p>I've created a new script called <code>mdsh2md</code> that generates Markdown files from <code>.mdsh</code> files.</p>
+
+<p>Users can now edit the original <code>.mdsh</code> files (including any sub-shell commands contained within) and auto rebuild the Markdown output from which the HTML pages are generated.</p>
+
+<h3>Rebuilding pages</h3>
+
+<p>With the new script <code>mdsh2md</code>, you can now do the following <strong>before</strong> re-building your HTML from markdown:</p>
+
+<pre><code>
+mdsh2md path/to/file.mdsh
+</code></pre>
+
+<p>^ this will create the Markdown file <code>path/to/file.md</code>.</p>
+
+<p>You can then rebuild the HTML page:</p>
+
+<pre><code>
+create_page path/to/file.md &gt; path/to/file.html
+</code></pre>
+
+<p>Even easier, you can simply pass the <code>.mdsh</code> file straight to <code>create_page</code>:</p>
+
+<pre><code>
+create_page path/to/file.mdsh &gt; path/to/file.html
+</code></pre>
+
+<p>^ The markdown file is re-built from the <code>.mdsh</code> file, <em>then</em> the HTML is rebuilt from the new markdown file.</p>
+
+<h3>Rebuilding your WHOLE site</h3>
+
+<p>Just use the <code>-ALL</code> (capitalised) option with <code>updated_pages</code>:</p>
+
+<pre><code>
+updates_pages -ALL
+</code></pre>
+
+<p>^ This could be VERY slow, depending on what sub-shell commands you put in your <code>.mdsh</code> files.</p>
+
+<h3>Why not just edit the Markdown files?</h3>
+
+<p>It's better to rebuild your Markdown files from the original <code>mdsh</code> input if want to:</p>
+
+<ul>
+<li>use a "single source of truth" for your website source files</li>
+<li>re-generate updated output from the sub-shells commands inside your Markdown</li>
+<li>easily re-build your pages/documentation for a new operating system or version</li>
+<li>auto fix errors in the [already] generated Markdown output that are hard to fix manually</li>
+</ul>
+
+<h3>When should I just edit the Markdown files directly?</h3>
+
+<p>Sometimes editing the Markdown files directly might be better (or needed):</p>
+
+<ul>
+<li>fix code blocks that have issues with indentation or escaped code blocks</li>
+<li>the <code>create_post</code> or <code>mdsh2md</code> commands created Markdown with errors in it</li>
+</ul>
+</div><div class="post-preview">
 <h2><a href="/mdsh/posts/2019/03/03/setting-up-your-blog.html">Setting up your blog</a></h2> <time datetime="2019-03-03">2019/03/03</time>
 <ul class="post-meta">
 <li>2 mins</li>
@@ -177,92 +278,89 @@
 <pre><code>
 // add highlighting of searched items as a cash JS method/plugin
 // from: https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js
+
 $.fn.highlight = function(pat) {
-function innerHighlight(node, pat) {
-var skip = 0;
+  function innerHighlight(node, pat) {
+    var skip = 0;
 
-if (node.nodeType == 3) {
-var pos = node.data.toUpperCase().indexOf(pat);
+    if (node.nodeType == 3) {
+      var pos = node.data.toUpperCase().indexOf(pat);
 
-if (pos >= 0) {
-var spannode = document.createElement("span");
-spannode.className = "highlight";
-var middlebit = node.splitText(pos);
-var endbit = middlebit.splitText(pat.length);
-var middleclone = middlebit.cloneNode(true);
+      if (pos &gt;= 0) {
+        var spannode = document.createElement("span");
+        spannode.className = "highlight";
+        var middlebit = node.splitText(pos);
+        var endbit = middlebit.splitText(pat.length);
+        var middleclone = middlebit.cloneNode(true);
 
-spannode.appendChild(middleclone);
-middlebit.parentNode.replaceChild(spannode, middlebit);
-skip = 1;
-}
-} else if (
-node.nodeType == 1 &&
-node.childNodes &&
-!/(script|style) /i.test(node.tagName)
-) {
-for (var i = 0; i < node.childNodes.length; ++i) {
-i += innerHighlight(node.childNodes[i], pat);
-}
-}
+        spannode.appendChild(middleclone);
+        middlebit.parentNode.replaceChild(spannode, middlebit);
+        skip = 1;
+      }
+    } else if (
+      node.nodeType == 1 &&
+      node.childNodes &&
+      !/(script|style) /i.test(node.tagName)
+    ) {
+      for (var i = 0; i &lt; node.childNodes.length; ++i) {
+        i += innerHighlight(node.childNodes[i], pat);
+      }
+    }
 
-return skip;
-}
+    return skip;
+  }
 
-return this.each(function() {
-innerHighlight(this, pat.toUpperCase());
-});
+  return this.each(function() {
+    innerHighlight(this, pat.toUpperCase());
+  });
 };
 
 $.fn.removeHighlight = function() {
-function newNormalize(node) {
-for (
-var i = 0, children = node.childNodes, nodeCount = children.length;
-i < nodeCount;
-i++
-) {
-var child = children[i];
+  function newNormalize(node) {
+    for (var i = 0, children = node.childNodes, nodeCount = children.length; i &lt; nodeCount; i++) {
+      var child = children[i];
 
-if (child.nodeType == 1) {
-newNormalize(child);
-continue;
-}
+      if (child.nodeType == 1) {
+        newNormalize(child);
+        continue;
+      }
 
-if (child.nodeType != 3) {
-continue;
-}
+      if (child.nodeType != 3) {
+        continue;
+      }
 
-var next = child.nextSibling;
+      var next = child.nextSibling;
 
-if (next == null || next.nodeType != 3) {
-continue;
-}
+      if (next == null || next.nodeType != 3) {
+        continue;
+      }
 
-var combined_text = child.nodeValue + next.nodeValue;
-new_node = node.ownerDocument.createTextNode(combined_text);
-node.insertBefore(new_node, child);
-node.removeChild(child);
-node.removeChild(next);
-i--;
-nodeCount--;
-}
-}
+      var combined_text = child.nodeValue + next.nodeValue;
+      new_node = node.ownerDocument.createTextNode(combined_text);
+      node.insertBefore(new_node, child);
+      node.removeChild(child);
+      node.removeChild(next);
+      i--;
+      nodeCount--;
+    }
+  }
 
-return this.find("span.highlight").each(function() {
-var thisParent = this.parentNode;
-thisParent.replaceChild(this.firstChild, this);
-newNormalize(thisParent);
-});
+  return this.find("span.highlight").each(function() {
+    var thisParent = this.parentNode;
+    thisParent.replaceChild(this.firstChild, this);
+    newNormalize(thisParent);
+  });
 };
 
 // add the event handler to the search input to call the highlighter
-// pull in the new value
+  // pull in the new value
 
-// remove any old highlighted terms
+  // remove any old highlighted terms
 
-// disable highlighting if empty
-if (searchTerm) {
-// highlight the new term
-}
+  // disable highlighting if empty
+  if (searchTerm) {
+    // highlight the new term
+  }
 });
 </code></pre>
 
@@ -504,7 +602,6 @@ echo '&lt;/div&gt;'
 <p>Here is a script which generates a valid XML sitemap, which Google (and others) will use to index your site:</p>
 
 <pre><code>
-#!/bin/bash
 
 # generate an XML sitemap for this site
 
@@ -520,7 +617,7 @@ echo "Generating sitemap.xml, please wait.."
 
 wget --spider --recursive --level=inf --no-verbose --output-file=linklist.txt "$sitedomain"
 grep -i URL linklist.txt | awk -F 'URL:' '
-{print $2}' | awk '{$1=$1};1' | awk '{print $1}' | sort -u | sed '/^$/d' > sortedurls.txt
+{print $2}' | awk '{$1=$1};1' | awk '{print $1}' | sort -u | sed '/^$/d' &gt; sortedurls.txt
 
 header='&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;urlset
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -528,21 +625,21 @@ header='&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;urlset
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"&gt;'
 
-echo "$header" > sitemap.xml
+echo $header &gt; sitemap.xml
 
 while read p; do
   case "$p" in
   */ | *.html | *.htm)
-    echo '&lt;url&gt;&lt;loc&gt;'$p'&lt;/loc&gt;&lt;/url&gt;' >> sitemap.xml
+    echo '&lt;url&gt;&lt;loc&gt;'$p'&lt;/loc&gt;&lt;/url&gt;' &gt;&gt; sitemap.xml
     ;;
   *)
     ;;
  esac
-done < sortedurls.txt
+done &lt; sortedurls.txt
 
-echo "&lt;/urlset&gt;" >> sitemap.xml
+echo "&lt;/urlset&gt;" &gt;&gt; sitemap.xml
 
-rm linklist.txt sortedurls.txt &>/dev/null
+rm linklist.txt sortedurls.txt &&gt;/dev/null
 
 [ ! -f sitemap.xml ] && exit 1
 
@@ -628,7 +725,6 @@ exit 0
 <p>Here is the contents of the main stylesheet (so far):</p>
 
 <pre><code>
-html,
 body {
   box-sizing: border-box;
   font-size: 16px;
@@ -644,14 +740,21 @@ body {
 }
 
 /* extra line height for para text */
-p {
+p,
+li {
   line-height: 1.6em;
+}
+
+/* reduce padding on left of &lt;li&gt; elems */
+ul,
+ol {
+  padding-left: 15px;
 }
 
 /* heades and inline code elems */
 code {
-  background-color: #eee;
-  color: #000;
+  background-color: #f9f9f9;
+  color: #222;
   display: inline;
   padding: 0;
   margin: 0;
@@ -660,26 +763,31 @@ code {
 h1,
 h1 code {
   font-size: 32px;
+  line-height: 1.2em;
 }
 
 h2,
 h2 code {
   font-size: 24px;
+  line-height: 1.2em;
 }
 
 h3,
 h3 code {
   font-size: 20px;
+  line-height: 1.2em;
 }
 
 h4,
 h4 code {
   font-size: 18px;
+  line-height: 1.2em;
 }
 
 p code,
 li code {
   font-size: 16px;
+  line-height: 1.2em;
 }
 
 h1 code,
@@ -690,18 +798,21 @@ p code,
 li code,
 span code {
   /* enable padding in inline snippets */
+  border: 1px solid #e6e6e6;
   display: inline-block;
-  line-height: 18px;
-  padding: 1px 6px;
+  line-height: 1em;
+  padding: 1px 2px;
   margin-left: 2px;
   margin-right: 1px;
+  margin-bottom: 1px;
   vertical-align: middle;
 }
 
 /* code blocks */
 pre {
-  background-color: #eee;
-  color: #000;
+  border: 1px solid #e6e6e6;
+  background-color: #f9f9f9;
+  color: #222;
   font-size: 15px;
   line-height: 18px;
   overflow-x: auto;
@@ -805,6 +916,37 @@ a.skip-to-content:focus {
   color: #222;
 }
 
+/* site search input */
+.page-header #site-search {
+  background-color: #efefef;
+  border: 0;
+  display: none; /* hide by default, enable only if JS is supported */
+  margin-right: 8px;
+  padding: 4px;
+  max-width: 120px;
+}
+
+@media (min-width: 414px) {
+  .page-header #site-search {
+    margin-top: 8px;
+    top: 1.5em;
+    position: absolute;
+    right: 12px;
+  }
+}
+
+/* search term highlighting (see assets/js/app.js) */
+
+.highlight {
+  background-color: #fff34d;
+  border-radius: 2px; /* Opera 10.5, IE 9, Saf5, Chrome */
+}
+
+.highlight {
+  padding: 1px;
+  margin: 0 -1px;
+}
+
 /* post header */
 .post-header {
   font-style: italic;
@@ -858,6 +1000,11 @@ a.skip-to-content:focus {
     padding-left: 72px;
     padding-right: 72px;
   }
+}
+
+.post-content {
+  /* padding above main post title */
+  padding-top: 1em;
 }
 
 ul.posts,
@@ -934,6 +1081,125 @@ ul.posts li {
   margin: 0 auto;
   text-align: center;
   width: 100%;
+}
+
+.footer a {
+  color: #efefef;
+}
+
+.footer a:hover,
+.footer a:focus {
+  color: #fff;
+}
+
+/* forms */
+
+.contact-form {
+  margin-bottom: 28px;
+}
+
+.contact-form label {
+  display: inline-block;
+  min-width: 70px;
+  vertical-align: top;
+  line-height: 2.75em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  appearance: none;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 8px;
+  margin: 4px;
+  min-width: 280px;
+}
+
+.contact-form textarea {
+  min-height: 100px;
+}
+
+.contact-form button[type="submit"] {
+  color: #fff;
+  cursor: pointer;
+  background-color: #222;
+  border: 0;
+  padding: 8px;
+  margin-left: 4px;
+}
+
+@media (min-width: 416px) {
+  .contact-form button[type="submit"] {
+    margin-left: 78px;
+  }
+}
+
+.contact-form button[type="submit"]:hover,
+.contact-form button[type="submit"]:focus {
+  background-color: #000;
+}
+
+.post-preview {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+}
+
+.post-preview h2,
+.post-preview time {
+  display: inline-block;
+}
+
+.post-preview h2 {
+  margin-right: 4px;
+  margin-bottom: 8px;
+}
+
+.post-preview .post-meta {
+  font-style: italic;
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .post-meta li {
+  display: inline-block;
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .tags {
+  font-style: italic;
+}
+
+.post-preview .tags:before {
+  content: "Tags: ";
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .post-meta li:nth-child(2),
+.post-preview .post-meta li:nth-child(3),
+.post-preview .post-meta li:nth-child(4),
+.post-preview .post-meta li:nth-child(5) {
+  display: none;
+}
+
+.post-preview .tags {
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .tags li {
+  display: inline-block;
 }
 </code></pre>
 </div><div class="post-preview">
@@ -1027,13 +1293,12 @@ ul.posts li {
 <p>bar</p>
 
 <pre><code>
-#!/bin/bash
 
 if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
 
   echo
   echo 'This script gets the repo URLs listed in /etc/apt/sources.list and '
-  echo '/etc/apt/sources.list.d/<name>.list then passes them to `ppa2pup`, '
+  echo '/etc/apt/sources.list.d/&lt;name&gt;.list then passes them to `ppa2pup`, '
   echo 'which creates a Puppy-compatible repo from the repo URLs it receives '
   echo '(if possible).'
   echo
@@ -1066,7 +1331,7 @@ fi
 # ...(use grep -h, to remove the preppended filenames if grepping multiple files)
 # ...remove any arch stuff from the entries, ppa2pup will handle that,
 # ...convert spaces to | chars, so we can process each line as a whole later
-apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
+apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2&gt;/dev/null \
   | sed \
     -e "s/^deb //g" \
     -e "s/^tor+//g" \
@@ -1143,9 +1408,9 @@ find "$romdir" \
   | sort -u \
   | rofi -dmenu \
       -p 'Enter name: ' \
-      -i -mesg 'Choose a system to play' > /tmp/rofi_system_name
+      -i -mesg 'Choose a system to play' &gt; /tmp/rofi_system_name
 
-system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
+system_name="$(cat /tmp/rofi_system_name 2&gt;/dev/null)"
 
 if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
  exit 1
@@ -1162,7 +1427,7 @@ find $romdir/$system_name \
     -or -iname "*.gba" \
   | sed -e 's#.*/##g' \
   | sort -u \
-  | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
+  | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' &gt; /tmp/rofi_rom_name;
 
 # rom name, escape [ and ]
 romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
@@ -1189,111 +1454,6 @@ esac
 <p>^ rofnafen</p>
 
 <p>...</p>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/rof-test.html">rof test</a></h2> <time datetime="2019-02-15">2019/02/15</time>
-<ul class="post-meta">
-<li>1 min</li>
-<li>2019/02/15</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/test.html">test</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/test.html">test</a></li>
-</ul>
-<pre><code>
-#!/bin/sh
-
-romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
-[ -d "$2" ] && romdir="$2"
-
-# choose a system dir to look in for roms
-find "$romdir" \
-    -maxdepth 1 \
-    -mindepth 1 \
-    -type d \
-  | sed "s#.*/##g" \
-  | sort -u \
-  | rofi -dmenu \
-      -p 'Enter name: ' \
-      -i -mesg 'Choose a system to play' > /tmp/rofi_system_name
-
-system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
-
-if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
- exit 1
-fi
-
-
-# looks for, list and choose a rom
-find $romdir/$system_name \
-    -maxdepth 2 \
-    -mindepth 1 \
-    -type f \
-    -iname "*.cue" -or -iname "*.ccd" -or -iname "*.iso" -or -iname "*.zip" \
-    -or -iname "*.smc" -or -iname "*.smd" -or -iname "*.gb" -or -iname "*.gbc" \
-    -or -iname "*.gba" \
-  | sed -e 's#.*/##g' \
-  | sort -u \
-  | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
-
-# rom name, escape [ and ]
-romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
-[ "$romname" = "" ] && exit 1
-
-romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
-
-
-if [ ! -f "$romfile" ];then
-  rofi -dmenu -mesg "Rom file '$romname' not found!"
-  exit 1
-fi
-
-
-case $system_name in
-  *)
-    # run the chosen game
-    mednafen "$romfile"
-    exit $?
-    ;;
-esac
-</code></pre>
-
-<p>more..</p>
-</div><div class="post-preview">
-<h2><a href="/mdsh/posts/2019/02/15/it-works-easier-post-editing-and-converting-is-on-the-way.html">It works! Easier post editing and converting is on the way...</a></h2> <time datetime="2019-02-15">2019/02/15</time>
-<ul class="post-meta">
-<li>2 mins</li>
-<li>2019/02/15</li>
-<li>John Doe</li>
-<li>@foobar</li>
-<li><a href="/mdsh/categories/blog.html">blog</a></li>
-</ul>
-<ul class="tags">
-<li><a href="/mdsh/tags/blog.html">blog</a></li>
-<li><a href="/mdsh/tags/markdown.html">markdown</a></li>
-<li><a href="/mdsh/tags/mdsh.html">mdsh</a></li>
-</ul>
-<p>After the last fix, and as described in previous posts, each time you create a post, this blog tool thing will now save 3 files:</p>
-
-<ul>
-<li><code>file.mdsh</code> - a custom format, contains post meta info, markdown, html, embedded sub-shell commands</li>
-<li><code>file.md</code> - a valid markdown file, contains only post body and the <strong>results</strong> of any embedded sub-shell commands</li>
-<li><code>file.html</code> - a valid HTML file generated from the <code>.md</code> file</li>
-</ul>
-
-<p>So, as of this post, it will be easier to:</p>
-
-<ul>
-<li>convert the posts into PDF, bbcode, or some other format</li>
-<li>edit existings posts - just edit the md file and run <code>update_pages -all</code></li>
-</ul>
-
-<h3>To do</h3>
-
-<p>I still need to update <code>mdshell</code> so it can re-parse existing <code>.mdsh</code> files, not just take input form the user via the terminal.</p>
-
-<p>After that is implemented, you will be able to edit any existing <code>.mdsh</code> files and generate the <code>.md</code> and <code>.html</code> from those.</p>
 </div>
 </div>
 </div>

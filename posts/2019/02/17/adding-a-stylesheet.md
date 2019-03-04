@@ -1,6 +1,5 @@
 ## Adding a stylesheet
 
-
 I've added a stylesheet for this site, `assets/css/main.css`.
 
 The main classes are:
@@ -41,8 +40,7 @@ So, you can edit the styles in `assests/css/main.css`, or create a stylesheet fo
 
 Here is the contents of the main stylesheet (so far):
 
-```
-html,
+```html,
 body {
   box-sizing: border-box;
   font-size: 16px;
@@ -58,14 +56,21 @@ body {
 }
 
 /* extra line height for para text */
-p {
+p,
+li {
   line-height: 1.6em;
+}
+
+/* reduce padding on left of <li> elems */
+ul,
+ol {
+  padding-left: 15px;
 }
 
 /* heades and inline code elems */
 code {
-  background-color: #eee;
-  color: #000;
+  background-color: #f9f9f9;
+  color: #222;
   display: inline;
   padding: 0;
   margin: 0;
@@ -74,26 +79,31 @@ code {
 h1,
 h1 code {
   font-size: 32px;
+  line-height: 1.2em;
 }
 
 h2,
 h2 code {
   font-size: 24px;
+  line-height: 1.2em;
 }
 
 h3,
 h3 code {
   font-size: 20px;
+  line-height: 1.2em;
 }
 
 h4,
 h4 code {
   font-size: 18px;
+  line-height: 1.2em;
 }
 
 p code,
 li code {
   font-size: 16px;
+  line-height: 1.2em;
 }
 
 h1 code,
@@ -104,18 +114,21 @@ p code,
 li code,
 span code {
   /* enable padding in inline snippets */
+  border: 1px solid #e6e6e6;
   display: inline-block;
-  line-height: 18px;
-  padding: 1px 6px;
+  line-height: 1em;
+  padding: 1px 2px;
   margin-left: 2px;
   margin-right: 1px;
+  margin-bottom: 1px;
   vertical-align: middle;
 }
 
 /* code blocks */
 pre {
-  background-color: #eee;
-  color: #000;
+  border: 1px solid #e6e6e6;
+  background-color: #f9f9f9;
+  color: #222;
   font-size: 15px;
   line-height: 18px;
   overflow-x: auto;
@@ -219,6 +232,37 @@ a.skip-to-content:focus {
   color: #222;
 }
 
+/* site search input */
+.page-header #site-search {
+  background-color: #efefef;
+  border: 0;
+  display: none; /* hide by default, enable only if JS is supported */
+  margin-right: 8px;
+  padding: 4px;
+  max-width: 120px;
+}
+
+@media (min-width: 414px) {
+  .page-header #site-search {
+    margin-top: 8px;
+    top: 1.5em;
+    position: absolute;
+    right: 12px;
+  }
+}
+
+/* search term highlighting (see assets/js/app.js) */
+
+.highlight {
+  background-color: #fff34d;
+  border-radius: 2px; /* Opera 10.5, IE 9, Saf5, Chrome */
+}
+
+.highlight {
+  padding: 1px;
+  margin: 0 -1px;
+}
+
 /* post header */
 .post-header {
   font-style: italic;
@@ -272,6 +316,11 @@ a.skip-to-content:focus {
     padding-left: 72px;
     padding-right: 72px;
   }
+}
+
+.post-content {
+  /* padding above main post title */
+  padding-top: 1em;
 }
 
 ul.posts,
@@ -349,6 +398,123 @@ ul.posts li {
   text-align: center;
   width: 100%;
 }
+
+.footer a {
+  color: #efefef;
+}
+
+.footer a:hover,
+.footer a:focus {
+  color: #fff;
+}
+
+/* forms */
+
+.contact-form {
+  margin-bottom: 28px;
+}
+
+.contact-form label {
+  display: inline-block;
+  min-width: 70px;
+  vertical-align: top;
+  line-height: 2.75em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  appearance: none;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 16px;
+  padding: 8px;
+  margin: 4px;
+  min-width: 280px;
+}
+
+.contact-form textarea {
+  min-height: 100px;
+}
+
+.contact-form button[type="submit"] {
+  color: #fff;
+  cursor: pointer;
+  background-color: #222;
+  border: 0;
+  padding: 8px;
+  margin-left: 4px;
+}
+
+@media (min-width: 416px) {
+  .contact-form button[type="submit"] {
+    margin-left: 78px;
+  }
+}
+
+.contact-form button[type="submit"]:hover,
+.contact-form button[type="submit"]:focus {
+  background-color: #000;
+}
+
+.post-preview {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 12px;
+}
+
+.post-preview h2,
+.post-preview time {
+  display: inline-block;
+}
+
+.post-preview h2 {
+  margin-right: 4px;
+  margin-bottom: 8px;
+}
+
+.post-preview .post-meta {
+  font-style: italic;
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .post-meta li {
+  display: inline-block;
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .tags {
+  font-style: italic;
+}
+
+.post-preview .tags:before {
+  content: "Tags: ";
+}
+
+.post-preview .post-meta li:nth-child(1):before {
+  content: "Time to read: ";
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.post-preview .post-meta li:nth-child(2),
+.post-preview .post-meta li:nth-child(3),
+.post-preview .post-meta li:nth-child(4),
+.post-preview .post-meta li:nth-child(5) {
+  display: none;
+}
+
+.post-preview .tags {
+  padding: 0;
+  margin: 0;
+}
+
+.post-preview .tags li {
+  display: inline-block;
+}
 ```
-
-

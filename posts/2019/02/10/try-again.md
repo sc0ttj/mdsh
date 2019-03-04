@@ -1,5 +1,3 @@
-
-
 ## Here is some stuff
 
 <pre><code>
@@ -42,13 +40,6 @@ fi
 # ...(use grep -h, to remove the preppended filenames if grepping multiple files)
 # ...remove any arch stuff from the entries, ppa2pup will handle that,
 # ...convert spaces to | chars, so we can process each line as a whole later
-apt_sources_list="$(grep -h '^deb ' /etc/apt/sources.list /etc/apt/sources.list.d/*.list 2>/dev/null \
-  | sed \
-    -e "s/^deb //g" \
-    -e "s/^tor+//g" \
-    -e 's/\[arch=[a-z,0-9].*\] //g' \
-    -e 's/ /|/g'\
-)"
 
 echo "Repos to process:"
 echo
@@ -66,7 +57,6 @@ do
   echo
 
   # ask user to update repo
-  read -r -N 1 -p "Update repo from '$(echo ${line//|/ } | cut -f1 -d' ')'? [y/n] " ANSWER
 
   if [ "$ANSWER" = 'y' ] || [ "$ANSWER" = 'Y' ];then
     echo

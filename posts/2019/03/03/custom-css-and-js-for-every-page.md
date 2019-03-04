@@ -1,6 +1,5 @@
 ## Custom CSS and JS for every page
 
-
 I've implemented a super easy way to include custom JavaScript (JS) and CSS in any pages or posts you create using `mdsh`.
 
 It is as simple as adding a `.css` or `.js` to the relevant folder in `assets/`, and giving the files the same name as the `.html` file in which you wish to include your custom scripts.
@@ -19,5 +18,3 @@ Tip: Create any custom JS or CSS files you will need (even as empty files) *befo
 The custom CSS is included **after** the `main.css` stylesheet.
 
 The custom JS is included **after** the main `app.js` script.
-
-

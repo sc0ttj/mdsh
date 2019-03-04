@@ -1,0 +1,52 @@
+## Enabling easier Markdown re-building
+
+I've created a new script called `mdsh2md` that generates Markdown files from `.mdsh` files.
+
+Users can now edit the original `.mdsh` files (including any sub-shell commands contained within) and auto rebuild the Markdown output from which the HTML pages are generated.
+
+### Rebuilding pages
+
+With the new script `mdsh2md`, you can now do the following **before** re-building your HTML from markdown:
+
+```
+mdsh2md path/to/file.mdsh
+```
+^ this will create the Markdown file `path/to/file.md`.
+
+You can then rebuild the HTML page:
+
+```
+create_page path/to/file.md > path/to/file.html
+```
+
+Even easier, you can simply pass the `.mdsh` file straight to `create_page`:
+
+```
+create_page path/to/file.mdsh > path/to/file.html
+```
+^ The markdown file is re-built from the `.mdsh` file, *then* the HTML is rebuilt from the new markdown file.
+
+### Rebuilding your WHOLE site
+
+Just use the `-ALL` (capitalised) option with `updated_pages`:
+
+```
+updates_pages -ALL
+```
+^ This could be VERY slow, depending on what sub-shell commands you put in your `.mdsh` files.
+
+### Why not just edit the Markdown files?
+
+It's better to rebuild your Markdown files from the original `mdsh` input if want to:
+
+- use a "single source of truth" for your website source files
+- re-generate updated output from the sub-shells commands inside your Markdown
+- easily re-build your pages/documentation for a new operating system or version
+- auto fix errors in the [already] generated Markdown output that are hard to fix manually
+
+### When should I just edit the Markdown files directly?
+
+Sometimes editing the Markdown files directly might be better (or needed):
+
+- fix code blocks that have issues with indentation or escaped code blocks
+- the `create_post` or `mdsh2md` commands created Markdown with errors in it

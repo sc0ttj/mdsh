@@ -1,5 +1,3 @@
-
-
 ## Better site headers
 
 I've updated the `create_page` script so that the `print_site_header` function now does the following:

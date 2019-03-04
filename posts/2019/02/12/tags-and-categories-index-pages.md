@@ -1,4 +1,3 @@
-
 ## Tags and Categories index pages
 
 I've updated the `create_page` and `update_pages` scripts to build two new pages: `categories.html` and `tags.html`.
