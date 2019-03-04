@@ -546,11 +546,13 @@ function list_prev_and_next_posts {
 body_html=''
 markdown=''
 
-# get markdown from file
+# if we were given an mdsh file, then re-build the markdown file,
+# then grab the markdown from that new file
 if [ -f "${1//.mdsh/}.mdsh" ];then
+  ./mdsh2md "${1//.mdsh/}.mdsh" &>/dev/null
   markdown="$(cat "${1//.mdsh/}.md")"
 
-# get markdown from file
+# if given a markdown file, just grab that markdown
 elif [ -f "${1//.md/}.md" ];then
   markdown="$(cat "${1//.md/}.md")"
 
@@ -570,7 +572,8 @@ else
   done
 fi
 
-if [ "$1" = "-all" ];then
+# ignore the -all option that will be passed here by update_pages (if used by user)
+if [ "$1" = "-all" ] || [ "$1" = "-ALL" ];then
   post_file=''
   body_html=''
   recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"

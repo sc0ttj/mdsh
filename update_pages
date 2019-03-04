@@ -11,7 +11,7 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
-
+# clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
 
 cut -f1-2 -d'|' /tmp/posts.csv \
@@ -33,10 +33,16 @@ cut -f1-2 -d'|' /tmp/posts.csv \
         # mdsh file exists
         # so if the .md file doesnt exist, rebuild it
 
-        if [ "$1" = "-all" ];then
+        # if -all, ....         md -> html
+        # if -ALL, .... mdsh -> md -> html
+        #
+        if [ "$1" = "-all" ] || [ "$1" = "-ALL" ];then
+          source_file="$mdshfile"
+          html_file="${mdshfile//.mdsh/.html}"
+          [ "$1" = "-all" ] && source_file="${mdshfile//.mdsh/.md}"
           # update (rebuild) all posts pages
-          echo "Updating: posts/${mdshfile//.mdsh/.html}"
-          ./create_page "posts/$mdshfile" "posts/${mdshfile//.mdsh/.html}"
+          echo "Updating: posts/$html_file"
+          ./create_page "posts/$source_file" "posts/$html_file"
         fi
       fi
 
