@@ -12,8 +12,8 @@ post_created=''
 post_time_to_read=''
 post_url=''
 markdown=''
-mardown_meta=''
-mardown_body=''
+markdown_meta=''
+markdown_body=''
 body_html=''
 output_file=''
 current_date="$(date)"
@@ -592,12 +592,9 @@ if [ "$markdown" != "" ];then
   #
   echo "$markdown" > /tmp/markdown
   echo -n '' > /tmp/fixed_markdown
-  # setting IFS to only \n is needed to preserve code indentation
-  OLDIFS=$IFS
-  IFS="
-"
-  # the -er option is needed to preserve newlines in the code blocks
-  while read -er line
+
+  # the -er option is needed to preserve newlines in the code blocks, IFS= preserves whitespace
+  while IFS= read -er line
   do
     # replace ``` with html pre/code tags, cos the markdown parsers break a lot
     if [[ "$line" =~ '```' ]];then
@@ -609,7 +606,6 @@ if [ "$markdown" != "" ];then
     fi
     echo -e "$line" >> /tmp/fixed_markdown
   done<<<$(cat /tmp/markdown)
-  IFS="$OLDIFS"
 
   # get the pre-processed markdown, we will convert that to html
   [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown)"
@@ -648,8 +644,8 @@ unset post_created
 unset post_time_to_read
 unset post_url
 unset markdown
-unset mardown_meta
-unset mardown_body
+unset markdown_meta
+unset markdown_body
 unset body_html
 unset output_file
 

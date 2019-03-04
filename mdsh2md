@@ -4,24 +4,16 @@
 # Based on an example script by Stéphane Chazelas.
 
 if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ] || [ "$1" = "--help" ];then
-cat << HELP_MSG
+  cat << HELP_MSG
 
- An interactive shell for writing Markdown documents, with
- support for embedding bash sub-shells \$() in your Markdown!
+ Process .mdsh files, outputting valid Markdown files (.md)
 
- Usage:  mdshell <path-to-file> # creates the file if it doesn't exist
-
- Note backtick subshells (\`\`) not supported, only \$()
-
- Example:   Add \$(uname) in your Markdown and the saved
-            file will contain your system info.
+ Usage:  mdsh2md path/to/file.mdsh # will output path/to/file.md
 
 HELP_MSG
-exit
+  exit
 fi
 
-# load the users config file from $HOME
-[ -f $HOME/.bl/config ] && source $HOME/.bl/config
 # load the local config file
 [ -f .site_config ] && source .site_config
 
@@ -39,12 +31,26 @@ if [ ! -f "$1" ] && [ "$1" != "-all" ];then
   touch "$1"
 fi
 
-while :
+if [ ! -f "$1" ];then
+  exit 1
+fi
+
+
+# get contents only (ignoring meta/front matter)
+mdsh_contents="$(cat "$1")"     # get file contents
+md_body="${mdsh_contents#*---}" # remove everything before (and including) ---
+md_body="##${md_body#*##}"      # strip leading blank lines
+
+# write markdown body to temp file
+echo "$md_body" > /tmp/markdown
+
+# we will read the file line by line and process it...
+
+#  IFS=  preserve whitespace
+#  -e    use readline
+#  -r    dont escape backslashes include them as literals chars
+while IFS= read -r line
 do
-  # the user just hit ENTER, so read the line they input
-  #  -e  use readline
-  #  -r  dont escape backslashes include them as literals chars
-  IFS= read -er line
 
   # if line starts with ``` we know it's a markdown line, not part of a bash sub-shell
   [ "$(echo "$line" | grep '^```')" != "" ] && line_is_bash=false
@@ -140,7 +146,7 @@ do
       markdown="$markdown\n$line"
       source="$source\n$line"
       multi_line_string=false
-      [ -z "${prev_line}" ] && [ -z "$line" ] && break
+      #[ -z "${prev_line}" ] && [ -z "$line" ] && break
 
   fi
 
@@ -160,23 +166,17 @@ do
   line_was_bash=${line_is_bash}
   prev_line="$line"
   [ ${retval:-1} -eq 0 ] && result=''
-done
+done < /tmp/markdown
 
-# append body to the source file
-mdsh_file="${1}"
-echo -e "$source" >> "$mdsh_file"
-
-# append to the markdown file
+# rebuild the markdown file
 markdown_file="${1//.mdsh/}.md"
-echo -e "$markdown" >> "$markdown_file"
 
-# create the HTML page
-html_file="${1//.mdsh/}.html"
-./create_page "$1" > "$html_file"
+md_body="##${md_body#*##}"
+
+echo -e "##${markdown#*##}" > "$markdown_file"
 
 echo "Saved as:"
 echo
-echo "HTML page:      $html_file"
 echo "Markdown file:  $markdown_file"
 echo "Source file:    $1"
 echo
