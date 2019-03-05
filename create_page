@@ -203,11 +203,11 @@ function print_site_meta {
 function print_site_inline_styles {
   echo '<style>
   body, input, select, textarea, button {
-    font-family: Ubuntu, serif;
+    font-family: Ubuntu, sans;
     font-size: 16px;
   }
   pre, code {
-    font-family: Inconsolata, Monaco, monospace, serif;
+    font-family: Inconsolata, monospace;
     font-size: 14px;
   }
 </style>'

@@ -12,8 +12,8 @@ blog_url="/mdsh" # no trailing slash
 blog_author="sc0ttj"
 blog_email="foo@bar.com"
 blog_twitter="@foobar"
-blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
-blog_js_deps="cash-dom jets"
+blog_fonts='Ubuntu:400,400i,700|Inconsolata:400&subset=latin'
+blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
 blog_google_analytics_id=""
 blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a>"
 
@@ -30,3 +30,4 @@ alias update_pages="${PWD}/update_pages"
 alias publish="${PWD}/publish"
 alias server="${PWD}/server"
 alias setup="${PWD}/setup"
+alias minify="sed ':a;N;$!ba;s/>\s*</></g'"
