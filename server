@@ -86,7 +86,7 @@ echo "env - \
 
 " > /tmp/httpd_cmd
 
-rm /tmp/httpd_err
+rm /tmp/httpd_err &>/dev/null
 
 # run the web server as user 'nobody'
 su -pm nobody -c "$(cat /tmp/httpd_cmd) 2>/tmp/httpd_err" &
