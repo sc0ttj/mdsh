@@ -27,10 +27,13 @@ do
           -e 's/; /;/g' > "$minified_file"
 done
 
-html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -r)"
+html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -u)"
 for html_file in $html_files
 do
-  sed -i 's|.css?v=|.min.css?v=|g' $html_file
+  if [ "$(grep "main.min.css?v=" "$html_file")" = "" ];then
+    echo "updating $html_file"
+    sed -i "s|main.css?v=|main.min.css?v=|g" "$html_file"
+  fi
   sed ':a;N;$!ba;s/>\s*</></g' $html_file > ${html_file//.html/.minhtml}
   mv ${html_file//.html/.minhtml} ${html_file}
 done
