@@ -14,11 +14,12 @@
 # clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
 
+# read all posts
 cut -f1-2 -d'|' /tmp/posts.csv \
   | while read line
     do
 
-      # skip comments
+      # skip comments in posts.csv
       [ "$(echo "$line" | grep "^#")" != "" ] && continue
 
       mdshfile="${line//|//}"
@@ -204,5 +205,8 @@ done
 
 echo "Updating: feed.rss"
 ./create_rss posts/ > feed.rss
+
+echo
+echo "Finished."
 
 exit 0
