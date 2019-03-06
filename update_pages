@@ -1,12 +1,18 @@
 #!/bin/bash
 
+# Usage:  update_pages [-all|-ALL]
+
 # Update all index pages across the site which list posts, tags and categories
 # because a new post may have been added.
 
-# Usage:  update_pages [-all]
+# can rebuild .html files from .md files (-all), and can also rebuild .md
+# files from .mdsh files (-ALL)
 
-# if -all is give, all HTML pages will be re-built, not just the index
+# if -all is given, all HTML pages will be re-built, not just the index
 # pages (categories, tags, archive, home/recent posts, etc)
+
+# if -ALL is given, all .md files will be rebuilt (from .mdsh), and then
+# all pages will be rebuilt as above.
 
 # load the local config file
 [ -f .site_config ] && source .site_config
@@ -119,9 +125,10 @@ done
 
 # update category pages
 category_posts=''
-site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
+site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u)"
 for category in $site_categories
 do
+  [ "$category" = "" ] && continue
   category_posts="<h2>Category: $category</h2>$(list_posts_in_category "${category}")"
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
@@ -134,18 +141,6 @@ done
 echo "Updating: categories.html"
 touch categories.html
 ./create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
-
-# update category pages
-category_posts=''
-site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
-for category in $site_categories
-do
-  category_posts="<h2>Category: $category</h2>$(list_posts_in_category "${category}")"
-  [ "$category_posts" = "" ] && continue
-  echo "Updating: categories/$category.html"
-  touch categories/$category.html
-  ./create_page "$category_posts" categories/$category.html
-done
 
 
 # update contact page
@@ -193,9 +188,10 @@ echo "Updating: tags.html"
 ./create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
-site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| sort -u)"
+site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
 for tag in $site_tags
 do
+  [ "$tag" = "" ] && continue
   tagged_posts="<h2>Tag: $tag</h2>$(list_posts_matching_tag "$tag")"
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
