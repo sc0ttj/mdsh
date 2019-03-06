@@ -354,7 +354,7 @@ function print_site_footer {
 
 function list_categories {
   echo '<ul class="categories-list">'
-  for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | sort -u)
+  for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | grep -v "^$" |sort -u | uniq)
   do
     post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh | sort -u | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
@@ -365,8 +365,10 @@ function list_categories {
 
 function list_tags {
   echo '<ul class="tags-list">'
-  for tag in $(cut -f6 -d'|' ./posts.csv | tr ',' '\n' | tr ' ' '\n' | sort -u)
+  local all_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
+  for tag in $all_tags
   do
+    [ "$tag" = "" ] && continue
     post_count=$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
@@ -469,7 +471,7 @@ function list_recent_posts {
 
 function list_posts_by_author {
   local author="$1"
-  matching_posts="$(grep -lRE "# author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -r)"
+  matching_posts="$(grep -lRE "# author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
   echo '<ul class="posts-by-author posts">'
   for post in $matching_posts
   do
@@ -481,7 +483,7 @@ function list_posts_by_author {
 
 function list_posts_matching_tag {
   local tag="$1"
-  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -r)"
+  matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
   echo '<ul class="posts-matching-tag posts">'
   for post in $matching_posts
   do
@@ -493,7 +495,7 @@ function list_posts_matching_tag {
 
 function list_posts_in_category {
   local category="$1"
-  local titles="$(grep "|$category|" ./posts.csv | cut -f1,3 -d'|' | grep -v "^#" | sort -r | cut -f2 -d'|')"
+  local titles="$(grep "|$category|" ./posts.csv | cut -f1,3 -d'|' | grep -v "^#" | sort -u | sort -r | uniq | cut -f2 -d'|')"
 
   if [ "$titles" != "" ];then
     echo '<ul class="posts-in-category posts">'
