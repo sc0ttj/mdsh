@@ -86,6 +86,7 @@ xml_unescaped() { sed 's/&amp;//g; s/&[lg]t;//g; s/&quot;//g' | grep -q "[&<>]";
 find ./posts -type f -name "*.html" | grep -v "index.html" | sort -r |
 sed 's/^\.\///' | # strip leading ./ when "$1" is empty
 while read file; do
+  mdshfile="${file//.html/.mdsh}"
   if ! head "$file" | grep -Fiq '<!--Exclude from bashfeed-->'; then
       echo "$file"
       i=$((i+1))
@@ -105,29 +106,40 @@ while read file; do
   fi
   title=""; keywords=""; description=""
   if echo "$file" | grep -Eq '\.(html|shtml|php)$'; then
-      title="`grep '<title>' "$file" | sed -e 's|<title>||' -e 's|</title>||'`"
-      keywords="`grep -i '<meta name="keywords"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
-      description="`grep -i '<meta name="description"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
-      page_author="`grep -i '<meta name="author"' "$file" | sed -e 's|.*content="||' -e 's|".*||'`"
-      extracted_text="$title $keywords $description$ $page_author"
-      if echo "$extracted_text" | xml_unescaped; then
-        echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
-        exit 1
-      fi
+    if [ -f "$mdshfile" ];then
+      md_meta="$(cat "$mdshfile")"
+      md_meta="${md_meta%---*}"
+      title="$(echo "$md_meta"       | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
+      keywords="$(echo "$md_meta"    | grep -m1 '# tags'        | cut -f2 -d':' | sed 's/^ *//')"
+      description="$(echo "$md_meta" | grep -m1 '# description' | cut -f2 -d':' | sed 's/^ *//')"
+      page_author="$(echo "$md_meta" | grep -m1 '# author'      | cut -f2 -d':' | sed 's/^ *//')"
+    else
+      title="`grep '<title>' "$file" | sed -e 's|.*<title>||' -e 's|</title>.*||'`"
+      keywords="`grep -i '<meta name="keywords"' "$file" | sed -e 's|.*<meta name="keywords" content="||' -e 's|".*||'`"
+      description="`grep -i '<meta name="description"' "$file" | sed -e 's|.*<meta name="description" content="||' -e 's|".*||'`"
+      page_author="`grep -i '<meta name="author"' "$file" | sed -e 's|.*<meta name="author" content="||' -e 's|".*||'`"
+    fi
+
+    extracted_text="$title $keywords $description$ $page_author"
+    if echo "$extracted_text" | xml_unescaped; then
+      echo "Error: HTML metadata in $file will not produce a valid XML feed" >&2
+      exit 1
+    fi
   fi
   [ -z "$title" ] && title="$file"
   tags=""
   if [ ! -z "$keywords" ]; then
-      for keyword in $keywords; do
-          tags=`echo -ne "$tags<category>$keyword</category>\n    "`
-      done
+    for keyword in ${keywords//,/ }; do
+      [ "$keyword" = "" ] && continue
+      tags=`echo -ne "$tags<category>$keyword</category>\n    "`
+    done
   fi
   if [ "$page_author" ]; then
-      if [ "$page_author" = "$author" ]; then
-          page_author=""
-      else
-          page_author=`echo -ne "<author>$page_author</author>\n    "`
-      fi
+    if [ "$page_author" = "$author" ]; then
+      page_author=""
+    else
+      page_author=`echo -ne "<author>$page_author</author>\n    "`
+    fi
   fi
 echo "
 <item>
