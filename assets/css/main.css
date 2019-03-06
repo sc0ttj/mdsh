@@ -402,3 +402,7 @@ ul.posts li {
   display: inline-block;
   padding-right: 5px;
 }
+
+.archive-posts li span {
+  margin-right: 4px;
+}
