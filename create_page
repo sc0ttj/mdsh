@@ -220,7 +220,10 @@ function print_site_stylesheets {
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$timestamp'">'
   fi
-  echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
+  if [ "$blog_fonts" != "" ];then
+    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com/">'
+    echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
+  fi
 }
 
 function print_site_javascripts {
