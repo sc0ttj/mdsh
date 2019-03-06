@@ -206,6 +206,10 @@ done
 echo "Updating: feed.rss"
 ./create_rss posts/ > feed.rss
 
+# minify the HTML and CSS
+echo
+./minify
+
 echo
 echo "Finished."
 

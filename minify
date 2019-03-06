@@ -9,19 +9,13 @@
 # versions
 
 # minify HTML and CSS
-echo "Minifying:  HTML and CSS"
-
-html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -r)"
-for html_file in $html_files
-do
-  #echo "Minifying:  $html_file"
-  sed ':a;N;$!ba;s/>\s*</></g' $html_file > ${html_file//.html/.minhtml}
-  mv ${html_file//.html/.minhtml} ${html_file}
-done
+echo "Minifying HTML and CSS.."
 
 css_files="$(find . -type f -name "*.css" | grep -v '.min.css' | sort -r)"
 for css_file in $css_files
 do
+  minified_file="${css_file//.css/.min.css}";
+  cp "$css_file" "$minified_file"
   cat "$css_file" \
     | grep -v '/\*' \
     | tr -d '\n' \
@@ -30,7 +24,15 @@ do
           -e 's/{ /{/g' \
           -e 's/ }/}/g' \
           -e 's/: /:/g' \
-          -e 's/; /;/g' > "${css_file//.css/.mincss}"
-  mv ${css_file//.css/.mincss} ${css_file}
+          -e 's/; /;/g' > "$minified_file"
 done
+
+html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -r)"
+for html_file in $html_files
+do
+  sed -i 's|.css?v=|.min.css?v=|g' $html_file
+  sed ':a;N;$!ba;s/>\s*</></g' $html_file > ${html_file//.html/.minhtml}
+  mv ${html_file//.html/.minhtml} ${html_file}
+done
+
 
