@@ -25,10 +25,17 @@ cut -f1-2 -d'|' /tmp/posts.csv \
   | while read line
     do
 
-      # skip comments in posts.csv
-      [ "$(echo "$line" | grep "^#")" != "" ] && continue
+      # remove the HTML files of unpublished posts
+      if [ "$(echo "$line" | grep "^#")" != "" ];then
+        html_file=${line//|//}
+        html_file=${html_file//#/}
+        html_file=posts/${html_file//.mdsh/.html}
+        [ -f $html_file ] && rm $html_file &>/dev/null
+        continue
+      fi
 
       mdshfile="${line//|//}"
+      mdshfile="${mdshfile//#/}"
 
       if [ ! -f "posts/$mdshfile" ];then
         # the .mdsh file doesnt exist, remove post from posts list
@@ -49,7 +56,7 @@ cut -f1-2 -d'|' /tmp/posts.csv \
           [ "$1" = "-all" ] && source_file="${mdshfile//.mdsh/.md}"
           # update (rebuild) all posts pages
           echo "Updating: posts/$html_file"
-          .app/create_page "posts/$source_file" "posts/$html_file"
+          .app/create_page "posts/$source_file" > "posts/$html_file"
         fi
       fi
 
@@ -114,6 +121,7 @@ touch authors/index.html
 .app/create_page "<h2>Authors</h2>\n$(list_authors)" authors/index.html
 # update authors pages
 [ ! -d ./authors/ ] && mkdir ./authors/
+site_authors="$(grep -v "^#" ./posts.csv | cut -f4 -d'|' | tr ',' '\n' | grep -v "^$" | sort -u)"
 cut -f4 -d'|' ./posts.csv | tr ',' '\n' | grep -v "^$" | sort -u | while read author
 do
   file="authors/$(.app/slugify.sh "$author").html"
@@ -125,7 +133,7 @@ done
 
 # update category pages
 category_posts=''
-site_categories="$(cut -f5 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u)"
+site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u)"
 for category in $site_categories
 do
   [ "$category" = "" ] && continue
@@ -188,7 +196,7 @@ echo "Updating: tags.html"
 .app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
-site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
+site_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
 for tag in $site_tags
 do
   [ "$tag" = "" ] && continue

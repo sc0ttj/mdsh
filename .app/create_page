@@ -354,9 +354,12 @@ function print_site_footer {
 
 function list_categories {
   echo '<ul class="categories-list">'
-  for category in $(cut -f5 -d'|' ./posts.csv | tr ',' '\n' | grep -v "^$" |sort -u | uniq)
+  for category in $(grep -v "^#" posts.csv | cut -f5 -d'|' | tr ',' '\n' | grep -v "^$" |sort -u | uniq)
   do
-    post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh | sort -u | wc -l 2>/dev/null)
+    post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh |sort -u| while read file
+      do
+      cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
+      done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/categories/'$(.app/slugify.sh "${category}")'.html">'${category}'</a> '$post_count'</li>'
   done
@@ -365,11 +368,14 @@ function list_categories {
 
 function list_tags {
   echo '<ul class="tags-list">'
-  local all_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
+  local all_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
   for tag in $all_tags
   do
     [ "$tag" = "" ] && continue
-    post_count=$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
+    post_count=$(grep -lRE "# tags:.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u| while read file
+      do
+      cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
+      done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/tags/'$(.app/slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
   done
@@ -378,9 +384,12 @@ function list_tags {
 
 function list_authors {
   echo '<ul class="authors-list">'
-  for author in $(cut -f4 -d'|' ./posts.csv | tr ',' '\n' grep -v "^$" | sort -u)
+  for author in $(grep -v "^#" posts.csv | cut -f4 -d'|' | tr ',' '\n' grep -v "^$" | sort -u)
   do
-    post_count=$(grep -lRE "# author.*$author[,]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
+    post_count=$(grep -lRE "# author:.*$author[,]?" posts/*/*/*/*.mdsh |sort -u| while read file
+      do
+      cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
+      done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/authors/'$(.app/slugify.sh "${author}")'.html">'${author}'</a> '$post_count'</li>'
   done
@@ -439,7 +448,7 @@ function print_post_preview {
 function list_posts_in {
   [ -z "$1" ] && return 1
   local post_dir="$1"
-  local matching_posts="$(grep "^$post_dir/" posts.csv | cut -f1,2 -d'|' | tr '|' '/' | sort -r)"
+  local matching_posts="$(grep "^$post_dir/" posts.csv | grep -v "^#" | cut -f1,2 -d'|' | tr '|' '/' | sort -r)"
 #  local matching_posts="$(find $posts_dir -type f -name "*.mdsh" | sort -r)"
   local post_name
   echo '<ul class="posts">'
@@ -475,8 +484,11 @@ function list_posts_by_author {
   echo '<ul class="posts-by-author posts">'
   for post in $matching_posts
   do
+    # skip post if it's commented out in posts.csv
+    [ "$(grep "${post}|" posts.csv | grep "^#" )" ] && continue
+    # get post name
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
-    echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
+    [ "$post_name" != "" ] && echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
   done
   echo '</ul>'
 }

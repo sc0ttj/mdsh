@@ -1,0 +1,5 @@
+.app/*
+posts.csv
+*.mdsh
+*.md
+*.sh

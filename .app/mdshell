@@ -170,7 +170,7 @@ echo -e "$markdown" >> "$markdown_file"
 
 # create the HTML page
 html_file="${1//.mdsh/}.html"
-./create_page "$1" > "$html_file"
+.app/create_page "$1" > "$html_file"
 
 echo "Saved as:"
 echo

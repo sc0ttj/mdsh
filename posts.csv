@@ -1,18 +1,18 @@
 2019/02/09|app-structure.mdsh|App structure|sc0ttj|blog|blog,bash
 2019/02/09|simplifying-blog-structure.mdsh|Simplifying blog structure|sc0ttj|blog|blog,csv,shell
-2019/02/10|another-test.mdsh|Another test||test|test
+#2019/02/10|another-test.mdsh|Another test||test|test
 2019/02/10|creating-html-from-markdown.mdsh|Creating HTML from Markdown||blog|shell,blog,markdown
 2019/02/10|creating-html-pages-with-markdown-pl.mdsh|Creating HTML pages with markdown.pl||blog|blog,shell,markdown
 2019/02/10|fixing-the-markdown-parsers.mdsh|Fixing the markdown parsers||blog|markdown,shell
-2019/02/10|foo.mdsh|foo||test|test
+#2019/02/10|foo.mdsh|foo||test|test
 2019/02/10|markdown-parsing-works-ok-now.mdsh|Markdown parsing works OK now||blog|blog,markdown,shell
-2019/02/10|more-tests.mdsh|More tests||test|test
+#2019/02/10|more-tests.mdsh|More tests||test|test
 2019/02/10|rofnafen-sh.mdsh|Rofnafen.sh||games|games,shell
-2019/02/10|test01.mdsh|test01||test|test
-2019/02/10|testing-html-creation.mdsh|Testing HTML creation||test|test
-2019/02/10|testing-md-to-html.mdsh|Testing md to html||test|test
-2019/02/10|this-might-work.mdsh|This might work||test|test
-2019/02/10|try-again.mdsh|Try again||blog|markdown,shell
+#2019/02/10|test01.mdsh|test01||test|test
+#2019/02/10|testing-html-creation.mdsh|Testing HTML creation||test|test
+#2019/02/10|testing-md-to-html.mdsh|Testing md to html||test|test
+#2019/02/10|this-might-work.mdsh|This might work||test|test
+#2019/02/10|try-again.mdsh|Try again||blog|markdown,shell
 2019/02/10|what-to-do-after-creating-a-post.mdsh|What to do after creating a post||blog|blog,shell
 2019/02/11|added-an-archive-html-page.mdsh|Added an archive.html page||blog|blog,shell
 2019/02/11|adding-post-headers.mdsh|Adding post headers||blog|blog,shell
@@ -27,24 +27,24 @@
 2019/02/13|about-mdshell.mdsh|About `mdshell`||blog|blog,markdown,shell
 2019/02/13|better-site-headers.mdsh|Better site headers||blog|blog
 2019/02/13|how-to-edit-existing-pages.mdsh|How to edit existing pages||blog|blog
-2019/02/15|error-in-choosing-valid-markdown-file-doh.mdsh|Error in choosing valid markdown file (doh!)||test|test
-2019/02/15|error-in-file-naming.mdsh|Error in file naming||test|test
+#2019/02/15|error-in-choosing-valid-markdown-file-doh.mdsh|Error in choosing valid markdown file (doh!)||test|test
+#2019/02/15|error-in-file-naming.mdsh|Error in file naming||test|test
 2019/02/15|fixed-code-block-formatting.mdsh|Fixed code block formatting||blog|blog
-2019/02/15|generating-valid-markdown.mdsh|Generating valid markdown||test|test
+#2019/02/15|generating-valid-markdown.mdsh|Generating valid markdown||test|test
 2019/02/15|it-works-easier-post-editing-and-converting-is-on-the-way.mdsh|It works! Easier post editing and converting is on the way...||blog|blog,markdown,mdsh
-2019/02/15|rof-test.mdsh|rof test||test|test
-2019/02/15|tester.mdsh|tester||test|test
-2019/02/15|test.mdsh|test||test|test
+#2019/02/15|rof-test.mdsh|rof test||test|test
+#2019/02/15|tester.mdsh|tester||test|test
+#2019/02/15|test.mdsh|test||test|test
 2019/02/16|auto-generated-post-footers.mdsh|Auto-generated post footers||blog|blog
 2019/02/16|ifs-and-the-read-command.mdsh|IFS and the read command||blog|blog,shell
 2019/02/16|missing-post-header.mdsh|Missing post header||blog|blog
 2019/02/17|adding-a-stylesheet.mdsh|Adding a stylesheet||blog|blog,css
-2019/02/23|generating-an-rss-feed.mdsh|Generating an RSS feed||blog,rss|blog, rss
+2019/02/23|generating-an-rss-feed.mdsh|Generating an RSS feed||blog|blog, rss
 2019/02/23|generating-an-xml-sitemap.mdsh|Generating an XML sitemap||blog|blog, xml
 2019/02/24|adding-a-site-search-feature.mdsh|Adding a site search feature||blog|blog, javascript
 2019/02/24|generating-better-homepages.mdsh|Generating better homepages||blog|blog
 2019/03/02|adding-authors-pages.mdsh|Adding authors pages||blog|blog
-2019/03/02|fixing-rss-generation.mdsh|Fixing RSS generation||blog|bsd, linux, gnu, osx
+2019/03/02|fixing-rss-generation.mdsh|Fixing RSS generation||blog|bsd, linux, gnu, osx, rss
 2019/03/02|searching-this-website.mdsh|Searching this website||blog|blog, javascript
 2019/03/03|custom-css-and-js-for-every-page.mdsh|Custom CSS and JS for every page||blog|blog, css, javascript
 2019/03/03|highlighting-search-terms-on-the-page.mdsh|Highlighting search terms on the page||blog|javascript
@@ -52,3 +52,5 @@
 2019/03/04|enabling-easier-markdown-re-building.mdsh|Enabling easier Markdown re-building||blog|shell, markdown
 2019/03/04|fixing-code-formatting.mdsh|Fixing code formatting||blog|shell
 2019/03/06|adding-html-and-css-minification.mdsh|Adding HTML and CSS minification||blog|html, css, shell
+2019/03/08|added-a-gitignore-file.mdsh|Added a `.gitignore` file||blog|git, blog
+2019/03/08|unpublishing-pages.mdsh|Unpublishing pages||blog|blog
