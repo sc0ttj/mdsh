@@ -20,8 +20,6 @@ HELP_MSG
 exit
 fi
 
-# load the users config file from $HOME
-[ -f $HOME/.bl/config ] && source $HOME/.bl/config
 # load the local config file
 [ -f .site_config ] && source .site_config
 

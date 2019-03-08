@@ -1,8 +1,4 @@
-`NOTE: This blog thing is a work-in-progress [WIP], not yet "finished"`)
-
----
-
-# `mdshell` README
+# README
 
 `mdshell` - Write your blog straight from the terminal.
 
@@ -16,10 +12,9 @@ The name `mdshell` refers to the fact you can combine Markdown and `$()` sub-she
 
 This is a fast way of producing documentation for any installed programs or commands, and a nice easy way to write blog posts in Markdown.
 
-## Features:
+## Features
 
 - Written in Bash shell script
-- Easy setup - just clone the repo, then run `./setup` and follow the prompts.
 - Builds a fast blog with great SEO and mobile support
 - Creates blog posts or custom pages.
 - Use a mix of Markdown and shell code to write blog posts!
@@ -35,35 +30,51 @@ This is a fast way of producing documentation for any installed programs or comm
 - Optionally use [GitHub Pages](https://pages.github.com/) for free, fast, and secure (SSL enabled) site hosting
 - Supports many other web hosting options too ([GitLab Pages](https://about.gitlab.com/product/pages/), [Netlify](https://www.netlify.com/docs/continuous-deployment/), others).
 
+## Setup
+
+`setup` - set site defaults, settings and options.
+
+`source .site_setup` - source the app and site settings - _important!_
+
+`server [start|stop]` - start/stop a local web server.
+
 ## Usage
 
-`./setup` - set important site settings like blog name, description, url, etc.
+`new post` - create a new post. Follow the on-screen instructions. All index pages will be updated and re-built after creating a new post.
 
-`./create_post` - create a new post (add meta, then markdown content)
-
-`./publish "some message"` - commit and push (deploy) your site to the remote host/server
+`publish "message"` - save and publish latest changes.
 
 ## Advanced usage
 
-`./update_pages` - rebuild all pages and indexes on the site
+#### Customising posts
 
-`./update_pages -all` - rebuild all pages and indexes on the site, _AND blog posts too_
+`new post -all` - creates a new post, as above, but allows overriding various site defaults.
 
-`./generate_sitemap.sh` - generate a valid XML sitemap of your site
+#### Creating pages
 
-Aside from adding blog posts and updating blog pages, you can easily create custom pages too:
+`new page file.md > file.html` - create a page from a Markdown file.
 
-- manually re-generate the default homepage, listing recent posts
+`new page "$html" > file.html` - create a page from an HTML string.
 
-  `./create_page > index.html`
+#### Rebuilding pages
 
-- create HTML page from markdown file (recommended)
+If you edit any existing Markdown or .mdsh files, you may need to re-build the HTML pages:
 
-  `./create_page path/to/some-file.md > some-file.html`
+`rebuild` - re-build all index pages (authors, categories, tags, etc).
 
-- create custom page containing the given HTML
+`rebuild file.md file.html` - re-build a specific page.
 
-  `./create_page "$some_HTML_string" > some-file.html`
+`rebuild file.mdsh file.html` - re-build a page from a .mdsh file.
+
+`rebuild -all` - re-build all posts from their Markdown files.
+
+`rebuild -ALL` - re-build all posts from their .mdsh files.
+
+#### Updating sitemap
+
+_After_ publishing your new post or page, you can update your sitemap.
+
+`rebuild sitemap` - re-build and publish an updated XML sitemap file.
 
 ## Documentation
 

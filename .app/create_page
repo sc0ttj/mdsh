@@ -303,7 +303,7 @@ function print_post_header {
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$post_created"'</span>'
-  echo '<span class="author"><a href="'$blog_url'/authors/'"$(./slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
+  echo '<span class="author"><a href="'$blog_url'/authors/'"$(.app/slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
   echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
   for tag in ${post_tags//,/ }
@@ -324,7 +324,7 @@ function print_post_footer {
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
   echo '<span class="date">'"$post_created"'</span>'
-  echo '<span class="author"><a href="'$blog_url'/authors/'"$(./slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
+  echo '<span class="author"><a href="'$blog_url'/authors/'"$(.app/slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
   echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
   for tag in ${post_tags//,/ }
@@ -358,7 +358,7 @@ function list_categories {
   do
     post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh | sort -u | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
-    echo '<li><a href="'${blog_url}'/categories/'$(./slugify.sh "${category}")'.html">'${category}'</a> '$post_count'</li>'
+    echo '<li><a href="'${blog_url}'/categories/'$(.app/slugify.sh "${category}")'.html">'${category}'</a> '$post_count'</li>'
   done
   echo '</ul>'
 }
@@ -371,7 +371,7 @@ function list_tags {
     [ "$tag" = "" ] && continue
     post_count=$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
-    echo '<li><a href="'${blog_url}'/tags/'$(./slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
+    echo '<li><a href="'${blog_url}'/tags/'$(.app/slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
   done
   echo '</ul>'
 }
@@ -382,7 +382,7 @@ function list_authors {
   do
     post_count=$(grep -lRE "# author.*$author[,]?" posts/*/*/*/*.mdsh |sort -u |  wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
-    echo '<li><a href="'${blog_url}'/authors/'$(./slugify.sh "${author}")'.html">'${author}'</a> '$post_count'</li>'
+    echo '<li><a href="'${blog_url}'/authors/'$(.app/slugify.sh "${author}")'.html">'${author}'</a> '$post_count'</li>'
   done
   echo '</ul>'
 }
@@ -431,7 +431,7 @@ function print_post_preview {
         fi
       fi
       echo -e "$line"
-    done | ./markdown.pl | grep -v '<h2>')"
+    done | .app/markdown.pl | grep -v '<h2>')"
   echo '</div>'
 }
 
@@ -659,7 +659,7 @@ if [ "$markdown" != "" ];then
      [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
     # convert the markdown to HTML
-    body_html="$(echo -e "$markdown" | ./markdown.pl)" # or markdown.sh
+    body_html="$(echo -e "$markdown" | .app/markdown.pl)" # or markdown.sh
   fi
 
 fi

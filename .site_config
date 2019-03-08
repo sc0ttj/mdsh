@@ -10,24 +10,14 @@ blog_categories="blog, bash, shell, javascript, css, programming, puppy linux, t
 blog_domain="sc0ttj.github.io"
 blog_url="/mdsh" # no trailing slash
 blog_author="sc0ttj"
-blog_email="foo@bar.com"
+blog_email="foo@example.com"
 blog_twitter="@foobar"
-blog_fonts='Ubuntu:400,400i,700|Inconsolata:400&subset=latin'
+blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
 blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
 blog_google_analytics_id=""
 blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a>"
 
 ##################################################################
 
-# nicer command-line interface (CLI)
+source .app/cli-interface
 
-alias create_page="${PWD}/create_page"
-alias create_post="${PWD}/create_post"
-alias create_rss="${PWD}/create_rss"
-alias generate_sitemap="${PWD}/generate_sitemap.sh"
-alias mdsh2md="${PWD}/mdsh2md"
-alias update_pages="${PWD}/update_pages"
-alias publish="${PWD}/publish"
-alias server="${PWD}/server"
-alias setup="${PWD}/setup"
-alias minify="${PWD}/minify"

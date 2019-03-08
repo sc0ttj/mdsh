@@ -49,14 +49,14 @@ cut -f1-2 -d'|' /tmp/posts.csv \
           [ "$1" = "-all" ] && source_file="${mdshfile//.mdsh/.md}"
           # update (rebuild) all posts pages
           echo "Updating: posts/$html_file"
-          ./create_page "posts/$source_file" "posts/$html_file"
+          .app/create_page "posts/$source_file" "posts/$html_file"
         fi
       fi
 
     done
 
 echo "Updating: index.html"
-. create_page > index.html
+. .app/create_page > index.html
 
 # update yearly indexes
 for year in $(ls -1 posts)
@@ -66,7 +66,7 @@ do
   [ "$yearly_posts" = "" ] && continue
   echo "Updating: posts/$year/index.html"
   touch posts/$year/index.html
-  ./create_page "$yearly_posts" posts/$year/index.html
+  .app/create_page "$yearly_posts" posts/$year/index.html
 
   # update monthly indexes
   for month in $(ls -1 posts/$year)
@@ -76,14 +76,14 @@ do
     [ "$monthly_posts" = "" ] && continue
     echo "Updating: posts/$year/$month/index.html"
     touch posts/$year/$month/index.html
-    ./create_page "$monthly_posts" posts/$year/$month/index.html
+    .app/create_page "$monthly_posts" posts/$year/$month/index.html
   done
 done
 
 
 # update 404 page
 echo "Updating: 404.html"
-./create_page '<h2>Page not found</h2>
+.app/create_page '<h2>Page not found</h2>
 <p>Sorry, the page you are looking for could not be found!</p>
 <hr>
 <p>Please use the menu to find something else.</p>' > 404.html
@@ -105,21 +105,21 @@ if [ "$all_posts" != "" ];then
   done
   all_post_html="${all_post_html}</ul>"
   touch archive.html
-  ./create_page "$all_post_html" archive.html
+  .app/create_page "$all_post_html" archive.html
 fi
 
 
 # update authors index page
 touch authors/index.html
-./create_page "<h2>Authors</h2>\n$(list_authors)" authors/index.html
+.app/create_page "<h2>Authors</h2>\n$(list_authors)" authors/index.html
 # update authors pages
 [ ! -d ./authors/ ] && mkdir ./authors/
 cut -f4 -d'|' ./posts.csv | tr ',' '\n' | grep -v "^$" | sort -u | while read author
 do
-  file="authors/$(./slugify.sh "$author").html"
+  file="authors/$(.app/slugify.sh "$author").html"
   echo "Updating: $file"
   [ ! -f $file ] && touch $file
-  ./create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
+  .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
 done
 
 
@@ -133,14 +133,14 @@ do
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
   touch categories/$category.html
-  ./create_page "$category_posts" categories/$category.html
+  .app/create_page "$category_posts" categories/$category.html
 done
 
 
 # update categories index page
 echo "Updating: categories.html"
 touch categories.html
-./create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
+.app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
 
 
 # update contact page
@@ -156,7 +156,7 @@ if [ "$blog_email" != "" ];then
   #"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
   #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
 
-  ./create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+  .app/create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
 $contact_twitter
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
   <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
@@ -185,7 +185,7 @@ fi
 
 # update tags index page
 echo "Updating: tags.html"
-./create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
+.app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
 site_tags="$(cut -f6 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
@@ -196,15 +196,15 @@ do
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
   touch tags/$tag.html
-  ./create_page "$tagged_posts" tags/$tag.html
+  .app/create_page "$tagged_posts" tags/$tag.html
 done
 
 echo "Updating: feed.rss"
-./create_rss posts/ > feed.rss
+.app/create_rss posts/ > feed.rss
 
 # minify the HTML and CSS
 echo
-./minify
+.app/minify
 
 echo
 echo "Finished."
