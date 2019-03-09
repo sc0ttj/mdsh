@@ -285,7 +285,7 @@ function print_site_header {
 
 function print_post_header {
   # exit if we are not building a blog post
-  [ "$post_slug" = "" ] && return 0
+  [ "$post_created" = "" ] && return 0
 
   echo '<div class="post-header">'
   echo '<div class="post-meta">'
@@ -306,7 +306,7 @@ function print_post_header {
 
 function print_post_footer {
   # exit if we are not building a blog post
-  [ "$post_slug" = "" ] && return 0
+  [ "$post_created" = "" ] && return 0
 
   echo '<div class="post-footer">'
   echo '<div class="post-meta">'
@@ -322,7 +322,7 @@ function print_post_footer {
   done
   echo '</div>'
   echo '</div>'
-  if [ "$post_slug" != "" ];then
+  if [ "$post_created" != "" ];then
     echo "$(list_prev_and_next_posts "${post_slug}.mdsh")"
   fi
   echo '</div>'
@@ -398,7 +398,7 @@ function print_post_preview {
    set_post_info "$1"
 
   # exit if we are not building a blog post
-  [ "$post_slug" = "" ] && return 0
+  [ "$post_created" = "" ] && return 0
 
   echo '<div class="post-preview">'
   echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <time datetime="'"${post_created//\//-}"'">'"${post_created}"'</time>'

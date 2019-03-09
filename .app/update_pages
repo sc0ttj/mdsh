@@ -83,14 +83,18 @@ do
     [ "$monthly_posts" = "" ] && continue
     echo "Updating: posts/$year/$month/index.html"
     touch posts/$year/$month/index.html
-    post_title="$blog_title - Posts from $(date -d $year-$month-01 '+%B') $year" .app/create_page "$monthly_posts" posts/$year/$month/index.html
+    post_title="$blog_title - Posts from $(date -d $year-$month-01 '+%B') $year" \
+    post_descr="Here's a list of blog posts written in $(date -d $year-$month-01 '+%B') $year" \
+    .app/create_page "$monthly_posts" posts/$year/$month/index.html
   done
 done
 
 
 # update 404 page
 echo "Updating: 404.html"
-post_title="Page not found" .app/create_page '<h2>Page not found</h2>
+post_title="Page not found" \
+post_descr="The page you are looking for could not be found." \
+.app/create_page '<h2>Page not found</h2>
 <p>Sorry, the page you are looking for could not be found!</p>
 <hr>
 <p>Please use the menu to find something else.</p>' > 404.html
@@ -112,7 +116,9 @@ if [ "$all_posts" != "" ];then
   done
   all_post_html="${all_post_html}</ul>"
   touch archive.html
-  post_title="$blog_title - Archive" .app/create_page "$all_post_html" archive.html
+  post_title="$blog_title - Archive" \
+  post_descr="Here's a list of all posts on this blog, listed newest to oldest." \
+  .app/create_page "$all_post_html" archive.html
 fi
 
 
@@ -127,7 +133,9 @@ do
   file="authors/$(.app/slugify.sh "$author").html"
   echo "Updating: $file"
   [ ! -f $file ] && touch $file
-  post_title="$blog_title - Posts by $author" .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
+  post_title="$blog_title - Posts by $author" \
+  post_descr="Here's a list of posts written by $author." \
+  .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
 done
 
 
@@ -141,14 +149,18 @@ do
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
   touch categories/$category.html
-  post_title="$blog_title - Posts in $category" .app/create_page "$category_posts" categories/$category.html
+  post_title="$blog_title - Posts in $category" \
+  post_descr="Here's a list of posts in the category '$category'" \
+  .app/create_page "$category_posts" categories/$category.html
 done
 
 
 # update categories index page
 echo "Updating: categories.html"
 touch categories.html
-post_title="$blog_title - Categories" .app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
+post_title="$blog_title - Categories" \
+post_descr="Here's a list of posts categories" \
+.app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
 
 
 # update contact page
@@ -164,7 +176,9 @@ if [ "$blog_email" != "" ];then
   #"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
   #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
 
-post_title="$blog_title - Contact" .app/create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+post_title="$blog_title - Contact" \
+post_descr="Contact us $blog_title to send a message, question, some feedback or whatever." \
+.app/create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
 $contact_twitter
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
   <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
@@ -193,7 +207,9 @@ fi
 
 # update tags index page
 echo "Updating: tags.html"
-post_title="$blog_title - Tags" .app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
+post_title="$blog_title - Tags" \
+post_descr="Here's a list of all tags on the site, to help you find some relevant content." \
+.app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
 site_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
@@ -204,7 +220,9 @@ do
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
   touch tags/$tag.html
-  post_title="$blog_title - Posts matching '$tag'" .app/create_page "$tagged_posts" tags/$tag.html
+  post_title="$blog_title - Posts matching '$tag'" \
+  post_descr="Here's a list of posts matching the tag '$tag'" \
+  .app/create_page "$tagged_posts" tags/$tag.html
 done
 
 echo "Updating: feed.rss"
