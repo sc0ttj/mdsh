@@ -63,7 +63,7 @@ cut -f1-2 -d'|' /tmp/posts.csv \
     done
 
 echo "Updating: index.html"
-. .app/create_page > index.html
+post_title="$blog_title - Homepage" . .app/create_page > index.html
 
 # update yearly indexes
 for year in $(ls -1 posts)
@@ -73,7 +73,7 @@ do
   [ "$yearly_posts" = "" ] && continue
   echo "Updating: posts/$year/index.html"
   touch posts/$year/index.html
-  .app/create_page "$yearly_posts" posts/$year/index.html
+  post_title="$blog_title - Posts from $year" .app/create_page "$yearly_posts" posts/$year/index.html
 
   # update monthly indexes
   for month in $(ls -1 posts/$year)
@@ -83,14 +83,14 @@ do
     [ "$monthly_posts" = "" ] && continue
     echo "Updating: posts/$year/$month/index.html"
     touch posts/$year/$month/index.html
-    .app/create_page "$monthly_posts" posts/$year/$month/index.html
+    post_title="$blog_title - Posts from $(date -d $year-$month-01 '+%B') $year" .app/create_page "$monthly_posts" posts/$year/$month/index.html
   done
 done
 
 
 # update 404 page
 echo "Updating: 404.html"
-.app/create_page '<h2>Page not found</h2>
+post_title="Page not found" .app/create_page '<h2>Page not found</h2>
 <p>Sorry, the page you are looking for could not be found!</p>
 <hr>
 <p>Please use the menu to find something else.</p>' > 404.html
@@ -112,7 +112,7 @@ if [ "$all_posts" != "" ];then
   done
   all_post_html="${all_post_html}</ul>"
   touch archive.html
-  .app/create_page "$all_post_html" archive.html
+  post_title="$blog_title - Archive" .app/create_page "$all_post_html" archive.html
 fi
 
 
@@ -127,7 +127,7 @@ do
   file="authors/$(.app/slugify.sh "$author").html"
   echo "Updating: $file"
   [ ! -f $file ] && touch $file
-  .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
+  post_title="$blog_title - Posts by $author" .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
 done
 
 
@@ -141,14 +141,14 @@ do
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
   touch categories/$category.html
-  .app/create_page "$category_posts" categories/$category.html
+  post_title="$blog_title - Posts in $category" .app/create_page "$category_posts" categories/$category.html
 done
 
 
 # update categories index page
 echo "Updating: categories.html"
 touch categories.html
-.app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
+post_title="$blog_title - Categories" .app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
 
 
 # update contact page
@@ -164,7 +164,7 @@ if [ "$blog_email" != "" ];then
   #"<form action=\"mailto:${blog_email}\" enctype=\"text/plain\">"                        # mailto
   #"<form method=\"POST\" action=\"https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX\">"   # briskforms
 
-  .app/create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
+post_title="$blog_title - Contact" .app/create_page "<h1>Contact</h1><p>Send me a message, question, some feedback or whatever.</p>
 $contact_twitter
 <form id=\"contact-form\" class=\"contact-form\" action=\"\" method=\"POST\">
   <input name=\"_gotcha\" type=\"text\" style=\"display: none;\"></input>
@@ -193,7 +193,7 @@ fi
 
 # update tags index page
 echo "Updating: tags.html"
-.app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
+post_title="$blog_title - Tags" .app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
 
 # update tags pages
 site_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
@@ -204,7 +204,7 @@ do
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
   touch tags/$tag.html
-  .app/create_page "$tagged_posts" tags/$tag.html
+  post_title="$blog_title - Posts matching '$tag'" .app/create_page "$tagged_posts" tags/$tag.html
 done
 
 echo "Updating: feed.rss"

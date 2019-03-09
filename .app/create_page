@@ -5,17 +5,6 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
-post_title=''
-post_slug=''
-post_category=''
-post_created=''
-post_time_to_read=''
-post_url=''
-markdown=''
-markdown_meta=''
-markdown_body=''
-body_html=''
-output_file=''
 current_date="$(date)"
 timestamp=$(date +%s)
 
