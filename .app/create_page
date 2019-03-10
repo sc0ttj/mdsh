@@ -117,20 +117,26 @@ function print_site_meta {
 <meta name="pagename" content="'${page_title}'">
  <!-- Apple -->
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="'${blog_title}'">
 <!-- Facebook -->
 <meta property="og:title" content="'${page_title}'">
 <meta property="og:description" content="'${post_descr:-$blog_descr}'">
 <meta property="og:url" content="'${post_url:-$blog_url}'">
-<meta property="og:site_name" content="'${page_title}'">
+<meta property="og:site_name" content="'${blog_title}'">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="'${post_language:-$blog_language}'">
 <meta property="og:image" content="'${blog_url}'/assets/icons/rss.png">
+<meta property="article:author" content="'${post_author:-blog_author}'"/>
+<meta property="article:section" content="'${blog_category}'"/>
 <meta property="article:published_time" content="'${post_created:-$current_date}'">
+<meta property="article:modified_time" content="'${current_date}'">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="'${page_title}'" />
 <meta name="twitter:site" content="'${post_twitter:-$blog_twitter}'" />
+<meta name="twitter:creator" content="'${post_twitter:-$blog_twitter}'" />
 <meta name="twitter:image" content="'${blog_url}'/assets/icons/rss.png" />
+<meta name="twitter:domain" content="'${blog_url}'" />
 <!-- Linked data -->
 <script id="meta-ld" type="application/ld+json">
 {
@@ -162,6 +168,9 @@ function print_site_meta {
 }
 </script>
 '
+  # print json-ld breadcrumb
+  .app/breadcrumb "${post_url:-$blog_url}"
+  # google analytics
   if [ "${blog_google_analytics_id}" != "" ];then
     echo '<!-- Google analytics (optional) -->'
     echo '<meta name="google-analytics" content="'${blog_google_analytics_id}'">'
@@ -171,7 +180,7 @@ function print_site_meta {
 <link rel="alternate" type="application/rss+xml" title="Subscribe to '${blog_title}'" href="'${blog_url}'/feed.rss" />
 <!-- SEO stuff -->
 <link rel="author" href="/humans.txt" />
-<link rel="canonical" href="'${blog_url}'/">
+<link rel="canonical" href="'${post_url:-$blog_url}'/">
 <!-- App icons and favicons -->
 <link rel="manifest" href="'${blog_url}'/manifest.webmanifest?v='$timestamp'">
 <link rel="icon" type="image/vnd.microsoft.icon" href="'${blog_url}'/assets/icons/favicon.ico?v='$timestamp'">
@@ -186,6 +195,9 @@ function print_site_meta {
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="'${blog_title}'">
+<!-- prefetch resources -->
+<link href="//unpkg.com" rel="preconnect" crossorigin>
+<link rel="dns-prefetch" href="//unpkg.com">
 '
 }
 

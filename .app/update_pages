@@ -73,7 +73,10 @@ do
   [ "$yearly_posts" = "" ] && continue
   echo "Updating: posts/$year/index.html"
   touch posts/$year/index.html
-  post_title="$blog_title - Posts from $year" .app/create_page "$yearly_posts" posts/$year/index.html
+  post_title="$blog_title - Posts from $year" \
+  post_descr="Here's a list of blog posts written in $year" \
+  post_url="$blog_url/posts/$year/" \
+  .app/create_page "$yearly_posts" posts/$year/index.html
 
   # update monthly indexes
   for month in $(ls -1 posts/$year)
@@ -85,7 +88,8 @@ do
     touch posts/$year/$month/index.html
     post_title="$blog_title - Posts from $(date -d $year-$month-01 '+%B') $year" \
     post_descr="Here's a list of blog posts written in $(date -d $year-$month-01 '+%B') $year" \
-    .app/create_page "$monthly_posts" posts/$year/$month/index.html
+    post_url="$blog_url/posts/$year/$month/" \
+    .app/create_page "$monthly_posts" > posts/$year/$month/index.html
   done
 done
 
@@ -118,12 +122,16 @@ if [ "$all_posts" != "" ];then
   touch archive.html
   post_title="$blog_title - Archive" \
   post_descr="Here's a list of all posts on this blog, listed newest to oldest." \
-  .app/create_page "$all_post_html" archive.html
+  post_url="$blog_url/archive.html" \
+  .app/create_page "$all_post_html" > archive.html
 fi
 
 
 # update authors index page
 touch authors/index.html
+post_title="$blog_title - Authors" \
+post_descr="Here's a list of authors who've written for this site." \
+post_url="$blog_url/authors" \
 .app/create_page "<h2>Authors</h2>\n$(list_authors)" authors/index.html
 # update authors pages
 [ ! -d ./authors/ ] && mkdir ./authors/
@@ -135,9 +143,18 @@ do
   [ ! -f $file ] && touch $file
   post_title="$blog_title - Posts by $author" \
   post_descr="Here's a list of posts written by $author." \
+  post_url="$blog_url/authors/${author}.html" \
   .app/create_page "<h2>Posts by $author</h2>\n$(list_posts_by_author "$author")" $file
 done
 
+
+# update categories index page
+echo "Updating: categories/index.html"
+touch categories/index.html
+post_title="$blog_title - Categories" \
+post_descr="Here's a list of posts categories" \
+post_url="$blog_url/categories" \
+.app/create_page "<h2>Categories</h2>\n$(list_categories)" > categories/index.html
 
 # update category pages
 category_posts=''
@@ -151,16 +168,10 @@ do
   touch categories/$category.html
   post_title="$blog_title - Posts in category '$category'" \
   post_descr="Here's a list of posts in the category '$category'" \
-  .app/create_page "$category_posts" categories/$category.html
+  post_url="$blog_url/categories/${category}.html" \
+  .app/create_page "$category_posts" > categories/$category.html
 done
 
-
-# update categories index page
-echo "Updating: categories.html"
-touch categories.html
-post_title="$blog_title - Categories" \
-post_descr="Here's a list of posts categories" \
-.app/create_page "<h2>Categories</h2>\n$(list_categories)" categories.html
 
 
 # update contact page
@@ -206,10 +217,12 @@ $contact_twitter
 fi
 
 # update tags index page
-echo "Updating: tags.html"
+echo "Updating: tags/index.html"
+touch tags/index.html
 post_title="$blog_title - Tags" \
 post_descr="Here's a list of all tags on the site, to help you find some relevant content." \
-.app/create_page "<h2>Tags</h2>\n$(list_tags)" tags.html
+post_url="$blog_url/tags" \
+.app/create_page "<h2>Tags</h2>\n$(list_tags)" > tags/index.html
 
 # update tags pages
 site_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' '\n'| tr -d ' ' | sort -u | uniq)"
@@ -222,7 +235,8 @@ do
   touch tags/$tag.html
   post_title="$blog_title - Posts matching '$tag'" \
   post_descr="Here's a list of posts matching the tag '$tag'" \
-  .app/create_page "$tagged_posts" tags/$tag.html
+  post_url="$blog_url/tags/${tag}.html" \
+  .app/create_page "$tagged_posts" > tags/$tag.html
 done
 
 echo "Updating: feed.rss"
