@@ -125,7 +125,7 @@ if [ "$all_posts" != "" ];then
   post_url="$blog_url/archive.html" \
   .app/create_page "$all_post_html" > archive.html
   # add archive page as posts/index.html  too)
-  (cd posts &>/dev/null; ln -s ../archive.html index.html)
+  (cd posts &>/dev/null; ln -s ../archive.html index.html &>/dev/null)
 fi
 
 
