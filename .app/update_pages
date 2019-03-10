@@ -124,6 +124,8 @@ if [ "$all_posts" != "" ];then
   post_descr="Here's a list of all posts on this blog, listed newest to oldest." \
   post_url="$blog_url/archive.html" \
   .app/create_page "$all_post_html" > archive.html
+  # add archive page as posts/index.html  too)
+  (cd posts &>/dev/null; ln -s ../archive.html index.html)
 fi
 
 
