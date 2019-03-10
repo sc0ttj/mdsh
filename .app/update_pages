@@ -149,7 +149,7 @@ do
   [ "$category_posts" = "" ] && continue
   echo "Updating: categories/$category.html"
   touch categories/$category.html
-  post_title="$blog_title - Posts in $category" \
+  post_title="$blog_title - Posts in category '$category'" \
   post_descr="Here's a list of posts in the category '$category'" \
   .app/create_page "$category_posts" categories/$category.html
 done
