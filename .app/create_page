@@ -137,8 +137,23 @@ function print_site_meta {
 <meta name="twitter:creator" content="'${post_twitter:-$blog_twitter}'" />
 <meta name="twitter:image" content="'${blog_url}'/assets/icons/rss.png" />
 <meta name="twitter:domain" content="'${blog_url}'" />
-<!-- Linked data -->
-<script id="meta-ld" type="application/ld+json">
+<!-- Linked data -->'
+# add site search json-ld (requires site.com/$blog_url/search.html?s=search+term)
+if [ "${page_title}" = "$blog_title - Homepage" ];then
+  echo '<script id="site-search-ld" type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": "'${blog_title}'",
+  "url": "https://'${blog_domain}${blog_url}'",
+  "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://'${blog_domain}${blog_url}'/search.html?q={search_term}",
+      "query-input": "required name=search_term"
+  }
+}</script>'
+fi
+echo '<script id="meta-ld" type="application/ld+json">
 {
   "@context": "http://schema.org/",
   "@type": "Article",

@@ -8,10 +8,11 @@
 url="$1"
 
 # start JSON-ld breadcrumb
-echo '<script id="breadcrumb-ld" type="application/ld+json">{
-"@context": "http://schema.org",
-"@type": "BreadcrumbList",
-"itemListElement": ['
+echo '<script id="breadcrumb-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": ['
 
 # set vars used in loop below
 crumb=''
@@ -59,14 +60,14 @@ do
   prev_name="$name"
 
   # print the ListItem
-  echo '{
-  "@type": "ListItem",
-  "position": '$i',
-  "item": {
-    "@id": "https://'${blog_domain}${crumb}'",
-    "name": "'$blog_title' - '${name}'"
-  }
-},'
+  echo '  {
+    "@type": "ListItem",
+    "position": '$i',
+    "item": {
+      "@id": "https://'${blog_domain}${crumb}'",
+      "name": "'$blog_title' - '${name}'"
+    }
+  },'
   i=$(($i + 1))
 done
 

@@ -8,11 +8,18 @@ $(function() {
 
   // site search, using Jets (https://jets.js.org/)
   if (Jets) {
+    // set some Jets defaults
+    var invertSearch = false;
+    var callSearchManually = false;
+    var hideBy =
+      "opacity: 0; height: 0; width: 0; padding: 0; margin: 0; display: none;";
+    var searchSelector = "*AND"; // search words in any order
     // check which page we are on - check which elems exist on the page
     var authors = document.getElementsByClassName("authors-list")[0]; // authors page
     var categories = document.getElementsByClassName("categories-list")[0]; // categories page
-    var tags = document.getElementsByClassName("tags-list")[0]; // tags pge
+    var tags = document.getElementsByClassName("tags-list")[0]; // tags page
     var postPreviews = document.getElementsByClassName("post-preview")[0]; // homepage
+    var searchResults = document.getElementsByClassName("search-results")[0]; // search page
     var posts = document.getElementsByClassName("posts")[0]; // indexes
     var contentToSearch = "";
 
@@ -26,6 +33,18 @@ $(function() {
     } else if (tags) {
       // tags page
       contentToSearch = ".tags-list";
+    } else if (searchResults) {
+      // search page
+      contentToSearch = ".search-results";
+      callSearchManually = true;
+      // we will hide all items, and only show the matching ones:
+      invertSearch = true;
+      hideBy = "display: block;";
+      $("<style>.search-results .result{display:none}</style>").appendTo(
+        document.head
+      );
+      // search for exact phrases (not words in any order)
+      searchSelector = "*";
     } else if (postPreviews) {
       // homepage
       contentToSearch = "#content";
@@ -42,10 +61,57 @@ $(function() {
         .getElementById("site-search")
         .setAttribute("style", "display: inline-block;");
 
+      // runs Jets - if NOT on search.html, it will filter the page as user types
+      //           - if on search.html, it will perform the search on DOM loaded
       var jets = new Jets({
         searchTag: "#site-search",
+        invert: invertSearch,
+        hideBy: hideBy,
+        searchSelector: searchSelector,
+        callSearchManually: callSearchManually,
         contentTag: contentToSearch
       });
+
+      // if we are on search.html
+      if (searchResults) {
+        // hide the search box in the page header
+        $("#site-search").css("display", "none");
+
+        // parse query string (get 's' param)
+        function getQueryVariable(variable) {
+          var query = window.location.search.substring(1);
+          var vars = query.split("&");
+          for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+              return pair[1];
+            }
+          }
+          return false;
+        }
+        var query = decodeURI(getQueryVariable("q"))
+          .replace("+", " ")
+          .replace(/"/g, "");
+
+        // if no search term given (yet) "
+        if (query === "false") {
+          // hide the 'return to search' link
+          $(".search-back").remove();
+          // add a search input
+          $(".search-results").before(
+            '<div class="search-box"><h2>Search the site</h2><form action="" method="GET"><input name="q" type="search" placeholder="Enter a search term.." /><button>Search</button></form></div>'
+          );
+          // else if search term found
+        } else {
+          // remove the search box and show the 'back to search' link
+          $(".search-box").remove();
+          $(".search-results").before(
+            '<a class="search-back" href="search.html">&lt;&lt; Back to search</a>'
+          );
+          // perform the search
+          jets.search(query);
+        }
+      }
     }
 
     // add highlighting of searched items as a cash JS method/plugin

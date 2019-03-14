@@ -218,6 +218,25 @@ $contact_twitter
 </script>" > contact.html
 fi
 
+# search page
+echo "Updating: search.html"
+post_title="$blog_title - Search" \
+post_descr="Search this website for relevant post and articles" \
+.app/create_page "<div class=\"search-results\">$(while read post
+do
+  title="$(grep '# title' "posts/$post" | cut -f2 -d':'| sed 's/^ *//')"
+  descr="$(grep '# descr' "posts/$post" | cut -f2 -d':'| sed 's/^ *//')"
+  tags="$(grep  '# tags'  "posts/$post" | cut -f2 -d':'| sed 's/^ *//')" #"
+  url="${blog_url}/posts/${post//.mdsh/.html}"
+
+  echo "<div class=\"result\">"
+  echo "  <a href=\"$url\">$title</a>"
+  echo "  <div>$descr</div>"
+  echo "  <div>${tags//,/, }</div>"
+  echo "</div>"
+done<<<$(cut -f1,2 -d'|' posts.csv | grep -v "^#" | tr '|' '/'))</div>" > search.html #"
+
+
 # update tags index page
 echo "Updating: tags/index.html"
 touch tags/index.html

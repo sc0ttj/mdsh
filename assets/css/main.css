@@ -406,3 +406,29 @@ ul.posts li {
 .archive-posts li span {
   margin-right: 4px;
 }
+
+/* search page */
+.search-box input {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.search-box button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #222;
+  border: 0;
+  padding: 8px;
+  margin-left: 4px;
+}
+.search-back {
+  display: block;
+  margin-bottom: 24px;
+}
+.search-results {
+  display: block;
+  margin-bottom: 36px;
+}
+.search-results .result {
+  margin-bottom: 16px;
+}
