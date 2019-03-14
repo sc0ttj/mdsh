@@ -5,7 +5,7 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
-current_date="$(date)"
+current_date="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 timestamp=$(date +%s)
 
 # we will write to file if $2 is a file, else to stdout
@@ -158,7 +158,6 @@ echo '<script id="meta-ld" type="application/ld+json">
   "@context": "http://schema.org/",
   "@type": "Article",
   "headline": "'${post_title:-$blog_title}'",
-  "headlineAlternative": "'${post_title:-$blog_title}'",
   "datePublished": "'${post_created:-$current_date}'",
   "dateModified": "'$current_date'",
   "description": "'${post_descr:-$blog_descr}'",
@@ -167,14 +166,14 @@ echo '<script id="meta-ld" type="application/ld+json">
     "@type": "ImageObject",
     "height": "512",
     "width": "512",
-    "url": "'${blog_url}'/assets/icons/android-chrome-512x512.png"
+    "url": "https://'${blog_domain}${blog_url}'/assets/icons/android-chrome-512x512.png"
   },
   "author": "'${post_author:-$blog_author}'",
   "publisher": {
     "@type": "Organization",
     "logo": {
       "@type": "ImageObject",
-      "url": "'${blog_url}'/assets/icons/android-chrome-512x512.png"
+      "url": "https://'${blog_domain}${blog_url}'/assets/icons/android-chrome-512x512.png"
     },
     "name": "'${blog_title}'"
   },

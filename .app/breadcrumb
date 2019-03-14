@@ -22,6 +22,8 @@ trailing_slash=''
 i=1;
 
 # for each item in URL, build ListItem
+item_count=$(echo "$url" | tr '/' '\n' | wc -l)
+
 for item in $(echo "$url" | tr '/' '\n')
 do
   text="$item"
@@ -60,15 +62,16 @@ do
   prev_name="$name"
 
   # print the ListItem
-  echo '  {
+  echo -n '  {
     "@type": "ListItem",
     "position": '$i',
     "item": {
       "@id": "https://'${blog_domain}${crumb}'",
       "name": "'$blog_title' - '${name}'"
     }
-  },'
+  }'
   i=$(($i + 1))
+  [ "$i" != "$item_count" ] && echo ','
 done
 
 # end JSON-ld

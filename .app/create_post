@@ -60,7 +60,8 @@ tags="$fixed_tags"
 # generate some more meta info
 slug=$(slugify.sh "$title")
 created="$(date -u +"%Y/%m/%d")"
-modified="$created"
+date_created="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+modified="$date_created"
 
 # set meta info
 meta_data="# title:        $title
@@ -74,7 +75,7 @@ meta_data="# title:        $title
 # twitter:      ${twitter:-$blog_twitter}
 # language:     ${language:-$blog_language}
 # JS deps:      ${js_deps:-$blog_js_deps}
-# created:      $created
+# created:      $date_created
 # modified:     $modified"
 
 
