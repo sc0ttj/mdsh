@@ -145,8 +145,8 @@ $(function() {
             '<h1>Search results</h1><a class="search-back" href="search.html">&lt;&lt; Back to search</a>'
           );
           // perform the search
-          jets.search(query);
           $(".search-results").css("display", "block");
+          jets.search(query);
         }
       }
     }

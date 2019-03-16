@@ -169,6 +169,7 @@ a.skip-to-content:focus {
 .page-header #site-search {
   background-color: #efefef;
   border: 0;
+  display: none;
   margin-right: 8px;
   padding: 4px;
   max-width: 120px;
@@ -426,10 +427,9 @@ ul.posts li {
   margin-bottom: 24px;
 }
 .search-results {
-  display: block;
+  display: none;
   margin-bottom: 36px;
 }
 .search-results .result {
-  display: none;
   margin-bottom: 16px;
 }

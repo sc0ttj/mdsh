@@ -234,7 +234,7 @@ do
   echo "  <div>$descr</div>"
   echo "  <div>${tags//,/, }</div>"
   echo "</div>"
-done<<<$(cut -f1,2 -d'|' posts.csv | grep -v "^#" | tr '|' '/'))</div>" > search.html #"
+done<<<$(cut -f1,2 -d'|' posts.csv | grep -v "^#" | tr '|' '/' | sort -r))</div>" > search.html #"
 
 
 # update tags index page
