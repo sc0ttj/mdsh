@@ -430,5 +430,6 @@ ul.posts li {
   margin-bottom: 36px;
 }
 .search-results .result {
+  display: none;
   margin-bottom: 16px;
 }

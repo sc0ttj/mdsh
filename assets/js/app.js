@@ -1,5 +1,41 @@
 // custom app JS
 
+// func to load (using AJAX) a specific elem from another page into the the current page.
+// source: https://stackoverflow.com/questions/21435877/load-specific-element-from-another-page-with-vanilla-js?answertab=votes#tab-top
+//
+// Usage:
+//  getPage(
+//   URL :    Location of remote resource ,
+//   FROM :   CSS selector of source tag on remote page ,
+//   TO:      CSS selector of destination tag
+// )
+function getPage(url, from, to) {
+  var cached = sessionStorage[url];
+  if (!from) {
+    from = "body";
+  } // default to grabbing body tag
+  if (to && to.split) {
+    to = document.querySelector(to);
+  } // a string TO turns into an element
+  if (!to) {
+    to = document.querySelector(from);
+  } // default re-using the source elm as the target elm
+  if (cached) {
+    return (to.innerHTML = cached);
+  } // cache responses for instant re-use re-use
+
+  var XHRt = new XMLHttpRequest(); // new ajax
+  XHRt.responseType = "document"; // ajax2 context and onload() event
+  XHRt.onload = function() {
+    sessionStorage[url] = to.innerHTML = XHRt.response.querySelector(
+      from
+    ).innerHTML;
+  };
+  XHRt.open("GET", url, true);
+  XHRt.send();
+  return XHRt;
+}
+
 // this site includes 'cash-dom' by default, so we can use it
 // for nicer DOM ready code:
 $(function() {
@@ -38,11 +74,8 @@ $(function() {
       contentToSearch = ".search-results";
       callSearchManually = true;
       // we will hide all items, and only show the matching ones:
-      invertSearch = true;
-      hideBy = "display: block;";
-      $("<style>.search-results .result{display:none}</style>").appendTo(
-        document.head
-      );
+      invertSearch = false;
+      hideBy = "display: none;";
       // search for exact phrases (not words in any order)
       searchSelector = "*";
     } else if (postPreviews) {
@@ -56,10 +89,12 @@ $(function() {
     //console.log("contentToSearch", contentToSearch);
 
     if (contentToSearch !== "") {
-      // make the site search input visible
-      document
-        .getElementById("site-search")
-        .setAttribute("style", "display: inline-block;");
+      // make the site search input visible (if not on the search page)
+      if (contentToSearch !== ".search-results") {
+        document
+          .getElementById("site-search")
+          .setAttribute("style", "display: inline-block;");
+      }
 
       // runs Jets - if NOT on search.html, it will filter the page as user types
       //           - if on search.html, it will perform the search on DOM loaded
@@ -95,21 +130,23 @@ $(function() {
 
         // if no search term given (yet) "
         if (query === "false") {
+          $(".search-results .result").css("display", "none");
           // hide the 'return to search' link
           $(".search-back").remove();
           // add a search input
           $(".search-results").before(
-            '<div class="search-box"><h2>Search the site</h2><form action="" method="GET"><input name="q" type="search" placeholder="Enter a search term.." /><button>Search</button></form></div>'
+            '<div class="search-box"><h1>Search the site</h1><form action="" method="GET"><input name="q" type="search" placeholder="Enter a search term.." /><button>Search</button></form></div>'
           );
           // else if search term found
         } else {
           // remove the search box and show the 'back to search' link
           $(".search-box").remove();
           $(".search-results").before(
-            '<a class="search-back" href="search.html">&lt;&lt; Back to search</a>'
+            '<h1>Search results</h1><a class="search-back" href="search.html">&lt;&lt; Back to search</a>'
           );
           // perform the search
           jets.search(query);
+          $(".search-results").css("display", "block");
         }
       }
     }
