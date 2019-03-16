@@ -224,9 +224,9 @@ post_title="$blog_title - Search" \
 post_descr="Search this website for relevant post and articles" \
 .app/create_page "<div class=\"search-results\">$(while read post
 do
-  title="$(grep '# title' "posts/$post" | cut -f2 -d':'| sed 's/^ *//')"
-  descr="$(grep '# descr' "posts/$post" | cut -f2 -d':'| sed 's/^ *//')"
-  tags="$(grep  '# tags'  "posts/$post" | cut -f2 -d':'| sed 's/^ *//')" #"
+  title="$(grep '# title' "posts/$post" | cut -f2-99 -d':'| sed 's/^ *//')"
+  descr="$(grep '# descr' "posts/$post" | cut -f2-99 -d':'| sed 's/^ *//')"
+  tags="$(grep  '# tags'  "posts/$post" | cut -f2-99 -d':'| sed 's/^ *//')" #"
   url="${blog_url}/posts/${post//.mdsh/.html}"
 
   echo "<div class=\"result\">"

@@ -33,18 +33,19 @@ function set_post_info {
   # remove post meta data and keep only the body
   md_meta="${md_meta%---*}"
   # set some page specific meta info that will end up in the HTML
-  post_title="$(echo "$md_meta"        | grep -m1 '# title'       | cut -f2 -d':' | sed 's/^ *//')"
-  post_slug="$(echo "$md_meta"         | grep -m1 '# slug '       | cut -f2 -d':' | sed 's/^ *//')"
-  post_descr="$(echo "$md_meta"        | grep -m1 '# description' | cut -f2 -d':' | sed 's/^ *//')"
-  post_category="$(echo "$md_meta"     | grep -m1 '# category'    | cut -f2 -d':' | sed 's/^ *//' | cut -f1 -d',')"
-  post_created="$(echo "$md_meta"      | grep -m1 '# created'     | cut -f2 -d':' | sed 's/^ *//')"
-  post_time_to_read="$(echo "$md_meta" | grep -m1 '# time to read'| cut -f2 -d':' | sed 's/^ *//')"
-  post_tags="$(echo "$md_meta"         | grep -m1 '# tags'        | cut -f2 -d':' | sed 's/^ *//')"
-  post_language="$(echo "$md_meta"     | grep -m1 '# language'    | cut -f2 -d':' | sed 's/^ *//')"
-  post_author="$(echo "$md_meta"       | grep -m1 '# author'      | cut -f2 -d':' | sed 's/^ *//')"
-  post_twitter="$(echo "$md_meta"      | grep -m1 '# twitter'     | cut -f2 -d':' | sed 's/^ *//')"
-  post_js_deps="$(echo "$md_meta"      | grep -m1 '# JS deps'     | cut -f2 -d':' | sed 's/^ *//')"
-  post_url="${blog_url}/posts/$post_created/${post_slug}.html"
+  post_title="$(echo "$md_meta"        | grep -m1 '# title'       | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_slug="$(echo "$md_meta"         | grep -m1 '# slug '       | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_descr="$(echo "$md_meta"        | grep -m1 '# description' | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_category="$(echo "$md_meta"     | grep -m1 '# category'    | cut -f2-99 -d':' | sed 's/^ *//' | cut -f1 -d',')"
+  post_created="$(echo "$md_meta"      | grep -m1 '# created'     | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_time_to_read="$(echo "$md_meta" | grep -m1 '# time to read'| cut -f2-99 -d':' | sed 's/^ *//')"
+  post_tags="$(echo "$md_meta"         | grep -m1 '# tags'        | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_language="$(echo "$md_meta"     | grep -m1 '# language'    | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_author="$(echo "$md_meta"       | grep -m1 '# author'      | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_twitter="$(echo "$md_meta"      | grep -m1 '# twitter'     | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_js_deps="$(echo "$md_meta"      | grep -m1 '# JS deps'     | cut -f2-99 -d':' | sed 's/^ *//')"
+  post_date="$(grep -v "^#" posts.csv | grep -m1 "|${post_slug}.mdsh|$post_title|" | cut -f1 -d'|')"
+  post_url="${blog_url}/posts/$post_date/${post_slug}.html"
 }
 
 
@@ -317,7 +318,7 @@ function print_post_header {
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
-  echo '<span class="date">'"$post_created"'</span>'
+  echo '<span class="date">'"${post_date//\//-}"'</span>'
   echo '<span class="author"><a href="'$blog_url'/authors/'"$(.app/slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
   echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
@@ -338,7 +339,7 @@ function print_post_footer {
   echo '<div class="post-meta">'
   echo '<span class="category"><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></span>'
   echo '<span class="time-to-read">'"${post_time_to_read}"'</span>'
-  echo '<span class="date">'"$post_created"'</span>'
+  echo '<span class="date">'"${post_date//\//-}"'</span>'
   echo '<span class="author"><a href="'$blog_url'/authors/'"$(.app/slugify.sh ${post_author:-$blog_author})"'.html">'"${post_author:-$blog_author}"'</a></span>'
   echo '<span class="twitter"><a href="https://twitter.com/'$blog_twitter'" target="_blank">'"${post_twitter:-$blog_twitter}"'</a></span>'
   echo '<div class="tags">'
@@ -427,10 +428,10 @@ function print_post_preview {
   [ "$post_created" = "" ] && return 0
 
   echo '<div class="post-preview">'
-  echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <time datetime="'"${post_created//\//-}"'">'"${post_created}"'</time>'
+  echo '<h2><a href="'"${post_url}"'">'"${post_title}"'</a></h2> <time datetime="'"${post_date//\//-}"'">'"${post_date//\//-}"'</time>'
   echo '<ul class="post-meta">'
   echo '<li>'"${post_time_to_read}"'</li>'
-  echo '<li>'"${post_created}"'</li>'
+  echo '<li>'"${post_date//\//-}"'</li>'
   echo '<li>'"${post_author}"'</li>'
   echo '<li>'"${post_twitter}"'</li>'
   echo '<li><a href="'${blog_url}'/categories/'"${post_category}"'.html">'"${post_category}"'</a></li>'
@@ -444,7 +445,7 @@ function print_post_preview {
   # show only a summary (using the meta description)
   #echo '<p>'"${post_descr}"'</p>'
   # show full post content, excluding main header (already in post preview)
-  echo "$(cat posts/$post_created/${post_slug}.md | grep -v '^## ' | while IFS= read -er line
+  echo "$(cat posts/$post_date/${post_slug}.md | grep -v '^## ' | while IFS= read -er line
     do
       if [[ "$line" =~ '```' ]];then
         [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
@@ -610,7 +611,7 @@ markdown=''
 # if we were given an mdsh file, then re-build the markdown file,
 # then grab the markdown from that new file
 if [ -f "${1//.mdsh/}.mdsh" ];then
-  ./mdsh2md "${1//.mdsh/}.mdsh" &>/dev/null
+  .app/mdsh2md "${1//.mdsh/}.mdsh" &>/dev/null
   markdown="$(cat "${1//.mdsh/}.md")"
 
 # if given a markdown file, just grab that markdown
@@ -709,6 +710,7 @@ unset post_title
 unset post_slug
 unset post_category
 unset post_created
+unset post_date
 unset post_time_to_read
 unset post_url
 unset markdown
