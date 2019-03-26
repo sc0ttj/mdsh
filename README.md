@@ -24,6 +24,7 @@ This is a fast way of producing documentation for any installed programs or comm
 - Includes a "Contact" page that works out of the box! (uses [formspree.io](http://formspree.io) to send you emails, requires JS)
 - Includes a very fast page search, with highlighted matches (uses [Jets](https://jets.js.org/), requires JS)
 - Supports fullscreen, native app experience on mobile/smartphone if added to Homescreen
+- Supports code syntax highlighting (requires [Pygments](http://pygments.org/), default theme is `monokai`)
 - Optionally use [Google Fonts](https://fonts.google.com/) to choose custom web fonts
 - Optionally use [Unpkg.com](http://unpkg.com) to manage JavaScript libraries/dependencies
 - Optionally use [Git](https://kbroman.org/github_tutorial/) for saving, managing and reverting versions and deployments
