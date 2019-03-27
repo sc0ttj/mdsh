@@ -4,7 +4,7 @@
 # time to read: 2 mins
 # category: games
 # tags: games,shell
-# author: John Doe
+# author: sc0ttj
 # email: foo@bar.com
 # twitter: @foobar
 # language: en
@@ -19,12 +19,12 @@ I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROM
 
 It uses `rofi`, the desktop launcher, and `mednafen` the mutli-system emulator.
 
-I have added key bindings so I can hit `Ctrl-SPACE` and start typing a system (PSX, SNES, etc), 
+I have added key bindings so I can hit `Ctrl-SPACE` and start typing a system (PSX, SNES, etc),
 then hit ENTER and start typing a game name, then hit ENTER again to play :)
 
-As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine. 
+As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine.
 
-<pre><code>
+```shell
 #!/bin/sh
 
 romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
@@ -80,6 +80,4 @@ case $system_name in
     exit $?
     ;;
 esac
-</code></pre>
-
-More stuff.
+```

@@ -2,15 +2,16 @@
 
 Here is a script which generates a valid XML sitemap, which Google (and others) will use to index your site:
 
-```#!/bin/bash
+```shell
+#!/bin/bash
 
 # generate an XML sitemap for this site
 
 # script adapted from: http://www.lostsaloon.com/technology/how-to-create-an-xml-sitemap-using-wget-and-shell-script/
 
-. .site_config
+[ -f .site_config ] && . .site_config
 
-sitedomain=https://sc0ttj.github.io/mdsh/
+sitedomain=https://${blog_domain}${blog_url}
 
 mv sitemap.xml sitemap_prev.xml
 
@@ -46,11 +47,13 @@ rm linklist.txt sortedurls.txt &>/dev/null
 
 rm sitemap_prev.xml
 
+current_branch=$(git branch | grep ^\* | cut -f2 -d' ')
+
 echo "Publishing sitemap.."
 echo
 git add sitemap.xml
 git commit -m 'Updated sitemap'
-git push origin gh-pages
+git push origin $current_branch
 
 exit 0
 ```

@@ -28,6 +28,7 @@ blog_twitter="@foobar"
 blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
 blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
 blog_google_analytics_id=""
+blog_code_highlight_theme="monokai"
 blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href=\"https://sc0ttj.github.io/mdsh/\">mdsh</a>"
 
 # let user set site info
@@ -56,6 +57,8 @@ read -e -i "$blog_fonts" -p "Enter the Google fonts to use (blank for none):  " 
 echo
 read -e -i "$blog_js_deps" -p "Enter the JS deps (space separated NPM package names):  " blog_js_deps
 echo
+read -e -i "$blog_code_highlight_theme" -p "Enter the code syntax highlighter theme (requires Pygments):  " blog_code_highlight_theme
+echo
 read -e -i "$blog_google_analytics_id" -p "Enter your Google Analytics ID (blank for none):  " blog_google_analytics_id
 
 
@@ -80,6 +83,7 @@ blog_twitter=\"$blog_twitter\"
 blog_fonts='$blog_fonts'
 blog_js_deps=\"$blog_js_deps\"
 blog_google_analytics_id=\"\"
+blog_code_highlight_theme=\"$blog_code_highlight_theme\"
 blog_footer=\"© \${blog_title} \$(date -u +\"%Y\"). Powered by <a href=\"https://sc0ttj.github.io/mdsh/\">mdsh</a>\"
 
 ##################################################################

@@ -17,7 +17,8 @@
 
 Here is a script which generates a valid XML sitemap, which Google (and others) will use to index your site:
 
-```$(cat generate_sitemap.sh )
+```shell
+$(cat .app/generate_sitemap.sh )
 ```
 
 

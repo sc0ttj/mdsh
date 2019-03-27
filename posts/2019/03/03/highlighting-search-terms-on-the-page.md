@@ -4,7 +4,7 @@ Using a [jQuery plugin found at Stack Overflow]( https://stackoverflow.com/quest
 
 Here is the code I've added to `assets/js/app.js`:
 
-```
+```javascript
 // add highlighting of searched items as a cash JS method/plugin
 // from: https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js
 
@@ -82,13 +82,17 @@ $.fn.removeHighlight = function() {
 };
 
 // add the event handler to the search input to call the highlighter
+$ ("#site-search").on("keyup change", function(ev) {
   // pull in the new value
+  var searchTerm = $(this).val();
 
   // remove any old highlighted terms
+  $ ("#content").removeHighlight();
 
   // disable highlighting if empty
   if (searchTerm) {
     // highlight the new term
+    $ ("#content").highlight(searchTerm);
   }
 });
 ```

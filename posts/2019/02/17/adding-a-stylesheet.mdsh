@@ -8,7 +8,7 @@
 # email:        foo@bar.com
 # twitter:      @foobar
 # language:     en
-# JS deps:      cash-dom 
+# JS deps:      cash-dom
 # created:      2019/02/17
 # modified:     2019/02/17
 
@@ -55,7 +55,8 @@ So, you can edit the styles in `assests/css/main.css`, or create a stylesheet fo
 
 Here is the contents of the main stylesheet (so far):
 
-```$(cat assets/css/main.css)
+```css
+$(cat assets/css/main.css)
 ```
 
 

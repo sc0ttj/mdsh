@@ -32,7 +32,7 @@ Don't worry, the `update_pages` script handles it all for you.
 
 Here is the contents of the new `minify` script:
 
-```
+```shell
 #!/bin/bash
 
 # minifies HTML and CSS files,  requires no arguments

@@ -8,7 +8,7 @@
 # email:        foo@bar.com
 # twitter:      @foobar
 # language:     en
-# JS deps:      cash-dom 
+# JS deps:      cash-dom
 # created:      2019/02/15
 # modified:     2019/02/15
 
@@ -21,7 +21,8 @@ In other words, breaking up long line into multiple line commands using backspac
 
 Here is an example, a script called `apt2pup`:
 
-```$(cat /root/bin/apt2pup)
+```shell
+$(cat /root/bin/apt2pup)
 ```
 
 

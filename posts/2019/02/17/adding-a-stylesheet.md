@@ -40,7 +40,21 @@ So, you can edit the styles in `assests/css/main.css`, or create a stylesheet fo
 
 Here is the contents of the main stylesheet (so far):
 
-```html,
+```css
+body,
+input,
+select,
+textarea,
+button {
+  font-family: Ubuntu, sans;
+  font-size: 16px;
+}
+pre,
+code {
+  font-family: Inconsolata, monospace;
+  font-size: 14px;
+}
+html,
 body {
   box-sizing: border-box;
   font-size: 16px;
@@ -49,63 +63,47 @@ body {
   margin: 0;
   padding: 0;
 }
-
-/* body bg color */
 body {
   background-color: #333;
 }
-
-/* extra line height for para text */
 p,
 li {
   line-height: 1.6em;
 }
-
-/* reduce padding on left of <li> elems */
 ul,
 ol {
   padding-left: 15px;
 }
-
-/* heades and inline code elems */
 code {
-  background-color: #f9f9f9;
-  color: #222;
   display: inline;
   padding: 0;
   margin: 0;
 }
-
 h1,
 h1 code {
   font-size: 32px;
   line-height: 1.2em;
 }
-
 h2,
 h2 code {
   font-size: 24px;
   line-height: 1.2em;
 }
-
 h3,
 h3 code {
   font-size: 20px;
   line-height: 1.2em;
 }
-
 h4,
 h4 code {
   font-size: 18px;
   line-height: 1.2em;
 }
-
 p code,
 li code {
   font-size: 16px;
   line-height: 1.2em;
 }
-
 h1 code,
 h2 code,
 h3 code,
@@ -113,7 +111,6 @@ h4 code,
 p code,
 li code,
 span code {
-  /* enable padding in inline snippets */
   border: 1px solid #e6e6e6;
   display: inline-block;
   line-height: 1em;
@@ -123,34 +120,236 @@ span code {
   margin-bottom: 1px;
   vertical-align: middle;
 }
-
-/* code blocks */
 pre {
   border: 1px solid #e6e6e6;
-  background-color: #f9f9f9;
-  color: #222;
   font-size: 15px;
   line-height: 18px;
   overflow-x: auto;
-  padding: 12px;
-  padding-top: 0;
+  padding: 16px;
   word-break: break-all;
   word-wrap: break-word;
 }
+div.highlight pre .hll {
+  background-color: #49483e;
+}
+div.highlight pre {
+  background: #272822;
+  color: #f8f8f2;
+}
+div.highlight pre .c {
+  color: #75715e;
+} /* Comment */
+div.highlight pre .err {
+  color: #960050;
+  background-color: #1e0010;
+} /* Error */
+div.highlight pre .k {
+  color: #66d9ef;
+} /* Keyword */
+div.highlight pre .l {
+  color: #ae81ff;
+} /* Literal */
+div.highlight pre .n {
+  color: #f8f8f2;
+} /* Name */
+div.highlight pre .o {
+  color: #f92672;
+} /* Operator */
+div.highlight pre .p {
+  color: #f8f8f2;
+} /* Punctuation */
+div.highlight pre .ch {
+  color: #75715e;
+} /* Comment.Hashbang */
+div.highlight pre .cm {
+  color: #75715e;
+} /* Comment.Multiline */
+div.highlight pre .cp {
+  color: #75715e;
+} /* Comment.Preproc */
+div.highlight pre .cpf {
+  color: #75715e;
+} /* Comment.PreprocFile */
+div.highlight pre .c1 {
+  color: #75715e;
+} /* Comment.Single */
+div.highlight pre .cs {
+  color: #75715e;
+} /* Comment.Special */
+div.highlight pre .gd {
+  color: #f92672;
+} /* Generic.Deleted */
+div.highlight pre .ge {
+  font-style: italic;
+} /* Generic.Emph */
+div.highlight pre .gi {
+  color: #a6e22e;
+} /* Generic.Inserted */
+div.highlight pre .gs {
+  font-weight: bold;
+} /* Generic.Strong */
+div.highlight pre .gu {
+  color: #75715e;
+} /* Generic.Subheading */
+div.highlight pre .kc {
+  color: #66d9ef;
+} /* Keyword.Constant */
+div.highlight pre .kd {
+  color: #66d9ef;
+} /* Keyword.Declaration */
+div.highlight pre .kn {
+  color: #f92672;
+} /* Keyword.Namespace */
+div.highlight pre .kp {
+  color: #66d9ef;
+} /* Keyword.Pseudo */
+div.highlight pre .kr {
+  color: #66d9ef;
+} /* Keyword.Reserved */
+div.highlight pre .kt {
+  color: #66d9ef;
+} /* Keyword.Type */
+div.highlight pre .ld {
+  color: #e6db74;
+} /* Literal.Date */
+div.highlight pre .m {
+  color: #ae81ff;
+} /* Literal.Number */
+div.highlight pre .s {
+  color: #e6db74;
+} /* Literal.String */
+div.highlight pre .na {
+  color: #a6e22e;
+} /* Name.Attribute */
+div.highlight pre .nb {
+  color: #f8f8f2;
+} /* Name.Builtin */
+div.highlight pre .nc {
+  color: #a6e22e;
+} /* Name.Class */
+div.highlight pre .no {
+  color: #66d9ef;
+} /* Name.Constant */
+div.highlight pre .nd {
+  color: #a6e22e;
+} /* Name.Decorator */
+div.highlight pre .ni {
+  color: #f8f8f2;
+} /* Name.Entity */
+div.highlight pre .ne {
+  color: #a6e22e;
+} /* Name.Exception */
+div.highlight pre .nf {
+  color: #a6e22e;
+} /* Name.Function */
+div.highlight pre .nl {
+  color: #f8f8f2;
+} /* Name.Label */
+div.highlight pre .nn {
+  color: #f8f8f2;
+} /* Name.Namespace */
+div.highlight pre .nx {
+  color: #a6e22e;
+} /* Name.Other */
+div.highlight pre .py {
+  color: #f8f8f2;
+} /* Name.Property */
+div.highlight pre .nt {
+  color: #f92672;
+} /* Name.Tag */
+div.highlight pre .nv {
+  color: #f8f8f2;
+} /* Name.Variable */
+div.highlight pre .ow {
+  color: #f92672;
+} /* Operator.Word */
+div.highlight pre .w {
+  color: #f8f8f2;
+} /* Text.Whitespace */
+div.highlight pre .mb {
+  color: #ae81ff;
+} /* Literal.Number.Bin */
+div.highlight pre .mf {
+  color: #ae81ff;
+} /* Literal.Number.Float */
+div.highlight pre .mh {
+  color: #ae81ff;
+} /* Literal.Number.Hex */
+div.highlight pre .mi {
+  color: #ae81ff;
+} /* Literal.Number.Integer */
+div.highlight pre .mo {
+  color: #ae81ff;
+} /* Literal.Number.Oct */
+div.highlight pre .sa {
+  color: #e6db74;
+} /* Literal.String.Affix */
+div.highlight pre .sb {
+  color: #e6db74;
+} /* Literal.String.Backtick */
+div.highlight pre .sc {
+  color: #e6db74;
+} /* Literal.String.Char */
+div.highlight pre .dl {
+  color: #e6db74;
+} /* Literal.String.Delimiter */
+div.highlight pre .sd {
+  color: #e6db74;
+} /* Literal.String.Doc */
+div.highlight pre .s2 {
+  color: #e6db74;
+} /* Literal.String.Double */
+div.highlight pre .se {
+  color: #ae81ff;
+} /* Literal.String.Escape */
+div.highlight pre .sh {
+  color: #e6db74;
+} /* Literal.String.Heredoc */
+div.highlight pre .si {
+  color: #e6db74;
+} /* Literal.String.Interpol */
+div.highlight pre .sx {
+  color: #e6db74;
+} /* Literal.String.Other */
+div.highlight pre .sr {
+  color: #e6db74;
+} /* Literal.String.Regex */
+div.highlight pre .s1 {
+  color: #e6db74;
+} /* Literal.String.Single */
+div.highlight pre .ss {
+  color: #e6db74;
+} /* Literal.String.Symbol */
+div.highlight pre .bp {
+  color: #f8f8f2;
+} /* Name.Builtin.Pseudo */
+div.highlight pre .fm {
+  color: #a6e22e;
+} /* Name.Function.Magic */
+div.highlight pre .vc {
+  color: #f8f8f2;
+} /* Name.Variable.Class */
+div.highlight pre .vg {
+  color: #f8f8f2;
+} /* Name.Variable.Global */
+div.highlight pre .vi {
+  color: #f8f8f2;
+} /* Name.Variable.Instance */
+div.highlight pre .vm {
+  color: #f8f8f2;
+} /* Name.Variable.Magic */
+div.highlight pre .il {
+  color: #ae81ff;
+} /* Literal.Number.Integer.Long */
 
-/* off screen text in site header */
 .off-screen {
-  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
   left: -999em;
   overflow: hidden;
   position: absolute;
-  white-space: nowrap; /* added line */
   width: 1px;
 }
-
-/* wraps around all content */
 .main-container {
   background-color: #fff;
   color: #222;
@@ -160,17 +359,12 @@ pre {
   max-width: 800px;
   margin: 0px auto;
   padding: 0;
-  padding-bottom: 0; /* height of footer .. OR -1px and add padding-bottom to .body-container */
-  padding-top: -1px; /* pushes container to top of page */
   position: relative;
   width: 100%;
 }
-
 .body-container {
   padding-bottom: 62px;
 }
-
-/* main site header */
 .page-header {
   background-color: #101010;
   color: #fff;
@@ -179,37 +373,30 @@ pre {
   padding: 18px;
   padding-bottom: 1px;
 }
-
 .page-header h1 {
   margin-top: 6px;
 }
-
 .page-header a {
   text-decoration: none;
 }
-
 .page-header a,
 .page-header a:visited {
   color: #f0f0f0;
 }
-
 .page-header a:hover,
 .page-header a:focus {
   color: #fff;
   text-decoration: underline;
 }
-
 .page-header ul {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
 }
-
 .page-header li {
   display: inline-block;
   padding-right: 8px;
 }
-
 .skip-to-content:focus {
   background: #fff;
   border: 2px solid #bbb;
@@ -225,23 +412,19 @@ pre {
   width: auto;
   z-index: 10;
 }
-
 a.skip-to-content,
 a.skip-to-content:hover,
 a.skip-to-content:focus {
   color: #222;
 }
-
-/* site search input */
 .page-header #site-search {
   background-color: #efefef;
   border: 0;
-  display: none; /* hide by default, enable only if JS is supported */
+  display: none;
   margin-right: 8px;
   padding: 4px;
   max-width: 120px;
 }
-
 @media (min-width: 414px) {
   .page-header #site-search {
     margin-top: 8px;
@@ -250,65 +433,55 @@ a.skip-to-content:focus {
     right: 12px;
   }
 }
-
-/* search term highlighting (see assets/js/app.js) */
-
 .highlight {
   background-color: #fff34d;
-  border-radius: 2px; /* Opera 10.5, IE 9, Saf5, Chrome */
 }
-
 .highlight {
-  padding: 1px;
-  margin: 0 -1px;
+  padding: 0;
+  margin: 0;
 }
-
-/* post header */
 .post-header {
   font-style: italic;
 }
-
 .post-header .post-meta .category,
 .post-header .post-meta .author,
 .post-header .post-meta .twitter {
   display: none;
 }
-
 .post-header .post-meta .time-to-read,
 .post-header .post-meta .date {
   display: block;
 }
-
 .post-header .post-meta .time-to-read:before {
-  content: "Time to read: ";
+  content: "Time to read:";
   display: inline-block;
+  margin-right: 4px;
   width: 100px;
 }
-
 .post-header .post-meta .date:before {
-  content: "Published: ";
+  content: "Published:";
   display: inline-block;
+  margin-right: 4px;
   width: 100px;
 }
+.post-header .tags span,
+.post-header .tags span {
+  margin-right: 4px;
+}
 
-/* tags */
 .post-header .tags:before,
 .post-footer .tags:before {
-  content: "Tags: ";
+  content: "Tags:";
   display: inline-block;
+  margin-right: 4px;
   width: 95px;
 }
-
-/* main content */
-
-/* add padding to sections inside main container */
 .post-content,
 .post-footer {
   padding: 0;
   padding-left: 18px;
   padding-right: 18px;
 }
-
 @media (min-width: 640px) {
   .post-content,
   .post-footer {
@@ -317,12 +490,9 @@ a.skip-to-content:focus {
     padding-right: 72px;
   }
 }
-
 .post-content {
-  /* padding above main post title */
   padding-top: 1em;
 }
-
 ul.posts,
 ul.categories,
 ul.tags {
@@ -331,64 +501,52 @@ ul.tags {
   margin-left: 0;
   padding-left: 0;
 }
-
-/* target all post lists on the site */
 ul.posts li {
-  /* auto trunate and append ... */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
 }
-
-/* post footer */
 .post-footer {
   font-style: italic;
   margin: 0 auto;
   margin-top: 12px;
 }
-
 .post-footer .post-meta .category:before {
-  content: "Category: ";
+  content: "Category:";
   display: inline-block;
+  margin-right: 4px;
   width: 100px;
 }
-
 .post-footer .post-meta .category {
   display: block;
 }
-
 .post-footer .post-meta .twitter,
 .post-footer .post-meta .time-to-read,
 .post-footer .post-meta .date {
   display: none;
 }
-
 .post-footer .post-meta .author:before {
-  content: "Author: ";
+  content: "Author:";
   display: inline-block;
+  margin-right: 4px;
   width: 100px;
 }
-
 .post-footer .post-meta .author {
   display: inline-block;
 }
-
 .post-footer .tags {
   display: none;
 }
-
 .prev-next-posts {
   font-style: italic;
   list-style: none;
   padding: 0;
 }
-
 .prev-next-posts span {
   display: inline-block;
   width: 96px;
 }
-
 .footer {
   position: absolute;
   background-color: #101010;
@@ -398,29 +556,22 @@ ul.posts li {
   text-align: center;
   width: 100%;
 }
-
 .footer a {
   color: #efefef;
 }
-
 .footer a:hover,
 .footer a:focus {
   color: #fff;
 }
-
-/* forms */
-
 .contact-form {
   margin-bottom: 28px;
 }
-
 .contact-form label {
   display: inline-block;
   min-width: 70px;
   vertical-align: top;
   line-height: 2.75em;
 }
-
 .contact-form input,
 .contact-form textarea {
   appearance: none;
@@ -432,11 +583,9 @@ ul.posts li {
   margin: 4px;
   min-width: 280px;
 }
-
 .contact-form textarea {
   min-height: 100px;
 }
-
 .contact-form button[type="submit"] {
   color: #fff;
   cursor: pointer;
@@ -445,76 +594,94 @@ ul.posts li {
   padding: 8px;
   margin-left: 4px;
 }
-
 @media (min-width: 416px) {
   .contact-form button[type="submit"] {
     margin-left: 78px;
   }
 }
-
 .contact-form button[type="submit"]:hover,
 .contact-form button[type="submit"]:focus {
   background-color: #000;
 }
-
 .post-preview {
   border-bottom: 1px solid #ccc;
   padding-bottom: 12px;
 }
-
 .post-preview h2,
 .post-preview time {
   display: inline-block;
 }
-
 .post-preview h2 {
   margin-right: 4px;
   margin-bottom: 8px;
 }
-
 .post-preview .post-meta {
   font-style: italic;
   padding: 0;
   margin: 0;
 }
-
 .post-preview .post-meta li {
   display: inline-block;
 }
-
 .post-preview .post-meta li:nth-child(1):before {
-  content: "Time to read: ";
+  content: "Time to read:";
   display: inline-block;
-  margin-right: 2px;
+  margin-right: 4px;
 }
-
 .post-preview .tags {
   font-style: italic;
 }
-
 .post-preview .tags:before {
-  content: "Tags: ";
+  content: "Tags:";
+  margin-right: 4px;
 }
-
 .post-preview .post-meta li:nth-child(1):before {
-  content: "Time to read: ";
+  content: "Time to read:";
   display: inline-block;
-  margin-right: 2px;
+  margin-right: 4px;
 }
-
 .post-preview .post-meta li:nth-child(2),
 .post-preview .post-meta li:nth-child(3),
 .post-preview .post-meta li:nth-child(4),
 .post-preview .post-meta li:nth-child(5) {
   display: none;
 }
-
 .post-preview .tags {
   padding: 0;
   margin: 0;
 }
-
 .post-preview .tags li {
   display: inline-block;
+  padding-right: 5px;
+}
+
+.archive-posts li span {
+  margin-right: 4px;
+}
+
+/* search page */
+.search-box input {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.search-box button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #222;
+  border: 0;
+  padding: 8px;
+  margin-left: 4px;
+}
+.search-back {
+  display: block;
+  margin-bottom: 24px;
+}
+.search-results {
+  display: none;
+  margin-bottom: 36px;
+}
+.search-results .result {
+  margin-bottom: 16px;
 }
 ```

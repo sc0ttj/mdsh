@@ -15,6 +15,7 @@ blog_twitter="@foobar"
 blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
 blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
 blog_google_analytics_id=""
+blog_code_highlight_theme="monokai"
 blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a>"
 
 ##################################################################

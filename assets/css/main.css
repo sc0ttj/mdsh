@@ -1,9 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
 body,
 input,
 select,
 textarea,
 button {
-  font-family: Ubuntu, sans;
+  font-family: Ubuntu, sans, sans-serif;
   font-size: 16px;
 }
 pre,
@@ -32,8 +36,6 @@ ol {
   padding-left: 15px;
 }
 code {
-  background-color: #f9f9f9;
-  color: #222;
   display: inline;
   padding: 0;
   margin: 0;
@@ -70,26 +72,37 @@ h4 code,
 p code,
 li code,
 span code {
-  border: 1px solid #e6e6e6;
+  background-color: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  color: #292929;
   display: inline-block;
-  line-height: 1em;
-  padding: 1px 2px;
+  line-height: 1.15em;
+  padding: 0px 3px;
   margin-left: 2px;
-  margin-right: 1px;
-  margin-bottom: 1px;
+  margin-right: 2px;
+  margin-top: -2px;
   vertical-align: middle;
 }
 pre {
-  border: 1px solid #e6e6e6;
-  background-color: #f9f9f9;
-  color: #222;
+  background-color: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  color: #292929;
+  overflow-x: auto;
+  word-break: break-all;
+  word-wrap: break-word;
+  line-height: 15px;
+  padding: 0px 15px;
+  font-size: 15px;
+  margin: 0px;
+}
+div.highlight pre {
+  border: 0px none;
   font-size: 15px;
   line-height: 18px;
   overflow-x: auto;
   padding: 12px;
-  padding-top: 0;
-  word-break: break-all;
-  word-wrap: break-word;
 }
 .off-screen {
   clip: rect(1px, 1px, 1px, 1px);

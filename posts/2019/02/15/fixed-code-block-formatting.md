@@ -6,7 +6,8 @@ In other words, breaking up long line into multiple line commands using backspac
 
 Here is an example, a script called `apt2pup`:
 
-```#!/bin/bash
+```shell
+#!/bin/bash
 
 if [ "$1" = '-h' ] || [ "$1" = '-help' ] || [ "$1" = '--help' ];then
 

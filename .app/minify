@@ -8,8 +8,11 @@
 # current dir (recursively) and replace them with minified
 # versions
 
-# minify HTML and CSS
-echo "Minifying HTML and CSS.."
+# load the local config file
+[ -f .site_config ] && source .site_config
+
+# minify CSS
+echo "Minifying CSS.."
 
 css_files="$(find . -type f -name "*.css" | grep -v '.min.css' | sort -r)"
 for css_file in $css_files
@@ -27,14 +30,22 @@ do
           -e 's/; /;/g' > "$minified_file"
 done
 
+# minify HTML
+#echo "Minifying HTML.."
+
 html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -u)"
 for html_file in $html_files
 do
   if [ "$(grep "main.min.css?v=" "$html_file")" = "" ];then
     sed -i "s|main.css?v=|main.min.css?v=|g" "$html_file"
   fi
-  sed ':a;N;$!ba;s/>\s*</></g' $html_file > ${html_file//.html/.minhtml}
-  mv ${html_file//.html/.minhtml} ${html_file}
+  if [ "$(grep "pygments-${blog_code_highlight_theme}.min.css?v=" "$html_file")" = "" ];then
+    sed -i "s|pygments-${blog_code_highlight_theme}.css?v=|pygments-${blog_code_highlight_theme}.min.css?v=|g" "$html_file"
+  fi
+  # until there's a way to exclude pygment/code block output from
+  # HTML minification, then don't minify HTML
+  #sed ':a;N;$!ba;s/>\s*</></g' $html_file > ${html_file//.html/.minhtml}
+  #mv ${html_file//.html/.minhtml} ${html_file}
 done
 
 

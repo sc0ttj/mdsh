@@ -211,34 +211,34 @@ echo '<script id="meta-ld" type="application/ld+json">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="'${blog_title}'">
 <!-- prefetch resources -->
-<link href="//unpkg.com" rel="preconnect" crossorigin>
 <link rel="dns-prefetch" href="//unpkg.com">
+<link href="//unpkg.com" rel="preconnect" crossorigin>
 '
+if [ "$blog_fonts" != "" ];then
+  echo '<link rel="dns-prefetch" href="//fonts.googleapis.com/">'
+  echo '<link href="//fonts.googleapis.com/" rel="preconnect" crossorigin>'
+fi
 }
 
 function print_site_inline_styles {
-  echo '<style>
-  body, input, select, textarea, button {
-    font-family: Ubuntu, sans;
-    font-size: 16px;
-  }
-  pre, code {
-    font-family: Inconsolata, monospace;
-    font-size: 14px;
-  }
-</style>'
+  echo '<style>'"$(cat assets/css/inline.css 2>/dev/null)"'</style>'
 }
 
 function print_site_stylesheets {
   echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/main.css?v='$timestamp'">'
+
   local filename="$(basename "$output_file" 2>/dev/null)"
   filename="assets/css/${filename//.html/.css}"
   if [ -f "$filename" ];then
     echo '<link rel="stylesheet" href="'${blog_url}'/'"${filename}"'?v='$timestamp'">'
   fi
+
   if [ "$blog_fonts" != "" ];then
-    echo '<link rel="dns-prefetch" href="//fonts.googleapis.com/">'
     echo '<link rel="stylesheet" href="//fonts.googleapis.com/css?family='${blog_fonts}'">'
+  fi
+
+  if [ "$(which pygmentize)" != "" ] && [ -f "assets/css/pygments-${blog_code_highlight_theme}.css" ];then
+    echo '<link rel="stylesheet" href="'${blog_url}'/assets/css/pygments-'${blog_code_highlight_theme}'.css?v='$timestamp'">'
   fi
 }
 
@@ -444,19 +444,15 @@ function print_post_preview {
   echo '</ul>'
   # show only a summary (using the meta description)
   #echo '<p>'"${post_descr}"'</p>'
-  # show full post content, excluding main header (already in post preview)
-  echo "$(cat posts/$post_date/${post_slug}.md | grep -v '^## ' | while IFS= read -er line
-    do
-      if [[ "$line" =~ '```' ]];then
-        [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
-        [ "$in_code_block" = false ] && line='</code></pre>' || line='<pre><code>'
-      else
-        if [ "$in_code_block" = true ];then
-          line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
-        fi
-      fi
-      echo -e "$line"
-    done | .app/markdown.pl | grep -v '<h2>')"
+
+  process_markdown posts/$post_date/${post_slug}.md # writes output to /tmp/fixed_markdown
+
+  # get the pre-processed markdown, we will convert that to html
+  [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown)"
+  rm /tmp/markdown /tmp/fixed_markdown &>/dev/null
+
+  body_html="$(echo -e "$markdown" | .app/markdown.pl)"
+  echo -e "$body_html" | sed "s/<h2>.*//"
   echo '</div>'
 }
 
@@ -599,6 +595,61 @@ urldecode() {
 }
 
 
+
+process_markdown() {
+  local in_code_block=false
+
+  # the -er option is needed to preserve newlines in the code blocks, IFS= preserves whitespace
+  while IFS= read -er line
+  do
+    if [ "$(which pygmentize)" = "" ];then
+      if [[ "$line" =~ '```' ]];then
+        code_class=''
+        code_lang="$(echo ${line//\`\`\`/})"
+        [ "$code_lang" != "" ] && code_class=" class=\"${code_lang}\""
+        [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
+        [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code${code_class}>"
+      else
+        if [ "$in_code_block" = true ];then
+          line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
+        fi
+      fi
+      echo -e "$line" >> /tmp/fixed_markdown
+
+    else
+      # if entering a code block
+      # replace ``` with html pre/code tags, cos the markdown parsers break a lot
+      if [[ "$line" =~ '```' ]] && [ "$in_code_block" = false ];then
+        local code_lang="$(echo ${line//\`\`\`/})"
+        local code_class=" class=\"${code_lang:-shell}\""
+        line="<pre><code${code_class}>"
+        in_code_block=true
+
+      fi
+
+      if [ "$line" != '```' ]  && [[ ! "$line" =~ '<pre>' ]] && [[ ! "$line" =~ '</code>' ]];then
+        if [ "$in_code_block" = true ];then
+          echo -e "$line" >> /tmp/code_block
+        else
+          echo -e "$line" >> /tmp/fixed_markdown
+        fi
+      fi
+
+      # if leaving a code block
+      if [[ "$line" =~ '```' ]] && [ "$in_code_block" = true ];then
+        if [ "$(cat /tmp/code_block)" != "" ];then
+          pygmentize -f html -l ${code_lang:-shell} -o /tmp/code_block_highlighted /tmp/code_block
+          echo "$(cat /tmp/code_block_highlighted)" >> /tmp/fixed_markdown
+          echo -n > /tmp/code_block
+          in_code_block=false
+          line="</code></pre>"
+        fi
+      fi
+
+    fi
+
+  done<<<"$(cat "${1:-/tmp/markdown}")"
+}
 ################################################################################
 
 #
@@ -658,23 +709,7 @@ if [ "$markdown" != "" ];then
   echo "$markdown" > /tmp/markdown
   echo -n '' > /tmp/fixed_markdown
 
-  # the -er option is needed to preserve newlines in the code blocks, IFS= preserves whitespace
-  while IFS= read -er line
-  do
-    # replace ``` with html pre/code tags, cos the markdown parsers break a lot
-    if [[ "$line" =~ '```' ]];then
-      code_class=''
-      code_lang="$(echo ${line//\`\`\`/})"
-      [ "$code_lang" != "" ] && code_class=" class=\"${code_lang}\""
-      [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
-      [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code${code_class}>"
-    else
-      if [ "$in_code_block" = true ];then
-        line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
-      fi
-    fi
-    echo -e "$line" >> /tmp/fixed_markdown
-  done<<<$(cat /tmp/markdown)
+  process_markdown
 
   # get the pre-processed markdown, we will convert that to html
   [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown)"
@@ -699,7 +734,6 @@ if [ "$post_header" != "" ];then
 $post_header}"
 fi
 
-#xmessage "$body_html"
 if [ -f "$output_file" ];then
   create_page_html > "$output_file"
 else

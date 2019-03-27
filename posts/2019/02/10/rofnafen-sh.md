@@ -4,12 +4,12 @@ I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROM
 
 It uses `rofi`, the desktop launcher, and `mednafen` the mutli-system emulator.
 
-I have added key bindings so I can hit `Ctrl-SPACE` and start typing a system (PSX, SNES, etc), 
+I have added key bindings so I can hit `Ctrl-SPACE` and start typing a system (PSX, SNES, etc),
 then hit ENTER and start typing a game name, then hit ENTER again to play :)
 
-As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine. 
+As you can see from the default ROM dir I have set at the top of the script, it loads ROMs over the local network just fine.
 
-<pre><code>
+```shell
 #!/bin/sh
 
 romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
@@ -18,6 +18,8 @@ romdir="/root/network/MAINPC--rootfs/mnt-point/mnt/sdb1/Games"
 # choose a system dir to look in for roms
 find "$romdir" \n    -maxdepth 1 \n    -mindepth 1 \n    -type d \n  | sed "s#.*/##g" \n  | sort -u \n  | rofi -dmenu \n      -p 'Enter name: ' \n      -i -mesg 'Choose a system to play' > /tmp/rofi_system_name
 
+system_name=""
+system_name="$(cat /tmp/rofi_system_name 2>/dev/null)"
 
 if [ "$system_name" = "" ] || [ ! -d "$romdir/$system_name" ];then
  exit 1
@@ -28,9 +30,10 @@ fi
 find $romdir/$system_name \n    -maxdepth 2 \n    -mindepth 1 \n    -type f \n    -iname "*.cue" -or -iname "*.ccd" -or -iname "*.iso" -or -iname "*.zip" \n    -or -iname "*.smc" -or -iname "*.smd" -or -iname "*.gb" -or -iname "*.gbc" \n    -or -iname "*.gba" \n  | sed -e 's#.*/##g' \n  | sort -u \n  | rofi -dmenu -p 'Enter name: ' -i -mesg 'Choose a ROM to play' > /tmp/rofi_rom_name;
 
 # rom name, escape [ and ]
-romname=""
+romname="$(cat /tmp/rofi_rom_name | sed -e 's/\[/\[/g' -e 's/\]/\]/g')"
 [ "$romname" = "" ] && exit 1
 
+romfile="$(find "$romdir/$system_name" -maxdepth 2 -mindepth 1 -type f -iname "*${romname}*")"
 
 
 if [ ! -f "$romfile" ];then
@@ -46,6 +49,4 @@ case $system_name in
     exit $?
     ;;
 esac
-</code></pre>
-
-More stuff.
+```
