@@ -9,7 +9,7 @@
 //   FROM :   CSS selector of source tag on remote page ,
 //   TO:      CSS selector of destination tag
 // )
-function getPage(url, from, to) {
+$.fn.getPage = function getPage(url, from, to) {
   var cached = sessionStorage[url];
   if (!from) {
     from = "body";
@@ -34,13 +34,145 @@ function getPage(url, from, to) {
   XHRt.open("GET", url, true);
   XHRt.send();
   return XHRt;
-}
+};
+
+$.fn.isTouchDevice = function() {
+  return "ontouchstart" in window || !!navigator.msMaxTouchPoints;
+};
+
+// https://hackernoon.com/javascript-apis-battery-c72baa74c203
+$.fn.batteryIsLow = function() {
+  if ("getBattery" in navigator) {
+    navigator.getBattery().then(battery => {
+      checkBatteryLevel();
+      // battery.onchargingchange = checkBatteryLevel;
+      // battery.onchargingtimechange = checkBatteryLevel;
+      // battery.onlevelchange = checkBatteryLevel;
+      battery.ondischargingtimechange = checkBatteryLevel;
+
+      function checkBatteryLevel() {
+        // dischargingTime is seconds until battery is empty. 1200 is 20 minutes
+        // level is a percentage of 100. So 0.2 is 20%
+        if (battery.dischargingTime < 1200 || battery.level <= 0.2) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
+  return null; // no battery found
+};
+
+$.fn.hasWebGL = function() {
+  try {
+    var canvas = document.createElement("canvas");
+    return (
+      !!window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
+// add highlighting of searched items as a cash JS method/plugin
+// from: https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js
+$.fn.highlight = function(pat) {
+  function innerHighlight(node, pat) {
+    var skip = 0;
+
+    if (node.nodeType == 3) {
+      var pos = node.data.toUpperCase().indexOf(pat);
+
+      if (pos >= 0) {
+        var spannode = document.createElement("span");
+        spannode.className = "highlighted";
+        var middlebit = node.splitText(pos);
+        var endbit = middlebit.splitText(pat.length);
+        var middleclone = middlebit.cloneNode(true);
+
+        spannode.appendChild(middleclone);
+        middlebit.parentNode.replaceChild(spannode, middlebit);
+        skip = 1;
+      }
+    } else if (
+      node.nodeType == 1 &&
+      node.childNodes &&
+      !/(script|style) /i.test(node.tagName)
+    ) {
+      for (var i = 0; i < node.childNodes.length; ++i) {
+        i += innerHighlight(node.childNodes[i], pat);
+      }
+    }
+
+    return skip;
+  }
+
+  return this.each(function() {
+    innerHighlight(this, pat.toUpperCase());
+  });
+};
+
+$.fn.removeHighlight = function() {
+  function newNormalize(node) {
+    for (
+      var i = 0, children = node.childNodes, nodeCount = children.length;
+      i < nodeCount;
+      i++
+    ) {
+      var child = children[i];
+
+      if (child.nodeType == 1) {
+        newNormalize(child);
+        continue;
+      }
+
+      if (child.nodeType != 3) {
+        continue;
+      }
+
+      var next = child.nextSibling;
+
+      if (next == null || next.nodeType != 3) {
+        continue;
+      }
+
+      var combined_text = child.nodeValue + next.nodeValue;
+      new_node = node.ownerDocument.createTextNode(combined_text);
+      node.insertBefore(new_node, child);
+      node.removeChild(child);
+      node.removeChild(next);
+      i--;
+      nodeCount--;
+    }
+  }
+
+  return this.find("span.highlighted").each(function() {
+    var thisParent = this.parentNode;
+    thisParent.replaceChild(this.firstChild, this);
+    newNormalize(thisParent);
+  });
+};
 
 // this site includes 'cash-dom' by default, so we can use it
 // for nicer DOM ready code:
 $(function() {
   // DOM is ready now (all elements, styles and script loaded)
   // put your JS code here
+
+  $("body").removeClass("no-js");
+
+  if ($().isTouchDevice()) {
+    $("body").addClass("touchscreen");
+  }
+
+  if ($().batteryIsLow()) {
+    $("body").addClass("low-battery");
+  }
+
+  if ($().hasWebGL()) {
+    $("body").addClass("webgl");
+  }
 
   // site search, using Jets (https://jets.js.org/)
   if (Jets) {
@@ -150,85 +282,6 @@ $(function() {
         }
       }
     }
-
-    // add highlighting of searched items as a cash JS method/plugin
-    // from: https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js
-    $.fn.highlight = function(pat) {
-      function innerHighlight(node, pat) {
-        var skip = 0;
-
-        if (node.nodeType == 3) {
-          var pos = node.data.toUpperCase().indexOf(pat);
-
-          if (pos >= 0) {
-            var spannode = document.createElement("span");
-            spannode.className = "highlight";
-            var middlebit = node.splitText(pos);
-            var endbit = middlebit.splitText(pat.length);
-            var middleclone = middlebit.cloneNode(true);
-
-            spannode.appendChild(middleclone);
-            middlebit.parentNode.replaceChild(spannode, middlebit);
-            skip = 1;
-          }
-        } else if (
-          node.nodeType == 1 &&
-          node.childNodes &&
-          !/(script|style) /i.test(node.tagName)
-        ) {
-          for (var i = 0; i < node.childNodes.length; ++i) {
-            i += innerHighlight(node.childNodes[i], pat);
-          }
-        }
-
-        return skip;
-      }
-
-      return this.each(function() {
-        innerHighlight(this, pat.toUpperCase());
-      });
-    };
-
-    $.fn.removeHighlight = function() {
-      function newNormalize(node) {
-        for (
-          var i = 0, children = node.childNodes, nodeCount = children.length;
-          i < nodeCount;
-          i++
-        ) {
-          var child = children[i];
-
-          if (child.nodeType == 1) {
-            newNormalize(child);
-            continue;
-          }
-
-          if (child.nodeType != 3) {
-            continue;
-          }
-
-          var next = child.nextSibling;
-
-          if (next == null || next.nodeType != 3) {
-            continue;
-          }
-
-          var combined_text = child.nodeValue + next.nodeValue;
-          new_node = node.ownerDocument.createTextNode(combined_text);
-          node.insertBefore(new_node, child);
-          node.removeChild(child);
-          node.removeChild(next);
-          i--;
-          nodeCount--;
-        }
-      }
-
-      return this.find("span.highlight").each(function() {
-        var thisParent = this.parentNode;
-        thisParent.replaceChild(this.firstChild, this);
-        newNormalize(thisParent);
-      });
-    };
 
     // add the event handler to the search input to call the highlighter
     $("#site-search").on("keyup change", function(ev) {

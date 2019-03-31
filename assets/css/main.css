@@ -195,10 +195,9 @@ a.skip-to-content:focus {
     right: 12px;
   }
 }
-.highlight {
+.highlighted {
   background-color: #fff34d;
-}
-.highlight {
+  color: #222;
   padding: 0;
   margin: 0;
 }

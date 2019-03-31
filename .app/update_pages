@@ -119,7 +119,13 @@ if [ "$all_posts" != "" ];then
     all_post_html="${all_post_html}<li><span>${post_date}</span> <a href=\"${blog_url}/${post//.mdsh/.html}\">${post_title}</a></li>"
   done
   all_post_html="${all_post_html}</ul>"
+
   touch archive.html
+
+  echo "$all_posts" > /tmp/itemlist
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
+
   post_title="$blog_title - Archive" \
   post_descr="Here's a list of all posts on this blog, listed newest to oldest." \
   post_url="$blog_url/archive.html" \

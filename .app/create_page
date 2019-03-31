@@ -60,6 +60,7 @@ function create_page_html {
   local lang="${blog_language:-en}"
   local site_header="$(print_site_header)"
   local prev_and_next_posts=''
+  local page_slug
   echo "<!DOCTYPE html>
 <!--[if lte IE 6]><html lang=\"$lang\" class=\"preIE7 preIE8 preIE9 preIE11\"><![endif]-->
 <!--[if IE 7]><html lang=\"$lang\" class=\"preIE8 preIE9 preIE11\"><![endif]-->
@@ -73,7 +74,7 @@ function create_page_html {
   print_site_stylesheets
   print_site_javascripts
   echo "</head>"
-  echo "<body>"
+  echo "<body class=\"category-${post_category:-main} ${post_slug:-$page_slug} no-js\">"
   echo '<div class="main-container">'
   echo '<div class="body-container">'
   echo "$site_header"
@@ -95,6 +96,7 @@ function print_site_meta {
   if [ "$post_title" != "" ];then
     page_title="$post_title"
   fi
+  page_slug="$(.app/slugify.sh "$page_title")"
   echo '<meta charset="utf-8">
 <!-- browser/device compatibility stuff -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -127,7 +129,7 @@ function print_site_meta {
 <meta property="og:type" content="article">
 <meta property="og:locale" content="'${post_language:-$blog_language}'">
 <meta property="og:image" content="'${blog_url}'/assets/icons/rss.png">
-<meta property="article:author" content="'${post_author:-blog_author}'"/>
+<meta property="article:author" content="'${post_author:-$blog_author}'"/>
 <meta property="article:section" content="'${blog_category}'"/>
 <meta property="article:published_time" content="'${post_created:-$current_date}'">
 <meta property="article:modified_time" content="'${current_date}'">
@@ -185,6 +187,11 @@ echo '<script id="meta-ld" type="application/ld+json">
 '
   # print json-ld breadcrumb
   .app/breadcrumb "${post_url:-$blog_url}"
+  # print json-ld item list
+  [ -f /tmp/itemlist.json ] && cat /tmp/itemlist.json
+  rm /tmp/itemlist 2>/dev/null
+  rm /tmp/itemlist.json 2>/dev/null
+
   # google analytics
   if [ "${blog_google_analytics_id}" != "" ];then
     echo '<!-- Google analytics (optional) -->'
@@ -369,47 +376,59 @@ function print_site_footer {
 #
 
 function list_categories {
+  echo -n '' > /tmp/itemlist
   echo '<ul class="categories-list">'
   for category in $(grep -v "^#" posts.csv | cut -f5 -d'|' | tr ',' '\n' | grep -v "^$" |sort -u | uniq)
   do
     post_count=$(grep -l "# category: .*$category" posts/*/*/*/*.mdsh |sort -u| while read file
-      do
+    do
       cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
-      done | wc -l 2>/dev/null)
+    done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/categories/'$(.app/slugify.sh "${category}")'.html">'${category}'</a> '$post_count'</li>'
+    echo "categories/$(.app/slugify.sh "${category}").html" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_tags {
+  echo -n '' > /tmp/itemlist
   echo '<ul class="tags-list">'
   local all_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
   for tag in $all_tags
   do
     [ "$tag" = "" ] && continue
     post_count=$(grep -lRE "# tags:.*$tag[, ]?" posts/*/*/*/*.mdsh |sort -u| while read file
-      do
+    do
       cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
-      done | wc -l 2>/dev/null)
+    done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/tags/'$(.app/slugify.sh "${tag}")'.html">'${tag}'</a> '$post_count'</li>'
+    echo "tags/$(.app/slugify.sh "${tag}").html" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_authors {
+  echo -n '' > /tmp/itemlist
   echo '<ul class="authors-list">'
   for author in $(grep -v "^#" posts.csv | cut -f4 -d'|' | tr ',' '\n' grep -v "^$" | sort -u)
   do
     post_count=$(grep -lRE "# author:.*$author[,]?" posts/*/*/*/*.mdsh |sort -u| while read file
-      do
+    do
       cut -f1,2 -d'|' posts.csv | grep "$(basename "${file}")" | grep -v "^#" | tr '|' '/'
-      done | wc -l 2>/dev/null)
+    done | wc -l 2>/dev/null)
     [ "$post_count" != '' ] && post_count="<span class=\"post-count\">(${post_count// /})</span>"
     echo '<li><a href="'${blog_url}'/authors/'$(.app/slugify.sh "${author}")'.html">'${author}'</a> '$post_count'</li>'
+    echo "authors/$(.app/slugify.sh "${author}").html" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 ################################################################################
@@ -461,6 +480,7 @@ function list_posts_in {
   [ -z "$1" ] && return 1
   local post_dir="$1"
   local matching_posts="$(grep "^$post_dir/" posts.csv | grep -v "^#" | cut -f1,2 -d'|' | tr '|' '/' | sort -r)"
+  echo -n '' > /tmp/itemlist
 #  local matching_posts="$(find $posts_dir -type f -name "*.mdsh" | sort -r)"
   local post_name
   echo '<ul class="posts">'
@@ -470,13 +490,17 @@ function list_posts_in {
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
     [ "$post_name" = "" ] && post_name=$(basename ${post//.mdsh/})
     echo '<li><a href="'${blog_url}'/posts/'${post//.mdsh/.html}'">'${post_name}'</a></li>'
+    echo "posts/${post//.mdsh/.html}" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_recent_posts {
   # list relative paths to the 10 most recent posts in ./posts dir
   local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | tr '|' '/' | grep -v "^#")"
+  echo -n '' > /tmp/itemlist
   # local recent_posts="$(find posts/ -type f -name "*.md" -exec stat -c "%y %n" {} + | sort -r | head -10 | cut -f4 -d' ')"
   local post_name
   # then list each one
@@ -486,13 +510,17 @@ function list_recent_posts {
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
     [ "$post_name" = "" ] && post_name=$(basename ${post//.mdsh/})
     echo '<li><a href="'${blog_url}'/posts/'${post//.mdsh/.html}'">'${post_name}'</a></li>'
+    echo "posts/${post//.mdsh/.html}" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_posts_by_author {
   local author="$1"
   matching_posts="$(grep -lRE "# author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  echo -n '' > /tmp/itemlist
   echo '<ul class="posts-by-author posts">'
   for post in $matching_posts
   do
@@ -500,26 +528,36 @@ function list_posts_by_author {
     [ "$(grep "${post}|" posts.csv | grep "^#" )" ] && continue
     # get post name
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
-    [ "$post_name" != "" ] && echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
+    if [ "$post_name" != "" ];then
+      echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
+      echo "${post//.mdsh/.html}" >> /tmp/itemlist
+    fi
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_posts_matching_tag {
   local tag="$1"
   matching_posts="$(grep -lRE "# tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  echo -n '' > /tmp/itemlist
   echo '<ul class="posts-matching-tag posts">'
   for post in $matching_posts
   do
     post_name="$(grep -m1 "|$(basename $post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')"
     echo -n '<li><a href="'${blog_url}'/'${post//.mdsh/.html}'">'$post_name'</a></li>'
+    echo "${post//.mdsh/.html}" >> /tmp/itemlist
   done
   echo '</ul>'
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_posts_in_category {
   local category="$1"
   local titles="$(grep "|$category|" ./posts.csv | cut -f1,3 -d'|' | grep -v "^#" | sort -u | sort -r | uniq | cut -f2 -d'|')"
+  echo -n '' > /tmp/itemlist
 
   if [ "$titles" != "" ];then
     echo '<ul class="posts-in-category posts">'
@@ -532,10 +570,13 @@ function list_posts_in_category {
       local slug="$(grep -m1 "|$title|" ./posts.csv | cut -f2 -d'|')"
       local title="$(grep -m1 "|$title|" ./posts.csv | cut -f3 -d'|')"
       echo -n '<li><a href="'${blog_url}'/posts/'$created'/'${slug//.mdsh/}'.html">'$title'</a></li>'
+      echo "posts/$created/${slug//.mdsh/}.html" >> /tmp/itemlist
     done
     IFS=$OLDIFS
     echo '</ul>'
   fi
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 }
 
 function list_prev_and_next_posts {
@@ -677,24 +718,32 @@ elif [ "$1" != "" ] && [ "$1" != "-all" ];then
 else
   post_file=''
   body_html=''
+  echo -n '' > /tmp/itemlist
   recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"
   for post in $recent_posts
   do
     post_file="posts/${post//|//}"
     body_html="${body_html}$(print_post_preview "$post_file")"
+    echo "posts/${post//|//}" >> /tmp/itemlist
   done
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 fi
 
 # ignore the -all option that will be passed here by update_pages (if used by user)
 if [ "$1" = "-all" ] || [ "$1" = "-ALL" ];then
   post_file=''
   body_html=''
+  echo -n '' > /tmp/itemlist
   recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"
   for post in $recent_posts
   do
     post_file="posts/${post//|//}"
     body_html="${body_html}$(print_post_preview "$post_file")"
+    echo "posts/${post//|//}" >> /tmp/itemlist
   done
+  # print json-ld item list
+  .app/itemlist "$(cat /tmp/itemlist)" > /tmp/itemlist.json
 fi
 
 # if we have markdown, not html, we need to convert it
