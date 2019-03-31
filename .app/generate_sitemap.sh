@@ -8,7 +8,7 @@
 
 sitedomain=https://${blog_domain}${blog_url}
 
-mv sitemap.xml sitemap_prev.xml
+mv sitemap.xml sitemap_prev.xml 2>/dev/null
 
 echo "Generating sitemap.xml, please wait.."
 
@@ -40,7 +40,7 @@ rm linklist.txt sortedurls.txt &>/dev/null
 
 [ ! -f sitemap.xml ] && exit 1
 
-rm sitemap_prev.xml
+rm sitemap_prev.xml 2>/dev/null
 
 current_branch=$(git branch | grep ^\* | cut -f2 -d' ')
 
