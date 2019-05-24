@@ -1,3 +1,5 @@
+
+
 ## Adding a site search feature
 
 I wanted `mdsh` to have a nice site search feature, and not have to use Google Custom Search Engine or similar.

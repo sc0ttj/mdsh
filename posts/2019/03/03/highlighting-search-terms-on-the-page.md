@@ -1,3 +1,5 @@
+
+
 ## Highlighting search terms on the page
 
 Using a [jQuery plugin found at Stack Overflow]( https://stackoverflow.com/questions/41533785/how-to-highlight-search-text-in-html-with-the-help-of-js), we can add some functionality to `cash-dom` (Ken Wheelers excellent [cash-JS](https://github.com/kenwheeler/cash), a lightweight jQuery replacement) so that any search terms entered into the site search input (which appears at the top of many pages on this site) are highlighted in yellow.
@@ -84,7 +86,6 @@ $.fn.removeHighlight = function() {
 // add the event handler to the search input to call the highlighter
 $ ("#site-search").on("keyup change", function(ev) {
   // pull in the new value
-  var searchTerm = $(this).val();
 
   // remove any old highlighted terms
   $ ("#content").removeHighlight();

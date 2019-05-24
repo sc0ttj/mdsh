@@ -1,3 +1,5 @@
+
+
 ## Fixing RSS generation
 
 I've made a few changes in the `./create_rss` function, so that it works on both Linux and Mac OS X:
@@ -19,7 +21,6 @@ if [ "$os_type" = "Linux" ];then
   force_update=`date -r "$file" "+%s"`
 else # Mac, BSD
   # use BSD date
-  timestamp=$(stat -f "%m" "$file")
   pubDate=`date -r "$timestamp" +"%a, %d %b %Y %T %z"`
   force_update=`date -r "$timestamp" "+%s"`
 fi

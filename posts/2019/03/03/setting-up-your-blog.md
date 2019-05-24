@@ -1,3 +1,5 @@
+
+
 ## Setting up your blog
 
 I've added two new scripts, to make setting and managing your blog a little easier.

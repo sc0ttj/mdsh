@@ -1,3 +1,6 @@
+
+
+
 ## Markdown parsing works OK now
 
 After getting it working somewhat, I realised that my pre-parsing fix (manually replacing triple backticks with HTML code tags) allows me to use `markdown.pl` without issues, which is nice, cos it formats the code well, with no need to escape backslashes to preserve formatting.

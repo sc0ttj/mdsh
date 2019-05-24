@@ -1,3 +1,6 @@
+
+
+
 ## Simplifying blog structure
 
 I needed a way to simplify the way my scripts searched and listed site content.

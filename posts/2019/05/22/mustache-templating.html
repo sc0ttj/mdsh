@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE10 preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<!-- browser/device compatibility stuff -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="HandheldFriendly" content="True"/>
+<meta name="format-detection" content="telephone=no">
+<!-- page info -->
+<title>Mustache templating | mdsh</title>
+<meta name="description" content="Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.">
+<meta name="keywords" content="blog, mustache">
+<meta name="news_keywords" content="blog, mustache">
+<meta name="subject" content="blog, mustache">
+<meta name="generator" content="mdsh">
+<meta name="medium" content="blog">
+<meta name="copyright" content="&copy; mdsh">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="topic" content="blog, mustache">
+<meta name="owner" content="sc0ttj">
+<meta name="pagename" content="Mustache templating">
+<!-- Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="mdsh">
+<!-- Facebook -->
+<meta property="og:title" content="Mustache templating">
+<meta property="og:description" content="Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.">
+<meta property="og:url" content="https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html">
+<meta property="og:site_name" content="mdsh">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://sc0ttj.github.io/mdsh/assets/icons/rss.png">
+<meta property="article:author" content="sc0ttj">
+<meta property="article:section" content="">
+<meta property="article:published_time" content="2019-05-22T05:42:08Z">
+<meta property="article:modified_time" content="2019-05-24T17:34:26Z">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mustache templating">
+<meta name="twitter:site" content="@foobar">
+<meta name="twitter:creator" content="@foobar">
+<meta name="twitter:image" content="https://sc0ttj.github.io/mdsh/assets/icons/rss.png">
+<meta name="twitter:domain" content="https://sc0ttj.github.io/mdsh">
+<!-- Linked data -->
+<script id="meta-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Article",
+  "headline": "Mustache templating",
+  "datePublished": "2019-05-22T05:42:08Z",
+  "dateModified": "2019-05-24T17:34:26Z",
+  "description": "Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.",
+  "keywords": "blog, mustache",
+  "image": {
+    "@type": "ImageObject",
+    "height": "512",
+    "width": "512",
+    "url": "https://sc0ttj.github.io/mdsh/assets/icons/android-chrome-512x512.png"
+  },
+  "author": "sc0ttj",
+  "publisher": {
+    "@type": "Organization",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sc0ttj.github.io/mdsh/assets/icons/android-chrome-512x512.png"
+    },
+    "name": "mdsh"
+  },
+  "mainEntityOfPage": "https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html#content",
+  "articleBody": "Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh."
+}
+</script>
+<script id="breadcrumb-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement":
+  [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh",
+        "name": "Mdsh"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts",
+        "name": "Posts"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019",
+        "name": "2019"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/05",
+        "name": "May"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/05/22",
+        "name": "22"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html",
+        "name": "Mustache templating"
+      }
+    }
+  ]
+}
+</script>
+<!-- RSS feed -->
+<link rel="alternate" type="application/rss+xml" title="Subscribe to mdsh" href="/mdsh/feed.rss">
+<!-- SEO stuff -->
+<link rel="author" href="/humans.txt">
+<link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html">
+<!-- App icons and favicons -->
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1558719266">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1558719266">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1558719266">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1558719266">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1558719266">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1558719266">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1558719266">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1558719266">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1558719266">
+<meta name="theme-color" content="#101010">
+<!-- Fallback app name, for legacy browsers -->
+<meta name="application-name" content="mdsh">
+<!-- prefetch resources -->
+<link rel="dns-prefetch" href="//unpkg.com">
+<link rel="preconnect"   href="//unpkg.com" crossorigin>
+<!-- site css -->
+<style>/* inline styles go here */</style>
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1558719266">
+
+<!-- pygments (syntax highlighting) -->
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1558719266">
+<script>
+// enable styling of some HTML elements in IE < 9
+document.createElement("picture");
+document.createElement("time");
+</script>
+<script class="unpkg" defer src="//unpkg.com/cash-dom@2.3.9/dist/cash.min.js"></script>
+<script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
+<script class="unpkg" defer src="//unpkg.com/cash-dom@2.3.9/dist/cash.min.js"></script>
+<script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
+
+<!-- main javascript app -->
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1558719266"></script>
+</head>
+<body class="no-js category-blog mustache-templating">
+  <div class="main-container">
+    <div class="site-header">
+  <h1><a href="/mdsh">mdsh</a></h1>
+  <input type="search" class="site-search" id="site-search" placeholder="search.." />
+  <a class="off-screen skip-to-content" href="#content">Skip to content</a>
+  <ul>
+      <li><a href="/mdsh/about.html">about</a></li>      <li><a href="/mdsh/archive.html">archive</a></li>      <li><a href="/mdsh/contact.html">contact</a></li>      <li><a href="/mdsh/search.html">search</a></li>  </ul>
+</div>
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>Mustache templating</h2>
+
+          <div class="page-header">
+  <div class="page-meta">
+    <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+    <span class="time-to-read">4 mins</span>
+    <span class="date"><time datetime="2019-05-22">2019-05-22</time></span>
+    <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
+    <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
+    <div class="tags">
+      <span><a href="/mdsh/tags/blog.html">blog</a></span>
+      <span><a href="/mdsh/tags/mustache.html">mustache</a></span>
+    </div>
+  </div>
+</div>
+
+        <p>I've totally re-written <code>mdsh</code>. It now uses a Mustache templating system, which makes it much easier to edit, manage and create layouts for your pages.</p>
+
+<p>Template files live in <code>.app/templates/</code>, sorted by type into folders - <code>html</code>, <code>js</code>, etc.</p>
+
+<h3>The basics</h3>
+
+<p>The templates require various variables to be set before they are used - collectively we can call these variables the "page data":</p>
+
+<div class="highlight"><pre><span></span>page_header
+page_lang
+page_title
+page_slug
+page_descr
+page_category
+page_created
+page_modified
+page_time_to_read
+page_keywords
+page_author
+page_author_slug
+page_twitter
+page_js_deps
+page_google_analytics_id
+page_url
+</pre></div>
+
+<p>Here is an example template which uses some of the page data above:</p>
+
+<div class="highlight"><pre><span></span>&lt;h2&gt;<span class="o">{{</span>page_title<span class="o">}}</span>&lt;/h2&gt;
+&lt;p&gt;<span class="o">{{</span>page_descr<span class="o">}}</span>&lt;/p&gt;
+</pre></div>
+
+<!-- more -->
+
+<p>For more complex stuff, read on.</p>
+
+<h3>How the templating works</h3>
+
+<p>A <code>render</code> function is used in <code>generate_page_content</code> to run <code>mo</code> and convert
+templates to HTML, using the <code>$page_</code> variables as input data.</p>
+
+<p>There is a "main" template in <code>.app/templates/html/main.mustache</code>. This is the
+template from which your HTML pages are generated. It includes things like
+<code>{{site_header}}</code>, and if you look in
+<code>.app/functions/generate_page_content.bash</code>, you'll see a function
+<em>also</em> called <code>site_header</code> - it's this function which generates the site header
+HTML output for the <code>main</code> template.</p>
+
+<p>You can add new functions to these files which generate HTML for any page areas
+or elements, and call them in the templates like so: <code>{{my_func_name}}</code>.</p>
+
+<h3>More advanced usage</h3>
+
+<p>In order to do complex things, like using custom variables, complex logic, etc,
+you can create a shell function, called <code>foo</code>, which outputs HTML, and you can
+then call that function in your templates like so:</p>
+
+<div class="highlight"><pre><span></span><span class="o">{{</span>foo<span class="o">}}</span>
+</pre></div>
+
+<p>^ this will execute your <code>foo</code> shell function, and replace <code>{{foo}}</code> with the
+output of your function. This is very handy if you need some complex logic to
+manage your HTML output, or if you need to pre-process some other templates
+using different data, before inserting it into your page.</p>
+
+<h3>Loops in templates</h3>
+
+<p>If you need to create a loop in your templates, then you have to do it this way:</p>
+
+<p>Example: let's create a template called "coolthing", that uses a loop:</p>
+
+<ol>
+<li>create a <code>.app/templates/html/coolthing.mustache</code> file, that looks like this:</li>
+</ol>
+
+<div class="highlight"><pre><span></span><span class="x">&lt;ul class=&quot;some-list&quot;&gt;</span>
+<span class="x">  </span><span class="cp">{{</span><span class="nf">#ITEMS</span><span class="cp">}}</span><span class="x"></span>
+
+<span class="x">    &lt;li&gt;</span>
+<span class="x">      </span><span class="cp">{{</span><span class="nv">ITEM.name</span><span class="cp">}}</span><span class="x"> - </span><span class="cp">{{</span><span class="nv">ITEM.descr</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">    &lt;/li&gt;</span>
+
+<span class="x">  </span><span class="cp">{{</span><span class="nf">/ITEMS</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">&lt;/ul&gt;</span>
+</pre></div>
+
+<ol>
+<li><p>add <code>{{coolthing}}</code> to one of the existing templates</p></li>
+<li><p>add a function called 'coolthing' to a file in <code>.app/functions/</code></p></li>
+<li><p>in your new function:</p>
+
+<ul>
+<li>get some data - a list of posts, authors, or something like that</li>
+<li>create an empty <code>ITEMS</code> array, like so: <code>ITEMS=()</code></li>
+<li>create a <code>for</code> or <code>while</code> loop, and inside it:
+<ul>
+<li>create some <code>items</code> variables: <code>item_name="cool name"; item_descr="bar baz";</code></li>
+<li>create the variable <code>$hash_name</code>, containing your hash:
+<ul>
+<li><code>hash_name="hash_${RANDOM}"; declare -A $hash_name</code></li>
+</ul></li>
+<li>add it all to the ITEMS array: <code>eval $ (add_keys_to_hash)</code></li>
+</ul></li>
+<li>lastly, after your loop, return the HTML by calling <code>render coolthing</code></li>
+</ul></li>
+</ol>
+
+<p>...and that's all about the new templating system, for now.</p>
+
+<p>The <code>item</code> variables available inside the <code>{{#ITEM}}</code> loops of your templates are:</p>
+
+<div class="highlight"><pre><span></span>ITEM.title
+ITEM.slug
+ITEM.descr
+ITEM.category
+ITEM.created
+ITEM.modified
+ITEM.time_to_read
+ITEM.keywords
+ITEM.author
+ITEM.author_slug
+ITEM.twitter
+ITEM.js_deps
+ITEM.google_analytics_id
+ITEM.url
+</pre></div>
+
+<h3>Other recent changes to <code>mdsh</code></h3>
+
+<h4>Cleaner code</h4>
+
+<ul>
+<li>all data (post and page vars) now separated from layouts completely</li>
+<li>All data (from meta info in <code>.mdsh</code> files, or from <code>post_**</code> vars passed to
+<code>create_page.sh</code>) gathered and organised into arrays, then passed to <code>mo</code>.</li>
+<li>All templates separated into <code>&lt;renderer&gt;/_&lt;layout&gt;.mustache</code> (Example:
+<code>html/_list.mustache</code>)</li>
+<li>Main scripts are as DRY as can be.</li>
+</ul>
+
+<h4>Render multiple formats</h4>
+
+<ul>
+<li>templates for different output types (HTML, JS, JSON-LD) live in different folders</li>
+<li>look in  <code>.app/templates/&lt;format&gt;/</code></li>
+<li>where <code>&lt;format&gt;</code> can be <code>html</code>, <code>json-ld</code>, <code>js</code></li>
+<li>in future, can add more formats: <code>css</code>, <code>amp</code>, <code>fbia</code>, <code>rss</code>, etc</li>
+<li>this makes it easy to render the site in HTML, and in other formats</li>
+</ul>
+
+<h4>Fixes in <code>JSON-LD</code> generation</h4>
+
+<ul>
+<li>better breadcrumbs</li>
+<li>fixed all URLs (should be full URLs, not relative)</li>
+<li>fixed author info</li>
+<li>fixed <code>mainEntityOfPage</code> in article info</li>
+</ul>
+
+<h4>More robust CSS for post headers/footers</h4>
+
+<ul>
+<li>not using <code>nth-child()</code> anymore,</li>
+<li>added some class names to target instead</li>
+</ul>
+
+<h4>W3C validation</h4>
+
+<ul>
+<li>removing the Google Font URL (containing <code>|</code>) from <code>&lt;head&gt;</code> fixes a W3C
+validation error</li>
+<li>CSS and JSON-LD also validate</li>
+</ul>
+
+<h4>Frontend performance improvement</h4>
+
+<ul>
+<li>add Google Font CSS to main CSS file at build time</li>
+</ul>
+
+<h4>Improvements to search page</h4>
+
+<ul>
+<li>better document/heading layout, looks nicer</li>
+</ul>
+
+<h4>Improvements displaying page/post dates</h4>
+
+<ul>
+<li>using <code>&lt;time datetime="2019-06-24"&gt;</code></li>
+</ul>
+
+<h4>Fixes in page meta</h4>
+
+<ul>
+<li>fixed canonical url</li>
+<li>simpler google analytics stuff</li>
+<li>fixed IE classes</li>
+</ul>
+
+<h4>Improvements to <code>publish.sh</code></h4>
+
+<ul>
+<li>fixed: don't publish out-of-date sitemap and RSS feeds</li>
+<li>the solution used: commit &amp; push the pages first, <em>then</em> generate the RSS feed and XML sitemaps...</li>
+<li>(The RSS feed and XML sitemaps are generated from the online/published version of the site, hence committing &amp; pushing the html pages first..)</li>
+</ul>
+
+          <div class="page-footer">
+  <div class="page-meta">
+    <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+    <span class="time-to-read">4 mins</span>
+    <span class="date"><time datetime="2019-05-22">2019-05-22</time></span>
+    <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
+    <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
+    <div class="tags">
+      <span><a href="/mdsh/tags/blog.html">blog</a></span>
+      <span><a href="/mdsh/tags/mustache.html">mustache</a></span>
+    </div>
+  </div>
+</div>
+          <ul class="prev-next-posts">
+
+  <li class="prev-post">
+    <span>Previous: </span>
+    <a href="../../../2019/03/31/more-responsive-pages.html">More responsive pages</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+/root/Sites/github/mdsh/.app/templates/html
+    <div class="footer">
+      <p>© mdsh, 2019. Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a></p>
+    </div>
+  </div>
+</body>
+</html>

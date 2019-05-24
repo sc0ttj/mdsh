@@ -1,3 +1,6 @@
+
+
+
 ## What to do after creating a post
 
 When a post is saved, it needs to be added to the list of recent posts.

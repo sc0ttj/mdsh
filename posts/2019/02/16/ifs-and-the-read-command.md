@@ -1,3 +1,5 @@
+
+
 ## IFS and the read command
 
 In order to (finally) get the `.mdsh` files to generate valid markdown, and from there to convert to valid HTML, while **also** preserving code block formatting (new lines, indentations, etc), I had to set IFS and use the `-er` options of the read command.

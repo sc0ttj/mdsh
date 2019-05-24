@@ -1,3 +1,5 @@
+
+
 ## Adding HTML and CSS minification
 
 As of the last update, your HTML pages (and any CSS files they use) will be minified by default when running `update_pages`.

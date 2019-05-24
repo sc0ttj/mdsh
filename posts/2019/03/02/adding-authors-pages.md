@@ -1,3 +1,5 @@
+
+
 ## Adding authors pages
 
 Author pages are now automatically generated when adding posts, in addition to the indexes already generated.

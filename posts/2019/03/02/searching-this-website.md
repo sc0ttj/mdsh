@@ -1,3 +1,5 @@
+
+
 ## Searching this website
 
 I've simplified the `assets/js/app.js` JavaScript file that is loaded in all pages by default.

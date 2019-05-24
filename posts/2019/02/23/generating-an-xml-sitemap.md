@@ -1,3 +1,5 @@
+
+
 ## Generating an XML sitemap
 
 Here is a script which generates a valid XML sitemap, which Google (and others) will use to index your site:
@@ -13,7 +15,7 @@ Here is a script which generates a valid XML sitemap, which Google (and others) 
 
 sitedomain=https://${blog_domain}${blog_url}
 
-mv sitemap.xml sitemap_prev.xml
+mv sitemap.xml sitemap_prev.xml 2>/dev/null
 
 echo "Generating sitemap.xml, please wait.."
 
@@ -45,15 +47,7 @@ rm linklist.txt sortedurls.txt &>/dev/null
 
 [ ! -f sitemap.xml ] && exit 1
 
-rm sitemap_prev.xml
-
-current_branch=$(git branch | grep ^\* | cut -f2 -d' ')
-
-echo "Publishing sitemap.."
-echo
-git add sitemap.xml
-git commit -m 'Updated sitemap'
-git push origin $current_branch
+rm sitemap_prev.xml 2>/dev/null
 
 exit 0
 ```

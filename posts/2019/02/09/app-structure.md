@@ -1,3 +1,6 @@
+
+
+
 ## App structure
 
 So far, I have a script called `create_post`, which I am using to write this post.

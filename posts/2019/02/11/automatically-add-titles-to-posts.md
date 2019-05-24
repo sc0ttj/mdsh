@@ -1,3 +1,5 @@
+
+
 ## Automatically add titles to posts
 
 I have improved the post creation routine a tiny bit, by automatically using `$title` as an `h2` header (##) at the top of each newly created post.

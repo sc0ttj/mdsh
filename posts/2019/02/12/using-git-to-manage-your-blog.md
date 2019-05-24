@@ -1,3 +1,5 @@
+
+
 ## Using Git to manage your blog
 
 A console based static site generator like this one needs a console-based solution for uploading/publishing/unpublishing the generated blog pages.
