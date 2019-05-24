@@ -58,7 +58,7 @@ function site_meta {
   local ld_breadcrumb=''
   local ld_item_list=''
   # add site search json-ld (requires site.com/$blog_url/search.html?s=search+term)
-  if [ "${page_title}" = "$blog_title - Homepage" ];then
+  if [ "${page_title}" = "Homepage" ];then
     ld_website="$(render _ld_website 'json-ld')"
   fi
   # main linked data - has info about the main content (article)
