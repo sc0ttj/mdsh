@@ -32,7 +32,7 @@ echo -n "Category:     "
 read -er category
 echo -n "Tags (comma separated words or phrases): "
 read -er tags
-# if -all given, as kfor all meta info
+# if -all given, ask for all meta info
 if [ "$1" = "-all" ];then
   echo -n "Author:       "
   read -er -i "$blog_author" author
@@ -59,9 +59,9 @@ tags="$fixed_tags"
 
 # generate some more meta info
 slug=$(slugify.sh "$title")
-created="$(date -u +"%Y/%m/%d")"
+date_dir="$(date -u +"%Y/%m/%d")"
 date_created="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-modified="$date_created"
+date_modified="$date_created"
 
 # set meta info
 meta_data="# title:        $title
@@ -76,7 +76,7 @@ meta_data="# title:        $title
 # language:     ${language:-$blog_language}
 # JS deps:      ${js_deps:-$blog_js_deps}
 # created:      $date_created
-# modified:     $modified"
+# modified:     $date_modified"
 
 
 # show meta info
@@ -99,19 +99,19 @@ if [ "$answer" = 'n' ] || [ "$answer" = 'N' ];then
   exit 1
 fi
 
+# set the output files
+md_file="./posts/$date_dir/${slug}.md"
+mdsh_file="${md_file}sh"
 # write meta info to mdsh file
-mkdir -p ./posts/$created/
-echo "$meta_data" > ./posts/$created/${slug}.mdsh
-echo ""          >> ./posts/$created/${slug}.mdsh
-echo "---"       >> ./posts/$created/${slug}.mdsh
-echo "## $title" >> ./posts/$created/${slug}.mdsh
-
+mkdir -p ./posts/$date_dir/
+echo "$meta_data" > "$mdsh_file"
+echo ""          >> "$mdsh_file"
+echo "---"       >> "$mdsh_file"
 # create a matching valid markdown file
-echo "## $title"  > ./posts/$created/${slug}.md
-echo ""          >> ./posts/$created/${slug}.md
+echo -n ""       >> "$md_file"
 
 # final message
-echo "Saved meta data in: posts/$created/${slug}.mdsh"
+echo "Saved meta data in: posts/$date_dir/${slug}.mdsh"
 echo
 echo "Now write your markdown below, line by line.
  * supports TAB completion
@@ -128,13 +128,13 @@ echo
 echo "## $title"
 echo
 # run interactive shell for writing the content itself, in markdown
-.app/mdshell posts/$created/${slug}.mdsh
+.app/mdshell.sh posts/$date_dir/${slug}.mdsh
 
 # update the main database of posts for the site
-echo "$created|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv
+echo "$date_dir|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv
 sort -u posts.csv | uniq >> posts_sorted.csv
 mv posts_sorted.csv posts.csv
 
-.app/update_pages
+.app/update_pages.sh
 
 exit 0

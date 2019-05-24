@@ -1,0 +1,12 @@
+<div class="site-header">
+  <h1><a href="{{blog_url}}">{{blog_title}}</a></h1>
+  {{#enable_search}}
+  <input type="search" class="site-search" id="site-search" placeholder="search.." />
+  {{/enable_search}}
+  <a class="off-screen skip-to-content" href="#content">Skip to content</a>
+  <ul>
+    {{#ITEMS}}
+      <li><a href="{{ITEM.url}}">{{ITEM.title}}</a></li>
+    {{/ITEMS}}
+  </ul>
+</div>

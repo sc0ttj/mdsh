@@ -20,5 +20,5 @@ blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0t
 
 ##################################################################
 
-source .app/cli-interface
+source .app/cli-interface.bash
 

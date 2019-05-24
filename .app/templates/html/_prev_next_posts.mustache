@@ -1,0 +1,17 @@
+<ul class="prev-next-posts">
+
+  {{#prev_slug_name}}
+  <li class="prev-post">
+    <span>Previous: </span>
+    <a href="../../../{{prev_date}}/{{prev_slug_name}}.html">{{prev_title}}</a>
+  </li>
+  {{/prev_slug_name}}
+
+  {{#next_slug_name}}
+  <li class="next-post">
+    <span>Next:</span>
+    <a href="../../../{{next_date}}/{{next_slug_name}}.html">{{next_title}}</a>
+  </li>
+  {{/next_slug_name}}
+
+</ul>

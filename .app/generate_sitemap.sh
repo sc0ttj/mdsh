@@ -42,12 +42,4 @@ rm linklist.txt sortedurls.txt &>/dev/null
 
 rm sitemap_prev.xml 2>/dev/null
 
-current_branch=$(git branch | grep ^\* | cut -f2 -d' ')
-
-echo "Publishing sitemap.."
-echo
-git add sitemap.xml
-git commit -m 'Updated sitemap'
-git push origin $current_branch
-
 exit 0

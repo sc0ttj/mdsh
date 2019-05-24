@@ -1,0 +1,17 @@
+<script id="itemlist-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "ItemList",
+  "itemListElement":
+  [
+  {{#ITEMS}}
+    {
+      "@type": "ListItem",
+      "position": {{ITEM.position}},
+      "url": "https://{{blog_domain}}{{ITEM.url}}"
+    }
+  {{/ITEMS}}
+
+  ]
+}
+</script>

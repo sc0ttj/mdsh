@@ -1,23 +1,42 @@
 # define the command-line interface (CLI)
 
+# source functions used by mdsh
+for script in .app/functions/*.bash .app/functions/*.sh
+do
+  [ -f $script ] && source $script
+done
+
+# mo must be in $PATH to work, so add its parent dir to $PATH, if needed
+if [ "$(echo $PATH | grep '.app/functions')" = "" ];then
+  export PATH=$PATH:.app/functions
+fi
+# mustache lib
+source .app/functions/mo
+
+
+
 #
 # create 'new page' and 'new post' commands
 #
 function new {
  [ "$1" != "page" ] && [ "$1" != "post" ] && return 1
- ${PWD}/.app/create_$1 $2 $3 $4 $5
+ ${PWD}/.app/create_${1}.sh $2 $3 $4 $5
 }
 
 function rebuild {
   if [ -f "$1" ];then
-    ${PWD}/.app/create_page $1 $2
+    ${PWD}/.app/create_page.sh $1 $2
+    return 0
+  fi
+  if [ "$1" = "homepage" ];then
+    post_title="Homepage" ${PWD}/.app/create_page.sh > index.html
     return 0
   fi
   if [ "$1" = "sitemap" ];then
     ${PWD}/.app/generate_sitemap.sh
     return 0
   fi
-  ${PWD}/.app/update_pages $1
+  ${PWD}/.app/update_pages.sh $1
 }
 
 function help {
@@ -48,6 +67,8 @@ function help {
   echo
   echo "  rebuild file.mdsh file.html      # re-build a specific page from a .mdsh file"
   echo
+  echo "  rebuild homepage                 # re-build the main index.html file"
+  echo
   echo "  rebuild sitemap                  # re-build and publish an updated sitemap.xml"
   echo
   echo "  publish                          # save and publish latest changes"
@@ -56,15 +77,15 @@ function help {
 }
 
 # make the scripts available themselves, just in case the user wants them
-alias create_page="${PWD}/.app/create_page"
-alias create_post="${PWD}/.app/create_post"
-alias create_rss="${PWD}/.app/create_rss"
+alias create_page="${PWD}/.app/create_page.sh"
+alias create_post="${PWD}/.app/create_post.sh"
+alias create_rss="${PWD}/.app/create_rss.sh"
 alias generate_sitemap="${PWD}/.app/generate_sitemap.sh"
-alias update="${PWD}/.app/update_pages"
-alias publish="${PWD}/.app/publish"
-alias unpublish="${PWD}/.app/unpublish"
-alias server="${PWD}/.app/server"
-alias setup="${PWD}/.app/setup"
-alias minify="${PWD}/.app/minify"
-alias mdshell="${PWD}/.app/mdshell"
-alias mdsh2md="${PWD}/.app/mdsh2md"
+alias update="${PWD}/.app/update_pages.sh"
+alias publish="${PWD}/.app/publish.sh"
+alias unpublish="${PWD}/.app/unpublish.sh"
+alias server="${PWD}/.app/server.sh"
+alias setup="${PWD}/.app/setup.sh"
+alias minify="${PWD}/.app/minify.sh"
+alias mdshell="${PWD}/.app/mdshell.sh"
+alias mdsh2md="${PWD}/.app/mdsh2md.sh"

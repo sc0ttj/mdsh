@@ -1,0 +1,36 @@
+<p>Send me a message, question, some feedback or whatever.</p>
+
+{{#blog_twitter}}
+<p>You can also contact me on Twitter <a href="https://twitter.com/{{blog_twitter}}" target="_blank">{{blog_twitter}}</a>.</p>
+{{/blog_twitter}}
+
+<!--
+  # NOTE: alternative email services
+  #"<form action="https://formspree.io/you@email.com" method="post">"                 # formspree
+  #"<form action="mailto:foo@example.com" enctype="text/plain">"                      # mailto
+  #"<form method="POST" action="https://www.briskforms.com/go/XXXXXXXXXXXXXXXXXX">"   # briskforms
+-->
+
+<form id="contact-form" class="contact-form" action="" method="POST">
+  <input name="_gotcha" type="text" style="display: none;"></input>
+  <div class="email">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="_replyto" placeholder="Your email"></input>
+  </div>
+  <div class="subject">
+    <label for="subject">Subject</label>
+    <input id="subject" type="text" name="_subject" placeholder="Subject here..."></input>
+  </div>
+  <div class="message">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" placeholder="Your Message..."></textarea>
+  </div>
+  <button id="send" type="submit">Send</button>
+</form>
+<script type="text/javascript">
+  // build the contact string
+  var str = '{{blog_email_safe}}';
+  str = str.replace('__ __', '@');
+  // add it to the page
+  document.getElementById('contact-form').setAttribute('action', 'https://formspree.io/' + str);
+</script>

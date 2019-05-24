@@ -186,7 +186,7 @@ $(function() {
     var authors = document.getElementsByClassName("authors-list")[0]; // authors page
     var categories = document.getElementsByClassName("categories-list")[0]; // categories page
     var tags = document.getElementsByClassName("tags-list")[0]; // tags page
-    var postPreviews = document.getElementsByClassName("post-preview")[0]; // homepage
+    var postPreviews = document.getElementsByClassName("page-preview")[0]; // homepage
     var searchResults = document.getElementsByClassName("search-results")[0]; // search page
     var posts = document.getElementsByClassName("posts")[0]; // indexes
     var contentToSearch = "";
@@ -267,14 +267,14 @@ $(function() {
           $(".search-back").remove();
           // add a search input
           $(".search-results").before(
-            '<div class="search-box"><h1>Search the site</h1><form action="" method="GET"><input name="q" type="search" placeholder="Enter a search term.." /><button>Search</button></form></div>'
+            '<div class="search-box"><h2>Search the site</h2><form action="" method="GET"><input name="q" type="search" placeholder="Enter a search term.." /><button>Search</button></form></div>'
           );
           // else if search term found
         } else {
           // remove the search box and show the 'back to search' link
           $(".search-box").remove();
           $(".search-results").before(
-            '<h1>Search results</h1><a class="search-back" href="search.html">&lt;&lt; Back to search</a>'
+            '<div><h2>Search results</h2><a class="search-back" href="search.html">&lt;&lt; Back to search</a></div>'
           );
           // perform the search
           $(".search-results").css("display", "block");

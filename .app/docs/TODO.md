@@ -1,16 +1,6 @@
 # To do
 
-- production bundles:
-
-  - reduce network requests
-
-    - combine css stylesheets
-    - combine js
-
-  - simple minify: echo `cat "$file"` > newfile
-    - minify the css, html js in `./assets/*/`
-
-- func to build navigation menu (which should appear in site footer, or an aside for large screens)
+- site navigation menu (which should appear in site footer, or an aside for large screens)
 
   - should output something like:
 
@@ -20,12 +10,6 @@
     - Home
     - About
     - Foo (root dir html pages)
-
-  Suggested:
-
-    - post one
-    - post two
-    - post three
 
   Recent:
 
@@ -54,6 +38,7 @@
 
 - func to generate a table of contents (TOC):
 
+  - put it below post/page h2 heading, above first para
   - to be used by screen readers (a la skip to content) and as an aside on large screens
   - should output small menu of links to headers, something like:
 
@@ -68,24 +53,6 @@
     b. h3 name
 ```
 
-- more stylesheets:
-
-  - github clone
-  - gitlab clone
-  - npm clone
-  - medium clone
-  - jekyll clone
-  - hugo clone
-  - wordpress clone
-  - stack overflow clone
-  - facebook clone
-  - minimalist
-
 - add a nice, small icons set:
-  - favicons
+  - octicons, font-awesome, favicons
   - or similar
-
-* a suggested posts add-on:
-  - store clicked tags, categories & post titles in localStorage
-  - find related posts
-  - add those to a "Suggested posts" section in the post footer or site navigation

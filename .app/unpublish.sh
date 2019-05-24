@@ -38,7 +38,5 @@ echo "Unpublish: ${post}"
 sed -i "s:${post_date}|${post_mdsh}:#${post_date}|${post_mdsh}:g" posts.csv
 rm "$post_file"
 
-.app/update_pages -all
-
-.app/publish "unpublished: $post_html"
+.app/update_pages.sh -all
 

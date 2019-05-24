@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html lang="{{page_lang}}" class="preIE7 preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="{{page_lang}}" class="preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="{{page_lang}}" class="preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="{{page_lang}}" class="preIE10 preIE11"><![endif]-->
+<!--[if IE 10]><html lang="{{page_lang}}" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="{{page_lang}}"><!--<![endif]-->
+<head>
+{{site_meta}}
+</head>
+<body class="no-js {{#page_category}}category-{{page_category}}{{/page_category}} {{page_slug}}">
+  <div class="main-container">
+    {{site_header}}
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>{{page_title}}</h2>
+
+        {{#is_blog_post}}
+          {{post_header}}
+        {{/is_blog_post}}
+
+        {{page_content}}
+
+        {{#is_blog_post}}
+          {{post_footer}}
+          {{onward_journeys}}
+        {{/is_blog_post}}
+
+      </div>
+    </div>
+    {{> .app/templates/html/_site_footer.mustache}}
+  </div>
+</body>
+</html>

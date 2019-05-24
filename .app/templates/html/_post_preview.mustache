@@ -1,0 +1,21 @@
+<div class="page-preview">
+  <h2><a href="{{page_url}}">{{page_title}}</a></h2>
+  <time datetime="{{page_date}}">{{page_date}}</time>
+  <ul class="page-meta">
+    <li class="time-to-read">{{page_time_to_read}}</li>
+    <li class="date"><time datetime="{{page_date}}">{{page_date}}</time></li>
+    <li class="author">{{page_author}}</li>
+    <li class="twitter">{{page_twitter}}</li>
+    <li class="category"><a href="{{blog_url}}/categories/{{page_category}}.html">{{page_category}}</a></li>
+    <li>
+      <ul class="tags">
+        {{#tags}}
+        <li>
+          <a href="{{blog_url}}/tags/{{.}}.html">{{.}}</a>
+        </li>
+        {{/tags}}
+      </ul>
+    </li>
+  </ul>
+  {{page_excerpt}}
+</div>

@@ -39,7 +39,6 @@ fi
 # get contents only (ignoring meta/front matter)
 mdsh_contents="$(cat "$1")"     # get file contents
 md_body="${mdsh_contents#*---}" # remove everything before (and including) ---
-md_body="##${md_body#*##}"      # strip leading blank lines
 
 # write markdown body to temp file
 echo "$md_body" > /tmp/markdown
@@ -171,9 +170,7 @@ done < /tmp/markdown
 # rebuild the markdown file
 markdown_file="${1//.mdsh/}.md"
 
-md_body="##${md_body#*##}"
-
-echo -e "##${markdown#*##}" > "$markdown_file"
+echo -e "${markdown}" > "$markdown_file"
 
 echo "Saved as:"
 echo
