@@ -460,7 +460,7 @@ ul.archive-posts li {
 /* hide main h2 headers for various pages  */
 .mdsh .main-content > h2:first-child,
 .homepage .main-content > h2:first-child,
-.about .main-content > h2:first-child,
+.about-mdsh .main-content > h2:first-child,
 .search .main-content > h2:first-child {
   display: none;
 }
