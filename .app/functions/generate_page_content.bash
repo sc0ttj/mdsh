@@ -234,9 +234,9 @@ function onward_journeys {
   render _prev_next_posts
 }
 
-#function site_footer {
-#  render _site_footer
-#}
+function site_footer {
+  render _site_footer
+}
 
 
 #
