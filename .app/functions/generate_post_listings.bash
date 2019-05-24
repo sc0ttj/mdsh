@@ -60,7 +60,7 @@ function list_posts_by_author {
   local author="$1"
   local classes="posts-by-author posts"
   local datetime=''
-  local all_items="$(grep -lRE "?# ?author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  local all_items="$(grep -lRE "#? ?author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
   ITEMS=()
   for item in $all_items
   do
