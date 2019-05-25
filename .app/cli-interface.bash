@@ -1,5 +1,10 @@
 # define the command-line interface (CLI)
 
+main_pages_list="$(ls -1 | grep -E "\.html$" | grep -vE 'index.html|404.html')"
+recent_posts_list="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -5 | tr '|' '/' | grep -v "^#")"
+categories_list="$(grep -v "^#" posts.csv | cut -f5 -d'|' | tr ',' '\n' | grep -v "^$" |sort -u | uniq)"
+tags_list="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
+
 # source functions used by mdsh
 for script in .app/functions/*.bash .app/functions/*.sh
 do

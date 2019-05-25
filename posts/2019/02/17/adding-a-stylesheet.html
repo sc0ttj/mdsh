@@ -40,7 +40,7 @@
 <meta property="article:author" content="John Doe">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019/02/17">
-<meta property="article:modified_time" content="2019-05-24T18:04:22Z">
+<meta property="article:modified_time" content="2019-05-25T23:15:00Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Adding a stylesheet">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Adding a stylesheet",
   "datePublished": "2019/02/17",
-  "dateModified": "2019-05-24T18:04:22Z",
+  "dateModified": "2019-05-25T23:15:00Z",
   "description": "Styling this blog to look nicer, and how it works.",
   "keywords": "blog,css",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/02/17/adding-a-stylesheet.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1558721062">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1558721062">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1558721062">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1558721062">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1558721062">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1558721062">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1558721062">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1558721062">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1558826100">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1558826100">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1558826100">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1558826100">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1558826100">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1558826100">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1558826100">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1558826100">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1558721062">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1558826100">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1558721062">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1558826100">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1558721062">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1558826100">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -178,7 +178,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1558721062"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1558826100"></script>
 </head>
 <body class="no-js category-blog adding-a-stylesheet">
   <div class="main-container">
@@ -572,7 +572,7 @@ document.createElement("time");
   <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
   <span class="k">background-color</span><span class="p">:</span> <span class="mh">#101010</span><span class="p">;</span>
   <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
-  <span class="k">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">-10</span><span class="kt">px</span><span class="p">;</span>
   <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="kc">auto</span><span class="p">;</span>
   <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
   <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
@@ -708,11 +708,55 @@ document.createElement("time");
   <span class="k">margin-left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
   <span class="k">padding-left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="p">{</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#101010</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#eee</span><span class="p">;</span>
+  <span class="k">bottom</span><span class="p">:</span> <span class="mi">48</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">padding-bottom</span><span class="p">:</span> <span class="mi">28</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
+  <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">top</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">640px</span><span class="o">)</span> <span class="p">{</span>
+  <span class="p">.</span><span class="nc">site-navigation</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">12</span><span class="kt">px</span> <span class="mi">72</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="o">&gt;</span> <span class="nt">li</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
+  <span class="k">text-align</span><span class="p">:</span> <span class="kc">left</span><span class="p">;</span>
+  <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">top</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">49</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="p">{</span>
+  <span class="k">list-style</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation--tags</span> <span class="o">&gt;</span> <span class="nt">div</span> <span class="p">{</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">12</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">h3</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">h4</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#e0e0e0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">a</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">a</span><span class="p">:</span><span class="nd">visited</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+  <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">a</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">site-navigation</span> <span class="nt">a</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+  <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">underline</span><span class="p">;</span>
+<span class="p">}</span>
 <span class="c">/* custom styles for individual pages below */</span>
 <span class="c">/* hide main h2 headers for various pages  */</span>
 <span class="p">.</span><span class="nc">mdsh</span> <span class="p">.</span><span class="nc">main-content</span> <span class="o">&gt;</span> <span class="nt">h2</span><span class="p">:</span><span class="nd">first-child</span><span class="o">,</span>
 <span class="p">.</span><span class="nc">homepage</span> <span class="p">.</span><span class="nc">main-content</span> <span class="o">&gt;</span> <span class="nt">h2</span><span class="p">:</span><span class="nd">first-child</span><span class="o">,</span>
-<span class="p">.</span><span class="nc">about</span> <span class="p">.</span><span class="nc">main-content</span> <span class="o">&gt;</span> <span class="nt">h2</span><span class="p">:</span><span class="nd">first-child</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">about-mdsh</span> <span class="p">.</span><span class="nc">main-content</span> <span class="o">&gt;</span> <span class="nt">h2</span><span class="p">:</span><span class="nd">first-child</span><span class="o">,</span>
 <span class="p">.</span><span class="nc">search</span> <span class="p">.</span><span class="nc">main-content</span> <span class="o">&gt;</span> <span class="nt">h2</span><span class="p">:</span><span class="nd">first-child</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
 <span class="p">}</span>
@@ -747,7 +791,61 @@ document.createElement("time");
 
       </div>
     </div>
-    <div class="footer">
+    <ul id="site-navigation" class="site-navigation">
+
+  <li class="site-navigation--main-pages">
+    <h3>Pages</h3>
+    <ul>
+      <li><a href="/mdsh/about.html">about</a></li>      <li><a href="/mdsh/archive.html">archive</a></li>      <li><a href="/mdsh/contact.html">contact</a></li>      <li><a href="/mdsh/search.html">search</a></li>    </ul>
+  </li>
+
+  <li class="site-navigation--recent-posts">
+    <h3>Recent posts</h3>
+    <ul>
+      <li><a href="/mdsh/posts/2019/05/22/mustache-templating.html">Mustache templating</a></li>      <li><a href="/mdsh/posts/2019/03/31/more-responsive-pages.html">More responsive pages</a></li>      <li><a href="/mdsh/posts/2019/03/31/improving-structured-data.html">Improving structured data</a></li>      <li><a href="/mdsh/posts/2019/03/27/syntax-highlighting-using-pygments.html">Syntax highlighting using Pygments</a></li>      <li><a href="/mdsh/posts/2019/03/16/dynamic-search-page-using-jets.html">Dynamic search page using Jets</a></li>    </ul>
+  </li>
+
+  <li class="site-navigation--categories">
+    <h3>Categories</h3>
+    <ul>
+      <li>
+        <a href="/mdsh/categories/blog.html">blog</a>
+      </li>      <li>
+        <a href="/mdsh/categories/games.html">games</a>
+      </li>    </ul>
+  </li>
+
+  <li class="site-navigation--tags">
+    <h3>Tags</h3>
+    <div>
+      <a href="/mdsh/tags/bash.html">bash</a>,
+      <a href="/mdsh/tags/blog.html">blog</a>,
+      <a href="/mdsh/tags/bsd.html">bsd</a>,
+      <a href="/mdsh/tags/css.html">css</a>,
+      <a href="/mdsh/tags/csv.html">csv</a>,
+      <a href="/mdsh/tags/games.html">games</a>,
+      <a href="/mdsh/tags/git.html">git</a>,
+      <a href="/mdsh/tags/gnu.html">gnu</a>,
+      <a href="/mdsh/tags/html.html">html</a>,
+      <a href="/mdsh/tags/javascript.html">javascript</a>,
+      <a href="/mdsh/tags/js.html">js</a>,
+      <a href="/mdsh/tags/json-ld.html">json-ld</a>,
+      <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/markdown.html">markdown</a>,
+      <a href="/mdsh/tags/mdsh.html">mdsh</a>,
+      <a href="/mdsh/tags/mustache.html">mustache</a>,
+      <a href="/mdsh/tags/osx.html">osx</a>,
+      <a href="/mdsh/tags/pygments.html">pygments</a>,
+      <a href="/mdsh/tags/rss.html">rss</a>,
+      <a href="/mdsh/tags/search.html">search</a>,
+      <a href="/mdsh/tags/sed.html">sed</a>,
+      <a href="/mdsh/tags/seo.html">seo</a>,
+      <a href="/mdsh/tags/shell.html">shell</a>,
+      <a href="/mdsh/tags/xml.html">xml</a>    </div>
+  </li>
+
+</ul>
+<div class="footer">
   <p>© mdsh, 2019. Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a></p>
 </div>
   </div>

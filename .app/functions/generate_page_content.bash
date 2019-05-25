@@ -41,7 +41,7 @@ function homepage {
   echo -n '' > /tmp/itemlist
   local post_file=''
   local body_html=''
-  local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -18 | grep -v "^#")"
+  local recent_posts="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -${recent_limit:-10} | grep -v "^#")"
   for post in $recent_posts
   do
     post_file="posts/${post//|//}"
@@ -233,6 +233,106 @@ function onward_journeys {
 
   render _prev_next_posts
 }
+
+
+function site_navigation {
+  # define a load of custom iterators, as we need to
+  # iterate over multiple loops in a single pass, and
+  # will also need to avoid naming conflicts inside
+  # the loops.
+
+  # this first iterator will list the main pages
+  function main_pages {
+    local content="$(cat)"
+    for page in "${main_pages[@]}"; do
+      echo -ne "$content" | sed "s/{{page/{{${page}/g"
+    done
+  }
+  function recent_posts {
+    local content="$(cat)"
+    for recent_post in "${recent_posts[@]}"; do
+      echo -ne "$content" | sed "s/{{recent_post/{{${recent_post}/g"
+    done
+  }
+  function categories {
+    local content="$(cat)"
+    for category in "${categories[@]}"; do
+      echo -ne "$content" | sed "s/{{category/{{${category}/g"
+    done
+  }
+  function tags {
+    local content="$(cat)"
+    local i=0
+    for tag in "${tags[@]}"; do
+      echo -ne "$content" | sed "s/{{tag/{{${tag}/g"
+      i=$(($i + 1))
+      [ $i -lt ${#tags[@]} ] && echo ","
+    done
+  }
+
+  # now we have our iterators, we need to define our data
+  main_pages=()
+  for page in $main_pages_list
+  do
+    #xmessage "page is $page"
+    # get the page name (without .html)
+    local item_title="\"${page//.html/}\""
+    local item_url="\"${blog_url}/${page}\""
+    # set hash name
+    hash_name="hash_${RANDOM}"
+    # create the hash for the current page in the loop
+    declare -A "$hash_name"
+    eval $(add_keys_to_hash 'main_pages')
+  done
+
+  #xmessage "$(declare -p main_pages)"
+
+  recent_posts=()
+  for recent_post in $recent_posts_list
+  do
+    # skip post if it's commented out in posts.csv
+    [ "$(grep "${recent_post}|" posts.csv | grep "^#" )" ] && continue
+    local item_url="${blog_url}/posts/${recent_post//.mdsh/.html}"
+    local item_title="'$(grep -m1 "|$(basename $recent_post)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
+    # set hash name
+    hash_name="hash_${RANDOM}"
+    # create the hash for the current page in the loop
+    declare -A "$hash_name"
+    eval $(add_keys_to_hash 'recent_posts')
+  done
+
+  # add categories to an array
+  categories=()
+  for category in $categories_list
+  do
+    # get the page name (without .html)
+    local item_title="${category//.html/}"
+    local item_url="${blog_url}/categories/${category}.html"
+    # set hash name
+    hash_name="hash_${RANDOM}"
+    # create the hash for the current page in the loop
+    declare -A "$hash_name"
+    eval $(add_keys_to_hash 'categories')
+  done
+
+  # add tags to an array
+  tags=()
+  for tag in $tags_list
+  do
+    # get the page name (without .html)
+    local item_title="${tag//.html/}"
+    local item_url="${blog_url}/tags/${tag}.html"
+    # set hash name
+    hash_name="hash_${RANDOM}"
+    # create the hash for the current page in the loop
+    declare -A "$hash_name"
+    eval $(add_keys_to_hash 'tags')
+  done
+
+  # finally, render the site navigation menu
+  render _site_navigation
+}
+
 
 function site_footer {
   render _site_footer

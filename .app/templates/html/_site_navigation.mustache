@@ -1,0 +1,43 @@
+<ul id="site-navigation" class="site-navigation">
+
+  <li class="site-navigation--main-pages">
+    <h3>Pages</h3>
+    <ul>
+    {{#main_pages}}
+      <li><a href="{{page.url}}">{{page.title}}</a></li>
+
+    {{/main_pages}}
+    </ul>
+  </li>
+
+  <li class="site-navigation--recent-posts">
+    <h3>Recent posts</h3>
+    <ul>
+    {{#recent_posts}}
+      <li><a href="{{recent_post.url}}">{{recent_post.title}}</a></li>
+
+    {{/recent_posts}}
+    </ul>
+  </li>
+
+  <li class="site-navigation--categories">
+    <h3>Categories</h3>
+    <ul>
+    {{#categories}}
+      <li>
+        <a href="{{category.url}}">{{category.title}}</a>
+      </li>
+    {{/categories}}
+    </ul>
+  </li>
+
+  <li class="site-navigation--tags">
+    <h3>Tags</h3>
+    <div>
+    {{#tags}}
+      <a href="{{tag.url}}">{{tag.title}}</a>
+    {{/tags}}
+    </div>
+  </li>
+
+</ul>

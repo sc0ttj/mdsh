@@ -180,6 +180,6 @@ function add_keys_to_hash {
   echo "$hash_name"+=\( [after]="'$item_after'" \)
   echo "$hash_name"+=\( [tags]="\"$item_tags\"" \)
   # add the hash to the ITEMS array
-  echo ITEMS+=\( "$hash_name" \)
+  echo ${1:-ITEMS}+=\( "$hash_name" \)
 }
 

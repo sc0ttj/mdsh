@@ -8,7 +8,7 @@ function list_categories {
   echo -n '' > /tmp/itemlist
   local classes="categories-list"
   local datetime=''
-  local all_items="$(grep -v "^#" posts.csv | cut -f5 -d'|' | tr ',' '\n' | grep -v "^$" |sort -u | uniq)"
+  local all_items="$categories_list"
   ITEMS=()
   for item in $all_items
   do
@@ -43,7 +43,7 @@ function list_categories {
 function list_tags {
   echo -n '' > /tmp/itemlist
   local classes="tags-list"
-  local all_items="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
+  local all_items="$tags_list"
   local datetime=''
   ITEMS=()
   for item in $all_items
