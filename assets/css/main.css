@@ -320,7 +320,7 @@ ul.archive-posts li {
   position: absolute;
   background-color: #101010;
   color: #fff;
-  bottom: -10px;
+  bottom: 0;
   margin: 0 auto;
   text-align: center;
   width: 100%;
@@ -460,7 +460,10 @@ ul.archive-posts li {
   background-color: #101010;
   color: #eee;
   bottom: 48px;
+  list-style: none;
   margin: 12px auto;
+  margin-left: 0;
+  margin-bottom: 4px;
   padding: 12px 12px;
   padding-bottom: 28px;
   position: relative;
@@ -478,10 +481,6 @@ ul.archive-posts li {
   text-align: left;
   vertical-align: top;
   width: 49%;
-}
-.site-navigation {
-  list-style: none;
-  margin-left: 0;
 }
 .site-navigation--tags > div {
   margin: 0 12px;
