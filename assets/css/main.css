@@ -130,10 +130,7 @@ div.highlight pre {
   position: relative;
   width: 100%;
 }
-.body-container {
-  padding-bottom: 62px;
-}
-.site-header {
+.main-container > .site-header {
   background-color: #101010;
   color: #fff;
   font-weight: bold;
@@ -141,27 +138,27 @@ div.highlight pre {
   padding: 18px;
   padding-bottom: 1px;
 }
-.site-header h1 {
+.main-container > .site-header h1 {
   margin-top: 6px;
 }
-.site-header a {
+.main-container > .site-header a {
   text-decoration: none;
 }
-.site-header a,
-.site-header a:visited {
+.main-container > .site-header a,
+.main-container > .site-header a:visited {
   color: #f0f0f0;
 }
-.site-header a:hover,
-.site-header a:focus {
+.main-container > .site-header a:hover,
+.main-container > .site-header a:focus {
   color: #fff;
   text-decoration: underline;
 }
-.site-header ul {
+.main-container > .site-header ul {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
 }
-.site-header li {
+.main-container > .site-header li {
   display: inline-block;
   padding-right: 8px;
 }
@@ -185,7 +182,7 @@ a.skip-to-content:hover,
 a.skip-to-content:focus {
   color: #222;
 }
-.site-header #site-search {
+.main-container > .site-header #site-search {
   background-color: #efefef;
   border: 0;
   display: none;
@@ -194,12 +191,15 @@ a.skip-to-content:focus {
   max-width: 120px;
 }
 @media (min-width: 414px) {
-  .site-header #site-search {
+  .main-container > .site-header #site-search {
     margin-top: 8px;
     top: 1.5em;
     position: absolute;
     right: 12px;
   }
+}
+.body-container {
+  padding-bottom: 62px;
 }
 .highlighted {
   background-color: #fff34d;
@@ -316,7 +316,7 @@ ul.archive-posts li {
   display: inline-block;
   width: 96px;
 }
-.footer {
+.main-container > .footer {
   position: absolute;
   background-color: #101010;
   color: #fff;
@@ -325,11 +325,11 @@ ul.archive-posts li {
   text-align: center;
   width: 100%;
 }
-.footer a {
+.main-container > .footer a {
   color: #efefef;
 }
-.footer a:hover,
-.footer a:focus {
+.main-container > .footer a:hover,
+.main-container > .footer a:focus {
   color: #fff;
 }
 .contact-form {
@@ -456,7 +456,7 @@ ul.archive-posts li {
   margin-left: 0;
   padding-left: 0;
 }
-.site-navigation {
+.main-container > .site-navigation {
   background-color: #101010;
   color: #eee;
   bottom: 48px;
@@ -471,31 +471,31 @@ ul.archive-posts li {
   vertical-align: top;
 }
 @media (min-width: 640px) {
-  .site-navigation {
+  .main-container > .site-navigation {
     padding: 12px 72px;
   }
 }
 
-.site-navigation > li {
+.main-container > .site-navigation > li {
   display: inline-block;
   text-align: left;
   vertical-align: top;
   width: 49%;
 }
-.site-navigation--tags > div {
+.main-container > .site-navigation--tags > div {
   margin: 0 12px;
 }
-.site-navigation h3,
-.site-navigation h4 {
+.main-container > .site-navigation h3,
+.main-container > .site-navigation h4 {
   color: #e0e0e0;
 }
-.site-navigation a,
-.site-navigation a:visited {
+.main-container > .site-navigation a,
+.main-container > .site-navigation a:visited {
   color: #ddd;
   text-decoration: none;
 }
-.site-navigation a:hover,
-.site-navigation a:focus {
+.main-container > .site-navigation a:hover,
+.main-container > .site-navigation a:focus {
   color: #fff;
   text-decoration: underline;
 }
