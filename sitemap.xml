@@ -2,13 +2,11 @@
 <url><loc>https://sc0ttj.github.io/mdsh/</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/about.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/archive.html</loc></url>
-<url><loc>https://sc0ttj.github.io/mdsh/authors/</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/authors/index.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/authors/sc0ttj.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/categories/blog.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/categories/games.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/contact.html</loc></url>
-<url><loc>https://sc0ttj.github.io/mdsh/index.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/09/app-structure.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/09/simplifying-blog-structure.html</loc></url>
@@ -58,6 +56,9 @@
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/03/27/syntax-highlighting-using-pygments.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/03/31/improving-structured-data.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/03/31/more-responsive-pages.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/search.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/bash.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/blog.html</loc></url>
@@ -69,9 +70,12 @@
 <url><loc>https://sc0ttj.github.io/mdsh/tags/gnu.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/html.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/javascript.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/js.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/json-ld.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/linux.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/markdown.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/mdsh.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/mustache.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/osx.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/pygments.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/rss.html</loc></url>

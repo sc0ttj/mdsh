@@ -37,6 +37,10 @@ function rebuild {
     post_title="Homepage" ${PWD}/.app/create_page.sh > index.html
     return 0
   fi
+  if [ "$1" = "rss" ];then
+    .app/create_rss.sh posts/ > feed.rss
+    return 0
+  fi
   if [ "$1" = "sitemap" ];then
     ${PWD}/.app/generate_sitemap.sh
     return 0
@@ -74,7 +78,9 @@ function help {
   echo
   echo "  rebuild homepage                 # re-build the main index.html file"
   echo
-  echo "  rebuild sitemap                  # re-build and publish an updated sitemap.xml"
+  echo "  rebuild rss                      # re-build and update the RSS feed (feed.rss)"
+  echo
+  echo "  rebuild sitemap                  # re-build and update sitemap.xml"
   echo
   echo "  publish                          # save and publish latest changes"
   echo
