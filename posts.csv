@@ -60,5 +60,6 @@
 2019/03/31|improving-structured-data.mdsh|Improving structured data||blog|json-ld, seo
 2019/03/31|more-responsive-pages.mdsh|More responsive pages||blog|css, javascript
 2019/05/22|mustache-templating.mdsh|Mustache templating||blog|blog, mustache
-2019/05/26|post-excerpts.mdsh|Post excerpts||blog|blog, markdown
 2019/05/26|new-site-navigation.mdsh|New site navigation||blog|blog, mustache, shell
+2019/05/26|post-excerpts.mdsh|Post excerpts||blog|blog, markdown
+2019/06/24|new-syntax-for-embedding-shell-script-in-your-markdown.mdsh|New syntax for embedding Shell script in your Markdown||blog|bash, markdown
