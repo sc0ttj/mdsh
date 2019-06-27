@@ -8,7 +8,7 @@ This is a simple static site generator (SSG), or "blog making thing".
 
 `mdshell` requires only Bash and Perl, and builds HTML files from Markdown files.
 
-The name `mdshell` refers to the fact you can combine Markdown and `$()` sub-shells in your blog posts to dynamically produce the HTML output.
+The name `mdshell` refers to the fact you can combine Markdown and Bash sub-shells in your blog posts to dynamically produce the HTML output.
 
 This is a fast way of producing documentation for any installed programs or commands, and a nice easy way to write blog posts in Markdown.
 
