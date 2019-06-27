@@ -25,10 +25,7 @@ fi
 
 # define run-time vars used by this program
 prev_line=none
-line_is_bash=false
-line_was_bash=false
-multi_line_string=false
-was_multi_line_string=false
+subshell_has_started=false
 command=''
 command_line_count=0
 
@@ -45,99 +42,136 @@ do
   IFS= read -er line
 
   # if line starts with ``` we know it's a markdown line, not part of a bash sub-shell
-  [ "$(echo "$line" | grep '^```')" != "" ] && line_is_bash=false
+  [ "$(echo "$line" | grep '^```')" != "" ] && subshell_has_started=false
 
   # if line starts with ~~~ we know it's a markdown line, not part of a bash sub-shell
-  [ "$(echo "$line" | grep '^~~~')" != "" ] && line_is_bash=false
+  [ "$(echo "$line" | grep '^~~~')" != "" ] && subshell_has_started=false
 
   # if the line contains $( then the user is starting a bash sub-shell on this line
-  [ "$(echo "$line" | grep -m1 '$(')" != "" ] && line_is_bash=true
+  [ "$(echo "$line" | grep -m1 '<?bash')" != "" ] && subshell_has_started=true
 
-  # if the line is not bash, then it's also not a multi line string
-  #if [ "$line_is_bash" = false ];then
-  #  multi_line_string=false
-  #fi
-
-  # if the previous last (one before last entered) was part of a multi-line string,
-  # then this line probably is too, and so it's part of a bash command
-  [ "$was_multi_line_string" = true ] && line_was_bash=true
+  # how many "<?bash .. ;?>" occurances do we have on the current line
+  subshell_count="$(echo "$line" | grep -o '<?bash ' | wc -l)"
 
   # the the line given was bash, not markdown, we need to interpret it
-  if [ "$line_is_bash" = true ];then
+  if [ "$subshell_has_started" = true ];then
 
-    # count the bumber of double quotes, and chck if that number is even
-    quote_count=$(echo "$line" | tr -cd '"' | wc -c)
-    quote_count_is_even=$(( ${quote_count} %2 ))
-
-    # if $line has quotes, and an odd number of them, we moved in/out of a string
-    if [ $quote_count -gt 0 ] && [ $quote_count_is_even -ne 0 ];then
-      # toggle whether in a string or not
-      if [ "$multi_line_string" = true ];then
-        multi_line_string=false    # toggle it
-      else
-        multi_line_string=true     # toggle it
-      fi
-    fi
+    # at this point, we are 'inside' the <?bash ... ;?> sub-shell..
 
     # while we are in a bash sub-shell, lets save each line in the $command var
     if [ "$command" = "" ];then
-      command="$line"
+      command="${line}"
     else
-      command="$command\n$line"
+      command="$command
+$line"
     fi
     command_line_count=$(($command_line_count + 1))
 
-    # check if the command has a closing parenthesis ) - cos then we might be ending the sub-shell
-    subshell_has_ended="$(echo "$command" | grep -Eq ')' && echo true || echo false)"
+    # check if the sub-shell has ended (look for ';?>')
+    subshell_has_ended="$(echo "$command" | grep -m1 -Eq ';?>' && echo true || echo false)"
 
-    # if line is part of a multi string, it's been saved into $command, so skip
-    if [ "$multi_line_string" = true ];then
-
-      line_is_bash=true
-
-    # else if we detected the end of a sub-shell, lets evaluate it, get its output
-    # and then save that to our markdown file, instead of the bash commands themselves
-    elif [ "$subshell_has_ended"  = true ];then
+    if [ "$subshell_has_ended" = true ];then
 
       # strip any leading chars up to the sub-shell invocation '$(' and
       # strip any chars after the sub-shell, and
       # keep only the command
-      pre_text="$(echo "$command" | sed -e 's/$(.*//' -e 's/)$//')"
-      post_text="$(echo "$command" | sed 's/.*$(.*)//g')"
+      pre_text="$(echo -e "$command" | sed -e 's/<?bash.*//' -e 's/;?>//')"
+      post_text="$(echo -e "$command" | sed 's/.*<?bash.*;?>//')"
+
+      # grab the text preceding the sub-shell on this line, we'll use it later
+      pre_text1="$(echo "${command//<?bash */}")"
+
+      # if either pre text or post text are not empty
       if [ "$pre_text"  != "" ] || [ "$post_text"  != "" ];then
-        command="$(echo "$command" | sed -e "s/^$pre_text//g" -e "s/$post_text//")"
+        # get command without pre/post text around it
+        command="$(echo -e "${command//\\/\\\\}" | sed -e "s/^$pre_text//g" -e "s/$post_text//")"
+        # sometimes (for some reason) the post text IS the command, in that case set post text to nothing
         [ "$post_text" = "$command" ] && post_text=""
       fi
 
-      # if previous line was not part of a string, then it each was a separate command
-      if [ "${was_multi_line_string}" = false ];then
-        # each line is a separate command, so replace newlines with semi-colons
-        result="$(eval $(echo -e "${command//\\/\\\\}" | sed s'/\\n/;/g' | tr -d '`' | sed -e 's/$(//g' -e 's/)$//g') 2>/dev/null)"
-        retval=$?
+      # if pre text is more than one line, it is the command
+      if [ $(echo "$pre_text" | wc -l ) -gt 1 ];then
+        # so, set the command to pre text, unset pre/post text
+        command="$pre_text"
+        cmd_only="$pre_text"
+        pre_text=''
+        post_text=''
+      fi
+
+      # if we have more than one sub-shell invocation on this line,
+      if [ $subshell_count -gt 1 ];then
+
+        # then break it up in to multiple lines
+        OLD_IFS=$IFS
+        IFS="
+"
+        for subline in $(echo "${command//;?>/;?>
+}")
+        do
+
+          # no need to do anything if no sub-shell on this line
+          [ "$( echo "$subline" | grep ';?>')" = "" ] && continue
+
+          # if we already used $pre_text1, grab it again form the current line,
+          # (because we have split this line into multiple sub-lines)
+          [ "$pre_text1" = "$prev_pre_text" ] && pre_text1="$(echo "${subline//<?bash */}")"
+
+          # get the text before/after the command
+          pre_text="$(echo -e "$subline" | sed -e 's/<?bash.*//' -e 's/;?>//')"
+          post_text="$(echo -e "$subline" | sed 's/.*<?bash.*;?>//')"
+          # at this point, post text may equal the whole line.. if so, reset it
+          [ "$post_text" = "$subline" ] && post_text=""
+          # remove <?bash ;?> to be sure we have only the command left
+          cmd_only="${subline//*ash /}"
+          cmd_only="${cmd_only//;?>*/}"
+
+          # if command is empty, skip
+          [ "$cmd_only" = "" ] && continue
+
+          # evaulate the commmand
+          result="$(eval $cmd_only 2>/dev/null)"
+          retval=$?
+          # if it didnt evaulate, command not yet finished, continue to next line
+          [ "$result" = "" ] && continue
+          # if the command was successful (it DID evaulate)
+          if [ $retval -eq 0 ];then
+            # set the correct pre text for this sub line (dont re-use pre text of $line)
+            pre_text="$pre_text1"
+            prev_pre_text="$pre_text1"
+            # save its results to the markdown
+            markdown="$markdown\n$pre_text$result$post_text"
+            # save the literal input in $source
+            source="${source}${command}"
+            # the sub-shell must have ended, so next line is not bash (by default)
+            subshell_has_started=false
+          fi
+        done
+        IFS=$OLD_IFS
       else
-        result="$(eval $(echo -e "${command//\\/\\\\}" | tr -d '`' | sed -e 's/$(//g' -e 's/)$//g') 2>/dev/null)"
+        # each line is a separate command, so replace newlines with semi-colons
+        cmd_only="${command//*bash /}"
+        cmd_only="${cmd_only//;?>*/}"
+        result="$(eval $cmd_only)"
         retval=$?
       fi
-      [ "$was_multi_line_string" = false ] && line_is_bash=false
-      [ "$multi_line_string" = false ] && line_is_bash=false
+
       # if the command was successful
-      if [ $retval -eq 0 ];then
+      if [ $retval -eq 0 -a $subshell_count -lt 2 ];then
         # save its results to the markdown
         markdown="$markdown\n$pre_text$result$post_text"
         # save the literal input in $source
         source="${source}${command}"
         # the sub-shell must have ended, so next line is not bash (by default)
-        line_is_bash=false
+        subshell_has_started=false
       fi
     fi
 
-  elif [ "$line_is_bash" = false ];then
+  elif [ "$subshell_has_started" = false ];then
 
       command_line_count=0
       command=""
       markdown="$markdown\n$line"
       source="$source\n$line"
-      multi_line_string=false
       [ -z "${prev_line}" ] && [ -z "$line" ] && break
 
   fi
@@ -145,17 +179,12 @@ do
   ###### done working out what was in $line #######
 
 #  xmessage "
-#  was multi-line string: $was_multi_line_string
-#  multi-line string:     $multi_line_string
-#  line_was_bash:         $line_was_bash
-#  line_is_bash:          $line_is_bash
+#  subshell_has_started:          $subshell_has_started
 #  command line count:    '${command_line_count}'
 #  command:               '${command//\\/\\\\}'
 #  result:                '${result}'
 #  "
 
-  was_multi_line_string=${multi_line_string}
-  line_was_bash=${line_is_bash}
   prev_line="$line"
   [ ${retval:-1} -eq 0 ] && result=''
 done
@@ -180,9 +209,7 @@ echo "Source file:    $1"
 echo
 
 unset prev_line
-unset line_is_bash
-unset multi_line_string
-unset quote_count_is_even
+unset subshell_has_started
 unset file
 unset text
 unset command
