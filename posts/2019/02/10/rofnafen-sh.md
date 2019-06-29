@@ -1,11 +1,52 @@
 
 
 
-Your date is Wed Jun 26 00:01:33 BST 2019.
+### python
 
-Your user is root
-. Your OS is Linux
- and Pkg version is 1.9.22
+Here is `SOME "PYTHON"` in a sentence.
+
+And a python block:
+
+```python
+current dir: $PWD
+wo"r"ld
+```
+
+### perl
+
+Now some `PERL $PWD "stuff"` in a sentence.
+
+And a Perl block:
+
+```perl
+perl-lowo"r"ld
+```
+
+And another, running a specific Perl version (/usr/bin/perl5.24.1):
+
+```
+hello world from Perl
+```
+
+### Node JS
+
+Node `in a` sentence.
+
+Node block:
+
+```
+Current dir: $PWD
+```
+
+### bash
+
+Your date is `Sat Jun 29 12:27:11 BST 2019.`
+
+Your PWD is `/root/Sites/github/mdsh`
+
+Your user is `root
+`. Your OS is `Linux
+` and Pkg version is 1.9.22
 
 I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.
 

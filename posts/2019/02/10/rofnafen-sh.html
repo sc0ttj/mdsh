@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019/02/10">
-<meta property="article:modified_time" content="2019-06-25T23:01:33Z">
+<meta property="article:modified_time" content="2019-06-29T13:38:46Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rofnafen.sh">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Rofnafen.sh",
   "datePublished": "2019/02/10",
-  "dateModified": "2019-06-25T23:01:33Z",
+  "dateModified": "2019-06-29T13:38:46Z",
   "description": "A combination of Rofi and Mednafen",
   "keywords": "games,shell",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/02/10/rofnafen-sh.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1561503693">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1561503693">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1561503693">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1561503693">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1561503693">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1561503693">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1561503693">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1561503693">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1561815526">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1561815526">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1561815526">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1561815526">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1561815526">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1561815526">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1561815526">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1561815526">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1561503693">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1561815526">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1561503693">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1561815526">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.css?v=1561503693">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1561815526">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1561503693"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1561815526"></script>
 </head>
 <body class="no-js category-games rofnafen-sh">
   <div class="main-container">
@@ -209,11 +209,48 @@ document.createElement("time");
   </div>
 </div>
 
-        <p>Your date is Wed Jun 26 00:01:33 BST 2019.</p>
+        <h3>python</h3>
 
-<p>Your user is root
-. Your OS is Linux
- and Pkg version is 1.9.22</p>
+<p>Here is <code>SOME "PYTHON"</code> in a sentence.</p>
+
+<p>And a python block:</p>
+
+<div class="highlight"><pre><span></span><span class="n">current</span> <span class="nb">dir</span><span class="p">:</span> <span class="err">$</span><span class="n">PWD</span>
+<span class="n">wo</span><span class="s2">&quot;r&quot;</span><span class="n">ld</span>
+</pre></div>
+
+<h3>perl</h3>
+
+<p>Now some <code>PERL $PWD "stuff"</code> in a sentence.</p>
+
+<p>And a Perl block:</p>
+
+<div class="highlight"><pre><span></span><span class="n">perl</span><span class="o">-</span><span class="n">lowo</span><span class="s">&quot;r&quot;</span><span class="n">ld</span>
+</pre></div>
+
+<p>And another, running a specific Perl version (/usr/bin/perl5.24.1):</p>
+
+<div class="highlight"><pre><span></span>hello world from Perl
+</pre></div>
+
+<h3>Node JS</h3>
+
+<p>Node <code>in a</code> sentence.</p>
+
+<p>Node block:</p>
+
+<div class="highlight"><pre><span></span>Current dir: <span class="nv">$PWD</span>
+</pre></div>
+
+<h3>bash</h3>
+
+<p>Your date is <code>Sat Jun 29 12:27:11 BST 2019.</code></p>
+
+<p>Your PWD is <code>/root/Sites/github/mdsh</code></p>
+
+<p>Your user is <code>root
+</code>. Your OS is <code>Linux
+</code> and Pkg version is 1.9.22</p>
 
 <p>I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.</p>
 
@@ -323,7 +360,7 @@ find <span class="nv">$romdir</span>/<span class="nv">$system_name</span> <span 
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>      <li><a href="/mdsh/posts/2019/05/22/mustache-templating.html">Mustache templating</a></li>      <li><a href="/mdsh/posts/2019/03/31/more-responsive-pages.html">More responsive pages</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/tags/seo.html">seo</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>      <li><a href="/mdsh/posts/2019/05/22/mustache-templating.html">Mustache templating</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
