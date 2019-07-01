@@ -200,7 +200,8 @@ $line"
       markdown="$markdown\n$line"
       source="$source\n$line"
       if [ "$mdshell" = true ];then
-        [ -z "${prev_line}" ] && [ -z "$line" ] && break
+        break_here=false
+        [ -z "${prev_line}" ] && [ -z "$line" ] && break_here=true
       fi
 
   fi

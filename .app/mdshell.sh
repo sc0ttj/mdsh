@@ -59,6 +59,7 @@ do
   # a Markdown file, and $source to be saved into
   # a .msdh file
   process_line
+  [ "$break_here" = true ] && echo -e "Saving...\n" && break
 done
 
 # (re)build the markdown file
