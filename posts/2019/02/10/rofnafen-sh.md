@@ -40,7 +40,7 @@ Current dir: $PWD
 
 ### bash
 
-Your date is `Sat Jun 29 12:27:11 BST 2019.`
+Your date is `Mon Jul  1 21:16:16 BST 2019.`
 
 Your PWD is `/root/Sites/github/mdsh`
 
