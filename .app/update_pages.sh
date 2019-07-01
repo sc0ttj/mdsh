@@ -127,7 +127,7 @@ cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
 # if a partial rebuild update the previous post, as it's prev/next links may have changed
 if [ -f "posts/$previous_post" ];then
   echo "Updating: posts/${previous_post//.mdsh/.html}"
-  .app/create_page.sh "posts/$previous_post" > "posts/${previous_post//.mdsh/.html}"
+  .app/create_page.sh "posts/${previous_post//.mdsh/md}" > "posts/${previous_post//.mdsh/.html}"
 fi
 
 # update the homepage
