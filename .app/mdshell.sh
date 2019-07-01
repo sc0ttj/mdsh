@@ -4,17 +4,21 @@
 # Based on an example script by Stéphane Chazelas.
 # ...hacked into a horrific mess...
 
+# Usage:
+#
+# This script takes a file as the first argument, example:
+#
+#    mdhsell.sh posts/$date_dir/${slug}.mdsh
+
 if [ ! "$1" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ] || [ "$1" = "--help" ];then
 cat << HELP_MSG
 
- An interactive shell for writing Markdown documents, with
- support for embedding bash sub-shells \$() in your Markdown!
+ An interactive shell for writing Markdown documents, with support for
+ embedding bash sub-shells in your Markdown, using: <?bash ... ;?>
 
  Usage:  mdshell <path-to-file> # creates the file if it doesn't exist
 
- Note backtick subshells (\`\`) not supported, only \$()
-
- Example:   Add \$(uname) in your Markdown and the saved
+ Example:   Add <?bash uname ;?> in your Markdown and the saved
             file will contain your system info.
 
 HELP_MSG

@@ -124,6 +124,11 @@ function site_meta {
 
 
 function site_header {
+  if [ -f /tmp/_site_header.html ];then
+    cat /tmp/_site_header.html
+    return 0
+  fi
+
   local enable_search=false
   if [ "$(echo "${post_js_deps:-$blog_js_deps}" | grep 'jets')" != "" ];then
     enable_search=true
@@ -144,7 +149,8 @@ function site_header {
     eval $(add_keys_to_hash)
   done
 
-  render _site_header
+  render _site_header > /tmp/_site_header.html
+  cat /tmp/_site_header.html
 }
 
 
@@ -206,10 +212,10 @@ function onward_journeys {
   # exit if no post to check
   [ "$current_post" = "" ] && return 1
   # get list of posts, not including current post
-  local prev_current_next_posts="$(grep -A1 -B1 "|${post_slug//.mdsh/}.mdsh|" ./posts.csv | grep -v "$current_post")"
+  local prev_current_next_posts="$(grep -v "^#" posts.csv | grep -A1 -B1 "|${post_slug//.mdsh/}.mdsh|" | grep -v "$current_post")"
   # check again without the .mds extension
   if [ "$prev_current_next_posts" = "" ];then
-    prev_current_next_posts="$(grep -A1 -B1 "|${post_slug//.mdsh/}|" ./posts.csv)"
+    prev_current_next_posts="$(grep -v "^#" posts.csv | grep -A1 -B1 "|${post_slug//.mdsh/}|")"
   fi
   # exit if no posts to list
   [ "$prev_current_next_posts" = "" ] && return 1
@@ -236,6 +242,12 @@ function onward_journeys {
 
 
 function site_navigation {
+
+  if [ -f /tmp/_site_navigation.html ];then
+    cat /tmp/_site_navigation.html
+    return 0
+  fi
+
   # define a load of custom iterators, as we need to
   # iterate over multiple loops in a single pass, and
   # will also need to avoid naming conflicts inside
@@ -330,12 +342,18 @@ function site_navigation {
   done
 
   # finally, render the site navigation menu
-  render _site_navigation
+  render _site_navigation > /tmp/_site_navigation.html
+  cat /tmp/_site_navigation.html
 }
 
 
 function site_footer {
-  render _site_footer
+  if [ -f /tmp/_site_footer.html ];then
+    cat /tmp/_site_footer.html
+    return 0
+  fi
+  render _site_footer > /tmp/_site_footer.html
+  cat /tmp/_site_footer.html
 }
 
 

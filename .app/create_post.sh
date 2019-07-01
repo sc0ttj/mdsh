@@ -114,9 +114,11 @@ echo -n ""       >> "$md_file"
 echo "Saved meta data in: posts/$date_dir/${slug}.mdsh"
 echo
 echo "Now write your markdown below, line by line.
- * supports TAB completion
+ * supports TAB completion (of file names, etc)
+ * supports terminal hotkeys (skip words with Alt-f, Alt-b, etc)
  * supports embedding executable commands in your markdown
- * just start a sub-shell \$() and the results will be in the final markdown.
+ * just start a sub-shell using <?bash //some code ;?> and
+   the results will be in the final markdown.
  * Hit ENTER 3 times to exit and save the file. "
 echo
 
@@ -135,6 +137,8 @@ echo "$date_dir|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv
 sort -u posts.csv | uniq >> posts_sorted.csv
 mv posts_sorted.csv posts.csv
 
-.app/update_pages.sh
+# pass the source file to update_pages.sh, so it knows to only
+# rebuild index pages relevant to that post
+.app/update_pages.sh posts/$date_dir/${slug}.mdsh
 
 exit 0

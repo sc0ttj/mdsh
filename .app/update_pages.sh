@@ -14,11 +14,74 @@
 # if -ALL is given, all .md files will be rebuilt (from .mdsh), and then
 # all pages will be rebuilt as above.
 
+# if $1 is a .mdsh file, then we will get the author, category, tags (etc)
+# of that post, and only rebuild the relevant index pages.
+
+# remove cached template output from lasdt build
+rm /tmp/_site_*.html &>/dev/null
+
 # load the local config file
 [ -f .site_config ] && source .site_config
 
 # clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
+
+# if $1 is a source file (mdsh)
+source_file=''
+if [ -f "${1//.mdsh}.mdsh" ];then
+  source_file="$1"
+fi
+
+if [ -f "$source_file" ];then
+
+  post_year=''
+  post_month=''
+  post_day=''
+  post_author=''
+  post_category=''
+  post_tags=''
+  post_filter_author="" # no filter by default
+  post_filter_category="" # no filter by default
+  previous_post=""
+
+  # get the previous post
+  previous_post="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
+
+  # we have a source file, so lets do a partial rebuild, which skips
+  # rebuilding pages that haven't changed.
+
+  get_vars(){
+  	local IFS="$1"
+  	shift
+  	read $@
+  }
+
+  # lets filter our all the irrelevant years, months, tags, categories
+  # before we rebuild our pages - so we dont have to rebuild any pages
+  # which haven't actually changed
+	while get_vars "/" dir post_year post_month post_day ; do
+    post_author="$(grep -m1 '# author: ' "$source_file" 2>/dev/null | cut -f2 -d':' | sed 's/^ *//')"
+    post_category="$(grep -m1 '# category: ' "$source_file" 2>/dev/null | cut -f2 -d':' | cut -f1 -d',' | sed -e 's/^ *//' -e 's/ *$//')"
+    post_tags="$(grep -m1 '# tags: ' "$source_file" 2>/dev/null | cut -f2 -d':' | sed 's/^ *//'| tr ',' ' ')"
+
+    # set some filters to filter out irrelevant tags, categories, etc
+    # during our partial rebuilds
+    post_filter_author="grep $post_author"
+    post_filter_category="grep $post_category"
+
+    echo "post_year=$post_year"                            > /tmp/post_meta_details
+    echo "post_month=$post_month"                         >> /tmp/post_meta_details
+    echo "post_day=$post_day"                             >> /tmp/post_meta_details
+    echo "post_author=$post_author"                       >> /tmp/post_meta_details
+    echo "post_category=$post_category"                   >> /tmp/post_meta_details
+    echo "post_tags='$post_tags'"                         >> /tmp/post_meta_details
+    echo "post_filter_author=\"$post_filter_author\""     >> /tmp/post_meta_details
+    echo "post_filter_category=\"$post_filter_category\"" >> /tmp/post_meta_details
+	  #break # we just need to test 1 line
+	done <<< "$source_file"
+  # get the posts meta info we just processed
+  source /tmp/post_meta_details
+fi
 
 # read all posts
 cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
@@ -61,14 +124,22 @@ cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
 
   done
 
+# if a partial rebuild update the previous post, as it's prev/next links may have changed
+if [ -f "posts/$previous_post" ];then
+  echo "Updating: posts/${previous_post//.mdsh/.html}"
+  .app/create_page.sh "posts/$previous_post" > "posts/${previous_post//.mdsh/.html}"
+fi
+
 # update the homepage
 echo "Updating: index.html"
 post_title="Homepage" . .app/create_page.sh > index.html
 
-# update the yearly indexe pages
-for year in $(ls -1 posts)
+# update the relevant yearly index pages
+for year in $(ls -1 posts/)
 do
   [ ! -d posts/$year ] && continue
+  # if a partial build, skip irrelevant years
+  [ "$post_year" != "" -a "$year" != "$post_year" ] && continue
   yearly_posts="$(list_posts_in_dir "$year")"
   [ "$yearly_posts" = "" ] && continue
   echo "Updating: posts/$year/index.html"
@@ -80,9 +151,11 @@ do
     .app/create_page.sh "$yearly_posts" posts/$year/index.html
 
   # update monthly indexes
-  for month in $(ls -1 posts/$year)
+  for month in $(ls -1 posts/$year/)
   do
     [ ! -d posts/$year/$month ] && continue
+    # if a partial build, skip irrelevant months
+    [ "$post_month" != "" -a "$month" != "$post_month" ] && continue
     monthly_posts="$(list_posts_in_dir "$year/$month" 2>/dev/null)"
     [ "$monthly_posts" = "" ] && continue
     month_name="$(date -d $year-$month-01 '+%B')"
@@ -146,7 +219,6 @@ if [ "$all_posts" != "" ];then
 fi
 
 
-# update authors index page
 echo "Updating: authors/index.html"
 touch authors/index.html
 # build page
@@ -157,7 +229,12 @@ post_title="Authors" \
 
 # update authors pages
 [ ! -d ./authors/ ] && mkdir ./authors/
-all_authors="$(grep -v "^#" ./posts.csv | cut -f4 -d'|' | tr ',' '\n' | grep -v "^$" | sort -u)"
+
+if [ "$post_filter_author" != "" ];then
+  all_authors="$(grep -v "^#" ./posts.csv | grep -v "^$" | cut -f4 -d'|' | tr ',' '\n' | $post_filter_author | sort -u)"
+else
+  all_authors="$(grep -v "^#" ./posts.csv | grep -v "^$" | cut -f4 -d'|' | tr ',' '\n' | sort -u)"
+fi
 for author in $all_authors
 do
   file="authors/$(.app/slugify.sh "$author").html"
@@ -182,7 +259,11 @@ post_title="Categories" \
 
 # update category pages
 category_posts=''
-site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' ./posts.csv | tr ',' '\n'| tr -d ' ' | sort -u)"
+if [ "$post_filter_category" = "" ];then
+  site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' | tr ' ' ',' | tr ',' '\n'| sort -u)"
+elif [ -f "$source_file" ];then
+  site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' | tr ' ' ',' | tr ',' '\n'| $post_filter_category | tr -d ' ' | sort -u)"
+fi
 for category in $site_categories
 do
   [ "$category" = "" ] && continue
@@ -211,7 +292,6 @@ if [ "$blog_email" != "" ];then
     .app/create_page.sh "${body_html}" > contact.html
 fi
 
-
 # search page
 echo "Updating: search.html"
 search_results="$(list_search_results)"
@@ -232,10 +312,14 @@ post_title="Tags" \
   .app/create_page.sh "$(list_tags)" > tags/index.html
 
 # update tags pages
-site_tags="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' '\n'| tr -d ' ' | sort -u)"
+site_tags="$(grep -v "^#" ./posts.csv| cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v ^$ | sort -u)"
 for tag in $site_tags
 do
   [ "$tag" = "" ] && continue
+  # if doing a partial rebuild, skip current tag if not in $post_tags
+  if [ -f "$source_file" ] && [ "$(echo " ${post_tags//,/ } " | grep " $tag ")" = "" ];then
+    continue
+  fi
   tagged_posts="$(list_posts_matching_tag "$tag")"
   [ "$tagged_posts" = "" ] && continue
   echo "Updating: tags/$tag.html"
@@ -250,6 +334,13 @@ done
 # minify the HTML and CSS
 echo
 .app/minify.sh
+
+# remove tmp and cache files
+rm /tmp/_site_*.html &>/dev/null
+rm /tmp/post_meta_details &>/dev/null
+
+unset source_file
+unset previous_post
 
 echo
 echo "Finished."

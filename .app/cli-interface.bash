@@ -19,15 +19,21 @@ fi
 source .app/functions/mo
 
 
-
+# new:   create a new page or post, follow the on-screen
+#        instructions to choose title, description, etc
 #
-# create 'new page' and 'new post' commands
+# Usage: new <post|page>
 #
 function new {
  [ "$1" != "page" ] && [ "$1" != "post" ] && return 1
  ${PWD}/.app/create_${1}.sh $2 $3 $4 $5
 }
 
+# rebuild: Rebuild an HTML file from its source file. The source
+#          file should be a .mdsh or .md file.
+#
+# Usage:   rebuild path/to/file.md[sh] [> path/to/file.html]
+#
 function rebuild {
   if [ -f "$1" ];then
     ${PWD}/.app/create_page.sh $1 $2
@@ -45,6 +51,7 @@ function rebuild {
     ${PWD}/.app/generate_sitemap.sh
     return 0
   fi
+  # $1 might be a parameter, like -all
   ${PWD}/.app/update_pages.sh $1
 }
 
