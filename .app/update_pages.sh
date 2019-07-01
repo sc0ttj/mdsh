@@ -132,7 +132,7 @@ fi
 
 # update the homepage
 echo "Updating: index.html"
-post_title="Homepage" . .app/create_page.sh > index.html
+post_title="Homepage" .app/create_page.sh > index.html
 
 # update the relevant yearly index pages
 for year in $(ls -1 posts/)
