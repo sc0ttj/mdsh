@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-06-24T20:18:10Z">
-<meta property="article:modified_time" content="2019-07-01T21:36:10Z">
+<meta property="article:modified_time" content="2019-08-02T23:28:40Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="New syntax for embedding Shell script in your Markdown">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "New syntax for embedding Shell script in your Markdown",
   "datePublished": "2019-06-24T20:18:10Z",
-  "dateModified": "2019-07-01T21:36:10Z",
+  "dateModified": "2019-08-02T23:28:40Z",
   "description": "A new, more robust templating method for embedding Bash sub-shells in your Markdown has been added to Mdsh.",
   "keywords": "bash, markdown",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562016970">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562016970">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562016970">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562016970">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562016970">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562016970">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562016970">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562016970">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788522">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788522">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788522">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788522">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788522">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788522">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788522">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788522">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562016970">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788522">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562016970">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788522">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562016970">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788523">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562016970"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788523"></script>
 </head>
 <body class="no-js category-blog new-syntax-for-embedding-shell-script-in-your-markdown">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">3 mins</span>
-    <span class="date"><time datetime="2019-06-24">2019-06-24</time></span>
+    <span class="date"><time datetime="2019-06-24T20:18:10Z">2019-06-24
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -211,13 +212,9 @@ document.createElement("time");
 
         <p>I've created a new way of embedding Bash sub-shells in your Markdown.</p>
 
-<p>Previously, you'd add something like:</p>
-
-<div class="highlight"><pre><span></span>some text <span class="k">$(</span> your_bash_code <span class="k">)</span> and more text
-</pre></div>
-
-<p>..in order to embed Bash (shell) scripting in your Markdown files -
-you had to use the regular <code>$()</code> syntax familiar to all shell scripters.</p>
+<p>Previously, you would add something like <code>some markdown text $( your_bash_code )
+and more text</code> in order to embed Bash (shell) scripting in your Markdown files -
+that is you had to use the regular <code>$()</code> syntax familiar to all shell scripters.</p>
 
 <p>However, this was a problem - parsing the Markdown, and the sub shell code in
 particular, created errors because of sub-shell invocations <em>within</em> the
@@ -231,16 +228,16 @@ syntax, not used by any official languages/scripts/etc, and stolen from the
 
 <p>Here is the new way of invoking Bash sub-shells in your Markdown:</p>
 
-<div class="highlight"><pre><span></span>&lt;?bash
+<div class="highlight"><pre><span></span>&lt;<span class="c1">#bash</span>
 // your shell code here
 // cat some file, or run a <span class="k">function</span>, or something..
 <span class="nb">echo</span> hi
-<span class="p">;</span>?&gt;
+<span class="p">;</span><span class="c1">#&gt;</span>
 </pre></div>
 
 <p>Or, you can do it like this as well:</p>
 
-<div class="highlight"><pre><span></span>..a sentence about OS &lt;?bash uname <span class="p">;</span>?&gt; and user &lt;?bash whoami <span class="p">;</span>?&gt;.
+<div class="highlight"><pre><span></span>..a sentence about OS &lt; ?bash uname <span class="p">;</span>? &gt; and user &lt; ?bash whoami <span class="p">;</span>? &gt;.
 </pre></div>
 
 <p>Which would produce something like:</p>
@@ -256,7 +253,8 @@ output</em> of those sub-shells will appear in the final HTML files.</p>
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">3 mins</span>
-    <span class="date"><time datetime="2019-06-24">2019-06-24</time></span>
+    <span class="date"><time datetime="2019-06-24T20:18:10Z">2019-06-24
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -292,7 +290,7 @@ output</em> of those sub-shells will appear in the final HTML files.</p>
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -321,6 +319,7 @@ output</em> of those sub-shells will appear in the final HTML files.</p>
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,

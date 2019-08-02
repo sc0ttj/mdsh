@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019/03/04">
-<meta property="article:modified_time" content="2019-07-01T21:36:47Z">
+<meta property="article:modified_time" content="2019-08-02T23:29:28Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Enabling easier Markdown re-building">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Enabling easier Markdown re-building",
   "datePublished": "2019/03/04",
-  "dateModified": "2019-07-01T21:36:47Z",
+  "dateModified": "2019-08-02T23:29:28Z",
   "description": "A new script called `mdsh2md` has been added to the suite of commands available in `mdsh`. This new script makes it easy to build valid Markdown files from the custom `mdsh` format files used when writing posts.",
   "keywords": "shell, markdown",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/03/04/enabling-easier-markdown-re-building.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562017007">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562017007">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562017007">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562017007">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562017007">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562017007">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562017007">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562017007">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788570">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788570">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788570">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788570">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788570">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788570">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788570">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788570">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562017007">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788570">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562017007">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788570">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562017007">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788570">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562017007"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788570"></script>
 </head>
 <body class="no-js category-blog enabling-easier-markdown-re-building">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-03-04">2019-03-04</time></span>
+    <span class="date"><time datetime="2019/03/04">2019-03-04
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -209,13 +210,13 @@ document.createElement("time");
   </div>
 </div>
 
-        <h2>Enabling easier Markdown re-building</h2>
+        <h2 id="_enabling_easier_markdown_re-building_">Enabling easier Markdown re-building</h2>
 
 <p>I've created a new script called <code>mdsh2md</code> that generates Markdown files from <code>.mdsh</code> files.</p>
 
 <p>Users can now edit the original <code>.mdsh</code> files (including any sub-shell commands contained within) and auto rebuild the Markdown output from which the HTML pages are generated.</p>
 
-<h3>Rebuilding pages</h3>
+<h3 id="_rebuilding_pages_">Rebuilding pages</h3>
 
 <p>With the new script <code>mdsh2md</code>, you can now do the following <strong>before</strong> re-building your HTML from markdown:</p>
 
@@ -236,7 +237,7 @@ document.createElement("time");
 
 <p>^ The markdown file is re-built from the <code>.mdsh</code> file, <em>then</em> the HTML is rebuilt from the new markdown file.</p>
 
-<h3>Rebuilding your WHOLE site</h3>
+<h3 id="_rebuilding_your_whole_site_">Rebuilding your WHOLE site</h3>
 
 <p>Just use the <code>-ALL</code> (capitalised) option with <code>updated_pages</code>:</p>
 
@@ -245,7 +246,7 @@ document.createElement("time");
 
 <p>^ This could be VERY slow, depending on what sub-shell commands you put in your <code>.mdsh</code> files.</p>
 
-<h3>Why not just edit the Markdown files?</h3>
+<h3 id="_why_not_just_edit_the_markdown_files__">Why not just edit the Markdown files?</h3>
 
 <p>It's better to rebuild your Markdown files from the original <code>mdsh</code> input if want to:</p>
 
@@ -256,7 +257,7 @@ document.createElement("time");
 <li>auto fix errors in the [already] generated Markdown output that are hard to fix manually</li>
 </ul>
 
-<h3>When should I just edit the Markdown files directly?</h3>
+<h3 id="_when_should_i_just_edit_the_markdown_files_directly__">When should I just edit the Markdown files directly?</h3>
 
 <p>Sometimes editing the Markdown files directly might be better (or needed):</p>
 
@@ -269,7 +270,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-03-04">2019-03-04</time></span>
+    <span class="date"><time datetime="2019/03/04">2019-03-04
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -305,7 +307,7 @@ document.createElement("time");
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -334,6 +336,7 @@ document.createElement("time");
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,

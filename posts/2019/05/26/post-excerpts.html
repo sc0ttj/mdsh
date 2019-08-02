@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-05-26T17:29:07Z">
-<meta property="article:modified_time" content="2019-07-01T21:36:13Z">
+<meta property="article:modified_time" content="2019-08-02T23:28:44Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Post excerpts">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Post excerpts",
   "datePublished": "2019-05-26T17:29:07Z",
-  "dateModified": "2019-07-01T21:36:13Z",
+  "dateModified": "2019-08-02T23:28:44Z",
   "description": "An easier way to show snippets, excerpts or previews of your blog posts on other parts of your site.",
   "keywords": "blog, markdown",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562016973">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562016973">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562016973">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562016973">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562016973">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562016973">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562016973">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562016973">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788526">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788526">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788526">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788526">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788526">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788526">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788526">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788526">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562016973">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788526">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562016973">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788526">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562016973">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788526">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562016973"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788526"></script>
 </head>
 <body class="no-js category-blog post-excerpts">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-05-26">2019-05-26</time></span>
+    <span class="date"><time datetime="2019-05-26T17:29:07Z">2019-05-26
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -213,13 +214,13 @@ document.createElement("time");
 
 <p>To mark the point at which your post should be truncated when being previewed, I have shamelessly stolen the <code>&lt;!–– more ––&gt;</code> marker idea used in Jekyll.</p>
 
-<h3>How to create a post excerpt</h3>
+<h3 id="_how_to_create_a_post_excerpt_">How to create a post excerpt</h3>
 
 <p>When writing the markdown for your blog post, you can simply include <code>&lt;!–– more ––&gt;</code> on any line, and everything after that line will be removed in post previews (such as those on the Homepage). A "Read more about X..." link will appear at the end of the preview instead of <code>&lt;!–– more ––&gt;</code>.</p>
 
 <!-- more -->
 
-<h3>How it works</h3>
+<h3 id="_how_it_works_">How it works</h3>
 
 <p>The <code>post_preview</code> function in <code>.app/generate_post_content.bash</code> truncates the post content, and creates a <code>$page_excerpt</code> variable, which is used in the <code>_post_preview.mustache</code> template as <code>{{page_excerpt}}</code>.</p>
 
@@ -234,7 +235,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-05-26">2019-05-26</time></span>
+    <span class="date"><time datetime="2019-05-26T17:29:07Z">2019-05-26
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -270,7 +272,7 @@ document.createElement("time");
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -299,6 +301,7 @@ document.createElement("time");
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,

@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019/03/02">
-<meta property="article:modified_time" content="2019-07-01T21:37:01Z">
+<meta property="article:modified_time" content="2019-08-02T23:29:45Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fixing RSS generation">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Fixing RSS generation",
   "datePublished": "2019/03/02",
-  "dateModified": "2019-07-01T21:37:01Z",
+  "dateModified": "2019-08-02T23:29:45Z",
   "description": "The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.",
   "keywords": "bsd, linux, gnu, osx",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/03/02/fixing-rss-generation.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562017021">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562017021">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562017021">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562017021">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562017021">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562017021">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562017021">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562017021">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788587">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788587">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788587">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788587">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788587">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788587">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788587">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788587">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562017021">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788587">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562017021">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788588">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562017021">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788588">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562017021"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788588"></script>
 </head>
 <body class="no-js category-blog fixing-rss-generation">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-03-02">2019-03-02</time></span>
+    <span class="date"><time datetime="2019/03/02">2019-03-02
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -211,7 +212,7 @@ document.createElement("time");
   </div>
 </div>
 
-        <h2>Fixing RSS generation</h2>
+        <h2 id="_fixing_rss_generation_">Fixing RSS generation</h2>
 
 <p>I've made a few changes in the <code>./create_rss</code> function, so that it works on both Linux and Mac OS X:</p>
 
@@ -244,7 +245,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-03-02">2019-03-02</time></span>
+    <span class="date"><time datetime="2019/03/02">2019-03-02
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -282,7 +284,7 @@ document.createElement("time");
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -311,6 +313,7 @@ document.createElement("time");
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,

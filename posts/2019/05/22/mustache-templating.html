@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-05-22T05:42:08Z">
-<meta property="article:modified_time" content="2019-07-01T21:36:19Z">
+<meta property="article:modified_time" content="2019-08-02T23:28:51Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mustache templating">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Mustache templating",
   "datePublished": "2019-05-22T05:42:08Z",
-  "dateModified": "2019-07-01T21:36:19Z",
+  "dateModified": "2019-08-02T23:28:51Z",
   "description": "Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.",
   "keywords": "blog, mustache",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562016979">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562016979">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562016979">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562016979">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562016979">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562016979">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562016979">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562016979">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788533">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788534">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788534">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788534">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788534">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788534">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788534">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788534">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562016979">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788534">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562016979">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788534">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562016979">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788534">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562016979"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788534"></script>
 </head>
 <body class="no-js category-blog mustache-templating">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">4 mins</span>
-    <span class="date"><time datetime="2019-05-22">2019-05-22</time></span>
+    <span class="date"><time datetime="2019-05-22T05:42:08Z">2019-05-22
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -213,7 +214,7 @@ document.createElement("time");
 
 <p>Template files live in <code>.app/templates/</code>, sorted by type into folders - <code>html</code>, <code>js</code>, etc.</p>
 
-<h3>The basics</h3>
+<h3 id="_the_basics_">The basics</h3>
 
 <p>The templates require various variables to be set before they are used - collectively we can call these variables the "page data":</p>
 
@@ -245,7 +246,7 @@ page_url
 
 <p>For more complex stuff, read on.</p>
 
-<h3>How the templating works</h3>
+<h3 id="_how_the_templating_works_">How the templating works</h3>
 
 <p>A <code>render</code> function is used in <code>generate_page_content</code> to run <code>mo</code> and convert
 templates to HTML, using the <code>$page_</code> variables as input data.</p>
@@ -260,7 +261,7 @@ HTML output for the <code>main</code> template.</p>
 <p>You can add new functions to these files which generate HTML for any page areas
 or elements, and call them in the templates like so: <code>{{my_func_name}}</code>.</p>
 
-<h3>More advanced usage</h3>
+<h3 id="_more_advanced_usage_">More advanced usage</h3>
 
 <p>In order to do complex things, like using custom variables, complex logic, etc,
 you can create a shell function, called <code>foo</code>, which outputs HTML, and you can
@@ -274,7 +275,7 @@ output of your function. This is very handy if you need some complex logic to
 manage your HTML output, or if you need to pre-process some other templates
 using different data, before inserting it into your page.</p>
 
-<h3>Loops in templates</h3>
+<h3 id="_loops_in_templates_">Loops in templates</h3>
 
 <p>If you need to create a loop in your templates, then you have to do it this way:</p>
 
@@ -295,10 +296,10 @@ using different data, before inserting it into your page.</p>
 <span class="x">&lt;/ul&gt;</span>
 </pre></div>
 
-<ol>
-<li><p>add <code>{{coolthing}}</code> to one of the existing templates</p></li>
-<li><p>add a function called 'coolthing' to a file in <code>.app/functions/</code></p></li>
-<li><p>in your new function:</p>
+<ol start="2">
+<li value="2"><p>add <code>{{coolthing}}</code> to one of the existing templates</p></li>
+<li value="3"><p>add a function called 'coolthing' to a file in <code>.app/functions/</code></p></li>
+<li value="4"><p>in your new function:</p>
 
 <ul>
 <li>get some data - a list of posts, authors, or something like that</li>
@@ -336,7 +337,7 @@ ITEM.google_analytics_id
 ITEM.url
 </pre></div>
 
-<h3>Other recent changes to <code>mdsh</code></h3>
+<h3 id="_other_recent_changes_to_mdsh__">Other recent changes to <code>mdsh</code></h3>
 
 <h4>Cleaner code</h4>
 
@@ -421,7 +422,8 @@ validation error</li>
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">4 mins</span>
-    <span class="date"><time datetime="2019-05-22">2019-05-22</time></span>
+    <span class="date"><time datetime="2019-05-22T05:42:08Z">2019-05-22
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -457,7 +459,7 @@ validation error</li>
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -486,6 +488,7 @@ validation error</li>
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,

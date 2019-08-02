@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-05-26T17:56:41Z">
-<meta property="article:modified_time" content="2019-07-01T21:36:16Z">
+<meta property="article:modified_time" content="2019-08-02T23:28:47Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="New site navigation">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "New site navigation",
   "datePublished": "2019-05-26T17:56:41Z",
-  "dateModified": "2019-07-01T21:36:16Z",
+  "dateModified": "2019-08-02T23:28:47Z",
   "description": "A new template has been added which creates a nice menu, for easier site navigation, and which has been added into the site footer by default.",
   "keywords": "blog, mustache, shell",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1562016976">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1562016976">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1562016976">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1562016976">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1562016976">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1562016976">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1562016976">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1562016976">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788529">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788529">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788529">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788529">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788529">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788529">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788529">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788529">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1562016976">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788529">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1562016976">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788529">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1562016976">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788530">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1562016976"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788530"></script>
 </head>
 <body class="no-js category-blog new-site-navigation">
   <div class="main-container">
@@ -199,7 +199,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-05-26">2019-05-26</time></span>
+    <span class="date"><time datetime="2019-05-26T17:56:41Z">2019-05-26
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -216,7 +217,7 @@ document.createElement("time");
 
 <!-- more -->
 
-<h3>How to edit</h3>
+<h3 id="_how_to_edit_">How to edit</h3>
 
 <p>The site navigation is created using a function in <code>.app/generate_page_content.bash</code>, which is called <code>site_navigation</code> and does the following:</p>
 
@@ -231,7 +232,7 @@ document.createElement("time");
 
 <p>You might also need to edit <code>assets/css/main.css</code> as well - look for <code>.site-navigation</code> classes.</p>
 
-<h3>Other uses</h3>
+<h3 id="_other_uses_">Other uses</h3>
 
 <p>The navigation generated could be used in the main website header, or it could be used as off-screen links for screen-readers, or it could be used as off-screen TAB only content, much like the "Skip to content" popup you get when tabbing through <code>mdsh</code> generated pages.</p>
 
@@ -239,7 +240,8 @@ document.createElement("time");
   <div class="page-meta">
     <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
     <span class="time-to-read">2 mins</span>
-    <span class="date"><time datetime="2019-05-26">2019-05-26</time></span>
+    <span class="date"><time datetime="2019-05-26T17:56:41Z">2019-05-26
+</time></span>
     <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
     <span class="twitter"><a href="https://twitter.com/@foobar" target="_blank">@foobar</a></span>
     <div class="tags">
@@ -276,7 +278,7 @@ document.createElement("time");
   <li class="site-navigation--recent-posts">
     <h3>Recent posts</h3>
     <ul>
-      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>      <li><a href="/mdsh/posts/2019/05/26/new-site-navigation.html">New site navigation</a></li>    </ul>
+      <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>      <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>      <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>      <li><a href="/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html">New syntax for embedding Shell script in your Markdown</a></li>      <li><a href="/mdsh/posts/2019/05/26/post-excerpts.html">Post excerpts</a></li>    </ul>
   </li>
 
   <li class="site-navigation--categories">
@@ -305,6 +307,7 @@ document.createElement("time");
       <a href="/mdsh/tags/js.html">js</a>,
       <a href="/mdsh/tags/json-ld.html">json-ld</a>,
       <a href="/mdsh/tags/linux.html">linux</a>,
+      <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
       <a href="/mdsh/tags/markdown.html">markdown</a>,
       <a href="/mdsh/tags/mdsh.html">mdsh</a>,
       <a href="/mdsh/tags/mustache.html">mustache</a>,
