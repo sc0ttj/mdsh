@@ -78,7 +78,7 @@ fi
 echo "env - \
   PATH=\"$PATH\" \
   DOCUMENT_ROOT=\"$webroot\" \
-  SERVER_NAME=localhost \
+  SERVER_NAME=${server_name:-localhost} \
   SERVER_PORT=$portnum \
   $httpd \
     -p 127.0.0.1:${portnum} \
@@ -118,7 +118,7 @@ echo -n $httpd_pid > /tmp/httpd_pid_nobody
 #echo
 echo "Started server in $(realpath ${webroot:-/var/www}) (pid $httpd_pid)"
 echo
-echo "Visit http://localhost:${portnum}${blog_url} in your browser."
+echo "Visit http://${server_name:-localhost}:${portnum}${blog_url} in your browser."
 echo
 echo "You can stop the server using:"
 echo "  server stop"

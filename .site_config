@@ -20,5 +20,15 @@ blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0t
 
 ##################################################################
 
+# server_name:      optionally used by `server` script to set a local server
+#                   name other than 'localhost'. Requires the value set here
+#                   to be set as a line in /etc/hosts, like so:
+#
+#                     127.0.0.1 mycoolservername
+#
+#server_name=mycoolservername
+
+# source CLI:       source the program commands and app logic
+#
 source .app/cli-interface.bash
 
