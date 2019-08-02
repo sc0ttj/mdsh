@@ -172,12 +172,11 @@ function append  { get_stdin; echo -n "$STDIN$1"; }
 
 function __print_truncation {
   get_stdin
-  local truncated="$1"
-  echo -n "$truncated"
-  if [ "$truncated" = "$STDIN" ];then
+  echo -n "$1"
+  if [ "$1" = "$2" ];then
     return 1
   else
-    echo -n "$2"
+    echo -n "$3"
     return 0
   fi
 }
@@ -185,13 +184,13 @@ function __print_truncation {
 function truncate {
   get_stdin
   local truncated="$(cut -b-${1:-9999} <<< "$STDIN")"
-  __print_truncation "$truncated" "$2"
+  __print_truncation "$truncated" "$STDIN" "$2"
 }
 
 function truncate_words {
   get_stdin
-  local truncated="$(cut -d' ' -f1-${1:-9999} <<< "$STDIN")"
-  __print_truncation "$truncated" "$2"
+  local truncated="$(echo "$STDIN" | cut -d' ' -f1-${1:-9999})"
+  __print_truncation "$truncated" "$STDIN" "$2"
 }
 
 function urlencode {
