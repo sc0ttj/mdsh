@@ -2,7 +2,7 @@
   <div class="page-meta">
     <span class="category"><a href="{{blog_url}}/categories/{{page_category}}.html">{{page_category}}</a></span>
     <span class="time-to-read">{{page_time_to_read}}</span>
-    <span class="date"><time datetime="{{page_date}}">{{page_date}}</time></span>
+    <span class="date"><time datetime="{{page_created}}">{{page_created | date_format iso8601}}</time></span>
     <span class="author"><a href="{{blog_url}}/authors/{{page_author_slug}}.html">{{page_author}}</a></span>
     <span class="twitter"><a href="https://twitter.com/{{page_twitter}}" target="_blank">{{page_twitter}}</a></span>
     <div class="tags">

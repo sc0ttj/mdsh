@@ -192,13 +192,12 @@ if [ "$all_posts" != "" ];then
   ITEMS=()
   for item in $all_posts
   do
-    item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
-    item_date=$(dirname "$item" | tr '/' '-')
-    item_date="${item_date//posts\//}"
-    item_datetime="${item_date//\//-}"
-    item_url="${blog_url}/posts/${item//.mdsh/.html}"
     item_file="posts/$item"
     [ ! -f "$item_file" ] && continue
+    item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
+    item_url="${blog_url}/posts/${item//.mdsh/.html}"
+    item_date="$(get_page_creation_date $item_file)"
+    item_datetime="$(echo "$item_date" | date_format "%Y-%m-%d")"
     # update itemlist tmp file
     echo "${item_url}" >> /tmp/itemlist
     # set hash name
@@ -215,7 +214,6 @@ if [ "$all_posts" != "" ];then
     .app/create_page.sh "$body_html" > archive.html
   # add archive page as posts/index.html  too)
   (cd posts &>/dev/null; ln -s ../archive.html index.html &>/dev/null)
-
 fi
 
 

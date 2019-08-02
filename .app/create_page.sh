@@ -6,7 +6,7 @@
 [ -f .site_config ] && source .site_config
 
 # set some dates to use later
-current_date="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+current_date="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 current_year="$(date -u +"%Y")"
 timestamp=$(date +%s)
 
@@ -18,6 +18,7 @@ page_title=''
 page_slug=''
 page_descr=''
 page_category=''
+page_dir=''
 page_created=''
 page_modified=''
 page_time_to_read=''
@@ -49,7 +50,7 @@ markdown=''
 # set the page data used by the templates:
 # use data passed in by user or post source ($post_*),
 # or fallback to site defaults ($blog_)
-set_page_data
+set_page_data "$1"
 
 # get the source HTML/markdown from STDIN (file or string)
 
@@ -130,8 +131,9 @@ unset post_title
 unset post_heading
 unset post_slug
 unset post_category
+unset post_dir
 unset post_created
-unset post_date
+unset post_modified
 unset post_time_to_read
 unset post_header
 unset post_url

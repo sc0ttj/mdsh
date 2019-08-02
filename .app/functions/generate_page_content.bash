@@ -51,6 +51,15 @@ function homepage {
   echo -e "$body_html"
 }
 
+function html_tag {
+  if [ -f /tmp/_site_html_tag.html ];then
+   cat /tmp/_site_html_tag.html
+   return 0
+  fi
+  render _html_tag > /tmp/_site_html_tag.html
+  cat /tmp/_site_html_tag.html
+}
+
 function site_meta {
   # linked data
   local ld_website=''
@@ -190,7 +199,7 @@ function post_preview {
 
   # get the post markdown, convert to HTML, then return it
   page_excerpt="$(
-    process_markdown posts/$post_date/${post_slug}.md
+    process_markdown $post_dir/${post_slug}.md
     [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown 2>/dev/null)"
     rm /tmp/markdown /tmp/fixed_markdown &>/dev/null
     if [ "$markdown" != '' ];then

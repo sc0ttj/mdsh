@@ -1,9 +1,9 @@
 <div class="page-preview">
-  <h2><a href="{{page_url}}">{{page_title}}</a></h2>
-  <time datetime="{{page_date}}">{{page_date}}</time>
+  <h2><a href="{{page_url}}">{{page_title | truncate_words 6 '..' | strip_newlines}}</a></h2>
+  <time datetime="{{page_created}}">{{page_created | date_format "%Y-%m-%d"}}</time>
   <ul class="page-meta">
     <li class="time-to-read">{{page_time_to_read}}</li>
-    <li class="date"><time datetime="{{page_date}}">{{page_date}}</time></li>
+    <li class="date"><time datetime="{{page_created}}">{{page_created | date_format "%Y-%m-%-d"}}</time></li>
     <li class="author">{{page_author}}</li>
     <li class="twitter">{{page_twitter}}</li>
     <li class="category"><a href="{{blog_url}}/categories/{{page_category}}.html">{{page_category}}</a></li>

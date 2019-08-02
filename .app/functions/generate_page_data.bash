@@ -26,7 +26,7 @@ function set_post_info {
     return 1
   fi
 
-  # remove post meta data and keep only the body
+  # remove post body and keep only the meta data
   md_meta="${md_meta%---*}"
 
   # if we have no data, exit
@@ -50,9 +50,9 @@ function set_post_info {
   # get current date as modified date, as we are updating this file now
   post_modified="$current_date"
   # get date from folder name (for url below)
-  post_date="$(grep -v "^#" posts.csv | grep -m1 "|${post_slug}.mdsh|$post_title|" | cut -f1 -d'|')"
+  post_dir="posts/$(grep -v "^#" posts.csv | grep -m1 "|${post_slug}.mdsh|$post_title|" | cut -f1 -d'|')"
   # create post URL
-  post_url="${blog_url}/posts/$post_date/${post_slug}.html"
+  post_url="${blog_url}/$post_dir/${post_slug}.html"
 
   # set whether or not the page being generated is a blog post (or custom page)
   [ "$post_created" != "" ] && is_blog_post=true || is_blog_post=false
@@ -63,6 +63,13 @@ function set_post_info {
   set_page_data
 }
 
+function get_page_creation_date {
+  local file="${1//.mdsh/}.mdsh"
+  [ ! -f "$file" ] && return 1
+  local page_created="$(cat "$file" | grep -E -m1 "^#? ?created"| cut -f2-99 -d':' | sed 's/^ *//')"
+  echo "$page_created"
+}
+
 function set_page_data {
   site_title="${blog_title}"
   page_fonts="${post_fonts:-$blog_fonts}"
@@ -71,8 +78,15 @@ function set_page_data {
   page_slug="${post_slug:-$(.app/slugify.sh "$post_title")}"
   page_descr="${post_descr:-$blog_descr}"
   page_category="${post_category}"
-  page_date="${post_date//\//-}"
-  page_created="${post_created:-$current_date}"
+  page_created="${post_created}"
+
+  # try to get the creation date if we didn't get it already, as will happen
+  # when running `rebuild posts/*/*/*/some-post.mdsh > some-file.html`
+  if [ "$page_created" = "" ];then
+    page_created="$(get_page_creation_date "$1")"
+    post_created="$page_created"
+  fi
+
   page_modified="${post_modified:-$current_date}"
   page_time_to_read="${post_time_to_read:-$blog_time_to_read}"
   page_keywords="${post_tags:-$blog_keywords}"

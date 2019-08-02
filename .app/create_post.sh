@@ -59,8 +59,8 @@ tags="$fixed_tags"
 
 # generate some more meta info
 slug=$(slugify.sh "$title")
-date_dir="$(date -u +"%Y/%m/%d")"
-date_created="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")"
+date_created="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 date_modified="$date_created"
 
 # set meta info
