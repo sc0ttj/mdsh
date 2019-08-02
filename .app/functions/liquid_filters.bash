@@ -61,13 +61,15 @@ function date_format {
 # string filters
 
 function basename {
-  get_stdin
-  echo -n "${STDIN##*/}"
+  local input="$1"
+  [ ! "$1" ] && get_stdin && input="$STDIN"
+  echo -n "${input##*/}"
 }
 
 function dirname {
-  get_stdin
-  echo -n "${STDIN%/*}"
+  local input="$1"
+  [ ! "$1" ] && get_stdin && input="$STDIN"
+  echo -n "${input%/*}"
 }
 
 function uppercase { tr '[:lower:]' '[:upper:]'; }
@@ -324,7 +326,7 @@ function time_to_read {
 function markdown_to_html {
   # Use enhanced version of markdown.pl, which includes
   # tables support.. from https://github.com/mackyle/markdown
-  .app/functions/Markdown.pl
+  .app/gf-markdown.pl
 }
 
 function csv_to_markdown {

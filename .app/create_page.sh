@@ -99,7 +99,11 @@ if [ "$markdown" != "" ];then
      [ "$(echo "$body_html" | grep 'Problems parsing JSON')" != "" ] || \
      [ "$(echo "$body_html" ] grep 'API rate limit exceeded')" != "" ];then
     # convert the markdown to HTML
-    body_html="$(echo -e "$markdown" | .app/markdown.pl)" # or markdown.sh
+    # available markdown parsers:
+    #  - markdown.pl - the original
+    #  - gf-markdown.pl - supports gitHub flavoured markdown (based on the above)
+    #  - markdown.sh - a bash only alternative
+    body_html="$(echo -e "$markdown" | .app/gf-markdown.pl)"
   fi
 
 fi
