@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="">
-<meta property="article:modified_time" content="2019-08-02T23:31:43Z">
+<meta property="article:modified_time" content="2019-08-05T02:24:13Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Homepage">
@@ -67,7 +67,7 @@
   "@type": "Article",
   "headline": "Homepage",
   "datePublished": "",
-  "dateModified": "2019-08-02T23:31:43Z",
+  "dateModified": "2019-08-05T02:24:13Z",
   "description": "mdsh - a simple static site generator for modern websites, written in Bash.",
   "keywords": "mdsh, static site generator, project page, open source, blog, news, feed",
   "image": {
@@ -172,16 +172,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788719">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788719">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788719">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788719">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788719">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788719">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788719">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788719">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564971895">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564971895">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564971895">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564971895">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564971895">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564971895">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564971895">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564971895">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788719">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564971896">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -190,10 +190,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788719">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564971896">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788719">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.css?v=1564971896">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -203,7 +203,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788720"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564971896"></script>
 </head>
 <body class="no-js  homepage">
   <div class="main-container">
@@ -269,7 +269,7 @@ source files. You pass the variables through a filter using the pipe symbol <cod
 
 <h4>1. Template usage</h4>
 
-<p><strong>Filtering basic page data (strings):</strong></p>
+<p><b>Filtering basic page data (strings):</b></p>
 
 <div class="highlight"><pre><span></span><span class="x">&lt;h2&gt;</span><span class="cp">{{</span><span class="nv">page_name</span> <span class="err">|</span> <span class="nv">uppercase</span><span class="cp">}}</span><span class="x">&lt;/h2&gt;</span>
 </pre></div>
@@ -281,20 +281,20 @@ source files. You pass the variables through a filter using the pipe symbol <cod
 <div class="highlight"><pre><span></span><span class="x">&lt;h2&gt;</span><span class="cp">{{</span><span class="nv">page_name</span> <span class="err">|</span> <span class="nv">truncate_words</span> <span class="m">6</span> <span class="s2">&quot;..&quot;</span> <span class="err">|</span> <span class="nv">strip_newlines</span><span class="cp">}}</span><span class="x">&lt;/h2&gt;</span>
 </pre></div>
 
-<p>^ this will truncate to 6 words, and append <code>..</code> if truncated, and strip new lines.</p>
+<p>^ this will truncate to 6 words, and append `..` if truncated, and strip new lines.</p>
 
 <p>These filters also can also be applied to whole sections (if you must!):</p>
 
 <div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nv">page_header</span> <span class="err">|</span> <span class="nv">strip_html</span><span class="cp">}}</span><span class="x"></span>
 </pre></div>
 
-<p><strong>Filtering arrays:</strong></p>
+<p><b>Filtering arrays:</b></p>
 
 <p>In your templates various places use arrays to iterate over lists, such as
 recent posts. These lists can also be "filtered", in much the same way as the
 page data variables described above.</p>
 
-<p>In your templates, normal <code>arrays</code> work as iterators, that can also take filters.</p>
+<p>In your templates, normal `arrays` work as iterators, that can also take filters.</p>
 
 <p>For example:</p>
 
@@ -303,7 +303,7 @@ page data variables described above.</p>
 <span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 </pre></div>
 
-<p>Associative arrays (like <code>ITEMS</code>, used in <code>mdsh</code>) also work:</p>
+<p>Associative arrays (like `ITEMS`, used in `mdsh`) also work:</p>
 
 <div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someAssocArray</span> <span class="err">|</span> <span class="nv">sort_by</span> <span class="s2">&quot;age&quot;</span> <span class="s2">&quot;asc&quot;</span> <span class="err">|</span> <span class="nv">limit</span> <span class="m">3</span><span class="cp">}}</span><span class="x"></span>
 <span class="x">  Hi </span><span class="cp">{{</span><span class="nv">item.name</span> <span class="err">|</span> <span class="nv">titlecase</span><span class="cp">}}</span><span class="x">,</span>
@@ -313,7 +313,7 @@ page data variables described above.</p>
 
 <h4>2. Markdown usage</h4>
 
-<p>You can even use them in the sub-shells of your <code>*.mdsh</code> source files:</p>
+<p>You can even use them in the sub-shells of your `*.mdsh` source files:</p>
 
 <div class="highlight"><pre><span></span>&lt; ?bash <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$something</span><span class="s2">&quot;</span> <span class="p">|</span> replace_all foo bar <span class="p">;</span>? &gt;
 </pre></div>

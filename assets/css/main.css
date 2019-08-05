@@ -507,3 +507,20 @@ ul.archive-posts li {
 .search .main-content > h2:first-child {
   display: none;
 }
+
+.liquid-filters .filter-heading {
+  display: block;
+  min-height: 1.2em;
+  padding: 8px 16px;
+  margin: 28px 0 0 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: #339;
+  color: white;
+}
+.liquid-filters .filter-body {
+  background-color: #ededed;
+  padding: 24px;
+  padding-top: 1px;
+  margin: 0 0 24px 0;
+}

@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-07-13T23:56:01Z">
-<meta property="article:modified_time" content="2019-08-02T23:28:25Z">
+<meta property="article:modified_time" content="2019-08-05T02:21:26Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Liquid Filters">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Liquid Filters",
   "datePublished": "2019-07-13T23:56:01Z",
-  "dateModified": "2019-08-02T23:28:25Z",
+  "dateModified": "2019-08-05T02:21:26Z",
   "description": "A new feature has been added, inspired by the liquid templating system, which allows filters to be applied to page data in your templates and Markdown.",
   "keywords": "mustache, markdown, liquid-templating",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564788509">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564788509">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564788509">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564788509">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564788509">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564788509">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564788509">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564788509">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564971715">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564971715">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564971715">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564971715">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564971715">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564971715">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564971715">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564971715">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564788509">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564971715">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564788509">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564971716">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.min.css?v=1564788509">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.css?v=1564971716">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564788509"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564971716"></script>
 </head>
 <body class="no-js category-blog liquid-filters">
   <div class="main-container">
@@ -231,11 +231,11 @@ implemented a rip-off version of liquid filters.</p>
 <p>You can use the filters in your <code>.mustache</code> templates files, and in your <code>.mdsh</code>
 source files. You pass the variables through a filter using the pipe symbol <code>|</code>.</p>
 
-<h3 id="_usage_and_examples__">Usage and examples:</h3>
+<h3>Usage and examples:</h3>
 
 <h4>1. Template usage</h4>
 
-<p><strong>Filtering basic page data (strings):</strong></p>
+<p><b>Filtering basic page data (strings):</b></p>
 
 <div class="highlight"><pre><span></span><span class="x">&lt;h2&gt;</span><span class="cp">{{</span><span class="nv">page_name</span> <span class="err">|</span> <span class="nv">uppercase</span><span class="cp">}}</span><span class="x">&lt;/h2&gt;</span>
 </pre></div>
@@ -247,20 +247,20 @@ source files. You pass the variables through a filter using the pipe symbol <cod
 <div class="highlight"><pre><span></span><span class="x">&lt;h2&gt;</span><span class="cp">{{</span><span class="nv">page_name</span> <span class="err">|</span> <span class="nv">truncate_words</span> <span class="m">6</span> <span class="s2">&quot;..&quot;</span> <span class="err">|</span> <span class="nv">strip_newlines</span><span class="cp">}}</span><span class="x">&lt;/h2&gt;</span>
 </pre></div>
 
-<p>^ this will truncate to 6 words, and append <code>..</code> if truncated, and strip new lines.</p>
+<p>^ this will truncate to 6 words, and append `..` if truncated, and strip new lines.</p>
 
 <p>These filters also can also be applied to whole sections (if you must!):</p>
 
 <div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nv">page_header</span> <span class="err">|</span> <span class="nv">strip_html</span><span class="cp">}}</span><span class="x"></span>
 </pre></div>
 
-<p><strong>Filtering arrays:</strong></p>
+<p><b>Filtering arrays:</b></p>
 
 <p>In your templates various places use arrays to iterate over lists, such as
 recent posts. These lists can also be "filtered", in much the same way as the
 page data variables described above.</p>
 
-<p>In your templates, normal <code>arrays</code> work as iterators, that can also take filters.</p>
+<p>In your templates, normal `arrays` work as iterators, that can also take filters.</p>
 
 <p>For example:</p>
 
@@ -269,7 +269,7 @@ page data variables described above.</p>
 <span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 </pre></div>
 
-<p>Associative arrays (like <code>ITEMS</code>, used in <code>mdsh</code>) also work:</p>
+<p>Associative arrays (like `ITEMS`, used in `mdsh`) also work:</p>
 
 <div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someAssocArray</span> <span class="err">|</span> <span class="nv">sort_by</span> <span class="s2">&quot;age&quot;</span> <span class="s2">&quot;asc&quot;</span> <span class="err">|</span> <span class="nv">limit</span> <span class="m">3</span><span class="cp">}}</span><span class="x"></span>
 <span class="x">  Hi </span><span class="cp">{{</span><span class="nv">item.name</span> <span class="err">|</span> <span class="nv">titlecase</span><span class="cp">}}</span><span class="x">,</span>
@@ -279,318 +279,681 @@ page data variables described above.</p>
 
 <h4>2. Markdown usage</h4>
 
-<p>You can even use them in the sub-shells of your <code>*.mdsh</code> source files:</p>
+<p>You can even use them in the sub-shells of your `*.mdsh` source files:</p>
 
 <div class="highlight"><pre><span></span>&lt; ?bash <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$something</span><span class="s2">&quot;</span> <span class="p">|</span> replace_all foo bar <span class="p">;</span>? &gt;
 </pre></div>
 
-<p><br></p>
+<br>
 
 <!-- more -->
 
-<hr />
-
-<h3 id="_available_filters__">Available filters:</h3>
+<h3>Available filters:</h3>
 
 <p>Here is a list of all the filters available:</p>
 
-<h4>string filters</h4>
+<h4>String filters</h4>
 
-<p><code>uppercase</code>             Make text upper case</p>
+<p>Here is the general usage:</p>
 
-<p><code>lowercase</code>             Make text lower case</p>
+<div>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> &lt;filter&gt; <span class="o">[</span>options<span class="o">]}}</span>
+</pre></div>
+</div>
 
-<p><code>titlecase</code>             Make text title case</p>
+<div class="filter-heading">uppercase</div>
+<div class="filter-body">
+<p>Make text upper case:</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> uppercase<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>capitalize</code>            Capitalise first-letter of string, lower case the rest</p>
+<div class="filter-heading">lowercase</div>
+<div class="filter-body">
+<p>Make text lower case</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> lowercase<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>slugify</code>               Convert string to slug</p>
+<div class="filter-heading">titlecase</div>
+<div class="filter-body">
+<p>Make text title case</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> titlecase<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>camelcase_to_slug</code>     Convert camel case string to a slug</p>
+<div class="filter-heading">capitalise</div>
+<div class="filter-body">
+<p>Capitalise first-letter of string, lower case the rest</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> capitalise<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>slug_to_camelcase</code>     Convert a slug to camel case</p>
+<div class="filter-heading">slugify</div>
+<div class="filter-body">
+<p>Convert string to slug</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> slugify<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>lstrip</code>                Remove leading whitepace from (left of string)</p>
+<div class="filter-heading">camelcase_to_slug</div>
+<div class="filter-body">
+<p>Convert camel case string to a slug</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> camelcase_to_slug<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>rstrip</code>                Remove trailing white space (right of string)</p>
+<div class="filter-heading">slug_to_camelcase</div>
+<div class="filter-body">
+<p>Convert a slug to camel case</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> slug_to_camelcase<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>strip</code>                 Remove leading and trailing whitespace</p>
+<div class="filter-heading">lstrip</div>
+<div class="filter-body">
+<p>Remove leading whitepace from (left of string)</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> lstrip<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>strip_html</code>            Remove all HTML tags, keeping the inner content</p>
+<div class="filter-heading">rstrip</div>
+<div class="filter-body">
+<p>Remove trailing whitepace from (right of string)</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> rstrip<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>strip_newlines</code>        Strip newline characters from string</p>
+<div class="filter-heading">strip</div>
+<div class="filter-body">
+<p>Remove leading and trailing whitespace</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> strip<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>escape_html</code>           Replace <code>&lt;p&gt;</code> with <code>&amp;lt;p&amp;gt;</code></p>
+<div class="filter-heading">strip_html</div>
+<div class="filter-body">
+<p>Remove all HTML tags, keeping the inner content</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> strip_html<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>unescape_html</code>         Replace <code>&amp;lt;p&amp;gt;</code> with <code>&lt;p&gt;</code></p>
+<div class="filter-heading">strip_newlines</div>
+<div class="filter-body">
+<p>Strip newline characters from string</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> strip_newlines<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>newline_to_br</code>         Replace newline characters with <code>&lt;br&gt;</code> tags</p>
+<div class="filter-heading">escape_html</div>
+<div class="filter-body">
+<p>Replace `&lt;p&gt;` with `&amp;lt;p&amp;gt;`</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> escape_html<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>br_to_newline</code>         Replace <code>&lt;br&gt;</code> tags with newline characters</p>
+<div class="filter-heading">unescape_html</div>
+<div class="filter-body">
+<p>Replace `&amp;lt;p&amp;gt;` with `&lt;p&gt;`</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> unescape_html<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>reverse</code>               Reverse a string</p>
+<div class="filter-heading">newline_to_br</div>
+<div class="filter-body">
+<p>Replace newline characters with `&lt;br&gt;` tags</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> newline_to_br<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>replace_first</code>         Replace first occurance of $1 with $2</p>
+<div class="filter-heading">br_to_newline</div>
+<div class="filter-body">
+<p>Replace `&lt;br&gt;` tags with newline characters</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> br_to_newline<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>replace_last</code>          Replace last occurance of $1 with $2</p>
+<div class="filter-heading">reverse</div>
+<div class="filter-body">
+<p>Reverse a string</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> reverse<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>replace_all</code>           Replace all occurances of $1 with $2</p>
+<div class="filter-heading">replace_first</div>
+<div class="filter-body">
+<p>Replace first occurance of $1 with $2</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> replace_first <span class="s1">&#39;old&#39;</span> <span class="s1">&#39;new&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>prepend</code>               Prepend a string with another string</p>
+<div class="filter-heading">replace_last</div>
+<div class="filter-body">
+<p>Replace last occurance of $1 with $2</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> replace_last <span class="s1">&#39;old&#39;</span> <span class="s1">&#39;new&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>append</code>                Append a string with another</p>
+<div class="filter-heading">replace_all</div>
+<div class="filter-body">
+<p>Replace all occurances of $1 with $2</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> replace_all <span class="s1">&#39;old&#39;</span> <span class="s1">&#39;new&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>truncate</code>              Truncate to given number of chars</p>
+<div class="filter-heading">prepend</div>
+<div class="filter-body">
+<p>Prepend a string with another string</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> prepend <span class="s1">&#39;some other string&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>truncate_words</code>        Truncate to given number of words</p>
+<div class="filter-heading">append</div>
+<div class="filter-body">
+<p>Append a string with another string</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> append <span class="s1">&#39;some other string&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>time_to_read</code>          Guesses the time to read a given string in "Mins" - or give <code>$2</code> to override the units.</p>
+<div class="filter-heading">truncate</div>
+<div class="filter-body">
+<p>Truncate string to the given number of characters</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> truncate <span class="m">20</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>urlencode</code>             Encode string to URL friendly format</p>
+<div class="filter-heading">truncate_words</div>
+<div class="filter-body">
+<p>Truncate string to the given number of words.</p>
+<p>Optionally pass a string as the second parameter, which will be appended if text was indeed truncated.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> truncate_words <span class="m">20</span> <span class="s1">&#39;...&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>urldecode</code>             Decode string from URL friendly format</p>
+<div class="filter-heading">time_to_read</div>
+<div class="filter-body">
+<p>Intelligently guesses the time to read the given string in "Mins"</p>
+<p>Optionally, override the default units by giving the desired units name as the second parameter.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> time_to_read <span class="s2">&quot;Minutes&quot;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>rgb2hex</code>               Convert colour values <code>255 0 0</code> into <code>#ff0000</code></p>
+<div class="filter-heading">urlencode</div>
+<div class="filter-body">
+<p>Encode string to URL friendly format</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> urlencode<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>hex2rgb</code>               Convert colour values <code>#ff0000</code> into <code>255 0 0</code></p>
+<div class="filter-heading">urldecode</div>
+<div class="filter-body">
+<p>Decode string from URL friendly format</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> urldecode<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>md5</code>                   Replace string with its md5 checksum</p>
+<div class="filter-heading">rgb2hex</div>
+<div class="filter-body">
+<p>Convert colour values `255 0 0` into `#ff0000`</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> rgb2hex<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>sha1</code>                  Replace string with its sha1 checksum</p>
+<div class="filter-heading">hex2rgb</div>
+<div class="filter-body">
+<p>Convert colour values `#ff0000` into `255 0 0`</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> hex2rgb<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>sha256</code>                Replace string with its sha256 checksum</p>
+<div class="filter-heading">md5</div>
+<div class="filter-body">
+<p>Replace string with its md5 checksum</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> md5<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>sha512</code>                Replace string with its sha512 checksum</p>
+<div class="filter-heading">sha1</div>
+<div class="filter-body">
+<p>Replace string with its sha1 checksum</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> sha1<span class="o">}}</span>
+</pre></div>
+</div>
+
+<div class="filter-heading">sha256</div>
+<div class="filter-body">
+<p>Replace string with its sha256 checksum</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> sha256<span class="o">}}</span>
+</pre></div>
+</div>
+
+<div class="filter-heading">sha512</div>
+<div class="filter-body">
+<p>Replace string with its sha512 checksum</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> sha512<span class="o">}}</span>
+</pre></div>
+</div>
 
 <h3 id="_data_filters_">Data filters</h3>
 
-<p><code>markdown_to_html</code>      Convert the given markdown to html</p>
+<div class="filter-heading">markdown_to_html</div>
+<div class="filter-body">
+<p>Convert the given markdown to HTML</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> markdown_to_html<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>csv_to_markdown</code>       Convert the given csv to a markdown table</p>
+<div class="filter-heading">csv_to_markdown</div>
+<div class="filter-body">
+<p>Convert the given csv to a markdown table</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> csv_to_markdown<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>csv_to_html</code>           Convert the given csv to a HTML table</p>
+<div class="filter-heading">csv_to_html</div>
+<div class="filter-body">
+<p>Convert the given csv to an HTML table</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> csv_to_html<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>csv_to_json</code>           Convert the given csv to json</p>
+<div class="filter-heading">csv_to_json</div>
+<div class="filter-body">
+<p>Convert the given csv to JSON</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> csv_to_json<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>csv_to_array</code>          Turns csv data into one big, flat indexed-array</p>
+<div class="filter-heading">csv_to_array</div>
+<div class="filter-body">
+<p>Convert the given csv to a single, flat, indexed array</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> csv_to_array<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>csv_to_arrays</code>         Turns csv data into array of associative
-arrays. It can be used to iterate over
-and filter CSV data in your templates:</p>
-
-<p>Usage:</p>
-
-<p><code>cat file.csv | csv_to_arrays | where id "&lt;" 100</code></p>
+<div class="filter-heading">csv_to_arrays</div>
+<div class="filter-body">
+<p>Convert csv data into an array of associative arrays. The CSV headers become
+the arrays keys. It can be used to iterate over and filter CSV data in your
+templates (see <b>Array filters</b> below).</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> csv_to_arrays<span class="o">}}</span>
+</pre></div>
+</div>
 
 <h3 id="_number_filters_">Number filters</h3>
 
-<p><code>at_least</code>              Sets a minimum value for returned numbers</p>
+<div class="filter-heading">at_least</div>
+<div class="filter-body">
+<p>Sets a minimum value for returned numbers</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> at_least <span class="m">10</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>at_most</code>               Sets a maximum value for returned numbers</p>
+<div class="filter-heading">at_most</div>
+<div class="filter-body">
+<p>Sets a maximum value for returned numbers</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> at_most <span class="m">10</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>decimal_places</code>        Limit number togiven number of decimal places</p>
+<div class="filter-heading">decimal_places</div>
+<div class="filter-body">
+<p>Limit number to the given number of decimal places</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> decimal_places <span class="m">2</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>divided_by</code>            Divide number by given number</p>
+<div class="filter-heading">divided_by</div>
+<div class="filter-body">
+<p>Divide input by the given number</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> divided_by <span class="m">2</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>minus</code>                 Subtract the given number from the input number</p>
+<div class="filter-heading">minus</div>
+<div class="filter-body">
+<p>Subtract the given number from the input number</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> minus <span class="m">2</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>plus</code>                  Add the given number to the input number</p>
+<div class="filter-heading">plus</div>
+<div class="filter-body">
+<p>Add the given number to the input number</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> plus <span class="m">2</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>modulo</code>                Find remainder after division of input and given number</p>
+<div class="filter-heading">modulo</div>
+<div class="filter-body">
+<p>Find remainder after division of input and given number</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> modulo<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>ordinal</code>               Return the given number in ordinal form (112 => 112th)</p>
+<div class="filter-heading">ordinal</div>
+<div class="filter-body">
+<p>Return the given number in ordinal form (112 => 112th)</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> ordinal<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>to_int</code>                Convert a float to an int</p>
+<div class="filter-heading">to_int</div>
+<div class="filter-body">
+<p>Convert a float to an int</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> to_int<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>floor</code>                 Round float down to nearest int</p>
+<div class="filter-heading">floor</div>
+<div class="filter-body">
+<p>Round float down to the nearest integer</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> floor<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>ceil</code>                  Round float up to nearest int</p>
+<div class="filter-heading">ceil</div>
+<div class="filter-body">
+<p>Round float up to the nearest integer</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> ceil<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>pluralize</code>             Append a singular ($1) or plural ($2) to a number.</p>
+<div class="filter-heading">pluralize</div>
+<div class="filter-body">
+<p>Append a singular (first param) or plural (second param) to a number</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> pluralize <span class="s1">&#39;ox&#39;</span> <span class="s1">&#39;oxen&#39;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p>Usage:</p>
-
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code>{{someNumber | pluralize "dog" "dogs"}}
-{{someNumber | pluralize "ox" "oxen"}}
-{{someNumber | pluralize "sheep" "sheep"}}
-</code></pre></div>
-
-<p><code>convert</code>               Perform unit conversions. Supported
-conversions: inches/feet, miles/km,
-kgs/stones, kgs/lbs, gallons/quarts.</p>
-
-<p>Usage:</p>
-
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code>{{someNumber | convert kg to lbs}}
-{{someNumber | convert miles to km}}
-</code></pre></div>
+<div class="filter-heading">convert</div>
+<div class="filter-body">
+<p>Perform unit conversions. Supported conversions: inches/feet, miles/km,
+kgs/stones, kgs/lbs, gallons/quarts</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> convert miles to km<span class="o">}}</span>
+</pre></div>
+</div>
 
 <h3 id="_money_filters_">Money filters</h3>
 
-<p><code>money</code>                  Converts number to money format, with
-currency (locale aware)</p>
+<div class="filter-heading">money</div>
+<div class="filter-body">
+<p>Converts number to money format, with currency symbol (locale aware).</p>
+<p>Optionally give the currency symbol as the second parameter to override the locale default.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> money £<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>money_with_currency</code>    Same as above, but appends "GBP", "USD", etc</p>
+<div class="filter-heading">money_with_currency</div>
+<div class="filter-body">
+<p>Converts number to money format, with currency symbol and name (locale aware)</p>
+<ul>
+<li>Optionally give the currency symbol as the second parameter to override the locale default.</li>
+<li>Optionally give the currency name as the third parameter to override the locale default.</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> money_with_currency £ GBP<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>money_without_currency</code> Format as previous filters, without currency
-symbol or name</p>
+<div class="filter-heading">money_without_currency</div>
+<div class="filter-body">
+<p>Converts number to money format, <em>without</em> currency symbol or name.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> money_without_currency<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>without_leading_zeros</code>  Remove ".0*" from end of numbers/strings</p>
-
-<p>Examples (when "en_US" is current locale):</p>
-
-<p><code>echo 2100 | money</code>   =>   $2,100.00</p>
-
-<p><code>echo 2100 | money £</code>  => £2,100.00</p>
-
-<p><code>echo 2100 | money_with_currency</code> => $2,100.00 USD</p>
-
-<p><code>echo 2100 | money_with_currency £ GBP</code> => £2,100.00 GBP</p>
+<div class="filter-heading">without_trailing_zeros</div>
+<div class="filter-body">
+<p>Remove ".0*" from end of numbers (and strings).</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> without_trailing_zeros<span class="o">}}</span>
+</pre></div>
+</div>
 
 <h4>Date filters</h4>
 
-<p><code>date_format</code>           Re-format a date, where <code>format</code> is:</p>
+<p>These filters can be used with the variables `page_created` and `page_modified`,
+ or any others which hold dates in this format: <em>2019-07-13T23:56:01Z</em></p>
 
+<div class="filter-heading">date_format</div>
+<div class="filter-body">
+<p> Re-format a date, where `format` is a named format, GNU date format or 'now':</p>
 <ul>
-<li><code>basic</code>              09/31/2019</li>
-<li><code>basic_uk</code>           31/09/2019</li>
-<li><code>iso8601</code>            2019-90-31</li>
-<li><code>to_string</code>          09 Nov 2019</li>
-<li><code>to_long_string</code>     09 November 2019</li>
-<li><code>rfc822</code>             Mon, 09 Nov 2019 13:07:54 -0800</li>
+  <li>`basic` => 09/31/2019</li>
+  <li>`basic_uk` => 31/09/2019</li>
+  <li>`iso8601` =>  2019-90-31</li>
+  <li>`to_string` => 09 Nov 2019</li>
+  <li>`to_long_string` => 09 November 2019</li>
+  <li>`rfc822` => Mon, 09 Nov 2019 13:07:54 -0800</li>
+  <li>`"%Y %m %d"` => 2019 09 31</li>
+  <li>`"%d %B %Y"` => 31 November 2009</li>
 </ul>
+<div class="highlight"><pre><span></span><span class="o">{{</span>page_created <span class="p">|</span> date_format <span class="s1">&#39;basic_uk&#39;</span><span class="o">}}</span>
+</pre></div>
+or
 
-<p>NOTE: <code>format</code> can also be any valid GNU <code>date</code> format:</p>
-
+<div class="highlight"><pre><span></span><span class="o">{{</span>page_created <span class="p">|</span> date_format <span class="s2">&quot;%d %B %Y&quot;</span><span class="o">}}</span>
+</pre></div>
+<p>Note that `rfc822` has these easier aliases:</p>
 <ul>
-<li><code>"%Y %m %d"</code>         2019 09 31</li>
-<li><code>"%d %B %Y"</code>         31 November 2009</li>
-<li>etc..</li>
+  <li>`rss`</li>
+  <li>`email`</li>
 </ul>
-
-<p>Note that <code>rfc822</code> has these, easier aliases:</p>
-
-<ul>
-<li><code>rss</code>, or <code>email</code></li>
-</ul>
-
-<p>Example usage of <code>date_format</code>:</p>
-
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code>{{page_created | date_format iso8601}}
-</code></pre></div>
-
-<p>You can also use <code>now</code> to get the current date/time
-when the page is built:</p>
-
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code>{{now | date_format rss}}
-</code></pre></div>
+<p>You can also use `now` to get the current date/time when the page is built:</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>now <span class="p">|</span> date_format rss<span class="o">}}</span>
+</pre></div>
+</div>
 
 <h4>HTML filters</h4>
 
-<p><code>absolute_url</code>         Return the absolute URL to the given file,
-starting with "http://${blog_domain}${blog_url}".</p>
+<div class="filter-heading">absolute_url</div>
+<div class="filter-body">
+<p> Return the absolute URL to the given file, starting with <em>http://${blog_domain}${blog_url}</em>.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someURL <span class="p">|</span> absolute_url<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>relative_url</code>         Return a relative URL to the given string,
-starting with "${blog_url}" (top dir of blog)</p>
+<div class="filter-heading">relative_url</div>
+<div class="filter-body">
+<p>Return a relative URL to the given string, starting with "${blog_url}" (top dir of blog).</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someURL <span class="p">|</span> relative_url<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>asset_url</code>            Return a relative path to the given file,
-appended with a timestamp as a query string,
-for cache busting purposes. Uses <code>find</code> to locate
-the path to the file (if it exists), else it uses the
-given string.</p>
+<div class="filter-heading">asset_url</div>
+<div class="filter-body">
+<p>Return a relative path to the given file, appended with a timestamp as a
+query string, for cache busting purposes. Uses `find` to locate the path to the
+file (if it exists), else it uses the given string.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someURL <span class="p">|</span> asset_url<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>link_tag</code>             Return a <code>&lt;a href=".."&gt;..&lt;/a&gt;</code> tag, linking
-to the given string. Works well with these
-other filters: <code>asset_url</code>, <code>absolute_url</code>,
-<code>relative_url</code>.</p>
+<div class="filter-heading">link_tag</div>
+<div class="filter-body">
+<p>Return a `&lt;a href=".."&gt;..&lt;/a&gt;` tag, linking to the given string.<p>
+<p>Works well with these other filters: `asset_url`, `absolute_url`, `relative_url`.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someURL <span class="p">|</span> absolute_url <span class="p">|</span> link_tag <span class="s2">&quot;My link title&quot;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
-<p>Usage:</p>
-
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code> {{someURL | link_tag "My link title"}}
-</code></pre></div>
-
-<p><code>time_tag</code>             Return a <code>&lt;time&gt;</code> tag, with <code>datetime</code>
- attribute. $1 is required and formats the
- printed (visible) date. $2 is optional, and
- formats the <code>datetime</code> atrribute. Supports
- the same options as the <code>date_format</code> filter:
- <code>basic</code>, <code>basic_uk</code>, <code>to_string</code>, <code>email</code>, and
- GNU date format strings like <code>%d %M %Y %H:%M</code></p>
-
-<p>Usage:</p>
-
-<p><code>echo  $some_date | time_tag format attr-format</code></p>
-
-<p>Examples:</p>
-
-<p><code>echo  $some_date | time_tag "basic" iso8601</code>
- <code>echo  $some_date | time_tag "%H:%M" rfc2822</code>
- <code>echo  $some_date | time_tag "%Y-%M" "%Y-%M-%d"</code></p>
-
-<p><code>echo  2019-07-13T23:56:01Z | time_tag to_string "%Y-%M-%d"</code></p>
-
+<div class="filter-heading">time_tag</div>
+<div class="filter-body">
+<p> Return a `&lt;time&gt;` tag, with `datetime` attribute. $1 is required and formats
+the printed (visible) date. $2 is optional, and formats the `datetime` attribute.</p>
+<p>Supports the same options as the `date_format` filter: `basic`, `basic_uk`,
+`to_string`, `email`, and GNU date format strings like `%d %M %Y %H:%M`.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someDate <span class="p">|</span> time_tag basic iso8601<span class="o">}}</span>
+</pre></div>
 <p>Outputs:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">time</span> <span class="na">datetime</span><span class="o">=</span><span class="s">&quot;2019-07-13&quot;</span><span class="p">&gt;</span>13 July, 2019<span class="p">&lt;/</span><span class="nt">time</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 
-<p><code>&lt;time datetime="2019-07-13"&gt;13 July, 2019&lt;/time&gt;</code></p>
+<div class="filter-heading">script_tag</div>
+<div class="filter-body">
+<p>Return the given content wrapped inside a &lt;script&gt; tag.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> script_tag<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>script_tag</code>           Return the given content in a script tag</p>
+<div class="filter-heading">stylesheet_tag</div>
+<div class="filter-body">
+<p>Return the given content wrapped inside a &lt;stylesheet&gt; tag.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someString <span class="p">|</span> stylesheet_tag<span class="o">}}</span>
+</pre></div>
+</div>
 
-<p><code>stylesheet_tag</code>       Return the given URL in a stylesheet
- tag. Works well with <code>asset_url</code>.</p>
-
-<p><code>img_tag</code>              Return the given URL in an img  tag,
- optionally give $1 to set alt text.</p>
+<div class="filter-heading">img_tag</div>
+<div class="filter-body">
+<p>Return the given URL wrapped inside an &lt;img&gt; tag.</p>
+<p>Optionally set the alt text using the first parameter.</p>
+<p>Works well with `asset_url`.</p>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someURL <span class="p">|</span> asset_url <span class="p">|</span> img_tag <span class="s2">&quot;My alt text.&quot;</span><span class="o">}}</span>
+</pre></div>
+</div>
 
 <h4>Array filters</h4>
 
-<p><code>concat</code>              Merge 2 arrays</p>
+<div class="filter-heading">concat</div>
+<div class="filter-body">
+<p>Concatenate two arrays (append one to another).</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">concat</span> <span class="s1">&#39;otherArrayName&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>compact</code>             Remove empty items from array</p>
+<div class="filter-heading">compact</div>
+<div class="filter-body">
+<p>Remove empty items from array.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">compact</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>unique</code>              Remove duplicate items from array</p>
+<div class="filter-heading">unique</div>
+<div class="filter-body">
+<p>Remove duplicate items from array.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">unique</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>limit</code>               Limit total items returned to the given number</p>
+<div class="filter-heading">limit</div>
+<div class="filter-body">
+<p>Limit total items returned to the given number.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">limit</span> <span class="m">5</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>exclude</code>             Exclude all items matching the given string</p>
+<div class="filter-heading">exclude</div>
+<div class="filter-body">
+<p>Exclude all items containing the given string.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">exclude</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>exclude_first</code>       Exclude the first item matching the given string</p>
+<div class="filter-heading">exclude_first</div>
+<div class="filter-body">
+<p>Exclude the first item containing the given string.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">exclude_first</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>exclude_last</code>        Exclude the last item matching the given string</p>
+<div class="filter-heading">exclude_last</div>
+<div class="filter-body">
+<p>Exclude the last item containing the given string.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">exclude_last</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>exclude_exact</code>       Exclude all items matching the given string exactly</p>
+<div class="filter-heading">exclude_exact</div>
+<div class="filter-body">
+<p>Exclude all items matching the given string exactly.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">exclude_exact</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>join_by</code>             Convert an array into a string delimeted by the given string</p>
+<div class="filter-heading">join_by</div>
+<div class="filter-body">
+<p>Convert an array into a string delimeted by the given string.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">join_by</span> <span class="s1">&#39;,&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{{</span><span class="err">.</span><span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>sort_array</code>          Sort the array 'asc' or 'desc'</p>
+<div class="filter-heading">sort_array</div>
+<div class="filter-body">
+<p>Sort the array 'asc' or 'desc'.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">sort_array</span> <span class="s1">&#39;asc&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p><code>sort_by</code>             Sort an array by the given key, either ascending or descending</p>
+<div class="filter-heading">sort_by</div>
+<div class="filter-body">
+<p>Sort an array by the given key, either ascending or descending.</p>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">sort_by</span> <span class="s1">&#39;some_key&#39;</span> <span class="s1">&#39;desc&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
-<p>Usage:</p>
+<div class="filter-heading">where</div>
+<div class="filter-body">
+<p>Keep only the array items matching the given string/expression.</p>
+<p>Usage of `where`, with associative arrays (hashes):</p>
 
-<div class="_markdown-code"><pre style="display:none"></pre><pre><code>{{#someAssocArray | sort_by "age" "desc"}}
-    {{item.name}} is {{item.age}}
-{{/someAssocArray}}
-</code></pre></div>
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;!=&#39;</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 
-<p><code>where</code>               Keep only the array items matching the given
-string/expression</p>
+<span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;contains&#39;</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 
-<p>Usage of <code>where</code>, with associative arrays (hashes):</p>
+<span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;!=&#39;</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 
-<ul>
-<li><code>{{assocArray | where name "contains" "Smith" }}</code></li>
-<li><code>{{assocArray | where name "!=" "Smith" }}</code></li>
-<li><code>{{assocArray | where name "=" "Smith" }}</code></li>
-<li><code>{{assocArray | where age "&gt;=" 20 }}</code></li>
-<li><code>{{assocArray | where age "&lt;" 60 }}</code></li>
-</ul>
+<span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;=&#39;</span> <span class="s1">&#39;foo&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 
-<p>Usage of <code>where</code> With simple (indexed) arrays:</p>
+<span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;&gt;=&#39;</span> <span class="m">20</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
 
-<ul>
-<li><code>{{array | where contains "Smith" }}</code></li>
-<li><code>{{array | where "&gt;" 20 }}</code></li>
-</ul>
+<span class="cp">{{</span><span class="nf">#someArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">some_key</span> <span class="s1">&#39;&lt;&#39;</span> <span class="m">60</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  ...</span>
+<span class="cp">{{</span><span class="nf">/someArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+<p>Usage of `where` With simple (indexed) arrays:</p>
+
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#someIndexedArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="nv">contains</span> <span class="s2">&quot;Smith&quot;</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{{</span><span class="err">.</span><span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span><span class="nf">/someIndexedArray</span><span class="cp">}}</span><span class="x"></span>
+
+<span class="cp">{{</span><span class="nf">#someIndexedArray</span> <span class="err">|</span> <span class="nv">where</span> <span class="s2">&quot;&gt;&quot;</span> <span class="m">20</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{{</span><span class="err">.</span><span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span><span class="nf">/someIndexedArray</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
 
 <h3 id="_conclusion_">Conclusion</h3>
 
