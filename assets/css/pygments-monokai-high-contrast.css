@@ -1,18 +1,16 @@
 div.highlight pre {
-  background-color: #272822;
-  box-shadow: 0 4px 8px 0 rgba(39, 40, 34, 1),
-    4px 4px 14px 0px rgba(39, 40, 34, 0.6);
+  background-color: #1e0010;
   color: #f8f8f2;
 }
 div.highlight pre .hll {
-  background-color: #272822;
+  background-color: #1e0010;
 }
 div.highlight pre .c {
   color: #75715e;
 }
 div.highlight pre .err {
   color: #dd0050;
-  background-color: #272822;
+  background-color: #1e0010;
   font-weight: bold;
 }
 div.highlight pre .k {
@@ -30,10 +28,16 @@ div.highlight pre .o {
 div.highlight pre .p {
   color: #f8f8f2;
 }
+div.highlight pre .ch {
+  color: #75715e;
+}
 div.highlight pre .cm {
   color: #75715e;
 }
 div.highlight pre .cp {
+  color: #75715e;
+}
+div.highlight pre .cpf {
   color: #75715e;
 }
 div.highlight pre .c1 {
@@ -42,11 +46,20 @@ div.highlight pre .c1 {
 div.highlight pre .cs {
   color: #75715e;
 }
+div.highlight pre .gd {
+  color: #f92672;
+}
 div.highlight pre .ge {
   font-style: italic;
 }
+div.highlight pre .gi {
+  color: #a6e22e;
+}
 div.highlight pre .gs {
   font-weight: bold;
+}
+div.highlight pre .gu {
+  color: #75715e;
 }
 div.highlight pre .kc {
   color: #66d9ef;
@@ -123,6 +136,9 @@ div.highlight pre .ow {
 div.highlight pre .w {
   color: #f8f8f2;
 }
+div.highlight pre .mb {
+  color: #ae81ff;
+}
 div.highlight pre .mf {
   color: #ae81ff;
 }
@@ -135,10 +151,16 @@ div.highlight pre .mi {
 div.highlight pre .mo {
   color: #ae81ff;
 }
+div.highlight pre .sa {
+  color: #e6db74;
+}
 div.highlight pre .sb {
   color: #e6db74;
 }
 div.highlight pre .sc {
+  color: #e6db74;
+}
+div.highlight pre .dl {
   color: #e6db74;
 }
 div.highlight pre .sd {
@@ -171,6 +193,9 @@ div.highlight pre .ss {
 div.highlight pre .bp {
   color: #f8f8f2;
 }
+div.highlight pre .fm {
+  color: #a6e22e;
+}
 div.highlight pre .vc {
   color: #f8f8f2;
 }
@@ -180,17 +205,9 @@ div.highlight pre .vg {
 div.highlight pre .vi {
   color: #f8f8f2;
 }
+div.highlight pre .vm {
+  color: #f8f8f2;
+}
 div.highlight pre .il {
   color: #ae81ff;
-}
-div.highlight pre .gh {
-}
-div.highlight pre .gu {
-  color: #75715e;
-}
-div.highlight pre .gd {
-  color: #f92672;
-}
-div.highlight pre .gi {
-  color: #a6e22e;
 }
