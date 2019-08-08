@@ -2,40 +2,50 @@ div.highlight pre .hll {
   background-color: #ffffcc;
 }
 div.highlight pre {
-  background: #eeeedd;
+  background: #ffffff;
 }
 div.highlight pre .c {
-  color: #1e7b1e;
+  font-style: italic;
+  color: #767665;
 }
 div.highlight pre .err {
   color: #a61717;
   /* background-color: #e3d2d2; */
 }
 div.highlight pre .k {
-  color: #8b008b;
+  font-weight: bold;
+}
+div.highlight pre .o {
   font-weight: bold;
 }
 div.highlight pre .ch {
-  color: #1e7b1e;
+  font-style: italic;
+  color: #767665;
 }
 div.highlight pre .cm {
-  color: #1e7b1e;
+  font-style: italic;
+  color: #767665;
 }
 div.highlight pre .cp {
-  color: #197487;
+  font-weight: bold;
+  color: #757575;
 }
 div.highlight pre .cpf {
-  color: #1e7b1e;
+  font-style: italic;
+  color: #767665;
 }
 div.highlight pre .c1 {
-  color: #1e7b1e;
+  font-style: italic;
+  color: #767665;
 }
 div.highlight pre .cs {
-  color: #8b008b;
   font-weight: bold;
+  font-style: italic;
+  color: #757575;
 }
 div.highlight pre .gd {
-  color: #aa0000;
+  color: #000000;
+  background-color: #ffdddd;
 }
 div.highlight pre .ge {
   font-style: italic;
@@ -44,14 +54,14 @@ div.highlight pre .gr {
   color: #aa0000;
 }
 div.highlight pre .gh {
-  color: #000080;
-  font-weight: bold;
+  color: #757575;
 }
 div.highlight pre .gi {
-  color: #007d00;
+  color: #000000;
+  background-color: #ddffdd;
 }
 div.highlight pre .go {
-  color: #6a6a6a;
+  color: #767676;
 }
 div.highlight pre .gp {
   color: #555555;
@@ -60,155 +70,148 @@ div.highlight pre .gs {
   font-weight: bold;
 }
 div.highlight pre .gu {
-  color: #800080;
-  font-weight: bold;
+  color: #747474;
 }
 div.highlight pre .gt {
   color: #aa0000;
 }
 div.highlight pre .kc {
-  color: #8b008b;
   font-weight: bold;
 }
 div.highlight pre .kd {
-  color: #8b008b;
   font-weight: bold;
 }
 div.highlight pre .kn {
-  color: #8b008b;
   font-weight: bold;
 }
 div.highlight pre .kp {
-  color: #8b008b;
   font-weight: bold;
 }
 div.highlight pre .kr {
-  color: #8b008b;
   font-weight: bold;
 }
 div.highlight pre .kt {
-  color: #00688b;
+  color: #445588;
   font-weight: bold;
 }
 div.highlight pre .m {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .s {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .na {
-  color: #517200;
+  color: #008080;
 }
 div.highlight pre .nb {
-  color: #517200;
+  color: #757575;
 }
 div.highlight pre .nc {
+  color: #445588;
   font-weight: bold;
-  color: #007c3c;
 }
 div.highlight pre .no {
-  color: #00688b;
+  color: #008080;
 }
-div.highlight pre .nd {
-  color: #666b6d;
+div.highlight pre .ni {
+  color: #800080;
 }
 div.highlight pre .ne {
+  color: #990000;
   font-weight: bold;
-  color: #007c3c;
 }
 div.highlight pre .nf {
-  color: #007c3c;
-}
-div.highlight pre .nn {
-  text-decoration: underline;
-  color: #007c3c;
-}
-div.highlight pre .nt {
-  color: #8b008b;
+  color: #990000;
   font-weight: bold;
 }
+div.highlight pre .nn {
+  color: #555555;
+}
+div.highlight pre .nt {
+  color: #000080;
+}
 div.highlight pre .nv {
-  color: #00688b;
+  color: #008080;
 }
 div.highlight pre .ow {
-  color: #8b008b;
+  font-weight: bold;
 }
 div.highlight pre .w {
-  color: #6a6a6a;
+  color: #767676;
 }
 div.highlight pre .mb {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .mf {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .mh {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .mi {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .mo {
-  color: #a538c4;
+  color: #008080;
 }
 div.highlight pre .sa {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .sb {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .sc {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .dl {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .sd {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .s2 {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .se {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .sh {
-  font-style: italic;
-  color: #1a7669;
+  color: #976d3b;
 }
 div.highlight pre .si {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .sx {
-  color: #a15816;
+  color: #976d3b;
 }
 div.highlight pre .sr {
-  color: #1a7669;
+  color: #767600;
 }
 div.highlight pre .s1 {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .ss {
-  color: #c23838;
+  color: #976d3b;
 }
 div.highlight pre .bp {
-  color: #517200;
+  color: #757575;
 }
 div.highlight pre .fm {
-  color: #007c3c;
+  color: #990000;
+  font-weight: bold;
 }
 div.highlight pre .vc {
-  color: #00688b;
+  color: #008080;
 }
 div.highlight pre .vg {
-  color: #00688b;
+  color: #008080;
 }
 div.highlight pre .vi {
-  color: #00688b;
+  color: #008080;
 }
 div.highlight pre .vm {
-  color: #00688b;
+  color: #008080;
 }
 div.highlight pre .il {
-  color: #a538c4;
+  color: #008080;
 }

@@ -4,6 +4,8 @@ div.highlight pre .hll {
 div.highlight pre {
   background-color: #272822;
   color: #f8f8f2;
+  box-shadow: 0 4px 8px 0 rgba(39, 40, 34, 1),
+    4px 4px 14px 0px rgba(39, 40, 34, 0.6);
 }
 div.highlight pre .c {
   color: #949076;
