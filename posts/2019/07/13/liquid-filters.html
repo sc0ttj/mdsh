@@ -40,7 +40,7 @@
 <meta property="article:author" content="sc0ttj">
 <meta property="article:section" content="">
 <meta property="article:published_time" content="2019-07-13T23:56:01Z">
-<meta property="article:modified_time" content="2019-08-05T02:21:26Z">
+<meta property="article:modified_time" content="2019-08-08T21:01:47Z">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Liquid Filters">
@@ -55,7 +55,7 @@
   "@type": "Article",
   "headline": "Liquid Filters",
   "datePublished": "2019-07-13T23:56:01Z",
-  "dateModified": "2019-08-05T02:21:26Z",
+  "dateModified": "2019-08-08T21:01:47Z",
   "description": "A new feature has been added, inspired by the liquid templating system, which allows filters to be applied to page data in your templates and Markdown.",
   "keywords": "mustache, markdown, liquid-templating",
   "image": {
@@ -146,16 +146,16 @@
 <link rel="author" href="/humans.txt">
 <link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html">
 <!-- App icons and favicons -->
-<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1564971715">
-<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1564971715">
-<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1564971715">
-<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1564971715">
-<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1564971715">
-<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1564971715">
-<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1564971715">
-<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1564971715">
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1565298136">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1565298136">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1565298136">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1565298136">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1565298136">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1565298137">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1565298137">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1565298137">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1564971715">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1565298137">
 <meta name="theme-color" content="#101010">
 <!-- Fallback app name, for legacy browsers -->
 <meta name="application-name" content="mdsh">
@@ -164,10 +164,10 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- site css -->
 <style>/* inline styles go here */</style>
-<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1564971716">
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1565298137">
 
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.css?v=1564971716">
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai.css?v=1565298137">
 <script>
 // enable styling of some HTML elements in IE < 9
 document.createElement("picture");
@@ -179,7 +179,7 @@ document.createElement("time");
 <script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
 
 <!-- main javascript app -->
-<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1564971716"></script>
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1565298137"></script>
 </head>
 <body class="no-js category-blog liquid-filters">
   <div class="main-container">
@@ -283,8 +283,6 @@ page data variables described above.</p>
 
 <div class="highlight"><pre><span></span>&lt; ?bash <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$something</span><span class="s2">&quot;</span> <span class="p">|</span> replace_all foo bar <span class="p">;</span>? &gt;
 </pre></div>
-
-<br>
 
 <!-- more -->
 
@@ -627,7 +625,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">modulo</div>
 <div class="filter-body">
 <p>Find remainder after division of input and given number</p>
-<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> modulo<span class="o">}}</span>
+<div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> modulo <span class="m">3</span><span class="o">}}</span>
 </pre></div>
 </div>
 
@@ -679,19 +677,26 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
 <div class="filter-heading">money</div>
 <div class="filter-body">
 <p>Converts number to money format, with currency symbol (locale aware).</p>
-<p>Optionally give the currency symbol as the second parameter to override the locale default.</p>
+<p>Optional: give the currency symbol to override the locale default.</p>
 <div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> money £<span class="o">}}</span>
+</pre></div>
+<p>If input is `10`, it will output:</p>
+<div class="highlight"><pre><span></span>£10.00
 </pre></div>
 </div>
 
 <div class="filter-heading">money_with_currency</div>
 <div class="filter-body">
 <p>Converts number to money format, with currency symbol and name (locale aware)</p>
+<p>Optional:</p>
 <ul>
-<li>Optionally give the currency symbol as the second parameter to override the locale default.</li>
-<li>Optionally give the currency name as the third parameter to override the locale default.</li>
+  <li>Give a currency symbol as the first parameter to override locale defaults.</li>
+  <li>Give a currency name as the second parameter to override locale defaults.</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="o">{{</span>someNumber <span class="p">|</span> money_with_currency £ GBP<span class="o">}}</span>
+</pre></div>
+<p>If input is `10`, it will output:</p>
+<div class="highlight"><pre><span></span>£10.00 GBP
 </pre></div>
 </div>
 
