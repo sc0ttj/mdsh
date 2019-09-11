@@ -1,9 +1,9 @@
 <ul class="search-results">
-  {{#ITEMS}}
+  {{#foreach post in site_posts}}
   <li class="result">
-    <h3><a href="{{ITEM.url}}">{{ITEM.title}}</a></h3>
-    <div>{{ITEM.descr}}</div>
-    <div><span>Tags:</span> {{ITEM.tags}}</div>
+    <h3><a href="{{post.url}}">{{post.title}}</a></h3>
+    <div>{{post.descr}}</div>
+    <div><span>Tags:</span> <em>{{post.tags}}</em></div>
   </li>
-  {{/ITEMS}}
+  {{/foreach}}
 </ul>

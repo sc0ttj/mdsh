@@ -1,0 +1,7 @@
+<ul class="authors-list">
+  {{#foreach author in site_authors}}
+    <li>
+      <a href="{{author.url}}">{{author.title}}</a> ({{author.post_count}})
+    </li>
+  {{/foreach}}
+</ul>

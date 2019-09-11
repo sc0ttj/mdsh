@@ -6,12 +6,12 @@
     <li class="date"><time datetime="{{page_created}}">{{page_created | date_format "%Y-%m-%-d"}}</time></li>
     <li class="author">{{page_author}}</li>
     <li class="twitter">{{page_twitter}}</li>
-    <li class="category"><a href="{{blog_url}}/categories/{{page_category}}.html">{{page_category}}</a></li>
+    <li class="category"><a href="{{site_url}}/categories/{{page_category}}.html">{{page_category}}</a></li>
     <li>
       <ul class="tags">
         {{#tags}}
         <li>
-          <a href="{{blog_url}}/tags/{{.}}.html">{{.}}</a>
+          <a href="{{site_url}}/tags/{{.}}.html">{{.}}</a>
         </li>
         {{/tags}}
       </ul>

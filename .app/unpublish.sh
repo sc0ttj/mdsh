@@ -16,27 +16,27 @@ post="${post//.html/}"
 post="${post//.mdsh/}"
 post="${post//.md/}"
 
-# set the name of the markdown file
-post_mdsh="${post}.mdsh"
-post_md="${post}.md"
-post_html="${post}.html"
+# set the name of the relevant filea
+page_mdsh="${post}.mdsh"
+page_md="${post}.md"
+page_html="${post}.html"
 
-post_file="$(find . -type f -name "${post_html}")"
+page_file="$(find . -type f -name "${page_html}")"
 
 # if the post html file doesn't exist, exit
-if [ ! -f "$post_file" ];then
+if [ ! -f "$page_file" ];then
   echo "Cannot find \"$1\""
   exit 1
 fi
 
 # set the date of the post from posts.csv
-post_date="$(grep -m1 "|${post_mdsh}|" posts.csv | cut -f1 -d'|')"
+page_date="$(grep -m1 "|${page_mdsh}|" posts.csv | cut -f1 -d'|')"
 
 
-echo "Unpublish: ${post}"
+echo "Unpublish: ${page_html}"
 # comment out the post and remove the html file
-sed -i "s:${post_date}|${post_mdsh}:#${post_date}|${post_mdsh}:g" posts.csv
-rm "$post_file"
+sed -i "s:${page_date}|${page_mdsh}:#${page_date}|${page_mdsh}:g" posts.csv
+rm "$page_file"
 
 .app/update_pages.sh -all
 

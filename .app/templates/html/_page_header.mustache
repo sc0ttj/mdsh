@@ -1,0 +1,13 @@
+        {{#is_blog_post}}
+          <div class="page-header">
+            <div class="page-meta">
+              <span class="time-to-read">{{page_time_to_read}}</span>
+              <span class="date"><time datetime="{{page_created}}">{{page_created | date_format iso8601}}</time></span>
+              <div class="tags">
+                {{#page_tags}}
+                <span><a href="{{site_url}}/tags/{{.}}.html">{{.}}</a></span>
+                {{/page_tags}}
+              </div>
+            </div>
+          </div>
+        {{/is_blog_post}}

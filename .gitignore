@@ -3,3 +3,7 @@ posts.csv
 *.mdsh
 *.md
 *.sh
+.credentials
+.credentials.yml
+.credentials.yaml
+assets/data/.credentials*

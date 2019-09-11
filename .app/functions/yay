@@ -1,0 +1,463 @@
+#!/bin/bash
+#
+# YAY - a bash Yamlesque parser
+#
+# YAML is a data configuration format consisting of hierarchial "collections"
+# of named data items. Yay is a parser that understands a subset of YAML, or
+# Yamlesque, that is indended as a way to provide basic configuration or other
+# data to bash shell scripts.
+#
+# Yamlesque has a structured syntax that is a small subset of YAML. Valid
+# Yamlesque is also valid YAML but the reverse isn't necessarily true due to
+# Yamlesque only supporting a basic subset of the YAML syntax. The name *Yay*
+# is a reminder that _**Yaml ain't Yamlesque!**_
+#
+# Valid Yamlesque will pass a YAML validity check: http://www.yamllint.com. The
+# full YAML specification is at http://yaml.org. Yamlesque meets the following
+# format specification:
+#
+#     <indent><key>:[<value>]
+#
+# Yay is inspired by http://stackoverflow.com/a/21189044
+#                and https://gist.github.com/pkuczynski/8665367
+#
+#
+# MIT License. See https://github.com/johnlane/random-toolbox
+#
+########################################################### JL 20150720i #####
+#
+# Yamlesque is written in a plain text file and such files contain one or more
+# input lines that consist of identifiers that are separated by whitespace:
+#
+# *  an indent
+# *  a key
+# *  a colon (:)
+# *  a value
+#
+# Lines beginning with the octothorpe character (`#` aka `hash`, `sharp` or
+# `pound`) are ignored, as is any trailing part of a line beginning with it.
+
+# In general, whitespace is ignored except when it is leading whitespace, in
+# which case it is considered to be an indent. An indent is zero or more pairs
+# of space characters (`TAB` isn't valid YAML), each representing one level of
+# indentation.
+#
+# Note that, unlike YAML, two spaces must be used for each level of indentation.
+#
+# If a line does not have a value then it defines a new collection of key/value
+# pairs which follow in subsequent lines and have one more level of indent.
+#
+# If a value is given then the key defines a setting in the collection. If the
+# value is wrapped in quotation marks then these are removed, otherwise the
+# value is used as-is including whitespace.
+#
+# Yay provides a bash function that reads an appropriately formatted data file
+# and produces associative array definitions containing the data read from the
+# file.
+#
+# This `yay_parse` function reads a Yay file and returns `bash` commands that
+# can be executed to define *associative* arrays containing the data defined
+# in the file. It takes one or two arguments:
+#
+#    yay_parse <filename> [<dataset>]
+#
+# Where `<filename>` is the name of the file. If the given name doesn't exist
+# then further searches are performed with the suffixes `.yay` and `.yml`
+# appended . The first matching file is used.
+#
+# The `<dataset>` is a label that is used to prefix the arrays that get
+# created to reduce the risk of collissions. If omitted then the filename,
+# less its suffix, is used.
+#
+# There are various ways to apply Yay definitions to the current shell environment:
+#
+# * `eval $(yay_parse demo)`
+# * `source <(yay_parse demo)`
+# * `yay_parse demo | source /dev/stdin`
+#
+# However, the easiest approach is to use the `yay` helper which loads data
+# from the given file and creates arrays in the current environment.
+#
+# $ yay demo
+#
+# Yay uses associative arrays which are a feature of Bash version 4. It will
+# not work with other bash versions.
+#
+# Usage
+#
+# First, include the Yay source in a script and then load a file
+#
+#    #!/bin/bash
+#    . /path/to/yay
+#    yay demo
+#
+# This leaves at least one array that is named after the data set. It will
+# have entries per top-level key/value pair. It will also have a special
+# entry called `keys` that contains a space-delimited string of the names of
+# all such keys. Another special entry called `children` lists the names of
+# further arrays defining other data sets within it. Such arrays follow the
+# same structure.
+#
+# Here is a recursive example that displays a data set:
+#
+#    # helper to get array value at key
+#    value() { eval echo \${$1[$2]}; }
+#
+#    # print a data set
+#    print_dataset() {
+#      for k in $(value $1 keys)
+#      do
+#        echo "$2$k = $(value $1 $k)"
+#      done
+#
+#      for c in $(value $1 children)
+#      do
+#        echo -e "$2$c\n$2{"
+#        print_dataset $c "  $2"
+#        echo "$2}"
+#      done
+#    }
+#
+#    yay demo
+#    print_dataset demo
+#
+function yaml_to_vars_ext {
+   local separator="${3:-_}"
+   # use given dataset prefix or imply from file name
+   [[ -n "$2" ]] && local prefix="${2}${separator}__" || {
+     local prefix=$(basename "$input")
+     prefix=${prefix%.*}
+     prefix="${prefix//-/_}${separator}"
+   }
+   prefix="${prefix//__/_}"
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=${fs:-$(echo @|tr @ '\034')} i=${i:-  }
+   cat $1 | \
+   awk -F$fs "{multi=0;
+       if(match(\$0,/$s\|$s\$/)){multi=1; sub(/$s\|$s\$/,\"\");}
+       if(match(\$0,/$s>$s\$/)){multi=2; sub(/$s>$s\$/,\"\");}
+       while(multi>0){
+           str=\$0; gsub(/^$s/,\"\", str);
+           indent=index(\$0,str);
+           indentstr=substr(\$0, 0, indent-1) \"$i\";
+           obuf=\$0;
+           getline;
+           while(index(\$0,indentstr)){
+               obuf=obuf substr(\$0, length(indentstr)+1);
+               if (multi==1){obuf=obuf \"\\\\n\";}
+               if (multi==2){
+                   if(match(\$0,/^$s\$/))
+                       obuf=obuf \"\\\\n\";
+                       else obuf=obuf \" \";
+               }
+               getline;
+           }
+           sub(/$s\$/,\"\",obuf);
+           print obuf;
+           multi=0;
+           if(match(\$0,/$s\|$s\$/)){multi=1; sub(/$s\|$s\$/,\"\");}
+           if(match(\$0,/$s>$s\$/)){multi=2; sub(/$s>$s\$/,\"\");}
+       }
+   print}" | \
+   sed  -e "s|^\($s\)?|\1-|" \
+       -ne "s|^$s#.*||;s|$s#[^\"']*$||;s|^\([^\"'#]*\)#.*|\1|;t1;t;:1;s|^$s\$||;t2;p;:2;d" | \
+   sed -ne "s|,$s\]$s\$|]|" \
+        -e ":1;s|^\($s\)\($w\)$s:$s\(&$w\)\?$s\[$s\(.*\)$s,$s\(.*\)$s\]|\1\2: \3[\4]\n\1$i- \5|;t1" \
+        -e "s|^\($s\)\($w\)$s:$s\(&$w\)\?$s\[$s\(.*\)$s\]|\1\2: \3\n\1$i- \4|;" \
+        -e ":2;s|^\($s\)-$s\[$s\(.*\)$s,$s\(.*\)$s\]|\1- [\2]\n\1$i- \3|;t2" \
+        -e "s|^\($s\)-$s\[$s\(.*\)$s\]|\1-\n\1$i- \2|;p" | \
+   sed -ne "s|,$s}$s\$|}|" \
+        -e ":1;s|^\($s\)-$s{$s\(.*\)$s,$s\($w\)$s:$s\(.*\)$s}|\1- {\2}\n\1$i\3: \4|;t1" \
+        -e "s|^\($s\)-$s{$s\(.*\)$s}|\1-\n\1$i\2|;" \
+        -e ":2;s|^\($s\)\($w\)$s:$s\(&$w\)\?$s{$s\(.*\)$s,$s\($w\)$s:$s\(.*\)$s}|\1\2: \3 {\4}\n\1$i\5: \6|;t2" \
+        -e "s|^\($s\)\($w\)$s:$s\(&$w\)\?$s{$s\(.*\)$s}|\1\2: \3\n\1$i\4|;p" | \
+   sed  -e "s|^\($s\)\($w\)$s:$s\(&$w\)\(.*\)|\1\2:\4\n\3|" \
+        -e "s|^\($s\)-$s\(&$w\)\(.*\)|\1- \3\n\2|" | \
+   sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)\(---\)\($s\)||" \
+        -e "s|^\($s\)\(\.\.\.\)\($s\)||" \
+        -e "s|^\($s\)-$s[\"']\(.*\)[\"']$s\$|\1$fs$fs\2|p;t" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p;t" \
+        -e "s|^\($s\)-$s\(.*\)$s\$|\1$fs$fs\2|" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\?\(.*\)$s\$|\1$fs\2$fs\3|" \
+        -e "s|^\($s\)[\"']\?\([^&][^$fs]\+\)[\"']$s\$|\1$fs$fs$fs\2|" \
+        -e "s|^\($s\)[\"']\?\([^&][^$fs]\+\)$s\$|\1$fs$fs$fs\2|" \
+        -e "s|$s\$||p" | \
+   awk -F$fs "{
+      gsub(/\t/,\"        \",\$1);
+      if(NF>3){if(value!=\"\"){value = value \" \";}value = value  \$4;}
+      else {
+        if(match(\$1,/^\&/)){anchor[substr(\$1,2)]=full_vn;getline};
+        indent = length(\$1)/length(\"$i\");
+        vname[indent] = \$2;
+        value= \$3;
+        for (i in vname) {if (i > indent) {delete vname[i]; idx[i]=0}}
+        if(length(\$2)== 0){  vname[indent]= ++idx[indent] };
+        vn=\"\"; for (i=0; i<indent; i++) { vn=(vn)(vname[i])(\"$separator\")}
+        vn=\"$prefix\" vn;
+        full_vn=vn vname[indent];
+        if(vn==\"$prefix\")vn=\"$prefix$separator\";
+        if(vn==\"_\")vn=\"__\";
+      }
+      assignment[full_vn]=value;
+      if(!match(assignment[vn], full_vn))assignment[vn]=assignment[vn] \" \" full_vn;
+      if(match(value,/^\*/)){
+         ref=anchor[substr(value,2)];
+         for(val in assignment){
+            if(index(val, ref)==1){
+               tmpval=assignment[val];
+               sub(ref,full_vn,val);
+               if(match(val,\"$separator\$\")){
+                  gsub(ref,full_vn,tmpval);
+               } else if (length(tmpval) > 0) {
+                  printf(\"%s=\\\"%s\\\"\n\", val, tmpval);
+               }
+               assignment[val]=tmpval;
+            }
+         }
+      } else if (length(value) > 0) {
+         printf(\"%s=\\\"%s\\\"\n\", full_vn, value);
+      }
+   }END{
+      asorti(assignment,sorted);
+      for(val in sorted){
+         if(match(sorted[val],\"$separator\$\"))
+            printf(\"%s=\\\"%s\\\"\n\", sorted[val], assignment[sorted[val]]);
+      }
+   }"
+}
+
+function yaml_to_vars {
+   # find input file
+   for f in "$1" "$1.yay" "$1.yml"
+   do
+     [[ -f "$f" ]] && input="$f" && break
+   done
+   [[ -z "$input" ]] && exit 1
+
+   local separator="${3:-_}"
+
+   # use given dataset prefix or imply from file name
+   [[ -n "$2" ]] && local prefix="${2}${separator}" || {
+     local prefix=$(basename "$input")
+     prefix=${prefix%.*}
+     prefix="${prefix//-/_}${separator}"
+   }
+   prefix="${prefix//__/_}"
+
+   if [ "$3" = "noprefix" ];then
+     prefix="_"
+   fi
+
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|,$s\]$s\$|]|" \
+        -e ":1;s|^\($s\)\($w\)$s:$s\[$s\(.*\)$s,$s\(.*\)$s\]|\1\2: [\3]\n\1  - \4|;t1" \
+        -e "s|^\($s\)\($w\)$s:$s\[$s\(.*\)$s\]|\1\2:\n\1  - \3|;p" $1 | \
+   sed -ne "s|,$s}$s\$|}|" \
+        -e ":1;s|^\($s\)-$s{$s\(.*\)$s,$s\($w\)$s:$s\(.*\)$s}|\1- {\2}\n\1  \3: \4|;t1" \
+        -e    "s|^\($s\)-$s{$s\(.*\)$s}|\1-\n\1  \2|;p" | \
+   sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)-$s[\"']\(.*\)[\"']$s\$|\1$fs$fs\2|p" \
+        -e "s|^\($s\)-$s\(.*\)$s\$|\1$fs$fs\2|p" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" | \
+   awk -F$fs '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]; idx[i]=0}}
+      if(length($2)== 0){  vname[indent]= ++idx[indent] };
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) { vn=(vn)(vname[i])("_")}
+         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, vname[indent], $3);
+      }
+   }'
+}
+
+yay_parse() {
+
+   # find input file
+   for f in "$1" "$1.yay" "$1.yml"
+   do
+     [[ -f "$f" ]] && input="$f" && break
+   done
+   [[ -z "$input" ]] && exit 1
+
+   # use given dataset prefix or imply from file name
+   [[ -n "$2" ]] && local prefix="$2" || {
+     local prefix=$(basename "$input"); prefix=${prefix%.*}; prefix=${prefix//-/_};
+   }
+
+   # if all keys are on the on top-level, then we dont wanna append
+   # the keys to the prefix (to make the variable/key names).. we
+   # wanna create an assoc array named after the file itself, and
+   # add the top-level keys to that assoc array.
+
+   # else, we want to preppend the file name to the top-level keys,
+   # and add all those keys to in indexed array
+
+   # we can set the preferred behaviour with the TOP_LEVEL_AS_ASSOC_ARRAY env var
+   #
+   # if TOP_LEVEL_AS_ASSOC_ARRAY=true, declare an assoc array, we'll add all
+   # top-level keys to it
+   if [ "$TOP_LEVEL_AS_ASSOC_ARRAY" = true ];then
+     echo "unset $prefix; declare -Ag $prefix 2>/dev/null;"
+   else
+     # if TOP_LEVEL_AS_ASSOC_ARRAY=false, declare an indexed array - we'll add the
+     # top-level keys (with filename prepended) as values to that array
+     echo "unset $prefix; declare -ag $prefix 2>/dev/null;"
+   fi
+
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   #sed -n -e "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+   #       -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" "$input" |
+   sed -ne "s|,$s\]$s\$|]|" \
+        -e ":1;s|^\($s\)\($w\)$s:$s\[$s\(.*\)$s,$s\(.*\)$s\]|\1\2: [\3]\n\1  - \4|;t1" \
+        -e "s|^\($s\)\($w\)$s:$s\[$s\(.*\)$s\]|\1\2:\n\1  - \3|;p" $1 | \
+   sed -ne "s|,$s}$s\$|}|" \
+        -e ":1;s|^\($s\)-$s{$s\(.*\)$s,$s\($w\)$s:$s\(.*\)$s}|\1- {\2}\n\1  \3: \4|;t1" \
+        -e    "s|^\($s\)-$s{$s\(.*\)$s}|\1-\n\1  \2|;p" | \
+   sed -ne "s|^\($s\):|\1|" \
+        -e "s|^\($s\)-$s[\"']\(.*\)[\"']$s\$|\1$fs$fs\2|p" \
+        -e "s|^\($s\)-$s\(.*\)$s\$|\1$fs$fs\2|p" \
+        -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p" | \
+   awk -F$fs '{
+      indent       = length($1)/2;
+      key          = $2;
+      value        = $3;
+
+      # No prefix or parent for the top level (indent zero)
+      root_prefix  = "'$prefix'_";
+      if (indent == 0) {
+        prefix = "";          parent_key = "'$prefix'";
+      } else {
+        prefix = root_prefix; parent_key = keys[indent-1];
+      }
+
+      keys[indent] = key;
+
+      # remove keys left behind if prior row was indented more than this row
+      for (i in keys) {if (i > indent) {delete keys[i]}}
+
+      # if we have a value
+      if (length(value) > 0) {
+
+        # set values here
+
+        # if the "key" is missing, make array indexed, not assoc..
+
+        if (length(key) == 0) {
+          # array item has no key, only a value..
+          # so, if we didnt already unset the assoc array
+          if (unsetArray == 0) {
+            # unset the assoc array here
+            printf("unset %s%s; ", prefix, parent_key);
+            # switch the flag, so we only unset once, before adding values
+            unsetArray = 1;
+          }
+          # array was unset, has no key, so add item using indexed array syntax
+          printf("%s%s+=(\"%s\");\n", prefix, parent_key, value);
+
+        } else {
+          # array item has key and value, add item using assoc array syntax
+          printf("%s%s[%s]=\"%s\";\n", prefix, parent_key, key, value);
+        }
+
+      } else {
+
+        # declare arrays here
+
+        # reset this flag for each new array we work on...
+        unsetArray = 0;
+
+        # if item has no key, declare indexed array
+        if (length(key) == 0) {
+          # indexed
+          printf("unset %s%s;\n\ndeclare -ag %s%s;\n", root_prefix, key, root_prefix, key);
+
+        # if item has numeric key, declare indexed array
+        } else if (key ~ /^[[:digit:]]/) {
+          printf("unset %s%s;\n\ndeclare -ag %s%s;\n", root_prefix, key, root_prefix, key);
+
+        # else (item has a string for a key), declare associative array
+        } else {
+          printf("unset %s%s;\n\ndeclare -Ag %s%s;\n", root_prefix, key, root_prefix, key);
+        }
+
+        # set root level values here
+
+        if (indent > 0) {
+          # add to associative array
+          printf("%s%s[%s]+=\"%s%s\";\n", prefix, parent_key , key, root_prefix, key);
+        } else {
+          # add to indexed array
+          printf("%s%s+=(\"%s%s\");\n", prefix, parent_key , root_prefix, key);
+        }
+
+      }
+   }'
+}
+
+
+# helper to load yay data file
+yay() {
+
+  if [ "$DEBUG_DATA" = true ];then
+    # yaml_to_vars_ext "$@"
+    echo >&2
+    yaml_to_vars "$@" >&2
+    echo >&2
+    yay_parse "$@" >&2
+  fi
+
+  # eval $(yaml_to_vars_ext "$@")
+  yaml_to_vars "$@" 2>/dev/null
+  yay_parse "$@" 2>/dev/null
+}
+
+print_site_data() {
+  for file in assets/data/*.yml
+  do
+    yaml_to_vars "$file" | grep -v 'unset'
+    yay_parse "$file" | grep -v 'unset'
+  done
+}
+
+lookup() {
+  local cached_var arr key
+
+  # if notation is something like foo[1].bar
+  if [ "$(echo "$1" | grep -E '[Aa-Zz]\[[0-9]\]')" != "" ];then
+    arr="$(eval echo \${${1%%.*}})"
+    key="${1#*.}";
+    cached_var="$(eval "echo \${${arr}[${key}]}")"
+
+  # if notation is something like foo[bar].baz
+  elif [ "$(echo "$1" | grep -E '[Aa-Zz]\[[Aa-Zz_]\]')" != "" ];then
+    arr="$(eval echo \${${1%%.*}})"
+    key="${1#*.}";
+    cached_var="$(eval "echo \${${arr}[${key}]}")"
+
+  # if notation is something like foo.baz
+  elif [ "$(echo "$1" | grep -E '[Aa-Zz_].[Aa-Zz_]')" != "" ];then
+    arr="${1%%.*}"
+    key="${1#*.}";
+    cached_var="$(eval "echo \${${arr}[${key}]}")"
+
+  # if notation is something like foo.bar
+  else
+    cached_var="$(eval "echo -n \${${1//./_}[@]}")"
+  fi
+
+  # if var exists, and not empty, return it
+  if [ ! -z "${cached_var[@]}" ];then
+    echo "${cached_var[@]}"
+    return
+  elif [ ! -z "${cached_var}" ];then
+    echo "${cached_var}"
+    return
+  fi
+
+  # still nothing found, check yml files for given item
+  [ ! -f "assets/data/${1%%.*}.yml" ] && return 1
+  .app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}"
+}

@@ -6,7 +6,7 @@
 
 [ -f .site_config ] && . .site_config
 
-sitedomain=https://${blog_domain}${blog_url}
+sitedomain=https://${site_domain}${site_url}
 
 mv sitemap.xml sitemap_prev.xml 2>/dev/null
 

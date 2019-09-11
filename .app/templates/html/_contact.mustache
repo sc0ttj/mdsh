@@ -1,7 +1,7 @@
 <p>Send me a message, question, some feedback or whatever.</p>
 
 {{#blog_twitter}}
-<p>You can also contact me on Twitter <a href="https://twitter.com/{{blog_twitter}}" target="_blank">{{blog_twitter}}</a>.</p>
+<p>You can also contact me on Twitter <a href="https://twitter.com/{{site_twitter}}" target="_blank">{{site_twitter}}</a>.</p>
 {{/blog_twitter}}
 
 <!--
@@ -29,7 +29,7 @@
 </form>
 <script type="text/javascript">
   // build the contact string
-  var str = '{{blog_email_safe}}';
+  var str = '{{site_email_safe}}';
   str = str.replace('__ __', '@');
   // add it to the page
   document.getElementById('contact-form').setAttribute('action', 'https://formspree.io/' + str);

@@ -1,0 +1,15 @@
+product1:
+  name: Product one
+  price: 1000
+product2:
+  name: Product two
+  price: 2000
+product3:
+  name: Product three
+  price: 3300
+product4:
+  name: Product four
+  price: 4440
+product5:
+  name: Product five
+  price: 5555

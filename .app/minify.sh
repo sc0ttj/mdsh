@@ -15,9 +15,9 @@
 echo "Minifying CSS.."
 
 # add google fonts CSS to main.min.css, so we dont need to include it separately
-if [ "${blog_fonts}" != "" ];then
+if [ "${site_fonts}" != "" ];then
   if [ ! -f assets/css/google_fonts.css ];then
-    curl "https://fonts.googleapis.com/css?family=${blog_fonts}" 2>/dev/null > assets/css/google_fonts.css
+    curl "https://fonts.googleapis.com/css?family=${site_fonts}" 2>/dev/null > assets/css/google_fonts.css
   fi
 fi
 
@@ -36,7 +36,7 @@ do
           -e 's/; /;/g' > "$minified_file"
 done
 
-if [ "${blog_fonts}" != "" ];then
+if [ "${site_fonts}" != "" ];then
   echo "Adding Google Font CSS.."
   cat assets/css/google_fonts.min.css assets/css/main.min.css > /tmp/cssfile.min
   mv /tmp/cssfile.min assets/css/main.min.css
@@ -45,18 +45,22 @@ fi
 # minify HTML
 #echo "Minifying HTML.."
 
-html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -u)"
+html_files="$(find . -type f -name "*.html" | grep -v 'min.html' | sort -u | uniq)"
+# temp fix to IFS, just in case the hmtl files contain spaces
+OLD_IFS=$IFS
+IFS="
+"
 for html_file in $html_files
 do
   if [ "$(grep "main.min.css?v=" "$html_file")" = "" ];then
     sed -i "s|main.css?v=|main.min.css?v=|g" "$html_file"
   fi
-  if [ "$(grep "pygments-${blog_code_highlight_theme}.min.css?v=" "$html_file")" = "" ];then
-    sed -i "s|pygments-${blog_code_highlight_theme}.css?v=|pygments-${blog_code_highlight_theme}.min.css?v=|g" "$html_file"
+  if [ "$(grep "pygments-${site_code_highlight_theme}.min.css?v=" "$html_file")" = "" ];then
+    sed -i "s|pygments-${site_code_highlight_theme}.css?v=|pygments-${site_code_highlight_theme}.min.css?v=|g" "$html_file"
   fi
   # dont minify HTML until we can skip contents of <pre>..</pre>
   #sed ':a;N;$!ba;/<div class="highlight"><pre>\.*<\/pre><\/div>/! s@>\s*<@><@g' $html_file > ${html_file//.html/.minhtml}
   #mv ${html_file//.html/.minhtml} ${html_file}
 done
-
+IFS=$OLD_IFS
 

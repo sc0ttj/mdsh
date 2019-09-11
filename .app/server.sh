@@ -32,14 +32,14 @@ if [ "$1" != "start" ];then
 fi
 
 
-# load the blog config, to get $blog_url, etc
+# load the blog config, to get $site_url, etc
 [ -f .site_config ] && source .site_config
 
 # work out where to start the server from
 OLD_IFS=$IFS
 IFS=/
 path=''
-for val in $blog_url
+for val in $site_url
 do
   [ "$val" = "" ] && continue
   path="${path}../"
@@ -118,7 +118,7 @@ echo -n $httpd_pid > /tmp/httpd_pid_nobody
 #echo
 echo "Started server in $(realpath ${webroot:-/var/www}) (pid $httpd_pid)"
 echo
-echo "Visit http://${server_name:-localhost}:${portnum}${blog_url} in your browser."
+echo "Visit http://${server_name:-localhost}:${portnum}${site_url} in your browser."
 echo
 echo "You can stop the server using:"
 echo "  server stop"

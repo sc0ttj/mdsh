@@ -1,0 +1,34 @@
+domain: sc0ttj.github.io
+url: /mdsh
+title: mdsh
+language: en
+descr: 'a simple static site generator for modern websites, written in Bash.'
+keywords: 'mdsh, static site generator, project page, open source, blog, news, feed'
+author: sc0ttj
+email: foo@example.com
+twitter: @foobar
+fonts: 'Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
+google_analytics_id:
+code_highlight_theme: monokai-osx
+search_enabled: true
+header_pages:
+  link1:
+    title: About
+    url: /mdsh/about.html
+  link2:
+    title: Archive
+    url: /mdsh/archive.html
+  link3:
+    title: Contact
+    url: /mdsh/contact.html
+  link4:
+    title: Search
+    url: /mdsh/search.html
+analytics_id:
+css: assets/css/main.css
+js_deps:
+  cashjs: cash-dom@2.3.9/dist/cash.min.js
+  jets: jets@0.14.1/jets.min.js
+js: assets/js/app.js
+
+

@@ -1,23 +1,36 @@
 # define the command-line interface (CLI)
 
-main_pages_list="$(ls -1 | grep -E "\.html$" | grep -vE 'index.html|404.html')"
-recent_posts_list="$(cut -f1,2 -d'|' ./posts.csv | sort -r | head -5 | tr '|' '/' | grep -v "^#")"
-categories_list="$(grep -v "^#" posts.csv | cut -f5 -d'|' | tr ',' '\n' | grep -v "^$" |sort -u | uniq)"
-tags_list="$(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v "^$" | sort -u | uniq)"
-
-# source functions used by mdsh
-for script in .app/functions/*.bash .app/functions/*.sh
-do
-  [ -f $script ] && source $script
-done
-
 # mo must be in $PATH to work, so add its parent dir to $PATH, if needed
 if [ "$(echo $PATH | grep '.app/functions')" = "" ];then
   export PATH=$PATH:.app/functions
 fi
-# mustache lib
-source .app/functions/mo
 
+# source functions used by mdsh
+libs="
+.app/functions/mo
+.app/functions/yay
+.app/functions/mdsh_functions.bash
+.app/functions/liquid_filters.bash
+.app/functions/mo-addons.bash
+.app/functions/generate*.bash
+"
+for script in $libs
+do
+  [ ! -z "$script" ] && [ -f "$script" ] && source "$script"
+done
+
+
+
+
+# define CLI below
+
+# mdsh:  init program (source scripts, functions, generate site data, etc)
+#
+# Usage: mdsh
+#
+function mdsh {
+  [ -f .site_config ] && source .site_config
+}
 
 # new:   create a new page or post, follow the on-screen
 #        instructions to choose title, description, etc
@@ -25,8 +38,8 @@ source .app/functions/mo
 # Usage: new <post|page>
 #
 function new {
- [ "$1" != "page" ] && [ "$1" != "post" ] && return 1
- ${PWD}/.app/create_${1}.sh $2 $3 $4 $5
+  [ "$1" != "page" ] && [ "$1" != "post" ] && return 1
+  ${PWD}/.app/create_${1}.sh $2 $3 $4 $5
 }
 
 # rebuild: Rebuild an HTML file from its source file. The source
@@ -35,6 +48,7 @@ function new {
 # Usage:   rebuild path/to/file.md[sh] [> path/to/file.html]
 #
 function rebuild {
+
   if [ -f "$1" ];then
     ${PWD}/.app/create_page.sh $1 $2
     return 0

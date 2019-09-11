@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{{html_tag}}
+
+
+<head>
+{{>page_meta}}
+</head>
+
+
+<!-- start body -->
+<body class="no-js {{#page_category}}category-{{page_category}}{{/page_category}} {{page_slug}}" style="background-color:#fefefe;">
+
+  <div class="main-container">
+
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>{{page_title}}</h2>
+
+        {{page_body}}
+
+      </div>
+    </div>
+
+    {{>site_footer}}
+
+  </div>
+
+</body>
+</html>

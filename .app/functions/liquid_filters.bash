@@ -60,15 +60,15 @@ function date_format {
 
 # string filters
 
-function basename {
+function base_name {
   local input="$1"
-  [ ! "$1" ] && get_stdin && input="$STDIN"
+  [ ! -f "$1" ] && get_stdin && input="$STDIN"
   echo -n "${input##*/}"
 }
 
-function dirname {
+function dir_name {
   local input="$1"
-  [ ! "$1" ] && get_stdin && input="$STDIN"
+  [ ! -f "$1" ] && get_stdin && input="$STDIN"
   echo -n "${input%/*}"
 }
 
@@ -238,9 +238,9 @@ function slice {
   cut -b${from}${to} 2>/dev/null
 }
 
-function absolute_url { get_stdin; echo -n "https://${blog_domain}${blog_url}/$STDIN"; }
+function absolute_url { get_stdin; echo -n "https://${site_domain}${site_url}/$STDIN"; }
 
-function relative_url { get_stdin; echo -n "${blog_url}/$STDIN"; }
+function relative_url { get_stdin; echo -n "${site_url}/$STDIN"; }
 
 function asset_url {
   get_stdin
@@ -487,6 +487,31 @@ csv_to_arrays() {
     declare -p new_array ${!row*}
 }
 
+function csv_to_data {
+    local -a values
+    local -a headers
+    local counter
+    local array_name="${1:-new_array}"
+
+    IFS=, read -r -a headers
+    eval "unset $array_name; declare -ag $array_name"
+    counter=1
+    while IFS=, read -r -a values; do
+        [ "$counter" = 1 ] && eval "echo unset $array_name"
+        rand="${RANDOM}"
+        eval "echo ${array_name:-new_array}+=\( row${counter}_${rand} \)"
+        declare -Ag "row${counter}_${rand}=($(
+            paste -d '' <(
+                printf "[%s]=\n" "${headers[@]}"
+            ) <(
+                printf "%q\n" "${values[@]}"
+            )
+        ))"
+        (( counter++ ))
+    done
+    declare -p ${array_name:-new_array} ${!row*}
+}
+
 function json_escape () {
   get_stdin
   printf '%s' "$STDIN" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
@@ -514,7 +539,7 @@ function at_least {
 
 function without_trailing_zeros {
   get_stdin
-  echo -n "${STDIN//.[0-9*]/}"
+  echo -n "${STDIN//.[0-9.*]*[^ A-Za-z\-_()]/}"
 }
 
 function to_int {
@@ -663,7 +688,7 @@ function concat {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -677,7 +702,7 @@ function compact {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -695,7 +720,7 @@ function unique {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -716,7 +741,7 @@ function exclude {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -735,7 +760,7 @@ function exclude_first {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -759,7 +784,7 @@ function exclude_last {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -784,7 +809,7 @@ function exclude_exact {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -801,9 +826,10 @@ function exclude_exact {
 
 function limit {
   get_stdin
+
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -830,7 +856,7 @@ function sort_array {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -847,7 +873,7 @@ function join_by {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -862,7 +888,7 @@ function where {
   get_stdin
   # if we received declare commands from csv_to_arrays,
   # eval them to set the arrays, and set STDIN to $new_array[@]
-  if [ "$(echo "$STDIN" | grep '^declare' -a)" != "" ];then
+  if [ "$(echo "$STDIN" | grep '^declare ')" != "" ];then
     source <(cat)
     eval "$STDIN"
     STDIN="${new_array[@]}"
@@ -872,7 +898,7 @@ function where {
   # if user gave "where foo = bar", or similar
   if [ $# -eq 3 ];then
     # create a new hash to return later
-    declare -A arrHash
+    declare -Ag arrHash
     # for each hash in the given array
     for hash in ${STDIN[@]}
     do

@@ -26,29 +26,24 @@ rm /tmp/_site_*.html &>/dev/null
 # clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
 
-# if $1 is a source file (mdsh)
 source_file=''
+partial_build=false
+# if $1 is a source file (mdsh)
 if [ -f "${1//.mdsh}.mdsh" ];then
-  source_file="$1"
-fi
-
-if [ -f "$source_file" ];then
-
-  post_year=''
-  post_month=''
-  post_day=''
-  post_author=''
-  post_category=''
-  post_tags=''
-  post_filter_author="" # no filter by default
-  post_filter_category="" # no filter by default
-  previous_post=""
-
-  # get the previous post
-  previous_post="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
-
   # we have a source file, so lets do a partial rebuild, which skips
   # rebuilding pages that haven't changed.
+  partial_build=true
+  source_file="${1//.mdsh}.mdsh"
+  relevant_year=''
+  relevant_month=''
+  relevant_day=''
+  relevant_author=''
+  relevant_category=''
+  relevant_tags=''
+  relevant_author_filter="" # no filter by default
+  relevant_category_filter="" # no filter by default
+  previous_page=""
+
 
   get_vars(){
   	local IFS="$1"
@@ -59,29 +54,45 @@ if [ -f "$source_file" ];then
   # lets filter our all the irrelevant years, months, tags, categories
   # before we rebuild our pages - so we dont have to rebuild any pages
   # which haven't actually changed
-	while get_vars "/" dir post_year post_month post_day ; do
-    post_author="$(grep -m1 '# author: ' "$source_file" 2>/dev/null | cut -f2 -d':' | sed 's/^ *//')"
-    post_category="$(grep -m1 '# category: ' "$source_file" 2>/dev/null | cut -f2 -d':' | cut -f1 -d',' | sed -e 's/^ *//' -e 's/ *$//')"
-    post_tags="$(grep -m1 '# tags: ' "$source_file" 2>/dev/null | cut -f2 -d':' | sed 's/^ *//'| tr ',' ' ')"
+	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
+    [ ! -f "$source_file" ] && continue
+    relevant_author="$(grep -m1 'author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
+    relevant_category="$(grep -m1 'category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
+    relevant_tags="$(grep -m1 'tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
+
+    # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
+    relevant_day="${relevant_day//\/*/}"
 
     # set some filters to filter out irrelevant tags, categories, etc
     # during our partial rebuilds
-    post_filter_author="grep $post_author"
-    post_filter_category="grep $post_category"
+    relevant_author_filter="grep $relevant_author"
+    relevant_category_filter="grep $relevant_category"
 
-    echo "post_year=$post_year"                            > /tmp/post_meta_details
-    echo "post_month=$post_month"                         >> /tmp/post_meta_details
-    echo "post_day=$post_day"                             >> /tmp/post_meta_details
-    echo "post_author=$post_author"                       >> /tmp/post_meta_details
-    echo "post_category=$post_category"                   >> /tmp/post_meta_details
-    echo "post_tags='$post_tags'"                         >> /tmp/post_meta_details
-    echo "post_filter_author=\"$post_filter_author\""     >> /tmp/post_meta_details
-    echo "post_filter_category=\"$post_filter_category\"" >> /tmp/post_meta_details
+    echo "relevant_year=$relevant_year"                            > /tmp/relevant_meta_details
+    echo "relevant_month=$relevant_month"                         >> /tmp/relevant_meta_details
+    echo "relevant_day=$relevant_day"                             >> /tmp/relevant_meta_details
+    echo "relevant_author=$relevant_author"                       >> /tmp/relevant_meta_details
+    echo "relevant_category=$relevant_category"                   >> /tmp/relevant_meta_details
+    echo "relevant_tags='$relevant_tags'"                         >> /tmp/relevant_meta_details
+    echo "relevant_author_filter=\"$relevant_author_filter\""     >> /tmp/relevant_meta_details
+    echo "relevant_category_filter=\"$relevant_category_filter\"" >> /tmp/relevant_meta_details
 	  #break # we just need to test 1 line
 	done <<< "$source_file"
+
   # get the posts meta info we just processed
-  source /tmp/post_meta_details
+  source /tmp/relevant_meta_details
+
+  # get the previous post
+  previous_page="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
+
+  # if a partial rebuild update the previous post, as it's prev/next links may have changed
+  if [ -f "posts/$previous_page" ];then
+    echo "Updating: posts/${previous_page//.mdsh/.html}"
+    .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
+  fi
+
 fi
+
 
 # read all posts
 cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
@@ -124,30 +135,24 @@ cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
 
   done
 
-# if a partial rebuild update the previous post, as it's prev/next links may have changed
-if [ -f "posts/$previous_post" ];then
-  echo "Updating: posts/${previous_post//.mdsh/.html}"
-  .app/create_page.sh "posts/${previous_post//.mdsh/md}" > "posts/${previous_post//.mdsh/.html}"
-fi
-
 # update the homepage
 echo "Updating: index.html"
-post_title="Homepage" .app/create_page.sh > index.html
+page_title="Homepage" .app/create_page.sh > index.html
 
 # update the relevant yearly index pages
 for year in $(ls -1 posts/)
 do
   [ ! -d posts/$year ] && continue
   # if a partial build, skip irrelevant years
-  [ "$post_year" != "" -a "$year" != "$post_year" ] && continue
+  [ "$partial_build" = true ] && [ "$year" != "$relevant_year" ] && continue
   yearly_posts="$(list_posts_in_dir "$year")"
   [ "$yearly_posts" = "" ] && continue
   echo "Updating: posts/$year/index.html"
   touch posts/$year/index.html
   # build the page
-  post_title="Posts from $year" \
-    post_descr="Here's a list of blog posts written in $year" \
-    post_url="$blog_url/posts/$year/index.html" \
+  page_title="Posts from $year" \
+    page_descr="Here's a list of blog posts written in $year" \
+    page_url="$site_url/posts/$year/index.html" \
     .app/create_page.sh "$yearly_posts" posts/$year/index.html
 
   # update monthly indexes
@@ -155,7 +160,7 @@ do
   do
     [ ! -d posts/$year/$month ] && continue
     # if a partial build, skip irrelevant months
-    [ "$post_month" != "" -a "$month" != "$post_month" ] && continue
+    [ "$partial_build" = true ] && [ "$month" != "$relevant_month" ] && continue
     monthly_posts="$(list_posts_in_dir "$year/$month" 2>/dev/null)"
     [ "$monthly_posts" = "" ] && continue
     month_name="$(date -d $year-$month-01 '+%B')"
@@ -163,9 +168,9 @@ do
     echo "Updating: posts/$year/$month/index.html"
     touch posts/$year/$month/index.html
     # build the page
-    post_title="Posts from ${month_name} $year" \
-      post_descr="Here's a list of blog posts written in ${month_name} $year" \
-      post_url="$blog_url/posts/$year/$month/index.html" \
+    page_title="Posts from ${month_name} $year" \
+      page_descr="Here's a list of blog posts written in ${month_name} $year" \
+      page_url="$site_url/posts/$year/$month/index.html" \
       .app/create_page.sh "$monthly_posts" > posts/$year/$month/index.html
   done
 done
@@ -175,74 +180,58 @@ done
 echo "Updating: 404.html"
 body_html="$(cat .app/templates/html/_404.mustache | mo)"
 # build the page
-post_title="Page not found" \
-  post_descr="The page you are looking for could not be found." \
-  post_url="${blog_url}/404.html" \
+page_title="Page not found" \
+  page_slug="404" \
+  page_descr="The page you are looking for could not be found." \
+  page_url="${site_url}/404.html" \
   .app/create_page.sh "${body_html}" > 404.html
 
 
 # update the archive page
-all_posts="$(cut -f1,2 -d'|' ./posts.csv | grep -v "^#" | tr '|' '/' | sort -u | sort -r)"
-if [ "$all_posts" != "" ];then
-  echo "Updating: archive.html"
-  echo -n '' > /tmp/itemlist
-  touch archive.html
-  classes="archive-posts posts"
-  datetime=true
-  ITEMS=()
-  for item in $all_posts
-  do
-    item_file="posts/$item"
-    [ ! -f "$item_file" ] && continue
-    item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
-    item_url="${blog_url}/posts/${item//.mdsh/.html}"
-    item_date="$(get_page_creation_date $item_file)"
-    item_datetime="$(echo "$item_date" | date_format "%Y-%m-%d")"
-    # update itemlist tmp file
-    echo "${item_url}" >> /tmp/itemlist
-    # set hash name
-    hash_name="hash_${RANDOM}"
-    # create the hash for the current page in the loop
-    declare -A "$hash_name"
-    eval $(add_keys_to_hash)
-  done
-  body_html="$(render _list)"
-  # build the page
-  post_title="Archive" \
-    post_descr="Here's a list of all posts on this blog, listed newest to oldest." \
-    post_url="$blog_url/archive.html" \
-    .app/create_page.sh "$body_html" > archive.html
-  # add archive page as posts/index.html  too)
-  (cd posts &>/dev/null; ln -s ../archive.html index.html &>/dev/null)
-fi
+echo "Updating: archive.html"
+touch archive.html
+# build the page
+page_title="Archive" \
+  page_slug="archive" \
+  page_descr="Here's a list of all posts on this blog, listed newest to oldest." \
+  page_url="$site_url/archive.html" \
+  .app/create_page.sh "$(render _archive)" > archive.html
+# add archive page as posts/index.html  too)
+(cd posts &>/dev/null && ln -s ../archive.html index.html &>/dev/null)
 
 
 echo "Updating: authors/index.html"
 touch authors/index.html
+# get the data (put into ITEMS)
 # build page
-post_title="Authors" \
-  post_descr="Here's a list of authors who've written for this site." \
-  post_url="$blog_url/authors/index.html" \
-  .app/create_page.sh "$(list_authors)" > authors/index.html
+page_title="Authors" \
+  page_slug="authors" \
+  page_descr="Here's a list of authors who've written for this site." \
+  page_url="$site_url/authors/index.html" \
+  .app/create_page.sh "$(render _authors)" > authors/index.html
+
 
 # update authors pages
 [ ! -d ./authors/ ] && mkdir ./authors/
-
-if [ "$post_filter_author" != "" ];then
-  all_authors="$(grep -v "^#" ./posts.csv | grep -v "^$" | cut -f4 -d'|' | tr ',' '\n' | $post_filter_author | sort -u)"
-else
-  all_authors="$(grep -v "^#" ./posts.csv | grep -v "^$" | cut -f4 -d'|' | tr ',' '\n' | sort -u)"
-fi
-for author in $all_authors
+for author_hash in ${site_authors[@]}
 do
-  file="authors/$(.app/slugify.sh "$author").html"
+  author="$(eval "echo \${$author_hash[title]}")"
+  author_slug="$(echo "$author" | slugify)"
+  [ -z "$author"      ] && continue
+  [ -z "$author_slug" ] && continue
+  # skip current author if not in $relevant_authors
+  [ "$partial_build" = true ] && [ "$(echo "${relevant_author}" | grep "$author")" = "" ] && continue
+  # else carry on
+  file="authors/${author_slug}.html"
+  touch $file
   echo "Updating: $file"
-  [ ! -f $file ] && touch $file
+  # get the data (put into ITEMS)
+  get_posts_by_author "$author"
   # build the page
-  post_title="Posts by $author" \
-    post_descr="Here's a list of posts written by $author." \
-    post_url="$blog_url/authors/${author}.html" \
-    .app/create_page.sh "$(list_posts_by_author "$author")" > $file
+  page_title="Posts by $author" \
+    page_descr="Here's a list of posts written by $author." \
+    page_url="$site_url/authors/${author}.html" \
+    .app/create_page.sh "$(render _list)" > $file
 done
 
 
@@ -250,84 +239,92 @@ done
 echo "Updating: categories/index.html"
 touch categories/index.html
 # build the page
-post_title="Categories" \
-  post_descr="Here's a list of posts categories" \
-  post_url="$blog_url/categories/index.html" \
-  .app/create_page.sh "$(list_categories)" > categories/index.html
+page_title="Categories" \
+  page_slug="categories" \
+  page_descr="Here's a list of posts categories" \
+  page_url="$site_url/categories/index.html" \
+  .app/create_page.sh "$(render _categories)" > categories/index.html
 
-# update category pages
-category_posts=''
-if [ "$post_filter_category" = "" ];then
-  site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' | tr ' ' ',' | tr ',' '\n'| sort -u)"
-elif [ -f "$source_file" ];then
-  site_categories="$(grep -v "^#" ./posts.csv | cut -f5 -d'|' | tr ' ' ',' | tr ',' '\n'| $post_filter_category | tr -d ' ' | sort -u)"
-fi
-for category in $site_categories
+
+# update each category index page
+for category_hash in ${site_categories[@]}
 do
-  [ "$category" = "" ] && continue
-  category_posts="$(list_posts_in_category "${category}")"
-  [ "$category_posts" = "" ] && continue
-  echo "Updating: categories/$category.html"
-  touch categories/$category.html
+  category="$(eval "echo \${$category_hash[title]}")"
+  category_slug="$(echo "$category" | slugify)"
+  [ -z "$category"      ] && continue
+  [ -z "$category_slug" ] && continue
+  # skip current category if not in $relevant_categories
+  [ "$partial_build" = true ] && [ "$(echo "${relevant_category}" | grep "$category")" = "" ] && continue
+  # else carry on
+  file="categories/${category_slug}.html"
+  touch $file
+  echo "Updating: $file"
+  # get the data (put into ITEMS)
+  get_posts_in_category "$category"
   # build the page
-  post_title="Posts in category '$category'" \
-    post_descr="Here's a list of posts in the category '$category'" \
-    post_url="$blog_url/categories/${category}.html" \
-    .app/create_page.sh "$category_posts" > categories/$category.html
+  page_title="Posts in category '$category'" \
+    page_descr="Here's a list of posts in the category '$category'" \
+    page_url="$site_url/categories/${category}.html" \
+    .app/create_page.sh "$(render _list)" > categories/$category.html
 done
 
 
-
 # update contact page
-if [ "$blog_email" != "" ];then
+if [ "$site_email" != "" ];then
   echo "Updating: contact.html"
-  blog_email_safe="${blog_email//@/__ __}"
+  site_email_safe="${site_email//@/__ __}"
   body_html="$(cat .app/templates/html/_contact.mustache | mo)"
   # build the page
-  post_title="Contact" \
-    post_descr="Contact us to send a message, question, some feedback or whatever." \
-    post_url="$blog_url/contact.html" \
+  page_title="Contact" \
+    page_slug="contact" \
+    page_descr="Contact us to send a message, question, some feedback or whatever." \
+    page_url="$site_url/contact.html" \
     .app/create_page.sh "${body_html}" > contact.html
 fi
 
+
 # search page
 echo "Updating: search.html"
-search_results="$(list_search_results)"
 # build the page
-post_title="Search" \
-  post_descr="Search this website for relevant post and articles" \
-  post_url="$blog_url/search.html" \
-  .app/create_page.sh "${search_results}" > search.html
-
+page_title="Search" \
+  page_slug="search" \
+  page_descr="Search this website for relevant post and articles (by title, description, category, tag)" \
+  page_url="$site_url/search.html" \
+  .app/create_page.sh "$(render _search_results)" > search.html
 
 # update tags index page
 echo "Updating: tags/index.html"
 touch tags/index.html
 # build the page
-post_title="Tags" \
-  post_descr="Here's a list of all tags on the site, to help you find some relevant content." \
-  post_url="$blog_url/tags/index.html" \
-  .app/create_page.sh "$(list_tags)" > tags/index.html
+page_title="Tags" \
+  page_slug="tags" \
+  page_descr="Here's a list of all tags on the site, to help you find some relevant content." \
+  page_url="$site_url/tags/index.html" \
+  .app/create_page.sh "$(render _tags)" > tags/index.html
+
 
 # update tags pages
-site_tags="$(grep -v "^#" ./posts.csv| cut -f6 -d'|' | tr ',' ' ' | tr ' ' '\n' | grep -v ^$ | sort -u)"
-for tag in $site_tags
+for tag_hash in ${site_tags[@]}
 do
+  tag="$(eval "echo \${$tag_hash[title]}")"
   [ "$tag" = "" ] && continue
-  # if doing a partial rebuild, skip current tag if not in $post_tags
-  if [ -f "$source_file" ] && [ "$(echo " ${post_tags//,/ } " | grep " $tag ")" = "" ];then
-    continue
-  fi
-  tagged_posts="$(list_posts_matching_tag "$tag")"
-  [ "$tagged_posts" = "" ] && continue
-  echo "Updating: tags/$tag.html"
-  touch tags/$tag.html
+  tag_slug="$(echo "$tag" | slugify)"
+  [ -z "$tag"      ] && continue
+  [ -z "$tag_slug" ] && continue
+  # if doing a partial rebuild, skip current tag if not in $page_tags
+  [ "$partial_build" = true ] && [ "$(echo " ${relevant_tags} " | grep " $tag ")" = "" ] && continue
+  # else carry on
+  echo "Updating: tags/${tag_slug}.html"
+  touch tags/$tag_slug.html
+  # get the data (put into ITEMS)
+  get_posts_matching_tag "$tag"
   # build the page
-  post_title="Posts matching '$tag'" \
-    post_descr="Here's a list of posts matching the tag '$tag'" \
-    post_url="$blog_url/tags/${tag}.html" \
-    .app/create_page.sh "$tagged_posts" > tags/$tag.html
+  page_title="Posts tagged '$tag'" \
+    page_descr="Here's a list of posts matching the tag '$tag'" \
+    page_url="$site_url/tags/${tag}.html" \
+    .app/create_page.sh "$(render _list)" > tags/$tag.html
 done
+
 
 # minify the HTML and CSS
 echo
@@ -335,10 +332,11 @@ echo
 
 # remove tmp and cache files
 rm /tmp/_site_*.html &>/dev/null
-rm /tmp/post_meta_details &>/dev/null
+rm /tmp/page_meta_details &>/dev/null
+rm /tmp/all_site_data &>/dev/null
 
 unset source_file
-unset previous_post
+unset previous_page
 
 echo
 echo "Finished."

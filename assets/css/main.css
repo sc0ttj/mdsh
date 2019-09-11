@@ -456,7 +456,7 @@ ul.archive-posts li {
   margin-left: 0;
   padding-left: 0;
 }
-.main-container > .site-navigation {
+.site-navigation {
   background-color: #101010;
   color: #eee;
   bottom: 48px;
@@ -471,31 +471,31 @@ ul.archive-posts li {
   vertical-align: top;
 }
 @media (min-width: 640px) {
-  .main-container > .site-navigation {
+  .site-navigation {
     padding: 12px 72px;
   }
 }
 
-.main-container > .site-navigation > li {
+.site-navigation > li {
   display: inline-block;
   text-align: left;
   vertical-align: top;
   width: 49%;
 }
-.main-container > .site-navigation--tags > div {
+.site-navigation--tags > div {
   margin: 0 12px;
 }
-.main-container > .site-navigation h3,
-.main-container > .site-navigation h4 {
+.site-navigation h3,
+.site-navigation h4 {
   color: #e0e0e0;
 }
-.main-container > .site-navigation a,
-.main-container > .site-navigation a:visited {
+.site-navigation a,
+.site-navigation a:visited {
   color: #ddd;
   text-decoration: none;
 }
-.main-container > .site-navigation a:hover,
-.main-container > .site-navigation a:focus {
+.site-navigation a:hover,
+.site-navigation a:focus {
   color: #fff;
   text-decoration: underline;
 }

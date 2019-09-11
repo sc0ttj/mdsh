@@ -32,18 +32,31 @@ echo -n "Category:     "
 read -er category
 echo -n "Tags (comma separated words or phrases): "
 read -er tags
-# if -all given, ask for all meta info
+echo -n "Layout:       "
+read -er -i main layout
+
+# set some defaults, based on site defaults
+permalink=""
+author="${author:-$site_author}"
+email="${email:-$site_email}"
+twitter="${twitter:-$site_twitter}"
+language="${language:-$site_language}"
+js_deps="${js_deps:-$site_js_deps}"
+
+# allow user to override site default if -all given
 if [ "$1" = "-all" ];then
+  echo -n "Permalink:       "
+  read -er -i "posts/$(echo "$title" | slugify)" permalink
   echo -n "Author:       "
-  read -er -i "$blog_author" author
+  read -er -i "$site_author" author
   echo -n "Email:        "
-  read -er -i "$blog_email" email
+  read -er -i "$site_email" email
   echo -n "Twitter:      "
-  read -er -i "$blog_twitter" twitter
+  read -er -i "$site_twitter" twitter
   echo -n "Language:     "
-  read -er -i "$blog_language" language
+  read -er -i "$site_language" language
   echo -n "JS deps (comma separated package names): "
-  read -er -i "$blog_js_deps" js_deps
+  read -er -i "$site_js_deps" js_deps
 fi
 
 # slugiy the tags
@@ -51,33 +64,35 @@ OLDIFS=$IFS
 IFS=","
 for tag in $tags
 do
-  fixed_tags="$fixed_tags $(.app/slugify.sh $tag | sed 's/^-//'),"
+  fixed_tags="$fixed_tags $(echo $tag | slugify | sed 's/^-//'),"
 done
 IFS=$OLD_IFS
+
 fixed_tags="$(echo "$fixed_tags" | sed -e 's/^ //' -e 's/,$//')"
 tags="$fixed_tags"
 
 # generate some more meta info
-slug=$(slugify.sh "$title")
+slug=$(echo "$title" | slugify)
 date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")"
 date_created="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 date_modified="$date_created"
 
 # set meta info
-meta_data="# title:        $title
-# slug name:    $slug
-# description:  $description
-# time to read: $time_to_read
-# category:     $category
-# tags:         $tags
-# author:       ${author:-$blog_author}
-# email:        ${email:-$blog_email}
-# twitter:      ${twitter:-$blog_twitter}
-# language:     ${language:-$blog_language}
-# JS deps:      ${js_deps:-$blog_js_deps}
-# created:      $date_created
-# modified:     $date_modified"
-
+meta_data="title:        $title
+slug:         $slug
+descr:        $description
+permalink:    $permalink
+time_to_read: $time_to_read
+created:      $date_created
+category:     $category
+tags:         $tags
+layout:       $layout
+author:       ${author:-$site_author}
+email:        ${email:-$site_email}
+twitter:      ${twitter:-$site_twitter}
+language:     ${language:-$site_language}
+js_deps:      $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
+modified:     $date_modified"
 
 # show meta info
 echo

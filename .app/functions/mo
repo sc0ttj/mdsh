@@ -31,6 +31,10 @@
 #
 # https://github.com/tests-always-included/mo
 
+# -----------------------------------------------------------------------------
+
+
+MO_ALLOW_FUNCTION_ARGUMENTS=true
 
 # Public: Template parser function.  Writes templates to stdout.
 #
@@ -596,13 +600,12 @@ moJoin() {
 #
 # Returns nothing.
 moLoadFile() {
-    local content len
+    local content len partialFile
 
     # The subshell removes any trailing newlines.  We forcibly add
     # a dot to the content to preserve all newlines.
     # As a future optimization, it would be worth considering removing
     # cat and replacing this with a read loop.
-
     content=$(cat -- "$2" && echo '.') || return 1
     len=$((${#content} - 1))
     content=${content:0:$len}  # Remove last dot
@@ -662,7 +665,6 @@ moParse() {
                   *'|'*) liquid_filter=true  ;;
                   *)     liquid_filter=false ;;
                 esac
-
                 # Loop, if/then, or pass content through function
                 # Sets context
                 moStandaloneAllowed moContent "${moContent[@]}" "$moIsBeginning"
@@ -685,6 +687,38 @@ moParse() {
                           # in moCallFunction
                           moTagIsFunction=true
                           moIsArray "$moTag" && moTagIsArray=true || moTagIsArray=false
+
+                          # for some iterators to work with liquid filters,
+                          #  we need to do the following:
+                          # - grab the filter,
+                          # - then get the array to filter
+                          # - then create a new, filtered array
+                          # - then pass that array in as the arguments to the iterator
+
+                          local the_filters the_array_name the_old_array the_new_array
+
+                          the_filters="${moContent[1]}"
+                          the_filters="${the_filters//*|/}"
+
+                          if [ "$the_filters" != "" ];then
+
+                            the_array_name="${moContent[1]}"
+                            the_array_name="${the_array_name// |*/}"
+                            the_array_name="${the_array_name//* /}"
+
+                            the_old_array="$(eval "echo \${$the_array_name[@]}")"
+                            the_new_array=($(echo ${the_old_array[@]} | $the_filters))
+
+                            # update moArgs to pass in the new, filtered array instead
+                            [ ! -z "$the_array_name" ] && moArgs="$(echo "$moArgs" | sed "s/$the_array_name/the_new_array/" | cut -f1 -d'|')"
+                          fi
+
+                        else
+                          # reset any temp stuff we created above
+                          unset the_filters
+                          unset the_array_name
+                          unset the_old_array
+                          unset the_new_array
                         fi
 
                         #: Consider piping the output to moGetContent
@@ -871,15 +905,30 @@ moPartial() {
 
     moTrimWhitespace moFilename "${3:1}"
 
+    local partialFile="${moFilename//.mustache/}.mustache"
+
+    if [ ! -f "$partialFile" ];then
+      [ -f "${MO_PARTIAL_DIR}${partialFile}" ] && partialFile="${MO_PARTIAL_DIR}${partialFile}"
+    fi
+
+    if [ ! -f "$partialFile" ];then
+      [ -f "${MO_PARTIAL_DIR}_${partialFile}" ] && partialFile="${MO_PARTIAL_DIR}_${partialFile}"
+    fi
+
+    partialFile="$(realpath "$partialFile" 2>/dev/null)"
+
+    [ ! -f "$partialFile" ] && return 1
+
     # Execute in subshell to preserve current cwd and environment
     (
         # It would be nice to remove `dirname` and use a function instead,
         # but that's difficult when you're only given filenames.
-        cd "$(dirname -- "$moFilename")" || exit 1
+        cd "$(dirname -- "$partialFile")" || exit 1
         moUnindented="$(
-            moLoadFile moPartial "${moFilename##*/}" || exit 1
+            # get the partial file contents as 'moPartial'
+            moLoadFile moPartial "${partialFile}" || exit 1
+            # parse the contents of the partial
             moParse "${moPartial}" "$6" true
-
             # Fix bash handling of subshells and keep trailing whitespace.
             # This is removed in moIndentLines.
             echo -n "."

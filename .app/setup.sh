@@ -14,83 +14,94 @@ mkdir -p ./tags/
 yellow="\033[38;5;3m"
 nc="\033[0m"
 
-# site defaults
-blog_title="mdsh"
-blog_language="en"
-blog_descr="mdsh - a simple static site generator for modern websites, written in Bash."
-blog_keywords="mdsh, static site generator, project page, open source, blog, news, feed"
-blog_categories="blog, bash, shell, javascript, css, programming, puppy linux, test, games"
-blog_domain="<USERNAME>.github.io"
-blog_url="/mdsh" # no trailing slash
-blog_author="YOUR NAME"
-blog_email="foo@bar.com"
-blog_twitter="@foobar"
-blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
-blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
-blog_google_analytics_id=""
-blog_code_highlight_theme="monokai"
-blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href=\"https://sc0ttj.github.io/mdsh/\">mdsh</a>"
+# set some site defaults
+site_title="mdsh"
+site_language="en"
+site_descr="mdsh - a simple static site generator for modern websites, written in Bash."
+site_keywords="mdsh, static site generator, project page, open source, blog, news, feed"
+site_domain="<USERNAME>.github.io"
+site_url="/mdsh" # no trailing slash
+site_author="YOUR NAME"
+site_email="foo@bar.com"
+site_twitter="@foobar"
+site_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
+site_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
+site_google_analytics_id=""
+site_code_highlight_theme="monokai"
+site_search_enabled=true
 
 # let user set site info
 echo
-read -e -i "$blog_title" -p "Enter a blog name:  " blog_title
+read -e -i "$site_title" -p "Enter a blog name:  " site_title
 echo
-read -e -i "$blog_language" -p "Enter a blog language (en, de, etc):  " blog_language
+read -e -i "$site_language" -p "Enter a blog language (en, de, etc):  " site_language
 echo
-read -e -i "$blog_descr" -p "Enter a blog description (~ 80 words):  " blog_descr
+read -e -i "$site_descr" -p "Enter a blog description (~ 80 words):  " site_descr
 echo
-read -e -i "$blog_keywords" -p "Enter some blog keywords (comma separated):  " blog_keywords
+read -e -i "$site_keywords" -p "Enter some blog keywords (comma separated):  " site_keywords
 echo
-read -e -i "$blog_categories" -p "Enter some blog categories (comma separated):  " blog_categories
+read -e -i "$site_domain" -p "Enter the blog domain:  " site_domain
 echo
-read -e -i "$blog_domain" -p "Enter the blog domain:  " blog_domain
+read -e -i "$site_url" -p "Enter the blog url (no trailing slash):  " site_url
 echo
-read -e -i "$blog_url" -p "Enter the blog url (no trailing slash):  " blog_url
+read -e -i "$site_author" -p "Enter the blog author (name or username):  " site_author
 echo
-read -e -i "$blog_author" -p "Enter the blog author (name or username):  " blog_author
+read -e -i "$site_email" -p "Enter the blog authors email:  " site_email
 echo
-read -e -i "$blog_email" -p "Enter the blog authors email:  " blog_email
+read -e -i "$site_twitter" -p "Enter the blog authors twitter handle:  " site_twitter
 echo
-read -e -i "$blog_twitter" -p "Enter the blog authors twitter handle:  " blog_twitter
+read -e -i "$site_fonts" -p "Enter the Google fonts to use (blank for none):  " site_fonts
 echo
-read -e -i "$blog_fonts" -p "Enter the Google fonts to use (blank for none):  " blog_fonts
+read -e -i "$site_js_deps" -p "Enter the JS deps (space separated NPM package names):  " site_js_deps
 echo
-read -e -i "$blog_js_deps" -p "Enter the JS deps (space separated NPM package names):  " blog_js_deps
+read -e -i "$site_code_highlight_theme" -p "Enter the code syntax highlighter theme (requires Pygments):  " site_code_highlight_theme
 echo
-read -e -i "$blog_code_highlight_theme" -p "Enter the code syntax highlighter theme (requires Pygments):  " blog_code_highlight_theme
-echo
-read -e -i "$blog_google_analytics_id" -p "Enter your Google Analytics ID (blank for none):  " blog_google_analytics_id
+read -e -i "$site_google_analytics_id" -p "Enter your Google Analytics ID (blank for none):  " site_google_analytics_id
 
 
 #
-# write site info to .site_config
-#
+# write site info to assets/data/site.yml
 
-echo "##################################################################
+# Note:
+# Any values containing spaces, pipe chars and colons
+# must be wrapped in single quotes
 
-# site defaults
-
-blog_title=\"$blog_title\"
-blog_language=\"$blog_language\"
-blog_descr=\"$blog_descr\"
-blog_keywords=\"$blog_keywords\"
-blog_categories=\"$blog_categories\"
-blog_domain=\"$blog_domain\"
-blog_url=\"$blog_url\" # no trailing slash
-blog_author=\"$blog_author\"
-blog_email=\"$blog_email\"
-blog_twitter=\"$blog_twitter\"
-blog_fonts='$blog_fonts'
-blog_js_deps=\"$blog_js_deps\"
-blog_google_analytics_id=\"\"
-blog_code_highlight_theme=\"$blog_code_highlight_theme\"
-blog_footer=\"© \${blog_title} \$(date -u +\"%Y\"). Powered by <a href=\"https://sc0ttj.github.io/mdsh/\">mdsh</a>\"
-
-##################################################################
+echo "site_title: '$site_title'
+site_language: $site_language
+site_descr: '$site_descr'
+site_keywords: '$site_keywords'
+site_domain: $site_domain
+site_url: $site_url
+site_author: $site_author
+site_email: $site_email
+site_twitter: $site_twitter
+site_fonts: '$site_fonts'
+site_google_analytics_id: $site_google_analytics_id
+site_code_highlight_theme: $site_code_highlight_theme
+search_enabled: $site_search_enabled
+header_pages:
+  link1:
+    title: About
+    url: $site_url/about.html
+  link2:
+    title: Archive
+    url: $site_url/archive.html
+  link3:
+    title: Contact
+    url: $site_url/contact.html
+  link4:
+    title: Search
+    url: $site_url/search.html
+analytics_id:
+css: assets/css/main.css
+js_deps:
+  cashjs: cash-dom@2.3.9/dist/cash.min.js
+  jets: jets@0.14.1/jets.min.js
+js: assets/js/app.js
+" > assets/data/site.yml
 
 source .app/cli-interface
-" > .site_config
 
 echo
 echo
-echo -e "Success: File ${yellow}.site_config updated."
+echo -e "Success: Site config updated."

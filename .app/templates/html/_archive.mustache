@@ -1,0 +1,7 @@
+<ul class="archive-posts posts">
+  {{#foreach post in site_posts}}
+    <li>
+      {{post.created | time_tag to_string}} <a href="{{post.url}}">{{post.title}}</a>
+    </li>
+  {{/foreach}}
+</ul>

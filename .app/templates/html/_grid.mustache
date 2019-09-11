@@ -9,11 +9,11 @@
         <p class="grid-item-name"><a href="{{ITEM.url}}">{{ITEM.name}}</a></p>
         -->
         <p class="grid-item-date">{{ITEM.date}}</p>
-        <p class="grid-item-author"><a href="{{blog_url}}/authors/{{author_slug}}.html">{{ITEM.author}}</a></p>
+        <p class="grid-item-author"><a href="{{site_url}}/authors/{{author_slug}}.html">{{ITEM.author}}</a></p>
         <p class="grid-item-descr">{{ITEM.descr}}</p>
         <p class="grid-item-tags">
           {{#tags}}
-          <span><a class="tag" href="{{blog_url}}/tags/{{.}}.html">{{.}}</a></span>
+          <span><a class="tag" href="{{site_url}}/tags/{{.}}.html">{{.}}</a></span>
           {{/tags}}
         </p>
       </figcaption>

@@ -50,10 +50,10 @@ if [ -f .site_config ];then
 fi
 
 num_files=18
-TITLE="${blog_title}"
-site="${blog_domain}${blog_url}"
-email="${blog_email}"
-author="${blog_author}"
+TITLE="${site_title}"
+site="${site_domain}${site_url}"
+email="${site_email}"
+author="${site_author}"
 suggested_update_freq=1440 #mins
 
 : ${TITLE=$site}

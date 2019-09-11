@@ -2,39 +2,21 @@
 
 # Script for creating HTML pages from markdown files or HTML strings
 
-# load the local config file
-[ -f .site_config ] && source .site_config
+# we will write to file if $2 is a file, else to stdout
+if [ -f "$2" ];then
+  output_file="$2"
+fi
 
 # set some dates to use later
 current_date="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 current_year="$(date -u +"%Y")"
 timestamp=$(date +%s)
 
-# set vars for page, globals used by various funcs
-site_title=''
-page_fonts=''
-page_lang=''
-page_title=''
-page_slug=''
-page_descr=''
-page_category=''
-page_dir=''
-page_created=''
-page_modified=''
-page_time_to_read=''
-page_keywords=''
-page_author=''
-page_author_slug=''
-page_twitter=''
-page_js_deps=''
-page_google_analytics_id=''
-page_url=''
-AUTO_APPEND=''
+# load the local config file
+[ -f .site_config ] && source .site_config
 
-# we will write to file if $2 is a file, else to stdout
-if [ -f "$2" ];then
-  output_file="$2"
-fi
+is_blog_post=''
+AUTO_APPEND=''
 
 ################################################################################
 
@@ -47,12 +29,43 @@ fi
 body_html=''
 markdown=''
 
-# set the page data used by the templates:
-# use data passed in by user or post source ($post_*),
-# or fallback to site defaults ($blog_)
-set_page_data "$1"
+# set the data used by the templates:
+# - get data from post front matter
+# - or fallback to site defaults ($site_)
+get_page_data "$1"
+get_linked_data
+get_css_meta
+get_js_meta
+if [ "$is_blog_post" = true ];then
+  get_prev_and_next_pages
+fi
+
+echo '' > /tmp/${page_slug}_itemlist
+
+# also get data from data folder (assets/data/<page-slug>/<file>)
+if [ -d "assets/data/${page_slug}/" ];then
+  # source sh files
+  for sh_file in assets/data/${page_slug}/*.sh
+  do
+    [ ! -z "$sh_file" ] && [ -f "$sh_file" ] && source "$sh_file"
+  done
+  # parse yml files
+  for yaml_file in assets/data/${page_slug}/*.yml
+  do
+    [ ! -z "$yaml_file" ] && [ -f "$yaml_file" ] && eval $(yay "$yaml_file")
+  done
+  # parse CSV files (they must contain headers!)
+  for csv_file in assets/data/${page_slug}/*.csv
+  do
+    [ ! -f "$csv_file" ] && continue
+    arrayName="$(basename "$csv_file" .csv)"
+    csv_data="$(cat "$csv_file" | csv_to_data $arrayName)"
+    eval "$csv_data"
+  done
+fi
 
 # get the source HTML/markdown from STDIN (file or string)
+
 
 # if given an mdsh file, then build its markdown file,
 # then grab the markdown from that new file
@@ -70,7 +83,7 @@ elif [ "$1" != "" ] && [ "$1" != "-all" ] && [ "$1" != "-ALL" ];then
 
 # no input, or doing all pages, so generate default homepage
 elif [ -z "$1" ] || [ "$1" = "-all" ] || [ "$1" = "-ALL" ];then
-  body_html="$(homepage)"
+  body_html="$(generate_homepage)"
 fi
 
 
@@ -78,9 +91,6 @@ fi
 if [ "$markdown" != "" ];then
 
   [ ! "$1" ] && return 1
-
-  # set some variables to put into the post HTML
-  set_post_info "$1"
 
   # do some pre-processing of the markdown before converting to html
   echo "$markdown" > /tmp/markdown
@@ -113,7 +123,10 @@ fi
 # at this point, we have $body_html, and we can build our page
 #
 
-create_page_html > /tmp/htmlfile
+# set {{page_body}} - used in the main.mustache template
+page_body="${body_html}"
+# render the main template
+render ${page_layout:-main} 1>/tmp/htmlfile
 
 # use minified CSS if it exists
 if [ "$(grep -m1 "main.min.css?v=" /tmp/htmlfile)" = "" ] && \
@@ -128,19 +141,15 @@ else
   cat /tmp/htmlfile
 fi
 
+# create a permalink
+if [ "$page_permalink" != "" ];then
+  generate_page_permalink "$page_permalink"
+fi
+
 # clean up
 rm    /tmp/htmlfile
-unset post_file
-unset post_title
-unset post_heading
-unset post_slug
-unset post_category
-unset post_dir
-unset post_created
-unset post_modified
-unset post_time_to_read
-unset post_header
-unset post_url
+unset is_blog_post
+unset page_file
 unset site_title
 unset page_fonts
 unset page_header
@@ -149,6 +158,7 @@ unset page_title
 unset page_slug
 unset page_descr
 unset page_category
+unset page_permalink
 unset page_created
 unset page_modified
 unset page_time_to_read

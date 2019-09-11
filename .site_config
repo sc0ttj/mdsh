@@ -1,34 +1,15 @@
-##################################################################
-
-# site defaults
-
-blog_title="mdsh"
-blog_language="en"
-blog_descr="mdsh - a simple static site generator for modern websites, written in Bash."
-blog_keywords="mdsh, static site generator, project page, open source, blog, news, feed"
-blog_categories="blog, bash, shell, javascript, css, programming, puppy linux, test, games"
-blog_domain="sc0ttj.github.io"
-blog_url="/mdsh" # no trailing slash
-blog_author="sc0ttj"
-blog_email="foo@example.com"
-blog_twitter="@foobar"
-blog_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
-blog_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
-blog_google_analytics_id=""
-blog_code_highlight_theme="monokai-osx"
-blog_footer="© ${blog_title} $(date -u +"%Y"). Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a>"
-
-##################################################################
+#
+# you can add any variables, functions, etc that you need in here
+#
 
 # server_name:      optionally used by `server` script to set a local server
 #                   name other than 'localhost'. Requires the value set here
 #                   to be set as a line in /etc/hosts, like so:
 #
-#                     127.0.0.1 mycoolservername
+#                   127.0.0.1 mycoolservername
 #
 #server_name=mycoolservername
 
-# source CLI:       source the program commands and app logic
-#
-source .app/cli-interface.bash
 
+# don't remove this line:
+source .app/cli-interface.bash

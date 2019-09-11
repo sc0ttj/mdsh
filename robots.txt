@@ -1,9 +1,24 @@
-User-agent: *
+User-Agent: *
+Allow: /
 Allow: *.html$
+Disallow: *.mdsh$
+Disallow: *.md$
+Disallow: */posts.csv
 Disallow: */assets/
+Disallow: */authors/
 Disallow: */cgi-bin/
 Disallow: */categories/
 Disallow: */plugins/
 Disallow: */tags/
 Disallow: */users/
+Disallow: */search.html$
+Disallow: */search$
+Allow: /search.html?*
+
 Sitemap: https://sc0ttj.github.io/mdsh/sitemap.xml
+
+User-agent: msnbot
+User-agent: Slurp
+User-agent: bingbot
+Crawl-delay: 20
+
