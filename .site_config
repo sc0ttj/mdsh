@@ -2,6 +2,15 @@
 # you can add any variables, functions, etc that you need in here
 #
 
+
+# USE_EDITOR:       if true, open newly generated Markdown files in your
+#                   default terminal $EDITOR (recommended), else use mdshell,
+#                   an interactive shell where you can write your Markdown
+#                   file line by line.
+#
+USE_EDITOR=true
+
+
 # server_name:      optionally used by `server` script to set a local server
 #                   name other than 'localhost'. Requires the value set here
 #                   to be set as a line in /etc/hosts, like so:

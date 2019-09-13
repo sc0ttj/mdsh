@@ -125,27 +125,46 @@ echo "---"       >> "$mdsh_file"
 # create a matching valid markdown file
 echo -n ""       >> "$md_file"
 
-# final message
-echo "Saved meta data in: posts/$date_dir/${slug}.mdsh"
-echo
-echo "Now write your markdown below, line by line.
- * supports TAB completion (of file names, etc)
- * supports terminal hotkeys (skip words with Alt-f, Alt-b, etc)
- * supports embedding executable commands in your markdown
- * just start a sub-shell using <?bash //some code ;?> and
-   the results will be in the final markdown.
- * Hit ENTER 3 times to exit and save the file. "
-echo
+if [ "$USE_EDITOR" != true ];then
+
+  # final message
+  echo "Saved meta data in: posts/$date_dir/${slug}.mdsh"
+  echo
+  echo "Now write your markdown below, line by line.
+   * supports TAB completion (of file names, etc)
+   * supports terminal hotkeys (skip words with Alt-f, Alt-b, etc)
+   * supports embedding executable commands in your markdown
+   * just start a sub-shell using <?bash //some code ;?> and
+     the results will be in the final markdown.
+   * Hit ENTER 3 times to exit and save the file. "
+  echo
 
 
-#
-# begin interactive mdshell (user can create the markdown document line by line)
-#
+  #
+  # begin interactive mdshell (user can create the markdown document line by line)
+  #
 
-echo "## $title"
-echo
-# run interactive shell for writing the content itself, in markdown
-.app/mdshell.sh posts/$date_dir/${slug}.mdsh
+  echo "## $title"
+  echo
+  # run interactive shell for writing the content itself, in markdown
+  .app/mdshell.sh posts/$date_dir/${slug}.mdsh
+
+else
+  $EDITOR posts/$date_dir/${slug}.mdsh
+
+  # create the HTML page
+  html_file="posts/$date_dir/${slug}.html"
+  markdown_file="posts/$date_dir/${slug}.md"
+  rebuild "posts/$date_dir/${slug}.mdsh" > "$html_file"
+
+  echo "Saved as:"
+  echo
+  echo "HTML page:      $html_file"
+  echo "Markdown file:  $markdown_file"
+  echo "Source file:    posts/$date_dir/${slug}.mdsh"
+  echo
+
+fi
 
 # update the main database of posts for the site
 echo "$date_dir|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv

@@ -241,6 +241,7 @@ do
   # skip post if it's commented out in posts.csv
   [ "$(grep -m1 "${post}|" posts.csv | grep "^#" )" ] && continue
 
+  item_before=''
   item_after=''
   item_slug="${post//*|/}"
   item_slug="${item_slug//.mdsh/}"
