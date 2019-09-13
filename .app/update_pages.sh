@@ -408,8 +408,14 @@ do
     homepage)
       rebuild_homepage
       ;;
-    search)
-      rebuild_search_page
+    rss)
+      echo "Updating: feed.rss"
+      .app/create_rss.sh posts/ > feed.rss
+      exit
+      ;;
+    sitemap)
+      .app/generate_sitemap.sh
+      exit
       ;;
     authors*|author*)
       authors_to_build="${option//\//:}"

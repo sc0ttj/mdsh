@@ -48,17 +48,8 @@ function new {
 # Usage:   rebuild path/to/file.md[sh] [> path/to/file.html]
 #
 function rebuild {
-
   if [ -f "$1" ];then
     ${PWD}/.app/create_page.sh $1 $2
-    return 0
-  fi
-  if [ "$1" = "rss" ];then
-    .app/create_rss.sh posts/ > feed.rss
-    return 0
-  fi
-  if [ "$1" = "sitemap" ];then
-    ${PWD}/.app/generate_sitemap.sh
     return 0
   fi
   # $1 might be a parameter, like 'tags', 'year:2019', 'authors:foo,bar', '-all', ...
@@ -77,11 +68,11 @@ function help {
   echo
   echo "  new post -all                    # create a new post or page, asks to override various site settings"
   echo
-  echo "  new page "file.md" > file.html     # create a page from a Markdown file"
+  echo "  new page "file.md" > file.html   # create a page from a Markdown file"
   echo
-  echo "  new page "file.mdsh" > file.html   # create a page from a .mdsh file"
+  echo "  new page "file.mdsh" > file.html # create a page from a .mdsh file"
   echo
-  echo "  new page \"\$html\" > file.html     # create a page from an HTML string"
+  echo "  new page \"\$html\" > file.html  # create a page from an HTML string"
   echo
   echo "  rebuild                          # rebuild all index pages (authors, categories, tags, etc)"
   echo
@@ -99,7 +90,29 @@ function help {
   echo
   echo "  rebuild sitemap                  # re-build and update sitemap.xml"
   echo
-  echo "  publish                          # save and publish latest changes"
+  echo "  rebuild 404                      # re-build 404.html"
+  echo
+  echo "  rebuild search                   # re-build search.html"
+  echo
+  echo "  rebuild authors                  # re-build all pages in authors/"
+  echo
+  echo "  rebuild authors:foo,bar          # re-build pages authors/foo.html and tags/bar.html"
+  echo
+  echo "  rebuild categories               # re-build all pages in categories/"
+  echo
+  echo "  rebuild categories:foo,bar       # re-build pages categories/foo.html and tags/bar.html"
+  echo
+  echo "  rebuild tags                     # re-build all pages in tags/"
+  echo
+  echo "  rebuild tags:foo,bar             # re-build pages tags/foo.html and tags/bar.html"
+  echo
+  echo "  rebuild years                    # re-build all posts/<years>/index.html index pages"
+  echo
+  echo "  rebuild years:foo                # re-build posts/foo/index.html specifically"
+  echo
+  echo "  rebuild months <year>            # re-build all monthly index pages in posts/<year>/"
+  echo
+  echo "  rebuild months:foo <year>        # re-build posts/<year>/foo/index.html specifically"
   echo
   echo "  unpublish file.html              # remove a page from site, inc all indexes, publish changes"
 }
