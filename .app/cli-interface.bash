@@ -68,11 +68,11 @@ function help {
   echo
   echo "  new post -all                    # create a new post or page, asks to override various site settings"
   echo
-  echo "  new page "file.md" > file.html   # create a page from a Markdown file"
+  echo "  new page "file.md" > file.html     # create a page from a Markdown file"
   echo
-  echo "  new page "file.mdsh" > file.html # create a page from a .mdsh file"
+  echo "  new page "file.mdsh" > file.html   # create a page from a .mdsh file"
   echo
-  echo "  new page \"\$html\" > file.html  # create a page from an HTML string"
+  echo "  new page \"\$html\" > file.html     # create a page from an HTML string"
   echo
   echo "  rebuild                          # rebuild all index pages (authors, categories, tags, etc)"
   echo

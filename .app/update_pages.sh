@@ -26,6 +26,7 @@ rm /tmp/_site_*.html &>/dev/null
 # clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
 
+# set some vars
 partial_build=false
 source_file=''
 relevant_year=''
@@ -37,73 +38,6 @@ relevant_tags=''
 relevant_author_filter=''
 relevant_category_filter=''
 previous_page=''
-
-function rebuild_indexes_of_page {
-  # we have a source file, so lets do a partial rebuild, which skips
-  # rebuilding pages that haven't changed.
-  local source_file="${1//.html}"
-  source_file="${source_file//.mdsh}"
-  source_file="${source_file//.md}"
-  source_file="${source_file}.mdsh"
-
-  function get_vars {
-  	local IFS="$1"
-  	shift
-  	read $@
-  }
-
-  # lets filter our all the irrelevant years, months, tags, categories
-  # before we rebuild our pages - so we dont have to rebuild any pages
-  # which haven't actually changed
-	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
-    [ ! -f "$source_file" ] && continue
-    relevant_author="$(grep -m1 'author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
-    relevant_category="$(grep -m1 'category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
-    relevant_tags="$(grep -m1 'tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
-
-    # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
-    relevant_day="${relevant_day//\/*/}"
-
-    # set some filters to filter out irrelevant tags, categories, etc
-    # during our partial rebuilds
-    relevant_author_filter="grep $relevant_author"
-    relevant_category_filter="grep $relevant_category"
-
-    # we have to write these vars to a file, cos we're in a sub-shell
-    echo "relevant_year=$relevant_year"                            > /tmp/relevant_meta_details
-    echo "relevant_month=$relevant_month"                         >> /tmp/relevant_meta_details
-    echo "relevant_day=$relevant_day"                             >> /tmp/relevant_meta_details
-    echo "relevant_author=$relevant_author"                       >> /tmp/relevant_meta_details
-    echo "relevant_category=$relevant_category"                   >> /tmp/relevant_meta_details
-    echo "relevant_tags='$relevant_tags'"                         >> /tmp/relevant_meta_details
-    echo "relevant_author_filter=\"$relevant_author_filter\""     >> /tmp/relevant_meta_details
-    echo "relevant_category_filter=\"$relevant_category_filter\"" >> /tmp/relevant_meta_details
-	  #break # we just need to test 1 line
-	done <<< "$source_file"
-
-  # out ofthe sub-shell, lets get the posts meta info we just processed
-  source /tmp/relevant_meta_details
-
-  # get the previous post
-  previous_page="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
-
-  # if a partial rebuild update the previous post, as it's prev/next links may have changed
-  if [ -f "posts/$previous_page" ];then
-    echo "Updating: posts/${previous_page//.mdsh/.html}"
-    .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
-  fi
-
-  # finally, update all the relevant index pages (ignoring ones that don't list this post)
-  rebuild authors:$relevant_author categories:$relevant_category tags:$relevant_tags archive search homepage
-}
-
-
-# if $1 is a source file (passed in from create_post.sh)
-if [ -f "${1//.mdsh}.mdsh" ];then
-  partial_build=true
-  source_file="${1//.mdsh}.mdsh"
-  rebuild_indexes_of_page "$source_file"
-fi
 
 
 # read all posts
@@ -147,6 +81,8 @@ cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
 
   done
 
+
+##########################################
 
 function rebuild_homepage {
   echo "Updating: index.html"
@@ -355,6 +291,65 @@ function rebuild_tag_pages {
 }
 
 
+function rebuild_indexes_of_page {
+  # we have a source file, so lets do a partial rebuild, which skips
+  # rebuilding pages that haven't changed.
+  local source_file="${1//.html}"
+  source_file="${source_file//.mdsh}"
+  source_file="${source_file//.md}"
+  source_file="${source_file}.mdsh"
+
+  function get_vars {
+  	local IFS="$1"
+  	shift
+  	read $@
+  }
+
+  # lets filter our all the irrelevant years, months, tags, categories
+  # before we rebuild our pages - so we dont have to rebuild any pages
+  # which haven't actually changed
+	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
+    [ ! -f "$source_file" ] && continue
+    relevant_author="$(grep -m1 'author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
+    relevant_category="$(grep -m1 'category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
+    relevant_tags="$(grep -m1 'tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
+
+    # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
+    relevant_day="${relevant_day//\/*/}"
+
+    # set some filters to filter out irrelevant tags, categories, etc
+    # during our partial rebuilds
+    relevant_author_filter="grep $relevant_author"
+    relevant_category_filter="grep $relevant_category"
+
+    # we have to write these vars to a file, cos we're in a sub-shell
+    echo "relevant_year=$relevant_year"                            > /tmp/relevant_meta_details
+    echo "relevant_month=$relevant_month"                         >> /tmp/relevant_meta_details
+    echo "relevant_day=$relevant_day"                             >> /tmp/relevant_meta_details
+    echo "relevant_author=$relevant_author"                       >> /tmp/relevant_meta_details
+    echo "relevant_category=$relevant_category"                   >> /tmp/relevant_meta_details
+    echo "relevant_tags='$relevant_tags'"                         >> /tmp/relevant_meta_details
+    echo "relevant_author_filter=\"$relevant_author_filter\""     >> /tmp/relevant_meta_details
+    echo "relevant_category_filter=\"$relevant_category_filter\"" >> /tmp/relevant_meta_details
+	  #break # we just need to test 1 line
+	done <<< "$source_file"
+
+  # out ofthe sub-shell, lets get the posts meta info we just processed
+  source /tmp/relevant_meta_details
+
+  # get the previous post
+  previous_page="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
+
+  # if a partial rebuild update the previous post, as it's prev/next links may have changed
+  if [ -f "posts/$previous_page" ];then
+    echo "Updating: posts/${previous_page//.mdsh/.html}"
+    .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
+  fi
+
+  # finally, update all the relevant index pages (ignoring ones that don't list this post)
+  rebuild authors:$relevant_author categories:$relevant_category tags:$relevant_tags archive search homepage
+}
+
 ###############################################################################
 
 # allow granular rebuilds - so users can build specifc parts
@@ -392,6 +387,13 @@ function rebuild_tag_pages {
 #
 # rebuild tags:foo,bar year:2019 authors:someone search
 
+
+# if $1 is a source file (passed in from create_post.sh)
+if [ -f "${1//.mdsh}.mdsh" ];then
+  partial_build=true
+  source_file="${1//.mdsh}.mdsh"
+  rebuild_indexes_of_page "$source_file"
+fi
 
 for option in $@
 do
