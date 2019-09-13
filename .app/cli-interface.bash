@@ -53,10 +53,6 @@ function rebuild {
     ${PWD}/.app/create_page.sh $1 $2
     return 0
   fi
-  if [ "$1" = "homepage" ];then
-    post_title="Homepage" ${PWD}/.app/create_page.sh > index.html
-    return 0
-  fi
   if [ "$1" = "rss" ];then
     .app/create_rss.sh posts/ > feed.rss
     return 0
@@ -65,8 +61,8 @@ function rebuild {
     ${PWD}/.app/generate_sitemap.sh
     return 0
   fi
-  # $1 might be a parameter, like -all
-  ${PWD}/.app/update_pages.sh $1
+  # $1 might be a parameter, like 'tags', 'year:2019', 'authors:foo,bar', '-all', ...
+  ${PWD}/.app/update_pages.sh $@
 }
 
 function help {

@@ -26,26 +26,27 @@ rm /tmp/_site_*.html &>/dev/null
 # clean up posts.csv (remove any entries that have missing files)
 cp posts.csv /tmp/posts.csv
 
-source_file=''
 partial_build=false
-# if $1 is a source file (mdsh)
-if [ -f "${1//.mdsh}.mdsh" ];then
+source_file=''
+relevant_year=''
+relevant_month=''
+relevant_day=''
+relevant_author=''
+relevant_category=''
+relevant_tags=''
+relevant_author_filter=''
+relevant_category_filter=''
+previous_page=''
+
+function rebuild_indexes_of_page {
   # we have a source file, so lets do a partial rebuild, which skips
   # rebuilding pages that haven't changed.
-  partial_build=true
-  source_file="${1//.mdsh}.mdsh"
-  relevant_year=''
-  relevant_month=''
-  relevant_day=''
-  relevant_author=''
-  relevant_category=''
-  relevant_tags=''
-  relevant_author_filter="" # no filter by default
-  relevant_category_filter="" # no filter by default
-  previous_page=""
+  local source_file="${1//.html}"
+  source_file="${source_file//.mdsh}"
+  source_file="${source_file//.md}"
+  source_file="${source_file}.mdsh"
 
-
-  get_vars(){
+  function get_vars {
   	local IFS="$1"
   	shift
   	read $@
@@ -68,6 +69,7 @@ if [ -f "${1//.mdsh}.mdsh" ];then
     relevant_author_filter="grep $relevant_author"
     relevant_category_filter="grep $relevant_category"
 
+    # we have to write these vars to a file, cos we're in a sub-shell
     echo "relevant_year=$relevant_year"                            > /tmp/relevant_meta_details
     echo "relevant_month=$relevant_month"                         >> /tmp/relevant_meta_details
     echo "relevant_day=$relevant_day"                             >> /tmp/relevant_meta_details
@@ -79,7 +81,7 @@ if [ -f "${1//.mdsh}.mdsh" ];then
 	  #break # we just need to test 1 line
 	done <<< "$source_file"
 
-  # get the posts meta info we just processed
+  # out ofthe sub-shell, lets get the posts meta info we just processed
   source /tmp/relevant_meta_details
 
   # get the previous post
@@ -91,6 +93,16 @@ if [ -f "${1//.mdsh}.mdsh" ];then
     .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
   fi
 
+  # finally, update all the relevant index pages (ignoring ones that don't list this post)
+  rebuild authors:$relevant_author categories:$relevant_category tags:$relevant_tags archive search homepage
+}
+
+
+# if $1 is a source file (passed in from create_post.sh)
+if [ -f "${1//.mdsh}.mdsh" ];then
+  partial_build=true
+  source_file="${1//.mdsh}.mdsh"
+  rebuild_indexes_of_page "$source_file"
 fi
 
 
@@ -135,27 +147,17 @@ cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
 
   done
 
-# update the homepage
-echo "Updating: index.html"
-page_title="Homepage" .app/create_page.sh > index.html
 
-# update the relevant yearly index pages
-for year in $(ls -1 posts/)
-do
-  [ ! -d posts/$year ] && continue
-  # if a partial build, skip irrelevant years
-  [ "$partial_build" = true ] && [ "$year" != "$relevant_year" ] && continue
-  yearly_posts="$(list_posts_in_dir "$year")"
-  [ "$yearly_posts" = "" ] && continue
-  echo "Updating: posts/$year/index.html"
-  touch posts/$year/index.html
-  # build the page
-  page_title="Posts from $year" \
-    page_descr="Here's a list of blog posts written in $year" \
-    page_url="$site_url/posts/$year/index.html" \
-    .app/create_page.sh "$yearly_posts" posts/$year/index.html
+function rebuild_homepage {
+  echo "Updating: index.html"
+  page_title="Homepage" .app/create_page.sh > index.html
+}
 
-  # update monthly indexes
+
+function rebuild_monthly_indexes {
+  local year="$1"
+  # if no year given, assume current year
+  [ -z "$year" ] && year="$(date +"%Y")"
   for month in $(ls -1 posts/$year/)
   do
     [ ! -d posts/$year/$month ] && continue
@@ -173,9 +175,29 @@ do
       page_url="$site_url/posts/$year/$month/index.html" \
       .app/create_page.sh "$monthly_posts" > posts/$year/$month/index.html
   done
-done
+}
 
+function rebuild_yearly_indexes {
+  for year in $(ls -1 posts/)
+  do
+    [ ! -d posts/$year ] && continue
+    # if a partial build, skip irrelevant years
+    [ "$partial_build" = true ] && [ "$year" != "$relevant_year" ] && continue
+    yearly_posts="$(list_posts_in_dir "$year")"
+    [ "$yearly_posts" = "" ] && continue
+    echo "Updating: posts/$year/index.html"
+    touch posts/$year/index.html
+    # build the page
+    page_title="Posts from $year" \
+      page_descr="Here's a list of blog posts written in $year" \
+      page_url="$site_url/posts/$year/index.html" \
+      .app/create_page.sh "$yearly_posts" posts/$year/index.html
 
+    [ "$1" != "only" ] && rebuild_monthly_indexes $year
+  done
+}
+
+function rebuild_404_page {
 # update 404 page
 echo "Updating: 404.html"
 body_html="$(cat .app/templates/html/_404.mustache | mo)"
@@ -185,145 +207,279 @@ page_title="Page not found" \
   page_descr="The page you are looking for could not be found." \
   page_url="${site_url}/404.html" \
   .app/create_page.sh "${body_html}" > 404.html
+}
 
-
-# update the archive page
-echo "Updating: archive.html"
-touch archive.html
-# build the page
-page_title="Archive" \
-  page_slug="archive" \
-  page_descr="Here's a list of all posts on this blog, listed newest to oldest." \
-  page_url="$site_url/archive.html" \
-  .app/create_page.sh "$(render _archive)" > archive.html
-# add archive page as posts/index.html  too)
-(cd posts &>/dev/null && ln -s ../archive.html index.html &>/dev/null)
-
-
-echo "Updating: authors/index.html"
-touch authors/index.html
-# get the data (put into ITEMS)
-# build page
-page_title="Authors" \
-  page_slug="authors" \
-  page_descr="Here's a list of authors who've written for this site." \
-  page_url="$site_url/authors/index.html" \
-  .app/create_page.sh "$(render _authors)" > authors/index.html
-
-
-# update authors pages
-[ ! -d ./authors/ ] && mkdir ./authors/
-for author_hash in ${site_authors[@]}
-do
-  author="$(eval "echo \${$author_hash[title]}")"
-  author_slug="$(echo "$author" | slugify)"
-  [ -z "$author"      ] && continue
-  [ -z "$author_slug" ] && continue
-  # skip current author if not in $relevant_authors
-  [ "$partial_build" = true ] && [ "$(echo "${relevant_author}" | grep "$author")" = "" ] && continue
-  # else carry on
-  file="authors/${author_slug}.html"
-  touch $file
-  echo "Updating: $file"
-  # get the data (put into ITEMS)
-  get_posts_by_author "$author"
+function rebuild_archive_page {
+  echo "Updating: archive.html"
+  touch archive.html
   # build the page
-  page_title="Posts by $author" \
-    page_descr="Here's a list of posts written by $author." \
-    page_url="$site_url/authors/${author}.html" \
-    .app/create_page.sh "$(render _list)" > $file
+  page_title="Archive" \
+    page_slug="archive" \
+    page_descr="Here's a list of all posts on this blog, listed newest to oldest." \
+    page_url="$site_url/archive.html" \
+    .app/create_page.sh "$(render _archive)" > archive.html
+  # add archive page as posts/index.html  too)
+  (cd posts &>/dev/null && ln -s ../archive.html index.html &>/dev/null)
+}
+
+function rebuild_author_index {
+  echo "Updating: authors/index.html"
+  touch authors/index.html
+  # get the data (put into ITEMS)
+  # build page
+  page_title="Authors" \
+    page_slug="authors" \
+    page_descr="Here's a list of authors who've written for this site." \
+    page_url="$site_url/authors/index.html" \
+    .app/create_page.sh "$(render _authors)" > authors/index.html
+}
+
+
+function rebuild_author_pages {
+  [ ! -d ./authors/ ] && mkdir ./authors/
+  for author_hash in ${site_authors[@]}
+  do
+    author="$(eval "echo \${$author_hash[title]}")"
+    [ -z "$author" ] && continue
+    # skip current author if not in $relevant_authors
+    [ "$partial_build" = true ] && [ "__${author}__" != "__${relevant_author}__" ] && continue
+    # else carry on
+    author_slug="$(echo "$author" | slugify)"
+    [ -z "$author_slug" ] && continue
+    file="authors/${author_slug}.html"
+    touch $file
+    echo "Updating: $file"
+    get_posts_by_author "$author"
+    # build the page
+    page_title="Posts by $author" \
+      page_descr="Here's a list of posts written by $author." \
+      page_url="$site_url/authors/${author}.html" \
+      .app/create_page.sh "$(render _list)" > $file
+  done
+}
+
+function rebuild_category_index {
+  echo "Updating: categories/index.html"
+  touch categories/index.html
+  # build the page
+  page_title="Categories" \
+    page_slug="categories" \
+    page_descr="Here's a list of posts categories" \
+    page_url="$site_url/categories/index.html" \
+    .app/create_page.sh "$(render _categories)" > categories/index.html
+}
+
+
+function rebuild_category_pages {
+  for category_hash in ${site_categories[@]}
+  do
+    category="$(eval "echo \${$category_hash[title]}")"
+    [ -z "$category"      ] && continue
+    # skip current category if not in $relevant_categories
+    [ "$partial_build" = true ] && [ "__${category}__" != "__${relevant_category}__" ] && continue
+    # else carry on
+    category_slug="$(echo "$category" | slugify)"
+    [ -z "$category_slug" ] && continue
+    file="categories/${category_slug}.html"
+    touch $file
+    echo "Updating: $file"
+    # get the data (put into ITEMS)
+    get_posts_in_category "$category"
+    # build the page
+    page_title="Posts in category '$category'" \
+      page_descr="Here's a list of posts in the category '$category'" \
+      page_url="$site_url/categories/${category}.html" \
+      .app/create_page.sh "$(render _list)" > categories/$category.html
+  done
+}
+
+
+function rebuild_contact_page {
+  if [ "$site_email" != "" ];then
+    echo "Updating: contact.html"
+    site_email_safe="${site_email//@/__ __}"
+    body_html="$(cat .app/templates/html/_contact.mustache | mo)"
+    # build the page
+    page_title="Contact" \
+      page_slug="contact" \
+      page_descr="Contact us to send a message, question, some feedback or whatever." \
+      page_url="$site_url/contact.html" \
+      .app/create_page.sh "${body_html}" > contact.html
+  fi
+}
+
+
+function rebuild_search_page {
+  echo "Updating: search.html"
+  # build the page
+  page_title="Search" \
+    page_slug="search" \
+    page_descr="Search this website for relevant post and articles (by title, description, category, tag)" \
+    page_url="$site_url/search.html" \
+    .app/create_page.sh "$(render _search_results)" > search.html
+}
+
+
+function rebuild_tag_index {
+  echo "Updating: tags/index.html"
+  touch tags/index.html
+  # build the page
+  page_title="Tags" \
+    page_slug="tags" \
+    page_descr="Here's a list of all tags on the site, to help you find some relevant content." \
+    page_url="$site_url/tags/index.html" \
+    .app/create_page.sh "$(render _tags)" > tags/index.html
+}
+
+function rebuild_tag_pages {
+  # update tags pages
+  for tag_hash in ${site_tags[@]}
+  do
+    tag="$(eval "echo \${$tag_hash[title]}")"
+    [ "$tag" = "" ] && continue
+    # if doing a partial rebuild, skip current tag if not in $page_tags
+    [ "$partial_build" = true ] && [ "__${tag}__" != "__${relevant_tag}__" ] && continue
+    tag_slug="$(echo "$tag" | slugify)"
+    [ -z "$tag_slug" ] && continue
+    # else carry on
+    echo "Updating: tags/${tag_slug}.html"
+    touch tags/$tag_slug.html
+    # get the data (put into ITEMS)
+    get_posts_matching_tag "$tag"
+    # build the page
+    page_title="Posts tagged '$tag'" \
+      page_descr="Here's a list of posts matching the tag '$tag'" \
+      page_url="$site_url/tags/${tag}.html" \
+      .app/create_page.sh "$(render _list)" > tags/$tag.html
+  done
+}
+
+
+###############################################################################
+
+# allow granular rebuilds - so users can build specifc parts
+# of the site only, using commands in the following format:
+#
+# rebuild homepage            # rebuild index.html (the homepage)
+#
+# rebuild archive             # rebuild archive.html
+#
+# rebuild 404                 # rebuild 404.html
+#
+# rebuild search              # rebuild search.html
+#
+# rebuild authors             # rebuild all pages in authors/
+#
+# rebuild authors:foo,bar     # rebuild pages authors/foo.html and tags/bar.html
+#
+# rebuild categories          # rebuild all pages in categories/
+#
+# rebuild categories:foo,bar  # rebuild pages categories/foo.html and tags/bar.html
+#
+# rebuild tags                # rebuild all pages in tags/
+#
+# rebuild tags:foo,bar        # rebuild pages tags/foo.html and tags/bar.html
+#
+# rebuild years               # rebuild all posts/<years>/index.html index pages
+#
+# rebuild years:foo           # rebuild posts/foo/index.html specifically
+#
+# rebuild months 2019         # rebuild all monthly index pages in posts/2019/
+#
+# rebuild months:foo 2019     # rebuild posts/2019/foo/index.html specifically
+
+# NOTE: the commands above can also be combined like so:
+#
+# rebuild tags:foo,bar year:2019 authors:someone search
+
+
+for option in $@
+do
+  case "$option" in
+    '404')
+      rebuild_404_page
+      ;;
+    archive)
+      rebuild_archive_page
+      ;;
+    contact)
+      rebuild_contact_page
+      ;;
+    homepage)
+      rebuild_homepage
+      ;;
+    search)
+      rebuild_search_page
+      ;;
+    authors*|author*)
+      authors_to_build="${option//\//:}"
+      authors_to_build="${authors_to_build//*:/}"
+      authors_to_build="${authors_to_build//,/ }"
+      # build pages
+      [ "$authors_to_build" = "authors" ] && rebuild_author_index
+      for relevant_author in $authors_to_build
+      do
+        partial_build=true rebuild_author_pages
+      done
+    ;;
+    categories*|category*)
+      category_to_build="${option//*:/}"
+      category_to_build="${category_to_build//,*/}"
+      # build pages
+      [ "$category_to_build" = "categories" ] && rebuild_author_index
+      for relevant_category in $category_to_build
+      do
+        partial_build=true rebuild_category_pages
+      done
+    ;;
+    tags*|tag*)
+      tags_to_build="${option//\//:}"
+      tags_to_build="${tags_to_build//*:/}"
+      tags_to_build="${tags_to_build//,/ }"
+      # build pages
+      [ "$tags_to_build" = "tags" ] && rebuild_tag_index
+      for relevant_tag in $tags_to_build
+      do
+        partial_build=true rebuild_tag_pages
+      done
+    ;;
+    years*|year*)
+      years_to_build="${option//*:}"
+      years_to_build="${years_to_build//,/ }"
+      [ "$years_to_build" = "years" ] && partial_build=false || partial_build=true
+      for relevant_year in $years_to_build
+      do
+        partial_build=$partial_build rebuild_yearly_indexes only
+      done
+    ;;
+    months*|month*)
+      months_to_build="${option//*:}"
+      months_to_build="${months_to_build//,/ }"
+      [ "$months_to_build" = "months" ] && partial_build=false || partial_build=true
+      for relevant_month in $months_to_build
+      do
+        partial_build=$partial_build rebuild_monthly_indexes ${2:-$(date +"%Y")}
+      done
+    ;;
+  esac
 done
 
-
-# update categories index page
-echo "Updating: categories/index.html"
-touch categories/index.html
-# build the page
-page_title="Categories" \
-  page_slug="categories" \
-  page_descr="Here's a list of posts categories" \
-  page_url="$site_url/categories/index.html" \
-  .app/create_page.sh "$(render _categories)" > categories/index.html
-
-
-# update each category index page
-for category_hash in ${site_categories[@]}
-do
-  category="$(eval "echo \${$category_hash[title]}")"
-  category_slug="$(echo "$category" | slugify)"
-  [ -z "$category"      ] && continue
-  [ -z "$category_slug" ] && continue
-  # skip current category if not in $relevant_categories
-  [ "$partial_build" = true ] && [ "$(echo "${relevant_category}" | grep "$category")" = "" ] && continue
-  # else carry on
-  file="categories/${category_slug}.html"
-  touch $file
-  echo "Updating: $file"
-  # get the data (put into ITEMS)
-  get_posts_in_category "$category"
-  # build the page
-  page_title="Posts in category '$category'" \
-    page_descr="Here's a list of posts in the category '$category'" \
-    page_url="$site_url/categories/${category}.html" \
-    .app/create_page.sh "$(render _list)" > categories/$category.html
-done
-
-
-# update contact page
-if [ "$site_email" != "" ];then
-  echo "Updating: contact.html"
-  site_email_safe="${site_email//@/__ __}"
-  body_html="$(cat .app/templates/html/_contact.mustache | mo)"
-  # build the page
-  page_title="Contact" \
-    page_slug="contact" \
-    page_descr="Contact us to send a message, question, some feedback or whatever." \
-    page_url="$site_url/contact.html" \
-    .app/create_page.sh "${body_html}" > contact.html
+if [ -z "$1" ];then
+  # no options given, rebuild all index pages
+  partial_rebuild=false
+  rebuild_homepage
+  rebuild_yearly_indexes
+  rebuild_404_page
+  rebuild_archive_page
+  rebuild_author_index
+  rebuild_author_pages
+  rebuild_category_index
+  rebuild_category_pages
+  rebuild_contact_page
+  rebuild_search_page
+  rebuild_tag_index
+  rebuild_tag_pages
 fi
-
-
-# search page
-echo "Updating: search.html"
-# build the page
-page_title="Search" \
-  page_slug="search" \
-  page_descr="Search this website for relevant post and articles (by title, description, category, tag)" \
-  page_url="$site_url/search.html" \
-  .app/create_page.sh "$(render _search_results)" > search.html
-
-# update tags index page
-echo "Updating: tags/index.html"
-touch tags/index.html
-# build the page
-page_title="Tags" \
-  page_slug="tags" \
-  page_descr="Here's a list of all tags on the site, to help you find some relevant content." \
-  page_url="$site_url/tags/index.html" \
-  .app/create_page.sh "$(render _tags)" > tags/index.html
-
-
-# update tags pages
-for tag_hash in ${site_tags[@]}
-do
-  tag="$(eval "echo \${$tag_hash[title]}")"
-  [ "$tag" = "" ] && continue
-  tag_slug="$(echo "$tag" | slugify)"
-  [ -z "$tag"      ] && continue
-  [ -z "$tag_slug" ] && continue
-  # if doing a partial rebuild, skip current tag if not in $page_tags
-  [ "$partial_build" = true ] && [ "$(echo " ${relevant_tags} " | grep " $tag ")" = "" ] && continue
-  # else carry on
-  echo "Updating: tags/${tag_slug}.html"
-  touch tags/$tag_slug.html
-  # get the data (put into ITEMS)
-  get_posts_matching_tag "$tag"
-  # build the page
-  page_title="Posts tagged '$tag'" \
-    page_descr="Here's a list of posts matching the tag '$tag'" \
-    page_url="$site_url/tags/${tag}.html" \
-    .app/create_page.sh "$(render _list)" > tags/$tag.html
-done
 
 
 # minify the HTML and CSS
