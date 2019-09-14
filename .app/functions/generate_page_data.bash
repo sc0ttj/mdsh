@@ -15,6 +15,8 @@ function get_page_data {
   page_title="${page_title:-$site_title}"
   page_slug="${page_slug:-$(echo "$page_title" | slugify)}"
   page_fonts="${page_fonts:-$site_fonts}"
+  page_stylesheet="${page_stylesheet:-$site_stylesheet}"
+  page_code_stylesheet="${page_code_stylesheet:-$site_code_stylesheet}"
   page_lang="${site_language:-en}"
   page_descr="${page_descr:-$site_descr}"
 
@@ -293,20 +295,20 @@ function generate_ld_itemlist {
 # CSS
 function get_css_meta {
   inline_css="$(cat assets/css/inline.css 2>/dev/null)"
-  page_stylesheet="assets/css/$(basename "$output_file" 2>/dev/null | sed "s/\.html$/.css/")"
-  if [ -f "$page_stylesheet" ];then
-    page_stylesheet="${site_url}/${page_stylesheet}?v=$timestamp"
+  page_specific_stylesheet="assets/css/$(basename "$output_file" 2>/dev/null | sed "s/\.html$/.css/")"
+  if [ -f "$page_specific_stylesheet" ];then
+    page_specific_stylesheet="${site_url}/${page_specific_stylesheet}?v=$timestamp"
   else
-    page_stylesheet=''
+    page_specific_stylesheet=''
   fi
   # Pygments
   pygments=''
   pygments_theme=''
   if [ "$(which pygmentize)" != "" ] && \
-     [ -f "assets/css/pygments-${site_code_highlight_theme}.css" ]
+     [ -f "assets/css/pygments-${page_code_stylesheet}.css" ]
   then
     pygments=true
-    pygments_theme="${site_code_highlight_theme:-monokai}"
+    pygments_theme="${page_code_stylesheet:-monokai}"
   fi
 
 }

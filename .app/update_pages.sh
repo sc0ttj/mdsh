@@ -134,15 +134,14 @@ function rebuild_yearly_indexes {
 }
 
 function rebuild_404_page {
-# update 404 page
-echo "Updating: 404.html"
-body_html="$(cat .app/templates/html/_404.mustache | mo)"
-# build the page
-page_title="Page not found" \
-  page_slug="404" \
-  page_descr="The page you are looking for could not be found." \
-  page_url="${site_url}/404.html" \
-  .app/create_page.sh "${body_html}" > 404.html
+  echo "Updating: 404.html"
+  body_html="$(cat .app/templates/html/_404.mustache | mo)"
+  # build the page
+  page_title="Page not found" \
+    page_slug="404" \
+    page_descr="The page you are looking for could not be found." \
+    page_url="${site_url}/404.html" \
+    .app/create_page.sh "${body_html}" > 404.html
 }
 
 function rebuild_archive_page {
@@ -161,7 +160,6 @@ function rebuild_archive_page {
 function rebuild_author_index {
   echo "Updating: authors/index.html"
   touch authors/index.html
-  # get the data (put into ITEMS)
   # build page
   page_title="Authors" \
     page_slug="authors" \
@@ -247,6 +245,7 @@ function rebuild_contact_page {
 
 function rebuild_search_page {
   echo "Updating: search.html"
+  touch search.html
   # build the page
   page_title="Search" \
     page_slug="search" \
@@ -336,6 +335,7 @@ function rebuild_indexes_of_page {
 
   # out ofthe sub-shell, lets get the posts meta info we just processed
   source /tmp/relevant_meta_details
+  rm     /tmp/relevant_meta_details
 
   # get the previous post
   previous_page="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"

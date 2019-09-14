@@ -78,21 +78,21 @@ date_created="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 date_modified="$date_created"
 
 # set meta info
-meta_data="title:        $title
-slug:         $slug
-descr:        $description
-permalink:    $permalink
-time_to_read: $time_to_read
-created:      $date_created
-category:     $category
-tags:         $tags
-layout:       $layout
-author:       ${author:-$site_author}
-email:        ${email:-$site_email}
-twitter:      ${twitter:-$site_twitter}
-language:     ${language:-$site_language}
-js_deps:      $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
-modified:     $date_modified"
+meta_data="title:            $title
+slug:             $slug
+descr:            $description
+permalink:        $permalink
+time_to_read:     $time_to_read
+created:          $date_created
+category:         $category
+tags:             $tags
+layout:           $layout
+author:           ${author:-$site_author}
+email:            ${email:-$site_email}
+twitter:          ${twitter:-$site_twitter}
+language:         ${language:-$site_language}
+js_deps:          $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
+modified:         $date_modified"
 
 # show meta info
 echo

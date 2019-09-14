@@ -69,14 +69,14 @@
 <link rel="preconnect"   href="//unpkg.com" crossorigin>
 <!-- CSS -->
 <style>{{inline_css}}</style>
-<link rel="stylesheet" href="{{site_url}}/assets/css/main.css?v={{timestamp}}">
-{{#page_stylesheet}}
+<link rel="stylesheet" href="{{site_url}}/assets/css/{{page_stylesheet}}.css?v={{timestamp}}">
+{{#page_specific_stylesheet}}
 <!-- page specific CSS -->
-<link rel="stylesheet" href="{{page_stylesheet}}">
-{{/page_stylesheet}}
+<link rel="stylesheet" href="{{page_specific_stylesheet}}">
+{{/page_specific_stylesheet}}
 {{#pygments}}
 <!-- pygments (syntax highlighting) -->
-<link rel="stylesheet" href="{{site_url}}/assets/css/pygments-{{site_code_highlight_theme}}.css?v={{timestamp}}">
+<link rel="stylesheet" href="{{site_url}}/assets/css/pygments-{{page_code_stylesheet}}.css?v={{timestamp}}">
 {{/pygments}}
 <!-- JavaScript -->
 <script>

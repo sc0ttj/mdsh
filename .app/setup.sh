@@ -27,7 +27,7 @@ site_twitter="@foobar"
 site_fonts='Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin,latin-ext'
 site_js_deps="cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js"
 site_google_analytics_id=""
-site_code_highlight_theme="monokai"
+site_code_stylesheet="monokai"
 site_search_enabled=true
 
 # let user set site info
@@ -54,7 +54,7 @@ read -e -i "$site_fonts" -p "Enter the Google fonts to use (blank for none):  " 
 echo
 read -e -i "$site_js_deps" -p "Enter the JS deps (space separated NPM package names):  " site_js_deps
 echo
-read -e -i "$site_code_highlight_theme" -p "Enter the code syntax highlighter theme (requires Pygments):  " site_code_highlight_theme
+read -e -i "$site_code_stylesheet" -p "Enter the code syntax highlighter theme (requires Pygments):  " site_code_stylesheet
 echo
 read -e -i "$site_google_analytics_id" -p "Enter your Google Analytics ID (blank for none):  " site_google_analytics_id
 
@@ -77,7 +77,7 @@ site_email: $site_email
 site_twitter: $site_twitter
 site_fonts: '$site_fonts'
 site_google_analytics_id: $site_google_analytics_id
-site_code_highlight_theme: $site_code_highlight_theme
+site_code_stylesheet: $site_code_stylesheet
 search_enabled: $site_search_enabled
 header_pages:
   link1:

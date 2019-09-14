@@ -129,9 +129,9 @@ page_body="${body_html}"
 render ${page_layout:-main} 1>/tmp/htmlfile
 
 # use minified CSS if it exists
-if [ "$(grep -m1 "main.min.css?v=" /tmp/htmlfile)" = "" ] && \
-   [ -f assets/css/main.min.css ];then
-  sed -i "s|main.css?v=|main.min.css?v=|g" /tmp/htmlfile
+if [ "$(grep -m1 "${page_stylesheet:-$site_stylesheet}.min.css?v=" /tmp/htmlfile)" = "" ] && \
+   [ -f assets/css/${page_stylesheet:-$site_stylesheet}.min.css ];then
+  sed -i "s|${page_stylesheet:-$site_stylesheet}.css?v=|${page_stylesheet:-$site_stylesheet}.min.css?v=|g" /tmp/htmlfile
 fi
 
 # finally, return the finished HTML page
