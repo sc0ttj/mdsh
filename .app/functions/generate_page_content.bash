@@ -111,9 +111,9 @@ function process_markdown {
   do
     # oembed - if line contains a supported URL, convert to oembed HTML
     if [ "$(echo "$line" | grep -E "$oembed_filters")" != "" ];then
-      oembed_html="$(get_oembed_html "$line")"
+      oembed_html="$(get_oembed_html "${line/ */}")"
       [ "$oembed_html" != "" ] && line=""
-      echo -e "$oembed_html" >> /tmp/fixed_markdown
+      echo -e "<div class=\"oembed-container\" style=\"max-width: 100% !important; overflow: hidden;\">$oembed_html</div>" >> /tmp/fixed_markdown
     fi
 
     if [ "$(which pygmentize)" = "" ];then

@@ -74,26 +74,26 @@ oembed() {
             request_params[maxheight]=$2
             shift 2
             ;;
-        -- ) 
+        -- )
             shift
             break
             ;;
-        -* ) 
+        -* )
             echo "Invalid option: -$1" >&2
-            break 
+            break
             ;;
-        * ) 
+        * )
             request_params[url]=$1
             url=$1
             shift
-            break 
+            break
             ;;
       esac
     done
 
     provider_name=$(match_provider "$url")
     if [ -z "$provider_name" ]; then
-        >&2 echo "Could not find an oEmbed provider for the supplied URL." 
+        >&2 echo "Could not find an oEmbed provider for the supplied URL."
         exit 1
     fi
 
@@ -114,7 +114,6 @@ oembed() {
 
     eval curl $request_string --get $(get_provider_endpoint "$provider_name")
 }
-
 
 # If not sourced, execute the main function
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
