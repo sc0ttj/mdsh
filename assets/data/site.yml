@@ -9,7 +9,8 @@ email: foo@example.com
 twitter: @foobar
 fonts: 'Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
 google_analytics_id:
-code_highlight_theme: monokai-osx
+stylesheet: main
+code_stylesheet: monokai-osx
 search_enabled: true
 header_pages:
   link1:
