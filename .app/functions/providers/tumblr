@@ -1,0 +1,2 @@
+provider_url_regex='^http(s?)://[0-9a-zA-Z_-]+\.tumblr\.com/post/[0-9]+$'
+provider_endpoint='https://www.tumblr.com/oembed/1.0'

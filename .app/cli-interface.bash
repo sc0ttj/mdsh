@@ -19,8 +19,7 @@ do
   [ ! -z "$script" ] && [ -f "$script" ] && source "$script"
 done
 
-
-
+oembed_filters="$(get_oembed_filters)"
 
 # define CLI below
 

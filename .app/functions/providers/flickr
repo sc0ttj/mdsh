@@ -1,0 +1,3 @@
+provider_url_regex='^http(s?)://(flic\.kr/p/[0-9a-zA-Z]+|www\.flickr\.com/photos/[0-9a-zA-Z@-]+/[0-9]+/)$'
+provider_endpoint='https://www.flickr.com/services/oembed/'
+

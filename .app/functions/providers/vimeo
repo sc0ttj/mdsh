@@ -1,0 +1,13 @@
+# Vimeo videos can use one of six URL schemes:
+#
+# https://vimeo.com/*
+# https://vimeo.com/*/*/video/*
+# https://vimeo.com/album/*/video/*
+# https://vimeo.com/channels/*/*
+# https://vimeo.com/groups/*/videos/*
+# https://vimeo.com/ondemand/*/*
+#
+
+provider_url_regex='^http(s?)://vimeo\.com/[0-9]+$'
+provider_endpoint="http://vimeo.com/api/oembed.$format"
+

@@ -1,0 +1,3 @@
+provider_url_regex='^http(s?)://codepen\.io/[0-9a-zA-Z]+/(pen/[0-9a-zA-Z]+)?$'
+provider_endpoint='https://codepen.io/api/oembed'
+

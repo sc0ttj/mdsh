@@ -1,0 +1,124 @@
+#!/bin/bash
+
+# Determine the path where this script resides in
+OEMBED_ROOT=$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd )
+
+usage () {
+    cat <<HELP_USAGE
+Usage: $0 [options...] <url>
+Options:
+     --help					Show this screen.
+ -f, --format <json|xml>	Specify the response filetype.
+ -w, --maxwidth <number>	Specify the maximum width available for the conent.
+ -h, --maxheight <number>	Specify the maximum width available for the conent.
+HELP_USAGE
+}
+
+match_provider() {
+    url="$1"
+    # Loop through the provider config files in the providers subdirectory
+    # source them, test if the provided url matches the providers url regex,
+    # if so, break out of the loop.
+    provider=
+    for provider_filepath in "$OEMBED_ROOT"/providers/*; do
+        source "$provider_filepath"
+        if [[ "$url" =~ $provider_url_regex ]]; then
+            provider=$(basename "$provider_filepath")
+            break;
+        fi
+    done
+    echo $provider
+}
+
+get_provider() {
+    provider_file="$OEMBED_ROOT/providers/$1"
+    [ -f "$provider_file" ] && source "$provider_file"
+}
+
+get_provider_request_params() {
+    declare -A provider_params
+    provider_params=()
+    get_provider "$1"
+    echo "${provider_params[@]}"
+}
+
+get_provider_endpoint() {
+    get_provider "$1"
+    echo "${provider_endpoint}"
+}
+
+oembed() {
+    # Initialize parameter default values
+    format="json"
+
+    declare -A request_params
+    request_params=([format]=$format)
+
+    # getopts? anyone? no...
+    while true; do
+      case "$1" in
+        --help)
+            usage
+            exit 0
+            ;;
+        -f | --format)
+            format=$2
+            request_params[format]=$2
+            shift 2
+            ;;
+        -w | --maxwidth )
+            request_params[maxwidth]=$2
+            shift 2
+            ;;
+        -h | --maxheight )
+            request_params[maxheight]=$2
+            shift 2
+            ;;
+        -- ) 
+            shift
+            break
+            ;;
+        -* ) 
+            echo "Invalid option: -$1" >&2
+            break 
+            ;;
+        * ) 
+            request_params[url]=$1
+            url=$1
+            shift
+            break 
+            ;;
+      esac
+    done
+
+    provider_name=$(match_provider "$url")
+    if [ -z "$provider_name" ]; then
+        >&2 echo "Could not find an oEmbed provider for the supplied URL." 
+        exit 1
+    fi
+
+    # If there are provider specific parameters add them to the list of request parameters
+    provider_params=($(get_provider_request_params "$provider_name"))
+    if [ ! -z "${!provider_params[@]}" ]; then
+        for param in "${!provider_params[@]}"; do
+            request_params[$param]=${provider_params[$param]}
+        done
+    fi
+
+    # flatten the request_params array into string
+    request_string=""
+    for param in "${!request_params[@]}"
+    do
+        request_string="$request_string --data-urlencode \"$param=${request_params[$param]}\""
+    done
+
+    eval curl $request_string --get $(get_provider_endpoint "$provider_name")
+}
+
+
+# If not sourced, execute the main function
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]
+then
+    oembed "$@"
+fi
+

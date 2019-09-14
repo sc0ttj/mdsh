@@ -1,0 +1,2 @@
+provider_url_regex='^http(s?)://imgur\.com/[0-9a-zA-Z]+$'
+provider_endpoint="https://api.imgur.com/oembed.$format"

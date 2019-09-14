@@ -109,6 +109,13 @@ function process_markdown {
   # the -er option is needed to preserve newlines in the code blocks, IFS= preserves whitespace
   while IFS= read -er line
   do
+    # oembed - if line contains a supported URL, convert to oembed HTML
+    if [ "$(echo "$line" | grep -E "$oembed_filters")" != "" ];then
+      oembed_html="$(get_oembed_html "$line")"
+      [ "$oembed_html" != "" ] && line=""
+      echo -e "$oembed_html" >> /tmp/fixed_markdown
+    fi
+
     if [ "$(which pygmentize)" = "" ];then
       if [[ "$line" =~ '```' ]];then
         code_class=''
@@ -156,4 +163,24 @@ function process_markdown {
     fi
 
   done<<<"$(cat "${1:-/tmp/markdown}")"
+}
+
+
+function get_oembed_filters {
+  ls -1 .app/functions/providers \
+    | sed -e 's/^/^http(s?):\/\/(www.|)/g' \
+    | tr '\n' '|' \
+    | sed '$ s/.$//'
+}
+
+
+function get_oembed_html {
+  local url="$1"
+  local oembed_html="$(.app/functions/oembed "$url" 2>/dev/null \
+    | python -m json.tool \
+    | grep -m1 '"html": "' \
+    | cut -f4- -d'"' \
+    | sed -e 's/\\"/"/g' -e '$ s/.$//' -e '$ s/"$//'
+  )" #'
+  echo -e "$oembed_html"
 }

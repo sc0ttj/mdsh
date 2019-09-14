@@ -1,0 +1,3 @@
+provider_url_regex='^http(s?)://twitter\.com/(.*)/(status|statuses)/[0-9]+$'
+provider_endpoint='https://publish.twitter.com/oembed'
+
