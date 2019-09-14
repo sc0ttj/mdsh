@@ -32,10 +32,11 @@ echo -n "Category:     "
 read -er category
 echo -n "Tags (comma separated words or phrases): "
 read -er tags
-echo -n "Layout:       "
-read -er -i main layout
 
 # set some defaults, based on site defaults
+layout="$site_layout"
+stylesheet="$site_stylesheet"
+code_stylesheet="$site_code_stylesheet"
 permalink=""
 author="${author:-$site_author}"
 email="${email:-$site_email}"
@@ -45,6 +46,12 @@ js_deps="${js_deps:-$site_js_deps}"
 
 # allow user to override site default if -all given
 if [ "$1" = "-all" ];then
+  echo -n "Layout:       "
+  read -er -i "$site_layout" layout
+  echo -n "Stylesheet:       "
+  read -er -i "$site_stylesheet" stylesheet
+  echo -n "Code stylesheet:       "
+  read -er -i "$site_code_stylesheet" code_stylesheet
   echo -n "Permalink:       "
   read -er -i "posts/$(echo "$title" | slugify)" permalink
   echo -n "Author:       "
@@ -87,6 +94,8 @@ created:          $date_created
 category:         $category
 tags:             $tags
 layout:           $layout
+stylesheet:       $stylesheet
+code_stylesheet:  $code_stylesheet
 author:           ${author:-$site_author}
 email:            ${email:-$site_email}
 twitter:          ${twitter:-$site_twitter}
