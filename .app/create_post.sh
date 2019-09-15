@@ -100,7 +100,7 @@ author:           ${author:-$site_author}
 email:            ${email:-$site_email}
 twitter:          ${twitter:-$site_twitter}
 language:         ${language:-$site_language}
-js_deps:          $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
+js_deps:          $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | tr ' ' '\n' | grep -v ^$ | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
 modified:         $date_modified"
 
 # show meta info

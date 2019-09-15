@@ -7,12 +7,10 @@ keywords: 'mdsh, static site generator, project page, open source, blog, news, f
 author: sc0ttj
 email: foo@example.com
 twitter: @foobar
-fonts: 'Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
-google_analytics_id:
 layout: main
 stylesheet: main
 code_stylesheet: monokai-osx
-search_enabled: true
+fonts: 'Ubuntu:400,400i,700|Inconsolata:400,400i,700|Monaco:400,400i,700&subset=latin'
 header_pages:
   link1:
     title: About
@@ -26,10 +24,9 @@ header_pages:
   link4:
     title: Search
     url: /mdsh/search.html
-analytics_id:
+google_analytics_id:
+js: assets/js/app.js
 js_deps:
   cashjs: cash-dom@2.3.9/dist/cash.min.js
   jets: jets@0.14.1/jets.min.js
-js: assets/js/app.js
-
-
+search_enabled: true
