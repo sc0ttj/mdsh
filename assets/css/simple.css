@@ -1,7 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
 body,
 input,
 select,
@@ -21,8 +17,6 @@ body {
   font-size: 16px;
   line-height: 1.4em;
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 body {
   background-color: #fefefe;
@@ -34,11 +28,6 @@ li {
 ul,
 ol {
   padding-left: 15px;
-}
-code {
-  display: inline;
-  padding: 0;
-  margin: 0;
 }
 h1,
 h2,
@@ -130,14 +119,14 @@ div.highlight pre {
   position: relative;
   width: 100%;
 }
-.main-container > .site-header {
+.site-header {
   color: #222;
   font-weight: bold;
   margin-top: -1px;
   padding: 18px;
   padding-bottom: 1px;
 }
-.main-container > .site-header:after {
+.site-header:after {
   border-bottom: 2px solid #ff9933;
   content: "";
   display: block;
@@ -145,27 +134,27 @@ div.highlight pre {
   text-align: center;
   width: 30%;
 }
-.main-container > .site-header h1 {
+.site-header h1 {
   margin-top: 6px;
 }
-.main-container > .site-header a {
+.site-header a {
   text-decoration: none;
 }
-.main-container > .site-header a,
-.main-container > .site-header a:visited {
+.site-header a,
+.site-header a:visited {
   color: #444;
 }
-.main-container > .site-header a:hover,
-.main-container > .site-header a:focus {
+.site-header a:hover,
+.site-header a:focus {
   color: #000;
   text-decoration: underline;
 }
-.main-container > .site-header ul {
+.site-header ul {
   list-style: none;
   margin-left: 0;
   padding-left: 0;
 }
-.main-container > .site-header li {
+.site-header li {
   display: inline-block;
   padding-right: 8px;
 }
@@ -189,7 +178,7 @@ a.skip-to-content:hover,
 a.skip-to-content:focus {
   color: #222;
 }
-.main-container > .site-header #site-search {
+.site-header #site-search {
   background-color: #efefef;
   color: #222;
   border: 0;
@@ -199,7 +188,7 @@ a.skip-to-content:focus {
   max-width: 120px;
 }
 @media (min-width: 414px) {
-  .main-container > .site-header #site-search {
+  .site-header #site-search {
     margin-top: 8px;
     top: 1.5em;
     position: absolute;
@@ -324,18 +313,18 @@ ul.archive-posts li {
   display: inline-block;
   width: 96px;
 }
-.main-container > .footer {
+.site-footer {
   position: absolute;
   bottom: 0;
   margin: 0 auto;
   text-align: center;
   width: 100%;
 }
-.main-container > .footer a {
+.site-footer a {
   color: #444;
 }
-.main-container > .footer a:hover,
-.main-container > .footer a:focus {
+.site-footer a:hover,
+.site-footer a:focus {
   color: #222;
 }
 .contact-form {

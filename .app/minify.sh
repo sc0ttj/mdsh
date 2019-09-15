@@ -11,6 +11,12 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
+# get our google site fonts
+if [ "$site_fonts" != "" ];then
+  rm assets/css/google_fonts.css &>/dev/null
+  curl "https://fonts.googleapis.com/css?family=${site_fonts}" 2>/dev/null > assets/css/google_fonts.css
+fi
+
 #
 # define functions
 #
@@ -27,20 +33,52 @@ function minify_css {
     html_file_list="$html_file_to_minify"
   fi
 
+  # delete the file we will build
+  rm assets/css/_core.min.css 2>/dev/null
+  # add any CSS file starting with _ to a minified core CSS file,
+  # which will be prepended to the CSS stylesheet we're generating
+  #
+  # /_*[^\.min].css       get css file starting with underscore, not minified
+  # sort -r               list '__core.css' first
+  #
+  #  tr -d '\n'           remove new lines
+  #  sed '/\/\*/,/\*\//d' remove comments
+  #  sed...               remove spaces
+  cat $(ls -1 assets/css/_*[^\.min].css | sort -r) \
+    | grep -v '/\*' \
+    | tr -d '\n' \
+    | sed -e '/\/\*/,/\*\//d' \
+          -e 's/  / /g' \
+          -e 's/ {/{/g' \
+          -e 's/{ /{/g' \
+          -e 's/ }/}/g' \
+          -e 's/: /:/g' \
+          -e 's/; /;/g' > "assets/css/_core.min.css"
+
   for css_file in $css_file_list
   do
-    minified_file="${css_file//.css/.min.css}";
+    css_bundle="assets/css/_core.min.css $css_file"
+
+    # if a pygments file, we want to minify it, but not prepend the _*.css files
+    [ "$(echo $css_file | grep '/pygments')" != "" ] && css_bundle="$css_file"
+
     # create a minified version of our new CSS file
-    grep -v '/\*' "$css_file" \
+    #
+    #  tr -d '\n'           remove new lines
+    #  sed '/\/\*/,/\*\//d' remove comments
+    #  ...                  remove spaces
+    cat $css_bundle \
+      | grep -v '/\*' \
       | tr -d '\n' \
-      | sed -e 's/  / /g' \
+      | sed -e '/\/\*/,/\*\//d' \
+            -e 's/  / /g' \
             -e 's/ {/{/g' \
             -e 's/{ /{/g' \
             -e 's/ }/}/g' \
             -e 's/: /:/g' \
-            -e 's/; /;/g' > "$minified_file"
+            -e 's/; /;/g' > "${css_file//.css/.min.css}"
 
-    add_google_font_css_to "$css_file"
+    add_google_font_css_to "${css_file//.css/.min.css}"
 
     # for each html file
     for html_file in $html_file_list
@@ -73,22 +111,22 @@ function add_google_font_css_to {
   css_file="${css_file//.css/}"
   css_file="${css_file:-main}"
   # get google fonts CSS, so we dont need to download it on page load
-  if [ "${site_fonts}" != "" ];then
-    if [ ! -f assets/css/google_fonts.css ];then
-      curl "https://fonts.googleapis.com/css?family=${site_fonts}" 2>/dev/null > assets/css/google_fonts.css
-      # create a minified version
-      grep -v '/\*' assets/css/google_fonts.css \
-        | tr -d '\n' \
-        | sed -e 's/  / /g' \
-              -e 's/ {/{/g' \
-              -e 's/{ /{/g' \
-              -e 's/ }/}/g' \
-              -e 's/: /:/g' \
-              -e 's/; /;/g' > assets/css/google_fonts.min.css
-    fi
+  if [ "${site_fonts}" != "" ] && [ -f assets/css/google_fonts.css ];then
     [ ! -f assets/css/${css_file}.min.css ] && css_file='main'
-    cat assets/css/google_fonts.min.css assets/css/${css_file}.min.css > /tmp/cssfile.min
-    mv /tmp/cssfile.min assets/css/${css_file}.min.css
+
+    cat assets/css/google_fonts.css \
+      | grep -v '/\*' \
+      | tr -d '\n' \
+      | sed -e '/\/\*/,/\*\//d' \
+            -e 's/  / /g' \
+            -e 's/ {/{/g' \
+            -e 's/{ /{/g' \
+            -e 's/ }/}/g' \
+            -e 's/: /:/g' \
+            -e 's/; /;/g' > assets/css/google_fonts.min.css
+
+    cat assets/css/google_fonts.min.css assets/css/${css_file}.min.css > /tmp/cssfile
+    mv /tmp/cssfile assets/css/${css_file}.min.css
   fi
 }
 
@@ -113,9 +151,13 @@ function minify_html {
 
 # get list of all css and html files we want to process
 html_files="$(find assets/css/ -type f -name "*.html" | grep -v 'min.html' | sort -u | uniq)"
-css_files="$(find  assets/css/ -type f -name "*.css"  | grep -v '.min.css' | sort -r)"
-css_file_to_minify="$(echo  "$css_files"  | grep -m1 "/${1}")"
-html_file_to_minify="$(echo "$html_files" | grep -m1 "/${2}")"
+css_files="$(find  assets/css/ -type f -name "*.css"  | grep -vE '.min.css|/_' | sort -r)"
+
+css_file_to_minify=''
+[ ! -z "$1" ] && css_file_to_minify="$(echo  "$css_files"  | grep -m1 "/${1}")"
+
+html_file_to_minify=''
+[ ! -z "$2" ] && html_file_to_minify="$(echo "$html_files" | grep -m1 "/${2}")"
 
 [ ! -f "$css_file_to_minify" ] && css_file_to_minify=""
 [ ! -f "$html_file_to_minify" ] && html_file_to_minify=""
