@@ -27,7 +27,6 @@ header_pages:
     title: Search
     url: /mdsh/search.html
 analytics_id:
-css: assets/css/main.css
 js_deps:
   cashjs: cash-dom@2.3.9/dist/cash.min.js
   jets: jets@0.14.1/jets.min.js

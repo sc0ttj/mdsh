@@ -216,7 +216,9 @@ code {
 }
 
 .skip-to-content:focus {
+  background-color: #efefef;
   clip: initial;
+  color: #222;
   display: block;
   height: auto;
   overflow: initial;
