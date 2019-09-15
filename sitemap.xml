@@ -61,6 +61,12 @@
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/07/01/faster-site-rebuilds.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/11/permalinks-for-your-posts.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/13/better-site-rebuilding.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/13/easier-layout-selection.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/14/easier-stylesheet-selection.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/09/14/embedding-youtube-videos-tweets-codepens-and-other-third-party-content.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/search.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/bash.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/blog.html</loc></url>
@@ -79,6 +85,7 @@
 <url><loc>https://sc0ttj.github.io/mdsh/tags/markdown.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/mdsh.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/mustache.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/oembed.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/osx.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/pygments.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/rss.html</loc></url>
@@ -87,4 +94,5 @@
 <url><loc>https://sc0ttj.github.io/mdsh/tags/seo.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/shell.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/xml.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/yaml.html</loc></url>
 </urlset>

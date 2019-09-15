@@ -10,207 +10,207 @@
 <generator>https://sc0ttj.github.io/mdsh/create_rss</generator>
 <description>latest from sc0ttj.github.io/mdsh</description>
 <managingEditor>foo@example.com (sc0ttj)</managingEditor>
-<lastBuildDate>Fri, 13 Sep 2019 23:01:48 +0100</lastBuildDate>
+<lastBuildDate>Sun, 15 Sep 2019 20:30:39 +0100</lastBuildDate>
 <language>en</language>
+
+
+<item>
+    <title>Embedding Youtube videos, Tweets, Codepens and other third-party content | mdsh </title>
+    <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/14/embedding-youtube-videos-tweets-codepens-and-other-third-party-content.html</guid>
+    <pubDate>Sun, 15 Sep 2019 19:31:33 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/14/embedding-youtube-videos-tweets-codepens-and-other-third-party-content.html#1568572293</link>
+    <category>oembed</category>
+    <category>shell</category>
+    <description><![CDATA[Using embedded content in your posts is easier than ever - just put the URL to the tweet, youtube video, (etc) on its own line in your page body and will be automatically converted to the relevant embedded content.<!--1568572293-->]]></description>
+</item>
+
+
+<item>
+    <title>Easier stylesheet selection | mdsh </title>
+    <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/14/easier-stylesheet-selection.html</guid>
+    <pubDate>Sun, 15 Sep 2019 19:31:43 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/14/easier-stylesheet-selection.html#1568572303</link>
+    <category>css</category>
+    <description><![CDATA[You can now choose a specific CSS stylesheet for your posts and pages - this provides an easy way to style your pages with different colours, typefaces, styles, layouts and so on.<!--1568572303-->]]></description>
+</item>
 
 
 <item>
     <title>Easier layout selection | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/13/easier-layout-selection.html</guid>
-    <pubDate>Fri, 13 Sep 2019 19:54:26 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/13/easier-layout-selection.html#1568400866</link>
+    <pubDate>Sun, 15 Sep 2019 19:31:53 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/13/easier-layout-selection.html#1568572313</link>
     <category>yaml</category>
-    <description><![CDATA[You can now choose a page layout when creating new posts and pages - this provides an easy way to render your pages with different mustache templates, with varying layouts and structure.<!--1568400866-->]]></description>
+    <description><![CDATA[You can now choose a page layout when creating new posts and pages - this provides an easy way to render your pages with different mustache templates, with varying layouts and structure.<!--1568572313-->]]></description>
 </item>
 
 
 <item>
     <title>Better site rebuilding | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/13/better-site-rebuilding.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/13/better-site-rebuilding.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:32:04 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/13/better-site-rebuilding.html#1568572324</link>
     <category>shell</category>
-    <description><![CDATA[The rebuild command has been greatly improved, so you can (re)build specific index pages, categories, tags, authors and so on, much more easily than before.<!--1568412022-->]]></description>
+    <description><![CDATA[The rebuild command has been greatly improved, so you can (re)build specific index pages, categories, tags, authors and so on, much more easily than before.<!--1568572324-->]]></description>
 </item>
 
 
 <item>
     <title>Permalinks for your posts | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/11/permalinks-for-your-posts.html</guid>
-    <pubDate>Fri, 13 Sep 2019 22:29:29 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/11/permalinks-for-your-posts.html#1568410169</link>
+    <pubDate>Sun, 15 Sep 2019 19:32:15 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/11/permalinks-for-your-posts.html#1568572335</link>
     <category>blog</category>
     <category>seo</category>
-    <description><![CDATA[A new permalinks feature has been added, so you can create shorter, easier, custom URLs for your blog posts.<!--1568410169-->]]></description>
+    <description><![CDATA[A new permalinks feature has been added, so you can create shorter, easier, custom URLs for your blog posts.<!--1568572335-->]]></description>
 </item>
 
 
 <item>
     <title>Better data and template handling | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html</guid>
-    <pubDate>Wed, 11 Sep 2019 23:42:15 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html#1568241735</link>
+    <pubDate>Sun, 15 Sep 2019 19:32:26 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html#1568572346</link>
     <category>csv</category>
     <category>mustache</category>
     <category>shell</category>
     <category>yaml</category>
-    <description><![CDATA[A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time.<!--1568241735-->]]></description>
+    <description><![CDATA[A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time.<!--1568572346-->]]></description>
 </item>
 
 
 <item>
     <title>Liquid Filters | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html</guid>
-    <pubDate>Wed, 11 Sep 2019 23:42:15 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html#1568241735</link>
+    <pubDate>Sun, 15 Sep 2019 19:32:48 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html#1568572368</link>
     <category>mustache</category>
     <category>markdown</category>
     <category>liquid-templating</category>
-    <description><![CDATA[A new feature has been added, inspired by the liquid templating system, which allows filters to be applied to page data in your templates and Markdown.<!--1568241735-->]]></description>
+    <description><![CDATA[A new feature has been added, inspired by the liquid templating system, which allows filters to be applied to page data in your templates and Markdown.<!--1568572368-->]]></description>
 </item>
 
 
 <item>
-    <title>Faster site rebuilds | mdsh</title>
+    <title>Faster site rebuilds | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/07/01/faster-site-rebuilds.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/07/01/faster-site-rebuilds.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:32:58 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/07/01/faster-site-rebuilds.html#1568572378</link>
     <category>shell</category>
-    <description><![CDATA[Re-building your pages, and your site in general, is more faster than before due to some new features - cached template output and partial rebuilds.<!--1568412022-->]]></description>
+    <description><![CDATA[Re-building your pages, and your site in general, is more faster than before due to some new features - cached template output and partial rebuilds.<!--1568572378-->]]></description>
 </item>
 
 
 <item>
-    <title>Adding support for more embedded languages | mdsh</title>
+    <title>Adding support for more embedded languages | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:33:10 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html#1568572390</link>
     <category>markdown</category>
     <category>shell</category>
-    <description><![CDATA[As of the latest update, you can now embed code other than Bash in your Markdown - including PHP, Ruby, Python, Node, Perl and more.<!--1568412022-->]]></description>
+    <description><![CDATA[As of the latest update, you can now embed code other than Bash in your Markdown - including PHP, Ruby, Python, Node, Perl and more.<!--1568572390-->]]></description>
 </item>
 
 
 <item>
-    <title>New syntax for embedding Shell script in your Markdown | mdsh</title>
+    <title>New syntax for embedding Shell script in your Markdown | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:33:20 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html#1568572400</link>
     <category>bash</category>
     <category>markdown</category>
-    <description><![CDATA[A new, more robust templating method for embedding Bash sub-shells in your Markdown has been added to Mdsh.<!--1568412022-->]]></description>
+    <description><![CDATA[A new, more robust templating method for embedding Bash sub-shells in your Markdown has been added to Mdsh.<!--1568572400-->]]></description>
 </item>
 
 
 <item>
     <title>New syntax for embedding Shell script in your Markdown | mdsh</title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown1.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown1.html#1568412022</link>
+    <pubDate>Fri, 13 Sep 2019 23:54:53 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown1.html#1568415293</link>
     <category>bash</category>
     <category>markdown</category>
-    <description><![CDATA[A new, more robust templating method for embedding Bash sub-shells in your Markdown has been added to Mdsh.<!--1568412022-->]]></description>
+    <description><![CDATA[A new, more robust templating method for embedding Bash sub-shells in your Markdown has been added to Mdsh.<!--1568415293-->]]></description>
 </item>
 
 
 <item>
-    <title>Post excerpts | mdsh</title>
+    <title>Post excerpts | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:33:30 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html#1568572410</link>
     <category>blog</category>
     <category>markdown</category>
-    <description><![CDATA[An easier way to show snippets, excerpts or previews of your blog posts on other parts of your site.<!--1568412022-->]]></description>
+    <description><![CDATA[An easier way to show snippets, excerpts or previews of your blog posts on other parts of your site.<!--1568572410-->]]></description>
 </item>
 
 
 <item>
-    <title>New site navigation | mdsh</title>
+    <title>New site navigation | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:33:40 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html#1568572420</link>
     <category>blog</category>
     <category>mustache</category>
     <category>shell</category>
-    <description><![CDATA[A new template has been added which creates a nice menu, for easier site navigation, and which has been added into the site footer by default.<!--1568412022-->]]></description>
+    <description><![CDATA[A new template has been added which creates a nice menu, for easier site navigation, and which has been added into the site footer by default.<!--1568572420-->]]></description>
 </item>
 
 
 <item>
-    <title>Mustache templating | mdsh</title>
+    <title>Mustache templating | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:33:52 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html#1568572432</link>
     <category>blog</category>
     <category>mustache</category>
-    <description><![CDATA[Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.<!--1568412022-->]]></description>
+    <description><![CDATA[Templates are now used to generate the HTML pages, which required a very extensive re-write of mdsh.<!--1568572432-->]]></description>
 </item>
 
 
 <item>
-    <title>More responsive pages | mdsh</title>
+    <title>More responsive pages | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/31/more-responsive-pages.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/31/more-responsive-pages.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:34:03 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/31/more-responsive-pages.html#1568572443</link>
     <category>css</category>
     <category>javascript</category>
     <category>blog</category>
-    <description><![CDATA[Each page created using `mdsh` now gives you some extra CSS classes to work with, so you can more easily target specific browsers and devices.<!--1568412022-->]]></description>
+    <description><![CDATA[Each page created using mdsh now gives you some extra CSS classes to work with, so you can more easily target specific browsers and devices.<!--1568572443-->]]></description>
 </item>
 
 
 <item>
-    <title>Improving structured data | mdsh</title>
+    <title>Improving structured data | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/31/improving-structured-data.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/31/improving-structured-data.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:34:13 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/31/improving-structured-data.html#1568572453</link>
     <category>blog</category>
     <category>seo</category>
-    <description><![CDATA[All generated index pages, which list posts, authors, categories and tags, now have improved structured data, in the form of a JSON-LD ItemList in the head of the page, which lists all items on the page. This should help your site get those nice carousels in Google search results.<!--1568412022-->]]></description>
+    <description><![CDATA[All generated index pages, which list posts, authors, categories and tags, now have improved structured data, in the form of a JSON-LD ItemList in the head of the page, which lists all items on the page. This should help your site get those nice carousels in Google search results.<!--1568572453-->]]></description>
 </item>
 
 
 <item>
-    <title>Syntax highlighting using Pygments | mdsh</title>
+    <title>Syntax highlighting using Pygments | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/27/syntax-highlighting-using-pygments.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/27/syntax-highlighting-using-pygments.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:34:23 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/27/syntax-highlighting-using-pygments.html#1568572463</link>
     <category>blog</category>
     <category>pygments</category>
-    <description><![CDATA[I've added a super simple way to enable colourful code syntax highlighting for any code blocks you publish (requires Pygments to be installed, which needs Python). No JavaScript is required by the visitors browser, as the highlighting is done at build time.<!--1568412022-->]]></description>
+    <description><![CDATA[I've added a super simple way to enable colourful code syntax highlighting for any code blocks you publish (requires Pygments to be installed, which needs Python). No JavaScript is required by the visitors browser, as the highlighting is done at build time.<!--1568572463-->]]></description>
 </item>
 
 
 <item>
-    <title>Dynamic search page using Jets | mdsh</title>
+    <title>Dynamic search page using Jets | mdsh </title>
     <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/16/dynamic-search-page-using-jets.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/16/dynamic-search-page-using-jets.html#1568412022</link>
+    <pubDate>Sun, 15 Sep 2019 19:34:33 +0100</pubDate>
+    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/16/dynamic-search-page-using-jets.html#1568572473</link>
     <category>search</category>
     <category>blog</category>
     <category>javascript</category>
-    <description><![CDATA[I've added a search.html page, which is auto-generated by the `rebuild` command, so users can search the website and its posts more easily. The results are presented in a nice list, just like a normal search engine results page.<!--1568412022-->]]></description>
-</item>
-
-
-<item>
-    <title>Improving SEO with JSON-LD Breadcrumbs | mdsh</title>
-    <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/10/improving-seo-with-json-ld-breadcrumbs.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/10/improving-seo-with-json-ld-breadcrumbs.html#1568412022</link>
-    <category>seo</category>
-    <category>blog</category>
-    <description><![CDATA[Using linked data breadcrumbs, we can help search engines map the structure of our site, and owrk out the relationships between pages.<!--1568412022-->]]></description>
-</item>
-
-
-<item>
-    <title>Unpublishing pages | mdsh</title>
-    <guid>https://sc0ttj.github.io/mdsh/posts/2019/03/08/unpublishing-pages.html</guid>
-    <pubDate>Fri, 13 Sep 2019 23:00:22 +0100</pubDate>
-    <link>https://sc0ttj.github.io/mdsh/posts/2019/03/08/unpublishing-pages.html#1568412022</link>
-    <category>blog</category>
-    <description><![CDATA[An easy way to hide pages on the site, without deleting them, so you can continue working on them, or publish them again later.<!--1568412022-->]]></description>
+    <description><![CDATA[I have added a search.html page, which is auto-generated by the 'rebuild' command, so users can search the website and its posts more easily. The results are presented in a nice list, just like a normal search engine results page.<!--1568572473-->]]></description>
 </item>
 
 </channel>
