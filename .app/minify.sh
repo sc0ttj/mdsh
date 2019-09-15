@@ -61,6 +61,8 @@ function minify_css {
 
     # if a pygments file, we want to minify it, but not prepend the _*.css files
     [ "$(echo $css_file | grep '/pygments')" != "" ] && css_bundle="$css_file"
+    # if a google fonts file, we want to minify it, but not prepend the _*.css files
+    [ "$(echo $css_file | grep '/google_font')" != "" ] && css_bundle="$css_file"
 
     # create a minified version of our new CSS file
     #
@@ -78,7 +80,11 @@ function minify_css {
             -e 's/: /:/g' \
             -e 's/; /;/g' > "${css_file//.css/.min.css}"
 
-    add_google_font_css_to "${css_file//.css/.min.css}"
+    # add google fonts to css file (not including pygments themes)
+    if [ "$(echo "${css_file//.css/.min.css}" | grep '/pygments')" = "" ] && \
+       [ "$(echo "${css_file//.css/.min.css}" | grep '/google_font')" = "" ];then
+      add_google_font_css_to "${css_file//.css/.min.css}"
+    fi
 
     # for each html file
     for html_file in $html_file_list
@@ -110,10 +116,14 @@ function add_google_font_css_to {
   css_file="${css_file//.min.css/}"
   css_file="${css_file//.css/}"
   css_file="${css_file:-main}"
+
+  [ "$(echo "${css_file}" | grep '/pygments')" != "" ] && return
+  [ "$(echo "${css_file}" | grep '/google_fonts')" != "" ] && return
+  [ "$(echo "${css_file}" | grep '/inline')" != "" ] && return
+
   # get google fonts CSS, so we dont need to download it on page load
   if [ "${site_fonts}" != "" ] && [ -f assets/css/google_fonts.css ];then
-    [ ! -f assets/css/${css_file}.min.css ] && css_file='main'
-
+    [ ! -f ${css_file}.min.css ] && css_file=assets/css/main.min.css
     cat assets/css/google_fonts.css \
       | grep -v '/\*' \
       | tr -d '\n' \
@@ -125,8 +135,8 @@ function add_google_font_css_to {
             -e 's/: /:/g' \
             -e 's/; /;/g' > assets/css/google_fonts.min.css
 
-    cat assets/css/google_fonts.min.css assets/css/${css_file}.min.css > /tmp/cssfile
-    mv /tmp/cssfile assets/css/${css_file}.min.css
+    cat assets/css/google_fonts.min.css ${css_file}.min.css > /tmp/cssfile
+    mv /tmp/cssfile ${css_file}.min.css
   fi
 }
 
@@ -164,7 +174,7 @@ html_file_to_minify=''
 
 # minify CSS and add google font imports inline
 echo "Minifying CSS.."
-minify_css "$css_file_to_minify" "$html_file_to_minify"
+minify_css $css_file_to_minify $html_file_to_minify
 
 # minify the HTML
 #echo "Minifying HTML.."
