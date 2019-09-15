@@ -1,20 +1,18 @@
-# title:        Adding a site search feature
-# slug name:    adding-a-site-search-feature
-# description:  I'm using Jets (https://github.com/NeXTs/Jets.js) for my site search, as it provides very fast, filter-as-you-type page searching.
-# time to read: 1 min
-# category:     blog
-# tags:         blog, javascript
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/02/24
-# modified:     2019/02/24
+title:        Adding a site search feature
+slug:         adding-a-site-search-feature
+descr:        I'm using Jets (https://github.com/NeXTs/Jets.js) for my site search, as it provides very fast, filter-as-you-type page searching.
+time_to_read: 1 min
+category:     blog
+tags:         blog, javascript
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/02/24
+modified:     2019/02/24
 
 ---
-## Adding a site search feature
-
 I wanted `mdsh` to have a nice site search feature, and not have to use Google Custom Search Engine or similar.
 
 I did not want a search that takes users away from the site, and I needed one which searched the site itself - not some extra JSON file of something (I don't want to have to update multiple files, I want to keep things DRY).

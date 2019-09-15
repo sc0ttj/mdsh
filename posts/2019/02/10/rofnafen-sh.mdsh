@@ -1,16 +1,16 @@
-# title: Rofnafen.sh
-# slug name: rofnafen-sh
-# description: A combination of Rofi and Mednafen
-# time to read: 2 mins
-# category: games
-# tags: games,shell
-# author: sc0ttj
-# email: foo@bar.com
-# twitter: @foobar
-# language: en
-# JS deps: cash-dom, mustache
-# created: 2019/02/10
-# modified: 2019/02/10
+title: Rofnafen.sh
+slug:      rofnafen-sh
+descr:       A combination of Rofi and Mednafen
+time_to_read: 2 mins
+category: games
+tags: games, shell
+author: sc0ttj
+email: foo@bar.com
+twitter: @foobar
+language: en
+js_deps: cash-dom
+created: 2019/02/10
+modified: 2019/02/10
 
 ---
 

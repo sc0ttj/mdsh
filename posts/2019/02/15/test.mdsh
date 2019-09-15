@@ -1,16 +1,16 @@
-# title:        test
-# slug name:    test
-# description:  test
-# time to read: 1
-# category:     test
-# tags:         test
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        test
+slug:         test
+descr:        test
+time_to_read: 1
+category:     test
+tags:         test
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
 ## test

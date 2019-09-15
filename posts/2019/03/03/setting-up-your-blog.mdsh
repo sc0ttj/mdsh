@@ -1,16 +1,16 @@
-# title:        Setting up your blog
-# slug name:    setting-up-your-blog
-# description:  I've added a couple of scripts that make the initial setup of your blog easier, as well as running the web server.
-# time to read: 2 mins
-# category:     blog
-# tags:         shell
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/03
-# modified:     2019/03/03
+title:        Setting up your blog
+slug:         setting-up-your-blog
+descr:        I've added a couple of scripts that make the initial setup of your blog easier, as well as running the web server.
+time_to_read: 2 mins
+category:     blog
+tags:         shell
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/03
+modified:     2019/03/03
 
 ---
 ## Setting up your blog

@@ -1,16 +1,16 @@
-# title:        Enabling easier Markdown re-building
-# slug name:    enabling-easier-markdown-re-building
-# description:  A new script called `mdsh2md` has been added to the suite of commands available in `mdsh`. This new script makes it easy to build valid Markdown files from the custom `mdsh` format files used when writing posts.
-# time to read: 2 mins
-# category:     blog
-# tags:         shell, markdown
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/04
-# modified:     2019/03/04
+title:        Enabling easier Markdown re-building
+slug:         enabling-easier-markdown-re-building
+descr:        A new script called mdsh2md has been added to the suite of commands available in mdsh. This new script makes it easy to build valid Markdown files from the custom .mdsh format files used when writing posts.
+time_to_read: 2 mins
+category:     blog
+tags:         shell, markdown
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/04
+modified:     2019/03/04
 
 ---
 ## Enabling easier Markdown re-building

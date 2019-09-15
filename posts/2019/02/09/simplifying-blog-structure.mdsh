@@ -1,13 +1,13 @@
-# title:        Simplifying blog structure
-# slug name:    simplifying-blog-structure
-# description:  Using a simple csv file to manage and search site structure and contents
-# time to read: 3 mins
-# author:       sc0ttj
-# contact:      
-# created:      2019/02/09
-# modified:     2019/02/09
-# category:     blog
-# tags:         blog,csv,shell
+title:        Simplifying blog structure
+slug:         simplifying-blog-structure
+descr:        Using a simple csv file to manage and search site structure and contents
+time_to_read: 3 mins
+author:       sc0ttj
+contact:      
+created:      2019/02/09
+modified:     2019/02/09
+category:     blog
+tags:         blog,csv,shell
 
 ---
 

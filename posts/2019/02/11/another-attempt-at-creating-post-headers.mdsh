@@ -1,16 +1,16 @@
-# title:        Another attempt at creating post headers
-# slug name:    another-attempt-at-creating-post-headers
-# description:  Using sed is always a pain
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell,sed
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
+title:        Another attempt at creating post headers
+slug:         another-attempt-at-creating-post-headers
+descr:        Using sed is always a pain
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell,sed
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/11
+modified:     2019/02/11
 
 ---
 ## Another attempt at creating post headers

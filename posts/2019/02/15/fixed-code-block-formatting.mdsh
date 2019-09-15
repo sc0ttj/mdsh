@@ -1,16 +1,16 @@
-# title:        Fixed code block formatting
-# slug name:    fixed-code-block-formatting
-# description:  Embedding scripts and code snippets works as before...
-# time to read: 1 min
-# category:     blog
-# tags:         blog
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        Fixed code block formatting
+slug:         fixed-code-block-formatting
+descr:        Embedding scripts and code snippets works as before...
+time_to_read: 1 min
+category:     blog
+tags:         blog
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
 ## Fixed code block formatting

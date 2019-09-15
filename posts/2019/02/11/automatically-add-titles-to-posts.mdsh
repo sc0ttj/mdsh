@@ -1,16 +1,16 @@
-# title:        Automatically add titles to posts
-# slug name:    automatically-add-titles-to-posts
-# description:  To speed up creating posts, I've added a new feature
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
+title:        Automatically add titles to posts
+slug:         automatically-add-titles-to-posts
+descr:        To speed up creating posts, I've added a new feature
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/11
+modified:     2019/02/11
 
 ---
 ## Automatically add titles to posts

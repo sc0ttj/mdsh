@@ -1,16 +1,16 @@
-# title:        Added an archive.html page
-# slug name:    added-an-archive-html-page
-# description:  A nicer way to list all content on the blog.
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
+title:        Added an archive.html page
+slug:         added-an-archive-html-page
+descr:        A nicer way to list all content on the blog.
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/11
+modified:     2019/02/11
 
 ---
 

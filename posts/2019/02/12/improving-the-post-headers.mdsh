@@ -1,16 +1,16 @@
-# title:        Improving the post headers
-# slug name:    improving-the-post-headers
-# description:  A nicer way to find related posts
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/12
-# modified:     2019/02/12
+title:        Improving the post headers
+slug:         improving-the-post-headers
+descr:        A nicer way to find related posts
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/12
+modified:     2019/02/12
 
 ---
 ## Improving the post headers

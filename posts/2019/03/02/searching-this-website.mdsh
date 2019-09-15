@@ -1,16 +1,16 @@
-# title:        Searching this website
-# slug name:    searching-this-website
-# description:  I've made it easier to search the website, by enabling Jets powered site search on more pages.
-# time to read: 1 min
-# category:     blog
-# tags:         blog, javascript
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/02
-# modified:     2019/03/02
+title:        Searching this website
+slug:         searching-this-website
+descr:        I've made it easier to search the website, by enabling Jets powered site search on more pages.
+time_to_read: 1 min
+category:     blog
+tags:         blog, javascript
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/02
+modified:     2019/03/02
 
 ---
 ## Searching this website

@@ -66,3 +66,9 @@
 2019/06/29|adding-support-for-more-embedded-languages.mdsh|Adding support for more embedded languages|sc0ttj|blog|markdown, shell
 2019/07/01|faster-site-rebuilds.mdsh|Faster site rebuilds|sc0ttj|blog|shell
 2019/07/13|liquid-filters.mdsh|Liquid Filters|sc0ttj|blog|mustache, markdown, liquid-templating
+2019/09/07|better-data-and-template-handling.mdsh|Better data and template handling|sc0ttj|blog|csv, mustache, shell, yaml
+2019/09/11|permalinks-for-your-posts.mdsh|Permalinks for your posts|sc0ttj|blog|blog, seo
+2019/09/13|better-site-rebuilding.mdsh|Better site rebuilding|sc0ttj|blog|shell
+2019/09/13|easier-layout-selection.mdsh|Easier layout selection|sc0ttj|blog|yaml
+2019/09/14|easier-stylesheet-selection.mdsh|Easier stylesheet selection|sc0ttj|blog|css
+2019/09/14|embedding-youtube-videos-tweets-codepens-and-other-third-party-content.mdsh|Embedding Youtube videos, Tweets, Codepens and other third-party content|sc0ttj|blog|oembed, shell

@@ -1,16 +1,16 @@
-# title:        Adding a stylesheet
-# slug name:    adding-a-stylesheet
-# description:  Styling this blog to look nicer, and how it works.
-# time to read: 3 mins
-# category:     blog
-# tags:         blog,css
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/17
-# modified:     2019/02/17
+title:        Adding a stylesheet
+slug:         adding-a-stylesheet
+descr:        Styling this blog to look nicer, and how it works.
+time_to_read: 3 mins
+category:     blog
+tags:         blog,css
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/17
+modified:     2019/02/17
 
 ---
 ## Adding a stylesheet

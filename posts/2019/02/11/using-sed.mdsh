@@ -1,16 +1,16 @@
-# title:        Using Sed
-# slug name:    using-sed
-# description:  A how not to...
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell,sed
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
+title:        Using Sed
+slug:         using-sed
+descr:        A how not to...
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell,sed
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/11
+modified:     2019/02/11
 
 ---
 ## Using Sed

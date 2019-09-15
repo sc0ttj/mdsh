@@ -7,7 +7,6 @@
 <url><loc>https://sc0ttj.github.io/mdsh/categories/blog.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/categories/games.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/contact.html</loc></url>
-<url><loc>https://sc0ttj.github.io/mdsh/posts/</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/09/app-structure.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/09/simplifying-blog-structure.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/creating-html-from-markdown.html</loc></url>
@@ -15,7 +14,6 @@
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/fixing-the-markdown-parsers.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/markdown-parsing-works-ok-now.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/rofnafen-sh.html</loc></url>
-<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/try-again.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/10/what-to-do-after-creating-a-post.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/11/added-an-archive-html-page.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/02/11/adding-post-headers.html</loc></url>
@@ -59,6 +57,10 @@
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/22/mustache-templating.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/26/new-site-navigation.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/posts/2019/05/26/post-excerpts.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/06/24/new-syntax-for-embedding-shell-script-in-your-markdown.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/07/01/faster-site-rebuilds.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/search.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/bash.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/blog.html</loc></url>
@@ -73,6 +75,7 @@
 <url><loc>https://sc0ttj.github.io/mdsh/tags/js.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/json-ld.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/linux.html</loc></url>
+<url><loc>https://sc0ttj.github.io/mdsh/tags/liquid-templating.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/markdown.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/mdsh.html</loc></url>
 <url><loc>https://sc0ttj.github.io/mdsh/tags/mustache.html</loc></url>

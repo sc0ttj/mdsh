@@ -1,19 +1,18 @@
-# title:        It works! Easier post editing and converting is on the way...
-# slug name:    it-works-easier-post-editing-and-converting-is-on-the-way
-# description:  After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.
-# time to read: 2 mins
-# category:     blog
-# tags:         blog,markdown,mdsh
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        It works! Easier post editing and converting is on the way...
+slug:         it-works-easier-post-editing-and-converting-is-on-the-way
+descr:        After the lsat update, it should be easier to update existing pages, and to convert your posts into other formats.
+time_to_read: 2 mins
+category:     blog
+tags:         blog,markdown,mdsh
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
-## It works! Easier post editing and converting is on the way...
 
 After the last fix, and as described in previous posts, each time you create a post, this blog tool thing will now save 3 files:
 

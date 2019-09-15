@@ -1,20 +1,18 @@
-# title:        Generating valid markdown
-# slug name:    generating-valid-markdown
-# description:  A new feature of this blogging thing
-# time to read: 1 min
-# category:     test
-# tags:         test
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        Generating valid markdown
+slug:         generating-valid-markdown
+descr:        A new feature of this blogging thing
+time_to_read: 1 min
+category:     test
+tags:         test
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
-## Generating valid markdown
-
 Here is a sub-shell, calling the `uname` command:
 
 ```

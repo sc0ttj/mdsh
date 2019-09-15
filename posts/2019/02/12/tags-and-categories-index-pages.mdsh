@@ -1,16 +1,16 @@
-# title:        Tags and Categories index pages
-# slug name:    tags-and-categories-index-pages
-# description:  A more consistent and flexible navigation setup for the blog.
-# time to read: 2 mins
-# category:     blog
-# tags:         blog
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/12
-# modified:     2019/02/12
+title:        Tags and Categories index pages
+slug:         tags-and-categories-index-pages
+descr:        A more consistent and flexible navigation setup for the blog.
+time_to_read: 2 mins
+category:     blog
+tags:         blog
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/12
+modified:     2019/02/12
 
 ---
 ## Tags and Categories index pages

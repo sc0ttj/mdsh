@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html lang="en" class="preIE7 preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 7]><html lang="en" class="preIE8 preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 8]><html lang="en" class="preIE9 preIE10 preIE11"><![endif]-->
+<!--[if IE 9]><html lang="en" class="preIE10 preIE11"><![endif]-->
+<!--[if IE 10]><html lang="en" class="preIE11"><![endif]-->
+<!--[if gte IE 11]><!--><html lang="en"><!--<![endif]-->
+
+
+<head>
+<meta charset="utf-8">
+<!-- browser/device compatibility stuff -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="HandheldFriendly" content="True"/>
+<meta name="format-detection" content="telephone=no">
+<!-- page info -->
+<title>Better data and template handling | mdsh </title>
+<meta name="description" content="A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time.">
+<meta name="keywords" content="csv, mustache, shell, yaml">
+<meta name="news_keywords" content="csv, mustache, shell, yaml">
+<meta name="subject" content="csv, mustache, shell, yaml">
+<meta name="generator" content="mdsh">
+<meta name="medium" content="blog">
+<meta name="copyright" content="&copy; mdsh">
+<meta name="language" content="en">
+<meta name="robots" content="index,follow">
+<meta name="topic" content="csv, mustache, shell, yaml">
+<meta name="owner" content="sc0ttj">
+<meta name="pagename" content="Better data and template handling">
+<!-- Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="mdsh">
+<!-- Facebook -->
+<meta property="og:title" content="Better data and template handling">
+<meta property="og:description" content="A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time.">
+<meta property="og:url" content="https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html">
+<meta property="og:site_name" content="mdsh">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://sc0ttj.github.io/mdsh/assets/icons/rss.png">
+<meta property="article:author" content="sc0ttj">
+<meta property="article:section" content="">
+<meta property="article:published_time" content="2019-09-07T18:29:46Z">
+<meta property="article:modified_time" content="2019-09-11T22:38:24Z">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Better data and template handling">
+<meta name="twitter:site" content="@foobar">
+<meta name="twitter:creator" content="@foobar">
+<meta name="twitter:image" content="https://sc0ttj.github.io/mdsh/assets/icons/rss.png">
+<meta name="twitter:domain" content="https://sc0ttj.github.io/mdsh">
+<!-- Linked data -->
+
+<script id="meta-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Article",
+  "headline": "Better data and template handling",
+  "datePublished": "2019-09-07T18:29:46Z",
+  "dateModified": "2019-09-11T22:38:24Z",
+  "description": "A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time.",
+  "keywords": "csv, mustache, shell, yaml",
+  "image": {
+    "@type": "ImageObject",
+    "height": "512",
+    "width": "512",
+    "url": "https://sc0ttj.github.io/mdsh/assets/icons/android-chrome-512x512.png"
+  },
+  "author": "sc0ttj",
+  "publisher": {
+    "@type": "Organization",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sc0ttj.github.io/mdsh/assets/icons/android-chrome-512x512.png"
+    },
+    "name": "mdsh"
+  },
+  "mainEntityOfPage": "https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html#content",
+  "articleBody": "A new data folder has been created into which you can put CSV, YAML and Shell script files. The data defined in those files will be available to your mustache templates at build time."
+}
+</script>
+<script id="breadcrumb-ld" type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement":
+  [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh",
+        "name": "Mdsh"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts",
+        "name": "Posts"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019",
+        "name": "2019"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/09",
+        "name": "September"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/09/07",
+        "name": "July"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "item":
+      {
+        "@id": "https://sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html",
+        "name": "Better data and template handling"
+      }
+    }
+  ]
+}
+</script>
+
+<!-- RSS feed -->
+<link rel="alternate" type="application/rss+xml" title="Subscribe to mdsh" href="/mdsh/feed.rss">
+<!-- SEO stuff -->
+<link rel="author" href="/humans.txt">
+<link rel="canonical" href="//sc0ttj.github.io/mdsh/posts/2019/09/07/better-data-and-template-handling.html">
+<!-- App icons and favicons -->
+<link rel="manifest" href="/mdsh/manifest.webmanifest?v=1568241511">
+<link rel="icon" type="image/png" sizes="16x16" href="/mdsh/assets/icons/favicon-16x16.png?v=1568241511">
+<link rel="icon" type="image/png" sizes="32x32" href="/mdsh/assets/icons/favicon-32x32.png?v=1568241511">
+<link rel="icon" type="image/png" sizes="192x192" href="/mdsh/assets/icons/android-chrome-192x192.png?v=1568241511">
+<link rel="icon" type="image/vnd.microsoft.icon" href="/mdsh/assets/icons/favicon.ico?v=1568241511">
+<link rel="apple-touch-icon" sizes="180x180" href="/mdsh/assets/icons/apple-touch-icon.png?v=1568241511">
+<link rel="shortcut icon" href="/mdsh/assets/icons/favicon.ico?v=1568241511">
+<link rel="mask-icon" color="#444444" href="/mdsh/assets/icons/safari-pinned-tab.svg?v=1568241511">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="/mdsh/assets/icons/browserconfig.xml?v=1568241511">
+<meta name="theme-color" content="#101010">
+<!-- Fallback app name, for legacy browsers -->
+<meta name="application-name" content="mdsh">
+<!-- prefetch resources -->
+<link rel="dns-prefetch" href="//unpkg.com">
+<link rel="preconnect"   href="//unpkg.com" crossorigin>
+<!-- CSS -->
+<style>/* inline styles go here */</style>
+<link rel="stylesheet" href="/mdsh/assets/css/main.min.css?v=1568241511">
+
+<!-- pygments (syntax highlighting) -->
+<link rel="stylesheet" href="/mdsh/assets/css/pygments-monokai-osx.min.css?v=1568241511">
+<!-- JavaScript -->
+<script>
+// enable styling of some HTML elements in IE < 9
+document.createElement("picture");
+document.createElement("time");
+</script>
+<!-- load site NPM deps, if any -->
+<script class="unpkg" defer src="//unpkg.com/cash-dom@2.3.9/dist/cash.min.js"></script>
+<script class="unpkg" defer src="//unpkg.com/jets@0.14.1/jets.min.js"></script>
+<!-- load page-specific NPM deps, if any -->
+
+<!-- main javascript app -->
+<script id="appjs" defer src="/mdsh/assets/js/app.js?v=1568241511"></script>
+</head>
+
+
+<!-- start body -->
+<body class="no-js category-blog better-data-and-template-handling">
+
+  <div class="main-container">
+
+        <div class="site-header">
+          <h1><a href="/mdsh">mdsh</a></h1>
+          <input type="search" class="site-search" id="site-search" placeholder="filter.." />
+          <a class="off-screen skip-to-content" href="#content">Skip to content</a>
+          <ul>
+              <li><a href="/mdsh/about.html">about</a></li>
+              <li><a href="/mdsh/archive.html">archive</a></li>
+              <li><a href="/mdsh/contact.html">contact</a></li>
+              <li><a href="/mdsh/search.html">search</a></li>      </ul>
+        </div>
+
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>Better data and template handling</h2>
+
+                  <div class="page-header">
+                    <div class="page-meta">
+                      <span class="time-to-read">5 mins</span>
+                      <span class="date"><time datetime="2019-09-07T18:29:46Z">2019-09-07
+        </time></span>
+                      <div class="tags">
+                        <span><a href="/mdsh/tags/csv.html">csv</a></span>
+                        <span><a href="/mdsh/tags/mustache.html">mustache</a></span>
+                        <span><a href="/mdsh/tags/shell.html">shell</a></span>
+                        <span><a href="/mdsh/tags/yaml.html">yaml</a></span>
+                      </div>
+                    </div>
+                  </div>
+
+        <p>Some big improvements have been made to the handling of site and page data,
+as well as improvements to the templating system - all of which makes it much
+easier to include custom data in your pages.</p>
+
+<h3 id="_the_assets_data_folder_">The <code>assets/data</code> folder</h3>
+
+<p>A new folder has been created, which serves a special purpose - any data defined
+in any <code>.csv</code>, <code>.sh</code> or <code>.yml</code> files found in <code>assets/data</code> will be included
+available to your templates. This feature should be familiar to users of
+<code>Jekyll</code>, which has a <code>_data</code> folder for the same purpose.</p>
+
+<p>The <em>data is namespaced by the file in which it lives</em> - a file called
+<code>products.yml</code> would be available in all your templates as an object called
+<code>products</code>, and so on.</p>
+
+<p>Here's an example:</p>
+
+<p><strong>File <code>assets/data/products.yml</code>:</strong></p>
+
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">product1</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Product one</span>
+  <span class="l l-Scalar l-Scalar-Plain">price</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+<span class="l l-Scalar l-Scalar-Plain">product2</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Product two</span>
+  <span class="l l-Scalar l-Scalar-Plain">price</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="l l-Scalar l-Scalar-Plain">product3</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Product three</span>
+  <span class="l l-Scalar l-Scalar-Plain">price</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3300</span>
+<span class="l l-Scalar l-Scalar-Plain">product4</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Product four</span>
+  <span class="l l-Scalar l-Scalar-Plain">price</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4440</span>
+<span class="l l-Scalar l-Scalar-Plain">product5</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Product five</span>
+  <span class="l l-Scalar l-Scalar-Plain">price</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5555</span>
+</pre></div>
+
+<p>can be accessed in your templates with the new <code>foreach</code> iterator:</p>
+
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nf">#foreach</span> <span class="nv">product</span> <span class="k">in</span> <span class="nv">products</span><span class="cp">}}</span><span class="x"></span>
+<span class="x">  Product </span><span class="cp">{{</span><span class="nv">product.name</span><span class="cp">}}</span><span class="x"> costs </span><span class="cp">{{</span><span class="nv">product.price</span> <span class="err">|</span> <span class="nv">money</span> <span class="s1">&#39;£&#39;</span><span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span><span class="nf">/foreach</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+<p>Once you have your templates and data files in place, you can (re)build your
+pages as before:</p>
+
+<div class="highlight"><pre><span></span><span class="c1"># rebuild the page from its source file</span>
+rebuild path/to/some/file.mdsh &gt; path/to/file.html
+
+<span class="c1"># update the homepage, index pages, etc</span>
+rebuild
+</pre></div>
+
+<p>That's all there is to it.</p>
+
+<h3 id="_supported_data_types__">Supported data types:</h3>
+
+<p>The <code>assets/data</code> folder supports CSV files (must contain headers!), a subset of
+YAML, and <code>.sh</code> files, which are sourced and in which you can define variables,
+arrays and functions as usual.</p>
+
+<!-- more -->
+
+<h3 id="_site_data_">Site data</h3>
+
+<p>The file <code>assets/data/site.yml</code> contains essential site data, like your websites
+title, URL, domain, and various settings. This is your websites main "config"
+file - the settings in this file are very important!</p>
+
+<p>All data files in <code>assets/data</code> make their data available to all pages. In other
+words, no matter which page you are building, the data from these files will
+be always available.</p>
+
+<h3 id="_page-specific_data_">Page-specific data</h3>
+
+<h4>Using YAML front matter</h4>
+
+<p>Each page has meta defined as "front matter" in the top of its <code>.mdsh</code> file -
+just like many other static site generators. These files are generated for you
+when you run <code>new post</code> and follow the on-screen instructions.</p>
+
+<p>You can manually edit any <code>.mdsh</code> file in a text editor to add extra data to
+the front matter, if you wish to add custom data your page.</p>
+
+<h4>Using <code>assets/data/&lt;page-slug&gt;/</code></h4>
+
+<p>You can also put data files in sub-directories named after your pages to easily
+make data available only to specific pages. Example - you create a page
+called "My cool page", which would have the slug <code>my-cool-page</code>.</p>
+
+<p>You then put some <code>.csv</code>, <code>.yml</code> or <code>.sh</code> files in <code>assets/data/my-cool-page/</code>,
+and that data will be made available only to that page at build time.</p>
+
+<h3 id="_templating_improvements_">Templating improvements</h3>
+
+<p>Some new features have also been added to make it easier to access all this data
+- the <code>foreach</code> iterator described above, and also the <code>lookup</code> command.</p>
+
+<p>Use the <code>lookup</code> command in your templates to access specific bits of data, like so:</p>
+
+<div class="highlight"><pre><span></span><span class="cp">{{</span><span class="nv">lookup</span> <span class="nv">products.product1.name</span><span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+<p>Using the <code>foreach</code> method you can easily access hashes and arrays, and with the
+<code>lookup</code> method you can easily access specific values inside those hashes/arrays.</p>
+
+<h3 id="_other_new_features_">Other new features</h3>
+
+<p>A new environment variable is available - <code>DEBUG_DATA</code>. If set to <code>true</code>, your
+site data (and any custom page data) will be printed to your terminal at build time.</p>
+
+<p>Using <code>DEBUG_DATA</code>:</p>
+
+<div class="highlight"><pre><span></span><span class="nv">DEBUG_DATA</span><span class="o">=</span><span class="nb">true</span> rebuild posts/2019/01/01/some-file.mdsh &gt; ./some-file.html
+</pre></div>
+
+<h3 id="_summary_">Summary</h3>
+
+<p>These changes separate the data and templates more, and make it easier to access
+custom data in your build process and templates. The code has also undergone a
+little clean up as well, although there is more to do.</p>
+
+<p>See these GitHub PRs for more details:</p>
+
+<ul>
+<li><a href="https://github.com/sc0ttj/mdsh/pull/85">Data folder</a></li>
+<li><a href="https://github.com/sc0ttj/mdsh/pull/86">Data folder refactor</a></li>
+</ul>
+
+
+                  <div class="page-footer">
+                    <div class="page-meta">
+                      <span class="category"><a href="/mdsh/categories/blog.html">blog</a></span>
+                      <span class="author"><a href="/mdsh/authors/sc0ttj.html">sc0ttj</a></span>
+                    </div>
+
+                    <ul class="prev-next-posts">
+                      <li class="prev-post">
+                        <span>Previous: </span>
+                        <a href="../../../2019/07/13/liquid-filters.html">
+                          Liquid Filters
+                        </a>
+                      </li>
+
+                      <li class="next-post">
+                        <span>Next:</span>
+                        <a href="../../../2019/09/11/permalinks-for-your-posts.html">
+                          Permalinks for your posts
+                        </a>
+                      </li>
+                    </ul>
+
+                  </div>
+
+      </div>
+    </div>
+
+    <ul id="site-navigation" class="site-navigation">
+
+      <li class="site-navigation--main-pages">
+        <h3>Pages</h3>
+        <ul>
+          <li><a href="/mdsh/about.html">About</a></li>
+          <li><a href="/mdsh/archive.html">Archive</a></li>
+          <li><a href="/mdsh/contact.html">Contact</a></li>
+          <li><a href="/mdsh/search.html">Search</a></li>    </ul>
+      </li>
+
+      <li class="site-navigation--recent-posts">
+        <h3>Recent posts</h3>
+        <ul>
+          <li><a href="/mdsh/posts/2019/09/11/permalinks-for-your-posts.html">Permalinks for your posts</a></li>
+          <li><a href="/mdsh/posts/2019/09/07/better-data-and-template-handling.html">Better data and template handling</a></li>
+          <li><a href="/mdsh/posts/2019/07/13/liquid-filters.html">Liquid Filters</a></li>
+          <li><a href="/mdsh/posts/2019/07/01/faster-site-rebuilds.html">Faster site rebuilds</a></li>
+          <li><a href="/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html">Adding support for more embedded languages</a></li>    </ul>
+      </li>
+
+      <li class="site-navigation--categories">
+        <h3>Categories</h3>
+        <ul>
+          <li>
+            <a href="/mdsh/categories/blog.html">blog</a>
+          </li>
+          <li>
+            <a href="/mdsh/categories/games.html">games</a>
+          </li>    </ul>
+      </li>
+
+      <li class="site-navigation--tags">
+        <h3>Tags</h3>
+        <div>
+          <a href="/mdsh/tags/bash.html">bash</a>,
+          <a href="/mdsh/tags/blog.html">blog</a>,
+          <a href="/mdsh/tags/bsd.html">bsd</a>,
+          <a href="/mdsh/tags/css.html">css</a>,
+          <a href="/mdsh/tags/csv.html">csv</a>,
+          <a href="/mdsh/tags/games.html">games</a>,
+          <a href="/mdsh/tags/git.html">git</a>,
+          <a href="/mdsh/tags/gnu.html">gnu</a>,
+          <a href="/mdsh/tags/html.html">html</a>,
+          <a href="/mdsh/tags/javascript.html">javascript</a>,
+          <a href="/mdsh/tags/js.html">js</a>,
+          <a href="/mdsh/tags/json-ld.html">json-ld</a>,
+          <a href="/mdsh/tags/linux.html">linux</a>,
+          <a href="/mdsh/tags/liquid-templating.html">liquid-templating</a>,
+          <a href="/mdsh/tags/markdown.html">markdown</a>,
+          <a href="/mdsh/tags/mdsh.html">mdsh</a>,
+          <a href="/mdsh/tags/mustache.html">mustache</a>,
+          <a href="/mdsh/tags/osx.html">osx</a>,
+          <a href="/mdsh/tags/pygments.html">pygments</a>,
+          <a href="/mdsh/tags/rss.html">rss</a>,
+          <a href="/mdsh/tags/search.html">search</a>,
+          <a href="/mdsh/tags/sed.html">sed</a>,
+          <a href="/mdsh/tags/seo.html">seo</a>,
+          <a href="/mdsh/tags/shell.html">shell</a>,
+          <a href="/mdsh/tags/xml.html">xml</a>,
+          <a href="/mdsh/tags/yaml.html">yaml</a>,    </div>
+      </li>
+
+    </ul>
+
+    <div class="footer">
+      <p>© mdsh, 2019. Powered by <a href="https://sc0ttj.github.io/mdsh/">mdsh</a></p>
+    </div>
+
+  </div>
+
+</body>
+</html>

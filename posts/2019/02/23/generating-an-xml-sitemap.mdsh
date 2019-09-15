@@ -1,16 +1,16 @@
-# title:        Generating an XML sitemap
-# slug name:    generating-an-xml-sitemap
-# description:  Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.
-# time to read: 1 min
-# category:     blog
-# tags:         blog, xml
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/23
-# modified:     2019/02/23
+title:        Generating an XML sitemap
+slug:         generating-an-xml-sitemap
+descr:        Here is a bash script for generating a valid XML sitemap file (sitemap.xml), which can be used to improve the SEO of your website, and improve your Google search rankings.
+time_to_read: 1 min
+category:     blog
+tags:         blog, xml
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/23
+modified:     2019/02/23
 
 ---
 ## Generating an XML sitemap

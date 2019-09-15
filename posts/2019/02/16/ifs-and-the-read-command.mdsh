@@ -1,19 +1,18 @@
-# title:        IFS and the read command
-# slug name:    ifs-and-the-read-command
-# description:  Or, how I parse markdown to generate valid HTML
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/16
-# modified:     2019/02/16
+title:        IFS and the read command
+slug:         ifs-and-the-read-command
+descr:        Or, how I parse markdown to generate valid HTML
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/16
+modified:     2019/02/16
 
 ---
-## IFS and the read command
 
 In order to (finally) get the `.mdsh` files to generate valid markdown, and from there to convert to valid HTML, while **also** preserving code block formatting (new lines, indentations, etc), I had to set IFS and use the `-er` options of the read command.
 

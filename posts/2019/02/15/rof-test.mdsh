@@ -1,16 +1,16 @@
-# title:        rof test
-# slug name:    rof-test
-# description:  test
-# time to read: 1 min
-# category:     test
-# tags:         test
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        rof test
+slug:         rof-test
+descr:        test
+time_to_read: 1 min
+category:     test
+tags:         test
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
 ## Rofnafen script

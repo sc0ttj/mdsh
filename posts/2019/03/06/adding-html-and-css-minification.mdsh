@@ -1,16 +1,16 @@
-# title:        Adding HTML and CSS minification
-# slug name:    adding-html-and-css-minification
-# description:  A new feature has been added to `mdsh` which will improve site performance: automatic minification of the generated HTML and CSS.
-# time to read: 2 mins
-# category:     blog
-# tags:         html, css, shell
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js
-# created:      2019/03/06
-# modified:     2019/03/06
+title:        Adding HTML and CSS minification
+slug:         adding-html-and-css-minification
+descr:        A new feature has been added to mdsh which will improve site performance: automatic minification of the generated HTML and CSS.
+time_to_read: 2 mins
+category:     blog
+tags:         html, css, shell
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom@2.3.9/dist/cash.min.js jets@0.14.1/jets.min.js
+created:      2019/03/06
+modified:     2019/03/06
 
 ---
 ## Adding HTML and CSS minification
@@ -37,7 +37,7 @@ Here is the contents of the new `minify` script:
 
 # minifies HTML and CSS files,  requires no arguments
 
-# usage: minify
+usage: minify
 
 # The script will then find all html and css files in the
 # current dir (recursively) and replace them with minified

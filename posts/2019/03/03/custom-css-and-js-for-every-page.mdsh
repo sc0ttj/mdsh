@@ -1,16 +1,16 @@
-# title:        Custom CSS and JS for every page
-# slug name:    custom-css-and-js-for-every-page
-# description:  A simple solution for adding custom CSS and JavaScript to any page or post you create using `mdsh` has now been implemented.
-# time to read: 1 min
-# category:     blog
-# tags:         blog, css, javascript
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/03
-# modified:     2019/03/03
+title:        Custom CSS and JS for every page
+slug:         custom-css-and-js-for-every-page
+descr:        A simple solution for adding custom CSS and JavaScript to any page or post you create using mdsh has now been implemented.
+time_to_read: 1 min
+category:     blog
+tags:         blog, css, javascript
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/03
+modified:     2019/03/03
 
 ---
 ## Custom CSS and JS for every page

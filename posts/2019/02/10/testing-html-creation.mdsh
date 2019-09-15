@@ -1,16 +1,16 @@
-# title:        Testing HTML creation
-# slug name:    testing-html-creation
-# description:  This is just a test
-# time to read: 1 min
-# category:     test
-# tags:         test
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/10
-# modified:     2019/02/10
+title:        Testing HTML creation
+slug:         testing-html-creation
+descr:        This is just a test
+time_to_read: 1 min
+category:     test
+tags:         test
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/10
+modified:     2019/02/10
 
 ---
 

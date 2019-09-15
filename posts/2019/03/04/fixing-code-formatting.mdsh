@@ -1,16 +1,16 @@
-# title:        Fixing code formatting
-# slug name:    fixing-code-formatting
-# description:  Another IFS based fix for processing input while retaining any whitespace.
-# time to read: 1 min
-# category:     blog
-# tags:         shell
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/04
-# modified:     2019/03/04
+title:        Fixing code formatting
+slug:         fixing-code-formatting
+descr:        Another IFS based fix for processing input while retaining any whitespace.
+time_to_read: 1 min
+category:     blog
+tags:         shell
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/04
+modified:     2019/03/04
 
 ---
 ## Fixing code formatting

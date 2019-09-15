@@ -1,16 +1,16 @@
-# title:        Creating HTML from Markdown
-# slug name:    creating-html-from-markdown
-# description:  Here is how this blog converts Markdown into nicely formatted HTML pages.
-# time to read: 3 mins
-# category:     blog
-# tags:         shell,blog,markdown
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/10
-# modified:     2019/02/10
+title:        Creating HTML from Markdown
+slug:         creating-html-from-markdown
+descr:        Here is how this blog converts Markdown into nicely formatted HTML pages.
+time_to_read: 3 mins
+category:     blog
+tags:         shell,blog,markdown
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/10
+modified:     2019/02/10
 
 ---
 

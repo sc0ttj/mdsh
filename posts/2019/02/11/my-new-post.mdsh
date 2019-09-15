@@ -1,16 +1,16 @@
-# title:        My new post
-# slug name:    my-new-post
-# description:  blah
-# time to read: 1 min
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/11
-# modified:     2019/02/11
+title:        My new post
+slug:         my-new-post
+descr:        blah
+time_to_read: 1 min
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/11
+modified:     2019/02/11
 
 ---
 

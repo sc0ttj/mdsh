@@ -1,16 +1,16 @@
-# title:        Fixing RSS generation
-# slug name:    fixing-rss-generation
-# description:  The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.
-# time to read: 2 mins
-# category:     blog
-# tags:         bsd, linux, gnu, osx
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/02
-# modified:     2019/03/02
+title:        Fixing RSS generation
+slug:         fixing-rss-generation
+descr:        The differences between the GNU and BSD version of `date`, `find` and `sed` caused the RSS feed generation to fail on Mac OS X. So here is how I fixed it.
+time_to_read: 2 mins
+category:     blog
+tags:         bsd, linux, gnu, osx
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/02
+modified:     2019/03/02
 
 ---
 ## Fixing RSS generation

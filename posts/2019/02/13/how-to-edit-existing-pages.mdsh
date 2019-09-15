@@ -1,16 +1,16 @@
-# title:        How to edit existing pages
-# slug name:    how-to-edit-existing-pages
-# description:  Here is the not-so-nice method currently being used to edit pre-existing posts
-# time to read: 1 min
-# category:     blog
-# tags:         blog
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/13
-# modified:     2019/02/13
+title:        How to edit existing pages
+slug:         how-to-edit-existing-pages
+descr:        Here is the not-so-nice method currently being used to edit pre-existing posts
+time_to_read: 1 min
+category:     blog
+tags:         blog
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/13
+modified:     2019/02/13
 
 ---
 ## How to edit existing pages

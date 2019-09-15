@@ -1,16 +1,16 @@
-# title:        Highlighting search terms on the page
-# slug name:    highlighting-search-terms-on-the-page
-# description:  Using a small Cash-JS plugin (adapted from a jQuery plugin), we can easily highlight the users given search terms where they are found on the page.
-# time to read: 1 min
-# category:     blog
-# tags:         javascript
-# author:       sc0ttj
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom jets
-# created:      2019/03/03
-# modified:     2019/03/03
+title:        Highlighting search terms on the page
+slug:         highlighting-search-terms-on-the-page
+descr:        Using a small Cash-JS plugin (adapted from a jQuery plugin), we can easily highlight the users given search terms where they are found on the page.
+time_to_read: 1 min
+category:     blog
+tags:         javascript
+author:       sc0ttj
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom jets
+created:      2019/03/03
+modified:     2019/03/03
 
 ---
 ## Highlighting search terms on the page

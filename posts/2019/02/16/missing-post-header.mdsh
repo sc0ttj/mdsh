@@ -1,19 +1,18 @@
-# title:        Missing post header
-# slug name:    missing-post-header
-# description:  A bug that I've just (hopefully) fixed.
-# time to read: 1 min
-# category:     blog
-# tags:         blog
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/16
-# modified:     2019/02/16
+title:        Missing post header
+slug:         missing-post-header
+descr:        A bug that I've just (hopefully) fixed.
+time_to_read: 1 min
+category:     blog
+tags:         blog
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/16
+modified:     2019/02/16
 
 ---
-## Missing post header
 
 This post should have a `h2` title called "Missing post header" .. The previous post (now fixed) was generated but had a missing header.
 

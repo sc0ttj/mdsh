@@ -1,20 +1,18 @@
-# title:        Error in file naming
-# slug name:    error-in-file-naming
-# description:  One of those things...
-# time to read: 1 min
-# category:     test
-# tags:         test
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/15
-# modified:     2019/02/15
+title:        Error in file naming
+slug:         error-in-file-naming
+descr:        One of those things...
+time_to_read: 1 min
+category:     test
+tags:         test
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/15
+modified:     2019/02/15
 
 ---
-## Error in file naming
-
 I've fixed some file naming stuff, so hopefully, this post should be saved as valid markdown, html, and our custom `.mdsh` format (which allows markdown, html and embedded sub-shell commands)..
 
 Lets test it.. Lets call the `uname` command, and we should get its *output* saved in the `.md` file, the command itself saved in the `.mdsh` file, and valid HTML in the `.html` file:

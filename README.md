@@ -15,12 +15,15 @@ This is a fast way of producing documentation for any installed programs or comm
 ## Features
 
 - Written in Bash shell script
+- Simple command-line interface (use in the terminal)
 - Builds a fast blog with great SEO and mobile support
-- Creates blog posts or custom pages.
-- Use a mix of Markdown and shell code to write blog posts!
-- Use your terminal - no text editor or IDE required (but you can use them too).
-- Automatically generates index pages for categories, tags, authors and more.
-- Also generates a valid RSS feed and XML sitemap.
+- Creates blog posts or custom pages, built from Markdown or HTML.
+- Generates index pages for categories, tags, authors and more.
+- Generates a valid RSS feed and XML sitemap.
+- Define your site and page data in `assets/data/` as YAML, CSV or Bash variables & arrays
+- Uses a mustache-like templating system, with [liquid-style filters](https://sc0ttj.github.io/mdsh/posts/2019/07/13/liquid-filters.html)
+- Auto convert URLs to [embedded content](https://sc0ttj.github.io/mdsh/posts/2019/09/14/embedding-youtube-videos-tweets-codepens-and-other-third-party-content.html) for Youtube, Twitter, Instagram, Vimeo and more
+- Embed shell, python, ruby, (etc) code in your Markdown to produce [dynamic Markdown](https://sc0ttj.github.io/mdsh/posts/2019/06/29/adding-support-for-more-embedded-languages.html) output!
 - Includes a "Contact" page that works out of the box! (uses [formspree.io](http://formspree.io) to send you emails, requires JS)
 - Includes a very fast page search, with highlighted matches (uses [Jets](https://jets.js.org/), requires JS)
 - Supports fullscreen, native app experience on mobile/smartphone if added to Homescreen

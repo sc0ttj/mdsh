@@ -1,16 +1,16 @@
-# title:        Using Git to manage your blog
-# slug name:    using-git-to-manage-your-blog
-# description:  Saving, publishing, reverting changes are all made easy with Git.
-# time to read: 1 min
-# category:     blog
-# tags:         blog,git
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/12
-# modified:     2019/02/12
+title:        Using Git to manage your blog
+slug:         using-git-to-manage-your-blog
+descr:        Saving, publishing, reverting changes are all made easy with Git.
+time_to_read: 1 min
+category:     blog
+tags:         blog,git
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/12
+modified:     2019/02/12
 
 ---
 ## Using Git to manage your blog

@@ -1,16 +1,16 @@
-# title:        Auto-generated post footers
-# slug name:    auto-generated-post-footers
-# description:  This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.
-# time to read: 1 min
-# category:     blog
-# tags:         blog
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom
-# created:      2019/02/16
-# modified:     2019/02/16
+title:        Auto-generated post footers
+slug:         auto-generated-post-footers
+descr:        This blog has automatically generated footers for each post you create, containing the meta info, category, tags, author (etc) of the post.
+time_to_read: 1 min
+category:     blog
+tags:         blog
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom
+created:      2019/02/16
+modified:     2019/02/16
 
 ---
 ## Auto-generated post footers

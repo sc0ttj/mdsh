@@ -1,16 +1,16 @@
-# title:        What to do after creating a post
-# slug name:    what-to-do-after-creating-a-post
-# description:  After a post is created, indexes and other pages need to be updated.
-# time to read: 2 mins
-# category:     blog
-# tags:         blog,shell
-# author:       John Doe
-# email:        foo@bar.com
-# twitter:      @foobar
-# language:     en
-# JS deps:      cash-dom 
-# created:      2019/02/10
-# modified:     2019/02/10
+title:        What to do after creating a post
+slug:         what-to-do-after-creating-a-post
+descr:        After a post is created, indexes and other pages need to be updated.
+time_to_read: 2 mins
+category:     blog
+tags:         blog,shell
+author:       John Doe
+email:        foo@bar.com
+twitter:      @foobar
+language:     en
+js_deps:      cash-dom 
+created:      2019/02/10
+modified:     2019/02/10
 
 ---
 
