@@ -79,11 +79,19 @@
 <link rel="stylesheet" href="{{site_url}}/assets/css/pygments-{{page_code_stylesheet}}.css?v={{timestamp}}">
 {{/pygments}}
 <!-- JavaScript -->
-<script>
-// enable styling of some HTML elements in IE < 9
-document.createElement("picture");
-document.createElement("time");
-</script>
+<!--[if lt IE 9]>
+  <script>
+    // enable styling of HTML5 elements in IE < 9
+    document.createElement('header');
+    document.createElement('nav');
+    document.createElement('section');
+    document.createElement('article');
+    document.createElement('aside');
+    document.createElement('footer');
+    document.createElement('picture');
+    document.createElement('time');
+  </script>
+<![endif]-->
 {{#page_google_analytics_js}}
 <!-- google analytics -->
 <script id="google-analytics">
