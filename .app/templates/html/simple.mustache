@@ -13,8 +13,7 @@
   <div class="main-container">
 
     {{^is_homepage}}
-    <br aria-hidden="true">
-    <a href="/mdsh/">&lt;-- Back to homepage</a>
+    <a href="/mdsh/" onclick="preventDefault(); window.history.back();" class="back-to-homepage">&lt;&nbsp;&nbsp;Back</a>
     {{/is_homepage}}
 
     <div class="body-container">

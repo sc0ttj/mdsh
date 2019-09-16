@@ -1,0 +1,44 @@
+
+
+Re-building your site is now faster than before, thanks to a few improvements
+made in the [latest commit](https://github.com/sc0ttj/mdsh/commit/8d904dff7f5a6829f9db92926d75f1ab4e077fd3):
+
+- rebuild only the relevant index pages after creating a new post
+- cache parts of the site which dont change during a site build:
+    - site header
+    - site navigation
+    - site footer
+
+Other fixes added in this commit include:
+
+- updated help info in various scripts
+- keep onwards journeys of all posts up-to-date when adding a new post
+
+<!-- more -->
+
+### Partial rebuild details
+
+Updates have been made to `.app/update_pages.sh` - if `$1` is a `.mdsh` of a
+post, a partial rebuild will be triggered.
+
+Updates in `.app/create_post.sh` have been made so a partial rebuild is triggered
+after creating a new post.
+
+Partial rebuilds update all the relevant index pages (authors, categories, tags,
+etc), while ignoring pages that are unaffected by the new post being added to
+the site.
+
+In other words, partial rebuilds will "re-index" your post, so that
+listings/information about it elsewhere on the site are in the right place and
+up-to-date.
+
+### Cached content
+
+During a rebuild, the site header, footer and navigation - which do not change
+during a build - are generated from templates then cached after the first page
+is built, and the cached versions used thereafter, until the rebuild is finished.
+Once a site rebuild is finished, the cached files are deleted.
+
+This ensures cached files are only kept as long as they are "up-to-date" - site
+data cannot be changed during a build, so caching content for the duration of the
+build, but not _between_ builds should work fine.

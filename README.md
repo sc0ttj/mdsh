@@ -68,7 +68,7 @@ Or manually:
 page_title="My cool page" \
 page_slug="my-cool-page"  \
 page_descr="Some thing"   \
-  create_page.sh "$body_html" > my-cool-page.html
+  .app/create_page.sh "$body_html" > my-cool-page.html
 ```
 
 #### Rebuilding pages

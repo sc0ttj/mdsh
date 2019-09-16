@@ -1,0 +1,135 @@
+
+
+
+Some big improvements have been made to the handling of site and page data,
+as well as improvements to the templating system - all of which makes it much
+easier to include custom data in your pages.
+
+### The `assets/data` folder
+
+A new folder has been created, which serves a special purpose - any data defined
+in any `.csv`, `.sh` or `.yml` files found in `assets/data` will be included
+available to your templates. This feature should be familiar to users of
+`Jekyll`, which has a `_data` folder for the same purpose.
+
+The _data is namespaced by the file in which it lives_ - a file called
+`products.yml` would be available in all your templates as an object called
+`products`, and so on.
+
+Here's an example:
+
+**File `assets/data/products.yml`:**
+
+```yaml
+product1:
+  name: Product one
+  price: 1000
+product2:
+  name: Product two
+  price: 2000
+product3:
+  name: Product three
+  price: 3300
+product4:
+  name: Product four
+  price: 4440
+product5:
+  name: Product five
+  price: 5555
+```
+
+can be accessed in your templates with the new `foreach` iterator:
+
+```handlebars
+{{#foreach product in products}}
+  Product {{product.name}} costs {{product.price | money '£'}}
+{{/foreach}}
+```
+
+Once you have your templates and data files in place, you can (re)build your
+pages as before:
+
+```shell
+# rebuild the page from its source file
+rebuild path/to/some/file.mdsh > path/to/file.html
+
+# update the homepage, index pages, etc
+rebuild
+```
+
+That's all there is to it.
+
+
+### Supported data types:
+
+The `assets/data` folder supports CSV files (must contain headers!), a subset of
+YAML, and `.sh` files, which are sourced and in which you can define variables,
+arrays and functions as usual.
+
+<!-- more -->
+
+### Site data
+
+The file `assets/data/site.yml` contains essential site data, like your websites
+title, URL, domain, and various settings. This is your websites main "config"
+file - the settings in this file are very important!
+
+All data files in `assets/data` make their data available to all pages. In other
+words, no matter which page you are building, the data from these files will
+be always available.
+
+### Page-specific data
+
+#### Using YAML front matter
+
+Each page has meta defined as "front matter" in the top of its `.mdsh` file -
+just like many other static site generators. These files are generated for you
+when you run `new post` and follow the on-screen instructions.
+
+You can manually edit any `.mdsh` file in a text editor to add extra data to
+the front matter, if you wish to add custom data your page.
+
+#### Using `assets/data/<page-slug>/`
+
+You can also put data files in sub-directories named after your pages to easily
+make data available only to specific pages. Example - you create a page
+called "My cool page", which would have the slug `my-cool-page`.
+
+You then put some `.csv`, `.yml` or `.sh` files in `assets/data/my-cool-page/`,
+and that data will be made available only to that page at build time.
+
+### Templating improvements
+
+Some new features have also been added to make it easier to access all this data
+- the `foreach` iterator described above, and also the `lookup` command.
+
+Use the `lookup` command in your templates to access specific bits of data, like so:
+
+```handlebars
+{{lookup products.product1.name}}
+```
+
+Using the `foreach` method you can easily access hashes and arrays, and with the
+`lookup` method you can easily access specific values inside those hashes/arrays.
+
+### Other new features
+
+A new environment variable is available - `DEBUG_DATA`. If set to `true`, your
+site data (and any custom page data) will be printed to your terminal at build time.
+
+Using `DEBUG_DATA`:
+
+```shell
+DEBUG_DATA=true rebuild posts/2019/01/01/some-file.mdsh > ./some-file.html
+```
+
+### Summary
+
+These changes separate the data and templates more, and make it easier to access
+custom data in your build process and templates. The code has also undergone a
+little clean up as well, although there is more to do.
+
+See these GitHub PRs for more details:
+
+- [Data folder](https://github.com/sc0ttj/mdsh/pull/85)
+- [Data folder refactor](https://github.com/sc0ttj/mdsh/pull/86)

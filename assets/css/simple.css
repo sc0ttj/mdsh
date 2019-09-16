@@ -518,3 +518,10 @@ ul.archive-posts li {
   padding-top: 1px;
   margin: 0 0 24px 0;
 }
+.back-to-homepage {
+  font-weight: normal;
+  padding-left: 18px;
+  margin-top: 24px;
+  display: block;
+  text-decoration: none;
+}
