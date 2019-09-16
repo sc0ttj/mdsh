@@ -215,6 +215,11 @@ code {
   width: 1px;
 }
 
+.skip-to-content {
+  background-color: #efefef;
+  color: #222;
+}
+
 .skip-to-content:focus {
   background-color: #efefef;
   clip: initial;
@@ -228,4 +233,20 @@ code {
   left: 12px;
   width: auto;
   z-index: 10;
+}
+
+.oembed-container {
+  border: 0;
+  padding: 0;
+  max-width: 100%;
+  width: 100%;
+  min-height: 360px;
+}
+
+.oembed-container iframe {
+  border: 0;
+  padding: 0;
+  max-width: 100%;
+  width: 100%;
+  min-height: 360px;
 }
