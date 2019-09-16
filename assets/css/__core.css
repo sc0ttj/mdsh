@@ -240,7 +240,7 @@ code {
   padding: 0;
   max-width: 100%;
   width: 100%;
-  min-height: 360px;
+  min-height: 240px;
 }
 
 .oembed-container iframe {
@@ -248,5 +248,33 @@ code {
   padding: 0;
   max-width: 100%;
   width: 100%;
-  min-height: 360px;
+  min-height: 240px;
+}
+
+@media (min-width: 600px) {
+  .oembed-container,
+  .oembed-container iframe {
+    min-height: 360px;
+  }
+}
+
+/* force wrapping of long text in main body (good for long links on small screens) */
+.main-content p,
+.main-content a,
+.main-content p > code {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  /* word-break: break-all; */
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
