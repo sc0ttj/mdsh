@@ -23,9 +23,6 @@ rm /tmp/_site_*.html &>/dev/null
 # load the local config file
 [ -f .site_config ] && source .site_config
 
-# clean up posts.csv (remove any entries that have missing files)
-cp posts.csv /tmp/posts.csv
-
 # set some vars
 partial_build=false
 source_file=''
@@ -39,56 +36,94 @@ relevant_author_filter=''
 relevant_category_filter=''
 previous_page=''
 
-
-# read all posts
+# clean up posts.csv
+cp posts.csv /tmp/posts.csv
 cut -f1-2 -d'|' /tmp/posts.csv | sort -r | while read line
+do
+  # remove the HTML files of unpublished posts
+  if [ "$(echo "$line" | grep "^#")" != "" ];then
+    html_file=${line//|//}
+    html_file=${html_file//#/}
+    html_file=posts/${html_file//.mdsh/.html}
+    [ -f $html_file ] && rm $html_file &>/dev/null
+    continue
+  fi
+
+  # get the file name
+  mdshfile="${line//|//}"
+  mdshfile="${mdshfile//#/}"
+
+  if [ ! -f "posts/$mdshfile" ];then
+    # the .mdsh file doesnt exist, remove post from posts list
+    echo "Removing: posts/$mdshfile"
+    grep -v "^$line" posts.csv > /tmp/posts.csv
+    mv /tmp/posts.csv posts.csv
+  fi
+done
+
+
+############################## functions ##################################
+
+function rebuild_posts {
+  cut -f1-2 -d'|' posts.csv | sort -r | while read line
   do
-
-    # remove the HTML files of unpublished posts
-    if [ "$(echo "$line" | grep "^#")" != "" ];then
-      html_file=${line//|//}
-      html_file=${html_file//#/}
-      html_file=posts/${html_file//.mdsh/.html}
-      [ -f $html_file ] && rm $html_file &>/dev/null
-      continue
-    fi
-
-    # get the file name
     mdshfile="${line//|//}"
     mdshfile="${mdshfile//#/}"
-
-    if [ ! -f "posts/$mdshfile" ];then
-      # the .mdsh file doesnt exist, remove post from posts list
-      echo "Removing: posts/$mdshfile"
-      grep -v "^$line" posts.csv > /tmp/posts.csv
-      mv /tmp/posts.csv posts.csv
-
-    else
-      # mdsh file exists
-      #
-      # if -all, ....         md -> html
-      # if -ALL, .... mdsh -> md -> html
-      #
-      if [ "$1" = "-all" ] || [ "$1" = "-ALL" ];then
-        source_file="$mdshfile"
-        html_file="${mdshfile//.mdsh/.html}"
-        [ "$1" = "-all" ] && source_file="${mdshfile//.mdsh/.md}"
-        # update (rebuild) all posts pages
-        echo "Updating: posts/$html_file"
-        .app/create_page.sh "posts/$source_file" > "posts/$html_file"
-      fi
+    if [ -f "posts/$mdshfile" ];then
+      source_file="$mdshfile"
+      html_file="${mdshfile//.mdsh/.html}"
+      [ "$2" = "mdonly" ] && source_file="posts/${mdshfile//.mdsh/.md}"
+      [ ! -f "posts/$source_file" ] && continue
+      # update (rebuild) all posts pages
+      echo "Updating: posts/$html_file"
+      .app/create_page.sh "posts/$source_file" > "posts/$html_file"
     fi
-
   done
+}
 
-
-##########################################
+function rebuild_custom_pages {
+  local pages="$(grep -v '^#' pages.csv | sort -u | sort -r)"
+  local source_file page_dir page_source
+  local IFS="
+"
+  for page in $pages
+  do
+    # get dir of page
+    page_dir="$(echo "$page"      | cut -f1 -d'|')"
+    page_dir="${page_dir:-.}"
+    # get slug without extension
+    page_source="$(echo "$page"   | cut -f2 -d'|')"
+    page_source="${page_source//.html/}"
+    page_source="${page_source//.mdsh/}"
+    page_source="${page_source//.md/}"
+    # get meta info
+    page_title="$(echo "$page"    | cut -f3 -d'|')"
+    page_html="$(echo "$page"   | cut -f4 -d'|')"
+    page_slug="${page_html//.html/}"
+    page_author="$(echo "$page"   | cut -f5 -d'|')"
+    page_category="$(echo "$page" | cut -f6 -d'|')"
+    page_keywords="$(echo "$page" | cut -f7 -d'|')"
+    # set source file
+    for file in "${page_source}.mdsh" "${page_source}.md"
+    do
+      [ -f "${page_dir}/${file}" ] && source_file="${page_dir}/${file}"
+      [ -f "$source_file" ] && break
+    done
+    # build page
+    echo "Updating: ${page_html}"
+    page_title="$page_title"       \
+    page_slug="$page_slug"         \
+    page_author="$page_author"     \
+    page_category="$page_category" \
+    page_keywords="$page_keywords" \
+      .app/create_page.sh "${source_file}" > "${page_dir}/${page_html}"
+  done
+}
 
 function rebuild_homepage {
   echo "Updating: index.html"
   page_title="Homepage" .app/create_page.sh > index.html
 }
-
 
 function rebuild_monthly_indexes {
   local year="$1"
@@ -357,6 +392,10 @@ function rebuild_indexes_of_page {
 #
 # rebuild homepage            # rebuild index.html (the homepage)
 #
+# rebuild pages               # rebuild all custom pages
+#
+# rebuild posts               # rebuild all blog posts
+#
 # rebuild archive             # rebuild archive.html
 #
 # rebuild 404                 # rebuild 404.html
@@ -410,10 +449,19 @@ do
     homepage)
       rebuild_homepage
       ;;
+    pages)
+      rebuild_custom_pages
+      ;;
+    posts)
+      rebuild_posts
+      ;;
     rss)
       echo "Updating: feed.rss"
       .app/create_rss.sh posts/ > feed.rss
       exit
+      ;;
+    search)
+      rebuild_search_page
       ;;
     sitemap)
       .app/generate_sitemap.sh
@@ -472,9 +520,13 @@ do
   esac
 done
 
-if [ -z "$1" ];then
-  # no options given, rebuild all index pages
+if [ -z "$1" ] || [ "$1" = "all" ];then
+  # rebuild all index pages
   partial_rebuild=false
+  if [ "$1" = "all" ];then
+    rebuild_custom_pages
+    rebuild_posts
+  fi
   rebuild_homepage
   rebuild_yearly_indexes
   rebuild_404_page

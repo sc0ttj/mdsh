@@ -146,6 +146,13 @@ if [ "$page_permalink" != "" ];then
   generate_page_permalink "$page_permalink"
 fi
 
+if [ -f "$2" ] && [ "$is_blog_post" != true ];then
+  # if is not a blog post, its a page, so save to pages.csv
+  echo "${page_dir}|$2|$page_title|$(echo "$page_title" | slugify)|$page_author|$page_category|$(echo ${page_tags[@]} | sed 's/ /, /g')" >> pages.csv
+  sort -u pages.csv | uniq >> pages_sorted.csv
+  mv pages_sorted.csv pages.csv
+fi
+
 # clean up
 rm    /tmp/htmlfile
 unset is_blog_post

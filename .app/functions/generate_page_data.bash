@@ -15,6 +15,9 @@ function get_page_data {
   page_title="${page_title:-$site_title}"
   page_slug="${page_slug:-$(echo "$page_title" | slugify)}"
   page_fonts="${page_fonts:-$site_fonts}"
+  page_author="${page_author:-$site_author}"
+  page_category="${page_category:-$site_category}"
+  page_keywords="${page_keywords:-$site_keywords}"
   page_stylesheet="${page_stylesheet:-$site_stylesheet}"
   page_code_stylesheet="${page_code_stylesheet:-$site_code_stylesheet}"
   page_lang="${site_language:-en}"
@@ -47,7 +50,10 @@ function get_page_data {
   page_url="${page_url:-$site_url}"
 
   # set whether or not the page being generated is a blog post (or custom page)
-  [ "$page_created" != "" ] && is_blog_post=true || is_blog_post=''
+  case "$page_url" in
+  */posts/*/*/*) is_blog_post=true ;;
+  *)  is_blog_post='' ;;
+  esac
 }
 
 # Usage:  get_page_data_from_frontmatter path/to/post.mdsh
@@ -95,13 +101,16 @@ function get_page_data_from_yml_frontmatter {
   page_category="${page_category//,*/}"
   # get current date as modified date, as we are updating this file now
   page_modified="$current_date"
-  # get date from folder name (for url below)
-  page_dir="posts/$(grep -v "^#" posts.csv | grep -m1 "|${page_slug}.mdsh|$page_title|" | cut -f1 -d'|')"
-  # create post URL
+  # get path to the file, to use in for url below
+  page_dir="$(dirname "${1//.md/}.mdsh")"
+  # create page URL
   page_url="${site_url}/$page_dir/${page_slug}.html"
 
   # set whether or not the page being generated is a blog post (or custom page)
-  [ "$page_created" != "" ] && is_blog_post=true || is_blog_post=''
+  case "$page_url" in
+  */posts/*/*/*) is_blog_post=true ;;
+  *)  is_blog_post='' ;;
+  esac
 }
 
 function get_page_creation_date {

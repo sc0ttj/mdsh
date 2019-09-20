@@ -4,6 +4,7 @@ title: mdsh
 language: en
 descr: 'a simple static site generator for modern websites, written in Bash.'
 keywords: 'mdsh, static site generator, project page, open source, blog, news, feed'
+category: blog
 author: sc0ttj
 email: foo@example.com
 twitter: @foobar
