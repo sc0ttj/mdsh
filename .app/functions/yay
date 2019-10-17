@@ -400,26 +400,8 @@ yay_parse() {
 
 # helper to load yay data file
 yay() {
-
-  if [ "$DEBUG_DATA" = true ];then
-    # yaml_to_vars_ext "$@"
-    echo >&2
-    yaml_to_vars "$@" >&2
-    echo >&2
-    yay_parse "$@" >&2
-  fi
-
-  # eval $(yaml_to_vars_ext "$@")
   yaml_to_vars "$@" 2>/dev/null
   yay_parse "$@" 2>/dev/null
-}
-
-print_site_data() {
-  for file in assets/data/*.yml
-  do
-    yaml_to_vars "$file" | grep -v 'unset'
-    yay_parse "$file" | grep -v 'unset'
-  done
 }
 
 lookup() {

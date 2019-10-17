@@ -493,6 +493,59 @@ ul.archive-posts li {
   color: #666;
   text-decoration: underline;
 }
+/* products */
+.product {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .products .product {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: inherit;
+    width: calc(49.5% - 4px);
+  }
+
+  .products .product:last-child {
+    margin-right: 0;
+  }
+}
+
+.product h4 {
+  margin-top: 0;
+}
+
+.product ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.product li span:first-child {
+  display: inline-block;
+  min-width: 120px;
+}
+
+.product p,
+.product select {
+  display: inline-block;
+  margin: 8px 0;
+  padding: 0;
+  width: 120px;
+}
+
+.product select {
+  width: 160px;
+}
+
+.product .paypal-btn {
+  padding: 6px;
+  margin: 8px 0;
+  width: 100%;
+}
 /* custom styles for individual pages below */
 /* hide main h2 headers for various pages  */
 .mdsh .main-content > h2:first-child,

@@ -345,10 +345,12 @@ ul.archive-posts li {
   background-color: #222;
   border: 0;
   padding: 8px;
+  margin-top: 12px;
   margin-left: 4px;
 }
-@media (min-width: 416px) {
+@media (min-width: 414px) {
   .contact-form button[type="submit"] {
+    margin-top: initial;
     margin-left: 78px;
   }
 }
@@ -482,6 +484,59 @@ ul.archive-posts li {
 .site-navigation a:focus {
   color: #fff;
   text-decoration: underline;
+}
+/* products */
+.product {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .products .product {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: inherit;
+    width: calc(50% - 10px);
+  }
+
+  .products .product:last-child {
+    margin-right: 0;
+  }
+}
+
+.product h4 {
+  margin-top: 0;
+}
+
+.product ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.product li span:first-child {
+  display: inline-block;
+  min-width: 120px;
+}
+
+.product p,
+.product select {
+  display: inline-block;
+  margin: 8px 0;
+  padding: 0;
+  width: 120px;
+}
+
+.product select {
+  width: 160px;
+}
+
+.product .paypal-btn {
+  padding: 6px;
+  margin: 8px 0;
+  width: 100%;
 }
 /* custom styles for individual pages below */
 /* hide main h2 headers for various pages  */

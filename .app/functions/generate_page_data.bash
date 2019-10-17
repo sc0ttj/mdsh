@@ -87,7 +87,13 @@ function get_page_data_from_yml_frontmatter {
   # assoc array (named after the file being processed) containing all
   # top-level items as keys, instead of creating separate assoc arrays
   # of EACH top-level item (with file name as prefix)
-  DEBUG_DATA=${DEBUG_DATA:-false} TOP_LEVEL_AS_ASSOC_ARRAY=false yay /tmp/page 2>/dev/null > /tmp/page_data
+  TOP_LEVEL_AS_ASSOC_ARRAY=false yay /tmp/page 2>/dev/null > /tmp/page_data
+
+  if [ "$DEBUG_DATA" = true ];then
+    echo >&2
+    cat /tmp/page_data >&2
+    echo >&2
+  fi
 
   # IMPORTANT: bring the page data into the current environment
   eval "$(cat /tmp/page_data 2>/dev/null)"

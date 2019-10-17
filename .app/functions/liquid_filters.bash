@@ -210,14 +210,38 @@ function urldecode {
   get_stdin
   STDIN="${STDIN:-$@}"
   local LC_CTYPE=C
+  #while read; do : "${STDIN//%/\\x}"; echo -e ${_//+/ }; done # bash only, from https://stackoverflow.com/questions/6250698/how-to-decode-url-encoded-string-in-shell
   local url_encoded="${STDIN//+/ }"
   printf '%b' "${url_encoded//%/\\x}"
+}
+
+function base64_encode {
+  #perl -MMIME::Base64 -0777 -ne 'print encode_base64($_)'  # perl solution
+  base64
+}
+
+function base64_decode {
+  #perl -MMIME::Base64 -ne 'print decode_base64($_)' # perl solution
+  base64 -d
+}
+
+function html_decode {
+  local LC_CTYPE=C
+  [ "`which python3`" != "" ] && python3 -c 'import html, sys; [print(html.unescape(l), end="") for l in sys.stdin]' && return
+  perl -MHTML::Entities -pe 'decode_entities($_);'
+}
+
+function html_encode {
+  local LC_CTYPE=C
+  [ "`which python3`" != "" ] && python3 -c 'import html, sys; [print(html.escape(l), end="") for l in sys.stdin]' && return
+  perl -MHTML::Entities -pe 'encode_entities($_);'
 }
 
 function rgb2hex { get_stdin; printf "#%02x%02x%02x\n" ${STDIN}; }
 
 function hex2rgb {
   get_stdin; STDIN="$(echo "${STDIN}" | sed 's/^#//')";
+  [ "${#STDIN}" = "3" ] && STDIN="$STDIN$STDIN"
   printf "%d %d %d\n" 0x${STDIN:0:2} 0x${STDIN:2:2} 0x${STDIN:4:2};
 }
 
@@ -349,6 +373,13 @@ function csv_to_html {
   tail -n +2 "$tmp_file" | \
       sed -e 's/^/<tr><td>/' -e 's/,/<\/td><td>/g' -e 's/$/<\/td><\/tr>/'
   echo -n "</table>"
+}
+
+function csv_to_json {
+  read STDIN
+  echo "$STDIN" > /tmp/csv_to_json.csv
+  python -c "import csv,json;print json.dumps(list(csv.reader(open('/tmp/csv_to_json.csv'))))"
+  rm /tmp/csv_to_json.csv
 }
 
 function csv_to_json {
@@ -519,9 +550,29 @@ function json_escape () {
 
 # number filters
 
+function if_more_than {
+  get_stdin
+  if (( $(echo "${STDIN//[Aa-Zz<>: \/£$]/} > $1" | $bc -l) ));then
+    echo -n "$STDIN"
+  else
+    return 1
+  fi
+  return 0
+}
+
+function if_less_than {
+  get_stdin
+  if (( $(echo "${STDIN//[Aa-Zz<>: \/£$]/} < $1" | $bc -l) ));then
+    echo -n "$STDIN"
+  else
+    return 1
+  fi
+  return 0
+}
+
 function at_most {
   get_stdin
-  if [ "$STDIN" -gt "$1" ];then
+  if (( $(echo "${STDIN//[Aa-Zz<>: \/£$]/} > $1" | $bc -l) ));then
     echo -n "$1"
   else
     echo -n "$STDIN"
@@ -530,7 +581,7 @@ function at_most {
 
 function at_least {
   get_stdin
-  if [ "$STDIN" -lt "$1" ];then
+  if (( $(echo "${STDIN//[Aa-Zz<>: \/]/} < $1" | $bc -l) ));then
     echo -n "$1"
   else
     echo -n "$STDIN"
@@ -897,6 +948,10 @@ function where {
   local opt_count=$#
   # if user gave "where foo = bar", or similar
   if [ $# -eq 3 ];then
+    # get the "needle", the thing we match against
+    needle="$3"
+    needle_val="$(eval "echo $3")"
+    [ "$needle" != "$needle_val" ] && needle="$needle_val"
     # create a new hash to return later
     declare -Ag arrHash
     # for each hash in the given array
@@ -921,25 +976,25 @@ function where {
           # as it matches the 'where' condition given by the user
           case "$2" in
             '=')
-              [ "$hashkey_value" = "$3" ] && return_the_array=true
+              [ "$hashkey_value" = "$needle" ] && return_the_array=true
               ;;
             '!=')
-              [ "$hashkey_value" != "$3" ] && return_the_array=true
+              [ "$hashkey_value" != "$needle" ] && return_the_array=true
               ;;
             '>')
-              if [ "$hashkey_value"  -gt "$3" ];then return_the_array=true; fi
+              if [ "$hashkey_value"  -gt "$needle" ];then return_the_array=true; fi
               ;;
             '>=')
-              if [ "$hashkey_value"  -ge "$3" ];then return_the_array=true; fi
+              if [ "$hashkey_value"  -ge "$needle" ];then return_the_array=true; fi
               ;;
             '<')
-              if [ "$hashkey_value"  -lt "$3" ];then return_the_array=true; fi
+              if [ "$hashkey_value"  -lt "$needle" ];then return_the_array=true; fi
               ;;
             '<=')
-              if [ "$hashkey_value"  -le "$3" ];then return_the_array=true; fi
+              if [ "$hashkey_value"  -le "$needle" ];then return_the_array=true; fi
               ;;
             'contains')
-              [[ "$hashkey_value" == *"$3"* ]] && return_the_array=true
+              [[ "$hashkey_value" == *"$needle"* ]] && return_the_array=true
               ;;
           esac
           # if $return_the_array = true, then we found the right key and
@@ -967,22 +1022,22 @@ function where {
     do
       case "$1" in
         '=')
-          [ "$value" = "$3" ] && arr+=("$value")
+          [ "$value" = "$needle" ] && arr+=("$value")
           ;;
         '!=')
-          [ "$value" != "$3" ] && arr+=("$value")
+          [ "$value" != "$needle" ] && arr+=("$value")
           ;;
         '>')
-          if [ "$value" -gt "$3" ];then arr+=("$value"); fi
+          if [ "$value" -gt "$needle" ];then arr+=("$value"); fi
           ;;
         '>=')
-          if [ "$value" -ge "$3" ];then arr+=("$value"); fi
+          if [ "$value" -ge "$needle" ];then arr+=("$value"); fi
           ;;
         '<')
-          if [ "$value" -lt "$3" ];then arr+=("$value"); fi
+          if [ "$value" -lt "$needle" ];then arr+=("$value"); fi
           ;;
         '<=')
-          if [ "$value" -le "$3" ];then arr+=("$value"); fi
+          if [ "$value" -le "$needle" ];then arr+=("$value"); fi
           ;;
         'contains')
           [[ "$value" == *"$2"* ]] && arr+=("$value")
@@ -1014,3 +1069,8 @@ function sort_by {
         printf '%s\t%s\n' "${ref["$field"]}" "$elem"
     done | sort "${sort_params[@]}" | cut -f2 | tr '\n' ' '
 }
+
+
+#
+# e-commerce filters
+#

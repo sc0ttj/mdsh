@@ -93,9 +93,13 @@ if [ "$markdown" != "" ];then
   [ ! "$1" ] && return 1
 
   # do some pre-processing of the markdown before converting to html
-  echo "$markdown" > /tmp/markdown
+  echo "$markdown" | mo > /tmp/markdown
   echo -n '' > /tmp/fixed_markdown
 
+  # custom pre-processor:
+  # - convert oembed supported urls to embed code
+  # - fix parsing of <pre><code>
+  # - apply colour syntax highlighting to code blocks
   process_markdown # writes to /tmp/fixed_markdown
 
   # get the pre-processed markdown, we will convert that to html
@@ -113,7 +117,8 @@ if [ "$markdown" != "" ];then
     #  - markdown.pl - the original
     #  - gf-markdown.pl - supports gitHub flavoured markdown (based on the above)
     #  - markdown.sh - a bash only alternative
-    body_html="$(echo -e "$markdown" | .app/gf-markdown.pl)"
+    body_html="$(echo "$markdown" | mo)"
+    body_html="$(echo -e "$body_html" | .app/gf-markdown.pl)"
   fi
 
 fi

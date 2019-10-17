@@ -22,7 +22,7 @@ function render {
   local template_name="${1//.mustache}.mustache"
 
   if [ -f "$template_name" ];then
-    cat "$template_name" | mo
+    cat "$template_name" | mo | html_decode
     return 0
   fi
 
@@ -34,9 +34,9 @@ function render {
   fi
 
   if [ -f "$template_file" ];then
-    cat "$template_file" | mo
+    cat "$template_file" | mo | html_decode
   elif [ -f "${MO_PARTIAL_DIR}${template_file}" ];then
-    cat "${MO_PARTIAL_DIR}${template_file}" | mo
+    cat "${MO_PARTIAL_DIR}${template_file}" | mo | html_decode
   else
     return 1
   fi
@@ -92,7 +92,7 @@ function post_preview {
       if [ "$(echo -e "$markdown" | grep -m1 '<!-- more -->')" != '' ];then
         markdown="${markdown//<\!-- more -->*/$(render _read_more)}"
       fi
-      echo -e "$markdown" | .app/markdown.pl | sed "s/<h2>.*//"
+      echo -e "$markdown" | mo 2>/dev/null | .app/markdown.pl 2>/dev/null | sed "s/<h2>.*//"
     fi
   )"
 

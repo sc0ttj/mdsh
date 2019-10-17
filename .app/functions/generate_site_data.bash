@@ -125,13 +125,23 @@ function get_posts_matching_tag {
 for sh_file in assets/data/*.sh
 do
   [ ! -z "$sh_file" ] && [ -f "$sh_file" ] && source "$sh_file"
+  if [ "$DEBUG_DATA" = true ];then
+    echo >&2
+    cat "$sh_file" >&2
+    echo >&2
+  fi
 done
 
 for yaml_file in assets/data/*.yml
 do
-  [ ! -z "$yaml_file" ] && [ -f "$yaml_file" ] && echo "$(yay "$yaml_file")" >> /tmp/all_site_yml_data
+  [ ! -z "$yaml_file" ] && [ -f "$yaml_file" ] && echo "$(TOP_LEVEL_AS_ASSOC_ARRAY=false yay "$yaml_file")" > /tmp/all_site_yml_data
+  eval "$(\cat /tmp/all_site_yml_data)"
+  if [ "$DEBUG_DATA" = true ];then
+    echo >&2
+    cat  /tmp/all_site_yml_data >&2
+    echo >&2
+  fi
 done
-eval "$(\cat /tmp/all_site_yml_data)"
 rm /tmp/all_site_yml_data
 
 # parse CSV files (they must contain headers!)
@@ -141,6 +151,11 @@ do
   arrayName="$(basename "$csv_file" .csv)"
   csv_data="$(cat "$csv_file" | csv_to_data $arrayName)"
   eval "$csv_data"
+  if [ "$DEBUG_DATA" = true ];then
+    echo >&2
+    echo "$csv_data" >&2
+    echo >&2
+  fi
 done
 
 #

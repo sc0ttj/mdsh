@@ -31,3 +31,13 @@ js_deps:
   cashjs: cash-dom@2.3.9/dist/cash.min.js
   jets: jets@0.14.1/jets.min.js
 search_enabled: true
+product_options:
+  colour: Colour
+  size: Size
+product_colour_options:
+  - Red
+  - Blue
+product_size_options:
+  - Small
+  - Medium
+  - Large

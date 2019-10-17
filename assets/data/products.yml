@@ -1,15 +1,42 @@
 product1:
   name: Product one
-  price: 1000
+  slug: how-to-setup-e-commerce-with-mdsh
+  type: tshirt
+  price: 5
+  shipping: 0.50
+  id: 000001
+  paypal_btn_id: U8R375VMEZPNN
+  paypal_btn_label: Buy Now
 product2:
   name: Product two
-  price: 2000
+  slug: foo
+  type: tshirt
+  price: 20
+  id: 000002
+  paypal_btn_id: U8R375VMEZPNN
+  paypal_btn_label: Buy Now
 product3:
   name: Product three
-  price: 3300
+  slug: how-to-setup-e-commerce-with-mdsh
+  type: jumper
+  price: 5
+  shipping: 0.50
+  id: 000003
+  paypal_btn_id: U8R375VMEZPNN
+  paypal_btn_label: Buy Now
 product4:
   name: Product four
-  price: 4440
+  slug: foo
+  type: tshirt
+  price: 44
+  id: 000004
+  paypal_btn_id: U8R375VMEZPNN
+  paypal_btn_label: Buy Now
 product5:
   name: Product five
-  price: 5555
+  slug: foo
+  type: tshirt
+  price: 55
+  id: 000005
+  paypal_btn_id: U8R375VMEZPNN
+  paypal_btn_label: Buy Now

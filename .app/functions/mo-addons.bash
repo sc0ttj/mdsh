@@ -5,11 +5,16 @@
 # $2 - must be a string that equals 'in'
 # $3 - An indexed array, otionally containing references to associative arrays
 #
+
+index=0
+export index
+
 # Returns parsed content
 function foreach {
   # Trying to use unique names
   local foreachSourceName foreachIterator foreachEvalString foreachContent
 
+  index=0
   foreachContent=$(cat)
 
   if [[ "$2" != "in" ]]; then
@@ -25,7 +30,7 @@ function foreach {
 
     for foreachIterator in "${!foreachSourceName}"; do
 
-      foreachEvalString=$(declare -p "$foreachIterator")
+        foreachEvalString=$(declare -p "$foreachIterator" 2>/dev/null)
 
 #      xmessage "\$3 is $3
 #      foreachEvalString = 'declare -p $foreachIterator'
@@ -40,6 +45,7 @@ function foreach {
 
       eval "$foreachEvalString"
       echo "$foreachContent" | mo
+      index=$(($index + 1))
     done
   fi
 }
