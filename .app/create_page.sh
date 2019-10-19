@@ -93,7 +93,7 @@ if [ "$markdown" != "" ];then
   [ ! "$1" ] && return 1
 
   # do some pre-processing of the markdown before converting to html
-  echo "$markdown" | mo > /tmp/markdown
+  echo "$markdown" > /tmp/markdown
   echo -n '' > /tmp/fixed_markdown
 
   # custom pre-processor:
@@ -103,7 +103,7 @@ if [ "$markdown" != "" ];then
   process_markdown # writes to /tmp/fixed_markdown
 
   # get the pre-processed markdown, we will convert that to html
-  [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown)"
+  [ -s /tmp/fixed_markdown ] && markdown="$(cat /tmp/fixed_markdown | mo)"
   rm /tmp/markdown /tmp/fixed_markdown &>/dev/null
 
   #body_html="$(md2html.sh /tmp/markdown)" # uses github API

@@ -22,7 +22,7 @@ function render {
   local template_name="${1//.mustache}.mustache"
 
   if [ -f "$template_name" ];then
-    cat "$template_name" | mo | html_decode
+    cat "$template_name" | mo
     return 0
   fi
 
@@ -34,9 +34,9 @@ function render {
   fi
 
   if [ -f "$template_file" ];then
-    cat "$template_file" | mo | html_decode
+    cat "$template_file" | mo
   elif [ -f "${MO_PARTIAL_DIR}${template_file}" ];then
-    cat "${MO_PARTIAL_DIR}${template_file}" | mo | html_decode
+    cat "${MO_PARTIAL_DIR}${template_file}" | mo
   else
     return 1
   fi
@@ -123,10 +123,6 @@ function process_markdown {
         [ "$code_lang" != "" ] && code_class=" class=\"${code_lang}\""
         [ "$in_code_block" = true  ] && in_code_block=false  || in_code_block=true
         [ "$in_code_block" = false ] && line="</code></pre>" || line="<pre><code${code_class}>"
-      else
-        if [ "$in_code_block" = true ];then
-          line="$(echo "$line" | sed -e 's|<|\&lt;|g' -e 's|>|\&gt;|g')"
-        fi
       fi
       echo -e "$line" >> /tmp/fixed_markdown
 
@@ -138,7 +134,6 @@ function process_markdown {
         local code_class=" class=\"${code_lang:-shell}\""
         line="<pre><code${code_class}>"
         in_code_block=true
-
       fi
 
       if [ "$line" != '```' ]  && [[ ! "$line" =~ '<pre>' ]] && [[ ! "$line" =~ '</code>' ]];then
@@ -152,8 +147,23 @@ function process_markdown {
       # if leaving a code block
       if [[ "$line" =~ '```' ]] && [ "$in_code_block" = true ];then
         if [ "$(cat /tmp/code_block)" != "" ];then
+
           pygmentize -f html -l ${code_lang:-shell} -o /tmp/code_block_highlighted /tmp/code_block
-          echo "$(cat /tmp/code_block_highlighted)" >> /tmp/fixed_markdown
+
+          if [ "$code_lang" = "handlebars" ] || [ "$code_lang" = "mustache" ];then
+            # inside code blocks, printing mustache, so render Mustache tags
+            # with HTML Entities, so they're printed literally, not parsed and
+            # rendered - this allows users to document Mustache easily in their
+            # code blocks :)
+            sed \
+              -e 's|{{|\&#123;\&#123;|g' \
+              -e 's|{{>|\&#123;\&#123;\&gt;|g' \
+              -e 's|}}|\&#125;\&#125;|g' \
+              /tmp/code_block_highlighted >> /tmp/fixed_markdown
+          else
+            cat /tmp/code_block_highlighted >> /tmp/fixed_markdown
+          fi
+          # we've now left the code block, so:
           echo -n > /tmp/code_block
           in_code_block=false
           line="</code></pre>"
