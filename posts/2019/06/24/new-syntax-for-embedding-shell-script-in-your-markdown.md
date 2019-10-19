@@ -19,11 +19,11 @@ syntax, not used by any official languages/scripts/etc, and stolen from the
 Here is the new way of invoking Bash sub-shells in your Markdown:
 
 ```
-<#bash
+<?bash
 // your shell code here
 // cat some file, or run a function, or something..
 echo hi
-;#>
+;?>
 ```
 
 Or, you can do it like this as well:

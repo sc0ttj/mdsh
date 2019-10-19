@@ -9,7 +9,7 @@ and is used in the templating system of [Jekyll](https://jekyllrb.com/).
 Here's a description of "liquid filters" from the [liquid filters documentation](https://help.shopify.com/en/themes/liquid/filters):
 
 > Filters are simple methods that modify the output of numbers, strings,
-> variables and objects. They are placed within an output tag {{ }} and are
+> variables and objects. They are placed within an output tag &#123;&#123; &#125;&#125; and are
 > denoted by a pipe character |.
 
 As `mdsh` is written in shell, and uses [`mo`](https://github.com/tests-always-included/mo)
@@ -89,7 +89,7 @@ page data variables described above.</p>
 <p>Here is the general usage:</p>
 
 <div>
-```
+```handlebars
 {{someString | <filter> [options]}}
 ```
 </div>
@@ -97,7 +97,7 @@ page data variables described above.</p>
 <div class="filter-heading">uppercase</div>
 <div class="filter-body">
 <p>Make text upper case:</p>
-```
+```handlebars
 {{someString | uppercase}}
 ```
 </div>
@@ -105,7 +105,7 @@ page data variables described above.</p>
 <div class="filter-heading">lowercase</div>
 <div class="filter-body">
 <p>Make text lower case</p>
-```
+```handlebars
 {{someString | lowercase}}
 ```
 </div>
@@ -114,7 +114,7 @@ page data variables described above.</p>
 <div class="filter-heading">titlecase</div>
 <div class="filter-body">
 <p>Make text title case</p>
-```
+```handlebars
 {{someString | titlecase}}
 ```
 </div>
@@ -123,7 +123,7 @@ page data variables described above.</p>
 <div class="filter-heading">capitalise</div>
 <div class="filter-body">
 <p>Capitalise first-letter of string, lower case the rest</p>
-```
+```handlebars
 {{someString | capitalise}}
 ```
 </div>
@@ -132,7 +132,7 @@ page data variables described above.</p>
 <div class="filter-heading">slugify</div>
 <div class="filter-body">
 <p>Convert string to slug</p>
-```
+```handlebars
 {{someString | slugify}}
 ```
 </div>
@@ -141,7 +141,7 @@ page data variables described above.</p>
 <div class="filter-heading">camelcase_to_slug</div>
 <div class="filter-body">
 <p>Convert camel case string to a slug</p>
-```
+```handlebars
 {{someString | camelcase_to_slug}}
 ```
 </div>
@@ -150,7 +150,7 @@ page data variables described above.</p>
 <div class="filter-heading">slug_to_camelcase</div>
 <div class="filter-body">
 <p>Convert a slug to camel case</p>
-```
+```handlebars
 {{someString | slug_to_camelcase}}
 ```
 </div>
@@ -159,7 +159,7 @@ page data variables described above.</p>
 <div class="filter-heading">lstrip</div>
 <div class="filter-body">
 <p>Remove leading whitepace from (left of string)</p>
-```
+```handlebars
 {{someString | lstrip}}
 ```
 </div>
@@ -168,7 +168,7 @@ page data variables described above.</p>
 <div class="filter-heading">rstrip</div>
 <div class="filter-body">
 <p>Remove trailing whitepace from (right of string)</p>
-```
+```handlebars
 {{someString | rstrip}}
 ```
 </div>
@@ -177,7 +177,7 @@ page data variables described above.</p>
 <div class="filter-heading">strip</div>
 <div class="filter-body">
 <p>Remove leading and trailing whitespace</p>
-```
+```handlebars
 {{someString | strip}}
 ```
 </div>
@@ -186,7 +186,7 @@ page data variables described above.</p>
 <div class="filter-heading">strip_html</div>
 <div class="filter-body">
 <p>Remove all HTML tags, keeping the inner content</p>
-```
+```handlebars
 {{someString | strip_html}}
 ```
 </div>
@@ -195,7 +195,7 @@ page data variables described above.</p>
 <div class="filter-heading">strip_newlines</div>
 <div class="filter-body">
 <p>Strip newline characters from string</p>
-```
+```handlebars
 {{someString | strip_newlines}}
 ```
 </div>
@@ -204,7 +204,7 @@ page data variables described above.</p>
 <div class="filter-heading">escape_html</div>
 <div class="filter-body">
 <p>Replace `&lt;p&gt;` with `&amp;lt;p&amp;gt;`</p>
-```
+```handlebars
 {{someString | escape_html}}
 ```
 </div>
@@ -213,7 +213,7 @@ page data variables described above.</p>
 <div class="filter-heading">unescape_html</div>
 <div class="filter-body">
 <p>Replace `&amp;lt;p&amp;gt;` with `&lt;p&gt;`</p>
-```
+```handlebars
 {{someString | unescape_html}}
 ```
 </div>
@@ -222,7 +222,7 @@ page data variables described above.</p>
 <div class="filter-heading">newline_to_br</div>
 <div class="filter-body">
 <p>Replace newline characters with `&lt;br&gt;` tags</p>
-```
+```handlebars
 {{someString | newline_to_br}}
 ```
 </div>
@@ -231,7 +231,7 @@ page data variables described above.</p>
 <div class="filter-heading">br_to_newline</div>
 <div class="filter-body">
 <p>Replace `&lt;br&gt;` tags with newline characters</p>
-```
+```handlebars
 {{someString | br_to_newline}}
 ```
 </div>
@@ -240,7 +240,7 @@ page data variables described above.</p>
 <div class="filter-heading">reverse</div>
 <div class="filter-body">
 <p>Reverse a string</p>
-```
+```handlebars
 {{someString | reverse}}
 ```
 </div>
@@ -249,7 +249,7 @@ page data variables described above.</p>
 <div class="filter-heading">replace_first</div>
 <div class="filter-body">
 <p>Replace first occurance of $1 with $2</p>
-```
+```handlebars
 {{someString | replace_first 'old' 'new'}}
 ```
 </div>
@@ -258,7 +258,7 @@ page data variables described above.</p>
 <div class="filter-heading">replace_last</div>
 <div class="filter-body">
 <p>Replace last occurance of $1 with $2</p>
-```
+```handlebars
 {{someString | replace_last 'old' 'new'}}
 ```
 </div>
@@ -267,7 +267,7 @@ page data variables described above.</p>
 <div class="filter-heading">replace_all</div>
 <div class="filter-body">
 <p>Replace all occurances of $1 with $2</p>
-```
+```handlebars
 {{someString | replace_all 'old' 'new'}}
 ```
 </div>
@@ -276,7 +276,7 @@ page data variables described above.</p>
 <div class="filter-heading">prepend</div>
 <div class="filter-body">
 <p>Prepend a string with another string</p>
-```
+```handlebars
 {{someString | prepend 'some other string'}}
 ```
 </div>
@@ -285,7 +285,7 @@ page data variables described above.</p>
 <div class="filter-heading">append</div>
 <div class="filter-body">
 <p>Append a string with another string</p>
-```
+```handlebars
 {{someString | append 'some other string'}}
 ```
 </div>
@@ -293,7 +293,7 @@ page data variables described above.</p>
 <div class="filter-heading">truncate</div>
 <div class="filter-body">
 <p>Truncate string to the given number of characters</p>
-```
+```handlebars
 {{someString | truncate 20}}
 ```
 </div>
@@ -303,7 +303,7 @@ page data variables described above.</p>
 <div class="filter-body">
 <p>Truncate string to the given number of words.</p>
 <p>Optionally pass a string as the second parameter, which will be appended if text was indeed truncated.</p>
-```
+```handlebars
 {{someString | truncate_words 20 '...'}}
 ```
 </div>
@@ -313,7 +313,7 @@ page data variables described above.</p>
 <div class="filter-body">
 <p>Intelligently guesses the time to read the given string in "Mins"</p>
 <p>Optionally, override the default units by giving the desired units name as the second parameter.</p>
-```
+```handlebars
 {{someString | time_to_read "Minutes"}}
 ```
 </div>
@@ -322,7 +322,7 @@ page data variables described above.</p>
 <div class="filter-heading">urlencode</div>
 <div class="filter-body">
 <p>Encode string to URL friendly format</p>
-```
+```handlebars
 {{someString | urlencode}}
 ```
 </div>
@@ -331,7 +331,7 @@ page data variables described above.</p>
 <div class="filter-heading">urldecode</div>
 <div class="filter-body">
 <p>Decode string from URL friendly format</p>
-```
+```handlebars
 {{someString | urldecode}}
 ```
 </div>
@@ -340,7 +340,7 @@ page data variables described above.</p>
 <div class="filter-heading">rgb2hex</div>
 <div class="filter-body">
 <p>Convert colour values `255 0 0` into `#ff0000`</p>
-```
+```handlebars
 {{someString | rgb2hex}}
 ```
 </div>
@@ -349,7 +349,7 @@ page data variables described above.</p>
 <div class="filter-heading">hex2rgb</div>
 <div class="filter-body">
 <p>Convert colour values `#ff0000` into `255 0 0`</p>
-```
+```handlebars
 {{someString | hex2rgb}}
 ```
 </div>
@@ -358,7 +358,7 @@ page data variables described above.</p>
 <div class="filter-heading">md5</div>
 <div class="filter-body">
 <p>Replace string with its md5 checksum</p>
-```
+```handlebars
 {{someString | md5}}
 ```
 </div>
@@ -367,7 +367,7 @@ page data variables described above.</p>
 <div class="filter-heading">sha1</div>
 <div class="filter-body">
 <p>Replace string with its sha1 checksum</p>
-```
+```handlebars
 {{someString | sha1}}
 ```
 </div>
@@ -376,7 +376,7 @@ page data variables described above.</p>
 <div class="filter-heading">sha256</div>
 <div class="filter-body">
 <p>Replace string with its sha256 checksum</p>
-```
+```handlebars
 {{someString | sha256}}
 ```
 </div>
@@ -385,7 +385,7 @@ page data variables described above.</p>
 <div class="filter-heading">sha512</div>
 <div class="filter-body">
 <p>Replace string with its sha512 checksum</p>
-```
+```handlebars
 {{someString | sha512}}
 ```
 </div>
@@ -396,7 +396,7 @@ page data variables described above.</p>
 <div class="filter-heading">markdown_to_html</div>
 <div class="filter-body">
 <p>Convert the given markdown to HTML</p>
-```
+```handlebars
 {{someString | markdown_to_html}}
 ```
 </div>
@@ -405,7 +405,7 @@ page data variables described above.</p>
 <div class="filter-heading">csv_to_markdown</div>
 <div class="filter-body">
 <p>Convert the given csv to a markdown table</p>
-```
+```handlebars
 {{someString | csv_to_markdown}}
 ```
 </div>
@@ -414,7 +414,7 @@ page data variables described above.</p>
 <div class="filter-heading">csv_to_html</div>
 <div class="filter-body">
 <p>Convert the given csv to an HTML table</p>
-```
+```handlebars
 {{someString | csv_to_html}}
 ```
 </div>
@@ -423,7 +423,7 @@ page data variables described above.</p>
 <div class="filter-heading">csv_to_json</div>
 <div class="filter-body">
 <p>Convert the given csv to JSON</p>
-```
+```handlebars
 {{someString | csv_to_json}}
 ```
 </div>
@@ -432,7 +432,7 @@ page data variables described above.</p>
 <div class="filter-heading">csv_to_array</div>
 <div class="filter-body">
 <p>Convert the given csv to a single, flat, indexed array</p>
-```
+```handlebars
 {{someString | csv_to_array}}
 ```
 </div>
@@ -443,7 +443,7 @@ page data variables described above.</p>
 <p>Convert csv data into an array of associative arrays. The CSV headers become
 the arrays keys. It can be used to iterate over and filter CSV data in your
 templates (see <b>Array filters</b> below).</p>
-```
+```handlebars
 {{someString | csv_to_arrays}}
 ```
 </div>
@@ -454,7 +454,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">at_least</div>
 <div class="filter-body">
 <p>Sets a minimum value for returned numbers</p>
-```
+```handlebars
 {{someNumber | at_least 10}}
 ```
 </div>
@@ -463,7 +463,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">at_most</div>
 <div class="filter-body">
 <p>Sets a maximum value for returned numbers</p>
-```
+```handlebars
 {{someNumber | at_most 10}}
 ```
 </div>
@@ -472,7 +472,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">decimal_places</div>
 <div class="filter-body">
 <p>Limit number to the given number of decimal places</p>
-```
+```handlebars
 {{someNumber | decimal_places 2}}
 ```
 </div>
@@ -481,7 +481,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">divided_by</div>
 <div class="filter-body">
 <p>Divide input by the given number</p>
-```
+```handlebars
 {{someNumber | divided_by 2}}
 ```
 </div>
@@ -490,7 +490,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">minus</div>
 <div class="filter-body">
 <p>Subtract the given number from the input number</p>
-```
+```handlebars
 {{someNumber | minus 2}}
 ```
 </div>
@@ -499,7 +499,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">plus</div>
 <div class="filter-body">
 <p>Add the given number to the input number</p>
-```
+```handlebars
 {{someNumber | plus 2}}
 ```
 </div>
@@ -508,7 +508,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">modulo</div>
 <div class="filter-body">
 <p>Find remainder after division of input and given number</p>
-```
+```handlebars
 {{someNumber | modulo 3}}
 ```
 </div>
@@ -517,7 +517,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">ordinal</div>
 <div class="filter-body">
 <p>Return the given number in ordinal form (112 => 112th)</p>
-```
+```handlebars
 {{someNumber | ordinal}}
 ```
 </div>
@@ -526,7 +526,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">to_int</div>
 <div class="filter-body">
 <p>Convert a float to an int</p>
-```
+```handlebars
 {{someNumber | to_int}}
 ```
 </div>
@@ -535,7 +535,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">floor</div>
 <div class="filter-body">
 <p>Round float down to the nearest integer</p>
-```
+```handlebars
 {{someNumber | floor}}
 ```
 </div>
@@ -544,7 +544,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">ceil</div>
 <div class="filter-body">
 <p>Round float up to the nearest integer</p>
-```
+```handlebars
 {{someNumber | ceil}}
 ```
 </div>
@@ -553,7 +553,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-heading">pluralize</div>
 <div class="filter-body">
 <p>Append a singular (first param) or plural (second param) to a number</p>
-```
+```handlebars
 {{someNumber | pluralize 'ox' 'oxen'}}
 ```
 </div>
@@ -563,7 +563,7 @@ templates (see <b>Array filters</b> below).</p>
 <div class="filter-body">
 <p>Perform unit conversions. Supported conversions: inches/feet, miles/km,
 kgs/stones, kgs/lbs, gallons/quarts</p>
-```
+```handlebars
 {{someNumber | convert miles to km}}
 ```
 </div>
@@ -575,7 +575,7 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
 <div class="filter-body">
 <p>Converts number to money format, with currency symbol (locale aware).</p>
 <p>Optional: give the currency symbol to override the locale default.</p>
-```
+```handlebars
 {{someNumber | money £}}
 ```
 <p>If input is `10`, it will output:</p>
@@ -593,7 +593,7 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
   <li>Give a currency symbol as the first parameter to override locale defaults.</li>
   <li>Give a currency name as the second parameter to override locale defaults.</li>
 </ul>
-```
+```handlebars
 {{someNumber | money_with_currency £ GBP}}
 ```
 <p>If input is `10`, it will output:</p>
@@ -606,7 +606,7 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
 <div class="filter-heading">money_without_currency</div>
 <div class="filter-body">
 <p>Converts number to money format, <em>without</em> currency symbol or name.</p>
-```
+```handlebars
 {{someNumber | money_without_currency}}
 ```
 </div>
@@ -615,7 +615,7 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
 <div class="filter-heading">without_trailing_zeros</div>
 <div class="filter-body">
 <p>Remove ".0*" from end of numbers (and strings).</p>
-```
+```handlebars
 {{someNumber | without_trailing_zeros}}
 ```
 </div>
@@ -639,12 +639,12 @@ kgs/stones, kgs/lbs, gallons/quarts</p>
   <li>`"%Y %m %d"` => 2019 09 31</li>
   <li>`"%d %B %Y"` => 31 November 2009</li>
 </ul>
-```
+```handlebars
 {{page_created | date_format 'basic_uk'}}
 ```
 or
 
-```
+```handlebars
 {{page_created | date_format "%d %B %Y"}}
 ```
 <p>Note that `rfc822` has these easier aliases:</p>
@@ -653,7 +653,7 @@ or
   <li>`email`</li>
 </ul>
 <p>You can also use `now` to get the current date/time when the page is built:</p>
-```
+```handlebars
 {{now | date_format rss}}
 ```
 </div>
@@ -663,7 +663,7 @@ or
 <div class="filter-heading">absolute_url</div>
 <div class="filter-body">
 <p> Return the absolute URL to the given file, starting with <em>http://${blog_domain}${blog_url}</em>.</p>
-```
+```handlebars
 {{someURL | absolute_url}}
 ```
 </div>
@@ -672,7 +672,7 @@ or
 <div class="filter-heading">relative_url</div>
 <div class="filter-body">
 <p>Return a relative URL to the given string, starting with "${blog_url}" (top dir of blog).</p>
-```
+```handlebars
 {{someURL | relative_url}}
 ```
 </div>
@@ -683,7 +683,7 @@ or
 <p>Return a relative path to the given file, appended with a timestamp as a
 query string, for cache busting purposes. Uses `find` to locate the path to the
 file (if it exists), else it uses the given string.</p>
-```
+```handlebars
 {{someURL | asset_url}}
 ```
 </div>
@@ -693,7 +693,7 @@ file (if it exists), else it uses the given string.</p>
 <div class="filter-body">
 <p>Return a `&lt;a href=".."&gt;..&lt;/a&gt;` tag, linking to the given string.<p>
 <p>Works well with these other filters: `asset_url`, `absolute_url`, `relative_url`.</p>
-```
+```handlebars
 {{someURL | absolute_url | link_tag "My link title"}}
 ```
 </div>
@@ -705,7 +705,7 @@ file (if it exists), else it uses the given string.</p>
 the printed (visible) date. $2 is optional, and formats the `datetime` attribute.</p>
 <p>Supports the same options as the `date_format` filter: `basic`, `basic_uk`,
 `to_string`, `email`, and GNU date format strings like `%d %M %Y %H:%M`.</p>
-```
+```handlebars
 {{someDate | time_tag basic iso8601}}
 ```
 <p>Outputs:</p>
@@ -718,7 +718,7 @@ the printed (visible) date. $2 is optional, and formats the `datetime` attribute
 <div class="filter-heading">script_tag</div>
 <div class="filter-body">
 <p>Return the given content wrapped inside a &lt;script&gt; tag.</p>
-```
+```handlebars
 {{someString | script_tag}}
 ```
 </div>
@@ -727,7 +727,7 @@ the printed (visible) date. $2 is optional, and formats the `datetime` attribute
 <div class="filter-heading">stylesheet_tag</div>
 <div class="filter-body">
 <p>Return the given content wrapped inside a &lt;stylesheet&gt; tag.</p>
-```
+```handlebars
 {{someString | stylesheet_tag}}
 ```
 </div>
@@ -738,7 +738,7 @@ the printed (visible) date. $2 is optional, and formats the `datetime` attribute
 <p>Return the given URL wrapped inside an &lt;img&gt; tag.</p>
 <p>Optionally set the alt text using the first parameter.</p>
 <p>Works well with `asset_url`.</p>
-```
+```handlebars
 {{someURL | asset_url | img_tag "My alt text."}}
 ```
 </div>

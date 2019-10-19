@@ -13,7 +13,6 @@ twitter:          @foobar
 language:         en
 js_deps:
 modified:         2019-09-14T18:35:35Z
-
 ---
 
 You can now set stylesheets in the front matter of your posts and pages or in
