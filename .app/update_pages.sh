@@ -65,7 +65,7 @@ done
 ############################## functions ##################################
 
 function rebuild_posts {
-  cut -f1-2 -d'|' posts.csv | sort -r | while read line
+  cut -f1-2 -d'|' posts.csv | sort -r | head -${LIMIT:-99999} | while read line
   do
     mdshfile="${line//|//}"
     mdshfile="${mdshfile//#/}"
