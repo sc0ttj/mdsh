@@ -131,7 +131,9 @@ fi
 # set {{page_body}} - used in the main.mustache template
 page_body="${body_html}"
 # render the main template
-render ${page_layout:-main} 1>/tmp/htmlfile
+render ${page_layout:-main} | sed \
+  -e 's|\&amp;#123;\&amp;#123;|{{|g' \
+  -e 's|\&amp;#125;\&amp;#125;|}}|g' 1>/tmp/htmlfile
 
 # use minified CSS if it exists
 if [ "$(grep -m1 "${page_stylesheet:-$site_stylesheet}.min.css?v=" /tmp/htmlfile)" = "" ] && \

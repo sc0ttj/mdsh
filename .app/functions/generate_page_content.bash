@@ -157,7 +157,6 @@ function process_markdown {
             # code blocks :)
             sed \
               -e 's|{{|\&#123;\&#123;|g' \
-              -e 's|{{>|\&#123;\&#123;\&gt;|g' \
               -e 's|}}|\&#125;\&#125;|g' \
               /tmp/code_block_highlighted >> /tmp/fixed_markdown
           else
@@ -173,6 +172,10 @@ function process_markdown {
     fi
 
   done<<<"$(cat "${1:-/tmp/markdown}")"
+
+  # finally, change `{{foo}}` to use HTML entities
+  sed -e 's/`{{/`\&#123;\&#123;/g' -e 's/}}`/\&#125;\&#125;`/g' /tmp/fixed_markdown > /tmp/fixed_markdown2
+  mv /tmp/fixed_markdown2 /tmp/fixed_markdown
 }
 
 
