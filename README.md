@@ -56,7 +56,7 @@ This is a fast way of producing documentation for any installed programs or comm
 
 #### Creating pages
 
-`rebuild file.md > file.html` - create a page from a `.mdsh` file (recommended).
+`rebuild file.mdsh > file.html` - create a page from a `.mdsh` file (recommended).
 
 `rebuild file.md > file.html` - create a page from a Markdown file.
 
@@ -71,17 +71,6 @@ page_descr="Some thing"   \
 page_layout="main"        \
 page_stylesheet="main"    \
   .app/create_page.sh "$body_html" > my-cool-page.html
-```
-
-!!! SHOULD BE !!!
-
-```
-page_title="My cool page" \
-page_descr="Some thing"   \
-page_layout="main"        \
-page_stylesheet="main"    \
-page_body="$some_html"    \
-  .app/create_page.sh > my-cool-page.html
 ```
 
 #### Rebuilding pages
