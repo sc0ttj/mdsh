@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{{html_tag}}
+
+
+<head>
+{{>page_meta}}
+</head>
+
+
+<!-- start body -->
+<body class="no-js {{#page_category}}category-{{page_category}}{{/page_category}} {{page_slug}}">
+
+  <div class="main-container">
+
+    {{>site_header}}
+
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>{{page_title}}</h2>
+
+        {{page_body}}
+
+      {{#foreach item in products | where slug = $page_slug}}
+        {{>_paypal_products_list}}
+      {{/foreach}}
+
+      </div>
+    </div>
+
+    {{>site_navigation}}
+
+    {{>site_footer}}
+
+  </div>
+
+</body>
+</html>

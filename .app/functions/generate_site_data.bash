@@ -38,6 +38,88 @@ function list_posts_in_dir {
   render _list
 }
 
+function get_taxonomies {
+  lookup taxonomies.* | sed 's/taxonomies_//g'
+}
+
+function get_taxonomy_items {
+  [ -z "$1" ] && return 1
+  local items="$(grep -hRE "^#? ?${1}:.*[, ]?" posts/*/*/*/*.mdsh)"
+  # change commas to new lines
+  # strip everything before the taxonomy item (author name, etc)
+  all_items="$(echo "${items//,/
+}" | sed \
+      -e 's/[Aa-Zz:]* //' \
+      -e 's/^ *//'        \
+   | sort -u)"
+
+  # add to $site_* arrays (like $site_tags, $site_categories, etc)
+  unset site_$1
+  local OLD_IFS=$IFS
+  local IFS=$'\n'
+  for item in $all_items
+  do
+    post_count=$(grep -lE "^#? ?$1: .*$item" posts/*/*/*/*.mdsh 2>/dev/null \
+      | sort -u \
+      | while read file
+      do
+        cut -f1,2 -d'|' posts.csv \
+        | grep "$(basename "${file}")" \
+        | grep -v "^#" \
+        | tr '|' '/'
+      done \
+      | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
+
+    export post_count
+    [ "$post_count" = ''  ] && continue
+    [ $post_count -lt 1 ] && continue
+
+    # set the item vars to be printed
+    item_title="'${item}'"
+    item_slug="$(echo "${item}" | slugify)"
+    item_url="${site_url}/$1/${item_slug}.html"
+    item_post_count="$post_count"
+    add_item_to "site_$1"
+    # update itemlist tmp file
+    echo "${item_url}" >> /tmp/$1_itemlist
+  done
+  IFS=$OLD_IFS
+  # update itemlist tmp file
+  echo -e "$item_list" > /tmp/itemlist
+
+  # return list (to rebuild_index_pages)
+  echo "$all_items"
+}
+
+function get_pages_in_taxonomy {
+  [ -z "$1" ] && return 1
+  [ -z "$2" ] && return 1
+  local taxonomy_name="${1//taxonomies_}"
+  local taxonomy_value="$2"
+  local all_items="$(grep -lRE "#? ?${taxonomy_name}.*${taxonomy_value}[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}.*${taxonomy_value}[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  [ -z "$all_items" ] && return 1
+
+  local item_list=''
+  classes="posts posts-${taxonomy_name}-${taxonomy_value}"
+  has_date=$(lookup "taxonomies.${taxonomy_name}.show_date")
+  ITEMS=()
+
+  for item in $all_items
+  do
+    # skip post if it's commented out in posts.csv
+    local filename="$(basename "${item}")"
+    [ "$(grep "^#" posts.csv | grep -m1 "|$filename|")" != "" ] && continue
+    item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
+    [ -z "$item_title" ] && continue
+    item_url="${site_url}/${item//.mdsh/.html}"
+    item_created="$(get_page_creation_date $item)"
+    add_item_to 'ITEMS'
+    item_list="${item_list}\n${item_url}"
+  done
+  # update itemlist tmp file
+  echo -e "$item_list" > /tmp/itemlist
+}
 
 function get_posts_by_author {
   [ -z "$1" ] && return 1
@@ -50,7 +132,7 @@ function get_posts_by_author {
   for item in $all_items
   do
     # skip post if it's commented out in posts.csv
-    [ "$(grep "${item}|" posts.csv | grep "^#" )" ] && continue
+    [ "$(grep "$(basename "${item}")|" posts.csv | grep "^#" )" ] && continue
     item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
     [ -z "$item_title" ] && continue
     item_url="${site_url}/${item//.mdsh/.html}"
@@ -92,7 +174,7 @@ function get_posts_in_category {
 function get_posts_matching_tag {
   [ -z "$1" ] && return 1
   local tag="$1"
-  local all_items="$(grep -lRE "#? ?tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
+  local all_items="$(grep -lRE "#? ?tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r)"
   local item_list=''
   classes="posts-matching-tag posts"
   has_date=true
@@ -127,7 +209,7 @@ do
   [ ! -z "$sh_file" ] && [ -f "$sh_file" ] && source "$sh_file"
   if [ "$DEBUG_DATA" = true ];then
     echo >&2
-    cat "$sh_file" >&2
+    \cat "$sh_file" >&2
     echo >&2
   fi
 done
@@ -138,7 +220,7 @@ do
   eval "$(\cat /tmp/all_site_yml_data)"
   if [ "$DEBUG_DATA" = true ];then
     echo >&2
-    cat  /tmp/all_site_yml_data >&2
+    \cat  /tmp/all_site_yml_data >&2
     echo >&2
   fi
 done

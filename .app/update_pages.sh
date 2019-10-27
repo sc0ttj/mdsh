@@ -192,6 +192,55 @@ function rebuild_archive_page {
   (cd posts &>/dev/null && ln -s ../archive.html index.html &>/dev/null)
 }
 
+function rebuild_index_pages {
+  for name in ${taxonomies[@]}
+  do
+    # get vars
+    local name="${name//taxonomies_}"
+    local taxonomy_name="$(lookup taxonomies.${name}.name)"
+    local taxonomy_header="$(lookup taxonomies.${name}.header)"
+    local taxonomy_plural=$(lookup "taxonomies.${name}.plural")
+    local taxonomy_descr=$(lookup "taxonomies.${name}.descr")
+
+    # get all items in taxonomy (example, each category in categories)
+    local taxonomy_items="$(get_taxonomy_items "${taxonomy_name}")"
+    [ -z "$taxonomy_items" ] && taxonomy_items="$(get_taxonomy_items "${taxonomy_plural}")"
+    [ -z "$taxonomy_items" ] && return 1
+
+    # build page
+    file="${taxonomy_plural}/index.html"
+    echo "Updating: $file"
+    touch "$file"
+    page_title="${taxonomy_plural}" \
+      page_slug="${taxonomy_plural}" \
+      page_descr="${taxonomy_descr}" \
+      page_url="$site_url/$file" \
+      .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
+
+    OLD_IFS=$IFS
+    local IFS=$'\n'
+    for value in $taxonomy_items
+    do
+      # get all page info in matching taxonomy item
+      # (where it matches $value, and is a specific category, author, etc)
+      get_pages_in_taxonomy "$name" "$value"
+      [ ${#ITEMS[@]} -lt 1 ] && continue
+      local page_slug="$(echo "$value" | slugify)"
+      local file="${taxonomy_plural}/${page_slug}.html"
+      # rebuild index of taxonomy item (categories/foo.html, etc)
+      echo "Updating: $file"
+      touch "$file"
+      # build page
+      page_title="${taxonomy_header} $value" \
+        page_slug="${page_slug}" \
+        page_descr="${taxonomy_descr}" \
+        page_url="$site_url/${file}" \
+        .app/create_page.sh "$(render _list)" > "$file"
+    done
+    IFS=$OLD_IFS
+  done
+}
+
 function rebuild_author_index {
   echo "Updating: authors/index.html"
   touch authors/index.html
@@ -344,9 +393,9 @@ function rebuild_indexes_of_page {
   # which haven't actually changed
 	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
     [ ! -f "$source_file" ] && continue
-    relevant_author="$(grep -m1 'author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
-    relevant_category="$(grep -m1 'category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
-    relevant_tags="$(grep -m1 'tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
+    relevant_author="$(grep -m1 '^author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
+    relevant_category="$(grep -m1 '^category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
+    relevant_tags="$(grep -m1 '^tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
 
     # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
     relevant_day="${relevant_day//\/*/}"

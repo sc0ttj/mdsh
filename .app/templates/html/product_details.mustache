@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{{html_tag}}
+
+
+<head>
+{{>page_meta}}
+</head>
+
+
+<!-- start body -->
+<body class="no-js {{#page_category}}category-{{page_category}}{{/page_category}} {{page_slug}}">
+
+  <div class="main-container">
+
+    {{>site_header}}
+
+    <div class="body-container">
+      <div id="content" class="main-content">
+
+        <h2>{{page_title}}</h2>
+
+        {{page_body}}
+
+      {{#page_product_name}}
+        <p>Here is a single product, defined in the YAML front matter of this page:</p>
+        {{>.app/templates/html/_paypal_product_details.mustache}}
+      {{/page_product_name}}
+
+      </div>
+    </div>
+
+    {{>site_navigation}}
+
+    {{>site_footer}}
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+author:
+  name: author
+  plural: authors
+  header: Posts written by
+  descr: Authors of the content
+  show_date: true
+category:
+  name: category
+  plural: categories
+  header: Posts in category
+  descr: Arbitrary categories
+  show_date: true
+tag:
+  name: tag
+  plural: tags
+  header: Posts tagged
+  descr: Arbitrary tags
+  show_date: true
