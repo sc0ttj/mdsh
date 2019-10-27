@@ -4,7 +4,7 @@
       {{#has_date}}
         {{ITEM.created | time_tag to_string}}
       {{/has_date}}
-      {{ITEM.before}} <a href="{{ITEM.url}}">{{ITEM.title}}</a> ({{ITEM.post_count}})
+      {{ITEM.before}} <a href="{{ITEM.url}}">{{ITEM.title}}</a> {{ITEM.after}}
     </li>
   {{/ITEMS}}
 </ul>

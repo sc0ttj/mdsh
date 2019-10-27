@@ -211,7 +211,7 @@ function rebuild_index_pages {
     file="${taxonomy_plural}/index.html"
     echo "Updating: $file"
     touch "$file"
-    page_title="${taxonomy_plural}" \
+    page_title="$(echo "${taxonomy_plural}" | titlecase)" \
       page_slug="${taxonomy_plural}" \
       page_descr="${taxonomy_descr}" \
       page_url="$site_url/$file" \
@@ -227,6 +227,7 @@ function rebuild_index_pages {
       [ ${#ITEMS[@]} -lt 1 ] && continue
       local page_slug="$(echo "$value" | slugify)"
       local file="${taxonomy_plural}/${page_slug}.html"
+      has_date=false
       # rebuild index of taxonomy item (categories/foo.html, etc)
       echo "Updating: $file"
       touch "$file"
