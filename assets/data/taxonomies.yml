@@ -2,17 +2,17 @@ author:
   name: author
   plural: authors
   header: Posts written by
-  descr: Authors of the content
+  descr: Search for content, posts, pages and articles by choosing an author.
   show_date: true
 category:
   name: category
   plural: categories
   header: Posts in category
-  descr: Arbitrary categories
+  descr: Search for content, posts, pages and articles by choosing a category.
   show_date: true
 tag:
   name: tag
   plural: tags
   header: Posts tagged
-  descr: Arbitrary tags
+  descr: Search for tagged content, posts, pages and articles by choosing a tag.
   show_date: true

@@ -471,8 +471,8 @@ function add_item_to {
 }
 
 
-# this next function populates the ITEMS array with all post/page info..
-# it takes no arguments, but expects (at least some of) the following
+# this next function populates the ITEMS array with all post/page/taxonomy
+# info, it takes no arguments, but expects (at least some of) the following
 # vars to be set before it is executed:
 #
 # item_title

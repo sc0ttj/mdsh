@@ -44,14 +44,8 @@ function get_taxonomies {
 
 function get_taxonomy_items {
   [ -z "$1" ] && return 1
-  local items="$(grep -hRE "^#? ?${1}:.*[, ]?" posts/*/*/*/*.mdsh)"
-  # change commas to new lines
-  # strip everything before the taxonomy item (author name, etc)
-  all_items="$(echo "${items//,/
-}" | sed \
-      -e 's/[Aa-Zz:]* //' \
-      -e 's/^ *//'        \
-   | sort -u)"
+  local all_items="$(grep -hRE "^#? ?${1}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+  [ "$all_items" = '' ] && return 1
 
   # add to $site_* arrays (like $site_tags, $site_categories, etc)
   unset site_$1
@@ -59,14 +53,13 @@ function get_taxonomy_items {
   local IFS=$'\n'
   for item in $all_items
   do
-    post_count=$(grep -lE "^#? ?$1: .*$item" posts/*/*/*/*.mdsh 2>/dev/null \
+    post_count=$(grep -lRE "^#? ?$1:.*$item[, ]?" posts/*/*/*/*.mdsh 2>/dev/null \
       | sort -u \
       | while read file
       do
         cut -f1,2 -d'|' posts.csv \
         | grep "$(basename "${file}")" \
-        | grep -v "^#" \
-        | tr '|' '/'
+        | grep -v "^#"
       done \
       | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
 
@@ -81,11 +74,11 @@ function get_taxonomy_items {
     item_post_count="$post_count"
     add_item_to "site_$1"
     # update itemlist tmp file
-    echo "${item_url}" >> /tmp/$1_itemlist
+    item_list="${item_list}\n${item_url}"
   done
   IFS=$OLD_IFS
   # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
+  echo -e "$item_list" > /tmp/$1_itemlist
 
   # return list (to rebuild_index_pages)
   echo "$all_items"
@@ -104,7 +97,6 @@ function get_pages_in_taxonomy {
   classes="posts posts-${taxonomy_name}-${taxonomy_value}"
   has_date=$(lookup "taxonomies.${taxonomy_name}.show_date")
   ITEMS=()
-
   for item in $all_items
   do
     # skip post if it's commented out in posts.csv
