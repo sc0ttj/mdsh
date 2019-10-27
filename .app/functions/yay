@@ -411,35 +411,35 @@ lookup() {
   if [ "$(echo "$1" | grep -E '[Aa-Zz]\[[0-9]\]')" != "" ];then
     arr="$(eval echo \${${1%%.*}})"
     key="${1#*.}";
-    cached_var="$(eval "echo \${${arr}[${key}]}")"
+    cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo[bar].baz
   elif [ "$(echo "$1" | grep -E '[Aa-Zz]\[[Aa-Zz_]\]')" != "" ];then
     arr="$(eval echo \${${1%%.*}})"
     key="${1#*.}";
-    cached_var="$(eval "echo \${${arr}[${key}]}")"
+    cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo.baz
   elif [ "$(echo "$1" | grep -E '[Aa-Zz_].[Aa-Zz_]')" != "" ];then
     arr="${1%%.*}"
     key="${1#*.}";
-    cached_var="$(eval "echo \${${arr}[${key}]}")"
+    cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo.bar
   else
-    cached_var="$(eval "echo -n \${${1//./_}[@]}")"
+    cached_var="$(eval "echo -n \${${1//./_}[@]}" 2>/dev/null)"
   fi
 
   # if var exists, and not empty, return it
   if [ ! -z "${cached_var[@]}" ];then
-    echo "${cached_var[@]}"
+    echo "${cached_var[@]}" | sed -e 's/^"//' -e 's/"$//'
     return
   elif [ ! -z "${cached_var}" ];then
-    echo "${cached_var}"
+    echo "${cached_var}" | sed -e 's/^"//' -e 's/"$//'
     return
   fi
 
   # still nothing found, check yml files for given item
   [ ! -f "assets/data/${1%%.*}.yml" ] && return 1
-  .app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}"
+  .app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}" | sed -e 's/^"//' -e 's/"$//'
 }
