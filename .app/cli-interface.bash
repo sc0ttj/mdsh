@@ -7,12 +7,14 @@ fi
 
 # source functions used by mdsh
 libs="
-.app/functions/mo
-.app/functions/yay
 .app/functions/mdsh_functions.bash
 .app/functions/liquid_filters.bash
+.app/functions/yay
+.app/functions/mo
 .app/functions/mo-addons.bash
-.app/functions/generate*.bash
+.app/functions/generate_page_data.bash
+.app/functions/generate_site_data.bash
+.app/functions/generate_page_content.bash
 "
 for script in $libs
 do
@@ -22,14 +24,6 @@ done
 oembed_filters="$(get_oembed_filters)"
 
 # define CLI below
-
-# mdsh:  init program (source scripts, functions, generate site data, etc)
-#
-# Usage: mdsh
-#
-function mdsh {
-  [ -f .site_config ] && source .site_config
-}
 
 # new:   create a new page or post, follow the on-screen
 #        instructions to choose title, description, etc
