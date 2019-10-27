@@ -193,14 +193,17 @@ function rebuild_archive_page {
 }
 
 function rebuild_index_pages {
-  for name in ${taxonomies[@]}
+  local file  page_slug  has_date
+  local taxonomies="$1"
+  [ -z "$taxonomies" ] && taxonomies="${taxonomies[@]}"
+  for taxonomy in $taxonomies
   do
     # get vars
-    local name="${name//taxonomies_}"
-    local taxonomy_name="$(lookup taxonomies.${name}.name)"
-    local taxonomy_header="$(lookup taxonomies.${name}.header)"
-    local taxonomy_plural=$(lookup "taxonomies.${name}.plural")
-    local taxonomy_descr=$(lookup "taxonomies.${name}.descr")
+    local taxonomy="${taxonomy//taxonomies_}"
+    local taxonomy_name="$(lookup taxonomies.${taxonomy}.name)"
+    local taxonomy_header="$(lookup taxonomies.${taxonomy}.header)"
+    local taxonomy_plural=$(lookup "taxonomies.${taxonomy}.plural")
+    local taxonomy_descr=$(lookup "taxonomies.${taxonomy}.descr")
 
     # get all items in taxonomy (example, each category in categories)
     local taxonomy_items="$(get_taxonomy_items "${taxonomy_name}")"
@@ -211,27 +214,31 @@ function rebuild_index_pages {
     file="${taxonomy_plural}/index.html"
     echo "Updating: $file"
     touch "$file"
+    has_date=''
     page_title="$(echo "${taxonomy_plural}" | titlecase)" \
       page_slug="${taxonomy_plural}" \
       page_descr="${taxonomy_descr}" \
       page_url="$site_url/$file" \
       .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
 
+    # for each item in the current taxonomy group (for each author in authors),
+    # create the index pages for each (which will list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
     for value in $taxonomy_items
     do
-      # get all page info in matching taxonomy item
+      # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
-      get_pages_in_taxonomy "$name" "$value"
+      get_pages_in_taxonomy "$taxonomy" "$value"
+      # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
-      local page_slug="$(echo "$value" | slugify)"
-      local file="${taxonomy_plural}/${page_slug}.html"
-      has_date=false
-      # rebuild index of taxonomy item (categories/foo.html, etc)
+      # we have items, so set some vars
+      has_date=true
+      page_slug="$(echo "$value" | slugify)"
+      file="${taxonomy_plural}/${page_slug}.html"
+      # build page
       echo "Updating: $file"
       touch "$file"
-      # build page
       page_title="${taxonomy_header} $value" \
         page_slug="${page_slug}" \
         page_descr="${taxonomy_descr}" \

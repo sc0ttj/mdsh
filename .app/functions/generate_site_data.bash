@@ -44,6 +44,7 @@ function get_taxonomies {
 
 function get_taxonomy_items {
   [ -z "$1" ] && return 1
+  local item_list=''
   local all_items="$(grep -hRE "^#? ?${1}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
   [ "$all_items" = '' ] && return 1
 
@@ -78,7 +79,7 @@ function get_taxonomy_items {
   done
   IFS=$OLD_IFS
   # update itemlist tmp file
-  echo -e "$item_list" > /tmp/$1_itemlist
+  echo -e "$item_list" > /tmp/itemlist
 
   # return list (to rebuild_index_pages)
   echo "$all_items"
@@ -89,11 +90,11 @@ function get_pages_in_taxonomy {
   [ -z "$2" ] && return 1
   local taxonomy_name="${1//taxonomies_}"
   local taxonomy_value="$2"
+  local item_list=''
   local all_items="$(grep -lRE "#? ?${taxonomy_name}.*${taxonomy_value}[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
   [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}.*${taxonomy_value}[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r | uniq)"
   [ -z "$all_items" ] && return 1
 
-  local item_list=''
   classes="posts posts-${taxonomy_name}-${taxonomy_value}"
   has_date=$(lookup "taxonomies.${taxonomy_name}.show_date")
   ITEMS=()
