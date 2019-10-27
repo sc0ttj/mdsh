@@ -38,15 +38,13 @@ function list_posts_in_dir {
   render _list
 }
 
-function get_taxonomies {
-  lookup taxonomies.* | sed 's/taxonomies_//g'
-}
-
 function get_taxonomy_items {
   [ -z "$1" ] && return 1
   local item_list=''
   local all_items="$(grep -hRE "^#? ?${1}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+  local taxonomy_plural="$(lookup "taxonomies.$1.plural")"
   [ "$all_items" = '' ] && return 1
+  [ "$taxonomy_plural" = '' ] && return 1
 
   # add to $site_* arrays (like $site_tags, $site_categories, etc)
   unset site_$1
@@ -71,7 +69,7 @@ function get_taxonomy_items {
     # set the item vars to be printed
     item_title="'${item}'"
     item_slug="$(echo "${item}" | slugify)"
-    item_url="${site_url}/$1/${item_slug}.html"
+    item_url="${site_url}/$taxonomy_plural/${item_slug}.html"
     item_post_count="$post_count"
     add_item_to "site_$1"
     # update itemlist tmp file

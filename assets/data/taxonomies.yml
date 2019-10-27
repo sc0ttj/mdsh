@@ -10,7 +10,7 @@ category:
   header: Posts in category
   descr: Search for content, posts, pages and articles by choosing a category.
   show_date: true
-tag:
+tags:
   name: tag
   plural: tags
   header: Posts tagged
