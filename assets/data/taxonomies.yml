@@ -1,18 +1,22 @@
 author:
   name: author
   plural: authors
-  header: Posts written by
   descr: Search for content, posts, pages and articles by choosing an author.
   show_date: true
+  items_header: Posts written by
+  items_descr: Here's a list of items written by
 category:
   name: category
   plural: categories
-  header: Posts in category
   descr: Search for content, posts, pages and articles by choosing a category.
   show_date: true
+  items_header: Posts in category
+  items_descr: Here's a list of items in category
 tags:
   name: tag
   plural: tags
-  header: Posts tagged
   descr: Search for tagged content, posts, pages and articles by choosing a tag.
   show_date: true
+  items_header: Posts tagged
+  items_descr: Here's a list of items tagged
+

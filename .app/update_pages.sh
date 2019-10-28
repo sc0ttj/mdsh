@@ -194,16 +194,18 @@ function rebuild_archive_page {
 
 function rebuild_index_pages {
   local file  page_slug  has_date
-  local taxonomies="$1"
-  [ -z "$taxonomies" ] && taxonomies="${taxonomies[@]}"
-  for taxonomy in $taxonomies
+  local taxonomies_list
+  [ "$1" != '' ] && taxonomies_list="$1" || taxonomies_list="${taxonomies[@]}"
+  [ -z "${taxonomies_list[@]}" ] && return 1
+  for taxonomy in ${taxonomies_list[@]}
   do
     # get vars
     local taxonomy="${taxonomy//taxonomies_}"
-    local taxonomy_name="$(lookup taxonomies.${taxonomy}.name)"
-    local taxonomy_header="$(lookup taxonomies.${taxonomy}.header)"
-    local taxonomy_plural=$(lookup "taxonomies.${taxonomy}.plural")
-    local taxonomy_descr=$(lookup "taxonomies.${taxonomy}.descr")
+    local taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+    local taxonomy_plural="$(lookup "taxonomies.${taxonomy}.plural")"
+    local taxonomy_descr="$(lookup "taxonomies.${taxonomy}.descr")"
+    local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
+    local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy}.items_descr")"
 
     # get all items in taxonomy (example, each category in categories)
     local taxonomy_items="$(get_taxonomy_items "${taxonomy_name}")"
@@ -216,8 +218,8 @@ function rebuild_index_pages {
     touch "$file"
     has_date=''
     page_title="$(echo "${taxonomy_plural}" | titlecase)" \
-      page_slug="${taxonomy_plural}" \
       page_descr="${taxonomy_descr}" \
+      page_slug="${taxonomy_plural}" \
       page_url="$site_url/$file" \
       .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
 
@@ -239,9 +241,9 @@ function rebuild_index_pages {
       # build page
       echo "Updating: $file"
       touch "$file"
-      page_title="${taxonomy_header} $value" \
+      page_title="${taxonomy_items_header} $value" \
+        page_descr="${taxonomy_items_descr} $value" \
         page_slug="${page_slug}" \
-        page_descr="${taxonomy_descr}" \
         page_url="$site_url/${file}" \
         .app/create_page.sh "$(render _list)" > "$file"
     done
