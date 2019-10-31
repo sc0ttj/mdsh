@@ -50,42 +50,15 @@ function get_post_count {
     | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null
 }
 
-function get_taxonomy_items { # unused at the moment
-  [ -z "$1" ] && return 1
-  local item_list=''
-  local taxonomy="${1//taxonomies_}"
-  local taxonomy_plural="$(lookup "taxonomies.$taxonomy.plural")"
-  [ "$taxonomy_plural" = '' ] && return 1
-  local all_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
-  [ "$all_items" = '' ] && return 1
-  local array_name="site_$taxonomy_plural"
-
-  unset $(eval 'echo $array_name')
-  declare -ag $(eval 'echo $array_name')
-
-  # add to $site_* arrays (like $site_tags, $site_categories, etc)
-  local OLD_IFS=$IFS
-  local IFS=$'\n'
-  for item in $all_items
+function get_taxonomies {
+  for x in ${taxonomies[@]}
   do
-    post_count="$(get_post_count $1 $item)"
-    [ "$post_count" = ''  ] && continue
-    [ "$post_count" = '0' ] && continue
-    # set the item vars to be printed
-    item_title="'${item}'"
-    item_slug="$(echo "${item}" | slugify)"
-    item_url="${site_url}/$taxonomy_plural/${item_slug}.html"
-    item_post_count="$post_count"
-    add_item_to "$array_name"
-    # update itemlist tmp file
-    item_list="${item_list}\n${item_url}"
+    echo "${x//taxonomies_/}"
   done
-  IFS=$OLD_IFS
-  export $(eval 'echo $array_name')
-  site+=($array_name)
-  # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
 }
+
+function get_taxonomy_name   { get_taxonomies | while read line; do echo -n "$line|"; lookup taxonomies.$line.plural; done | grep -E "^$1|\|$1" | cut -f1 -d'|'; }
+function get_taxonomy_plural { get_taxonomies | while read line; do echo -n "$line|"; lookup taxonomies.$line.plural; done | grep -E "^$1|\|$1" | cut -f2 -d'|'; }
 
 function get_pages_in_taxonomy {
   [ -z "$1" ] && return 1

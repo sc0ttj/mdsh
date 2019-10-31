@@ -195,6 +195,7 @@ function rebuild_archive_page {
 function rebuild_index_pages {
   local file  page_slug  has_date
   local taxonomies_list
+  # $1 should be match the key of a taxonomy in taxonomies.yml
   [ "$1" != '' ] && taxonomies_list="$1" || taxonomies_list="${taxonomies[@]}"
   [ -z "${taxonomies_list[@]}" ] && return 1
   for taxonomy in ${taxonomies_list[@]}
@@ -202,29 +203,51 @@ function rebuild_index_pages {
     # get vars
     local taxonomy="${taxonomy//taxonomies_}"
     local taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+
+    # if $1 doesn't match any keys in taxonomies.yml, then
+    # search for singluar/plural versions to be sure
+    if [ -z "$taxonomy_name" ];then
+      taxonomy="$(get_taxonomy_name ${1//taxonomies_/})"
+      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+    fi
+    if [ -z "$taxonomy_name" ];then
+      taxonomy="$(get_taxonomy_plural ${1//taxonomies_/})"
+      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+    fi
+    # if we still don't have it, skip it
+    [ -z "$taxonomy_name" ] && continue
+
     local taxonomy_plural="$(lookup "taxonomies.${taxonomy}.plural")"
     local taxonomy_descr="$(lookup "taxonomies.${taxonomy}.descr")"
     local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
     local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy}.items_descr")"
 
-    # build page
-    file="${taxonomy_plural}/index.html"
-    echo "Updating: $file"
-    touch "$file"
-    has_date=''
-    page_title="$(echo "${taxonomy_plural}" | titlecase)" \
-      page_descr="${taxonomy_descr}" \
-      page_slug="${taxonomy_plural}" \
-      page_url="$site_url/$file" \
-      .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
+    if [ "$partial_build" != true ];then
+      # build page - foo/index.html
+      file="${taxonomy_plural}/index.html"
+      echo "Updating: $file"
+      touch "$file"
+      has_date=''
+      page_title="$(echo "${taxonomy_plural}" | titlecase)" \
+        page_descr="${taxonomy_descr}" \
+        page_slug="${taxonomy_plural}" \
+        page_url="$site_url/$file" \
+        .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
+    fi
 
-    all_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+    # build index item pages (authors/bob.html, etc)
+
+    # first, get all terms/items in current taxonomy:
+    # for example. get all authors in "author"
+    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
     # for each item in the current taxonomy group (for each author in authors),
-    # create the index pages for each (which will list the relevant pages/posts)
+    # create the index pages (which list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
-    for value in $all_items
+    for value in $all_taxonomy_items
     do
+      # skip current author if not in $relevant_authors
+      [ "$partial_build" = true ] && [ "__$(echo ${value} | slugify)__" != "__$(echo ${relevant_item} | slugify)__" ] && continue
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
       get_pages_in_taxonomy "$taxonomy" "$value"
@@ -489,6 +512,18 @@ if [ -f "${1//.mdsh}.mdsh" ];then
   rebuild_indexes_of_page "$source_file"
 fi
 
+# get taxonoies as case-friendly list ( like "foo|bar")
+site_taxonomies="$(echo ${taxonomies[@]} \
+  | tr ' ' '\n' \
+  | while read t; do \
+    echo -n "${t//taxonomies_/}|" && lookup taxonomies.${t//taxonomies_/}.plural; \
+  done \
+  | tr '\n' '|' \
+  | sed \
+    -e 's/|/*|/g' \
+    -e 's/^|//g' \
+    -e 's/|$//g')"
+
 for option in $@
 do
   case "$option" in
@@ -517,42 +552,11 @@ do
     ;;
     search)
       rebuild_search_page
+
     ;;
     sitemap)
       .app/generate_sitemap.sh
       exit
-    ;;
-    authors*|author*)
-      authors_to_build="${option//\//:}"
-      authors_to_build="${authors_to_build//*:/}"
-      authors_to_build="${authors_to_build//,/ }"
-      # build pages
-      [ "$authors_to_build" = "authors" ] && rebuild_author_index
-      for relevant_author in $authors_to_build
-      do
-        partial_build=true rebuild_author_pages
-      done
-    ;;
-    categories*|category*)
-      category_to_build="${option//*:/}"
-      category_to_build="${category_to_build//,*/}"
-      # build pages
-      [ "$category_to_build" = "categories" ] && rebuild_author_index
-      for relevant_category in $category_to_build
-      do
-        partial_build=true rebuild_category_pages
-      done
-    ;;
-    tags*|tag*)
-      tags_to_build="${option//\//:}"
-      tags_to_build="${tags_to_build//*:/}"
-      tags_to_build="${tags_to_build//,/ }"
-      # build pages
-      [ "$tags_to_build" = "tags" ] && rebuild_tag_index
-      for relevant_tag in $tags_to_build
-      do
-        partial_build=true rebuild_tag_pages
-      done
     ;;
     years*|year*)
       years_to_build="${option//*:}"
@@ -570,6 +574,20 @@ do
       for relevant_month in $months_to_build
       do
         partial_build=$partial_build rebuild_monthly_indexes ${2:-$(date +"%Y")}
+      done
+    ;;
+    *)
+      [ "$(echo "${option//:*/}" | grep "$site_taxonomies"))" != "" ] || continue
+      items_to_build="${option//\//:}"
+      items_to_build="${items_to_build//*:/}"
+      items_to_build="${items_to_build//,/ }"
+      taxonomy_name="${option//:*/}"
+
+      # build pages
+      [ "$items_to_build" = "$option" ] && rebuild_index_pages $option
+      for relevant_item in $items_to_build
+      do
+        partial_build=true rebuild_index_pages "$taxonomy_name"
       done
     ;;
   esac
