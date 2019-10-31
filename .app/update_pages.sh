@@ -207,11 +207,6 @@ function rebuild_index_pages {
     local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
     local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy}.items_descr")"
 
-    # get all items in taxonomy (example, each category in categories)
-    local taxonomy_items="$(get_taxonomy_items "${taxonomy_name}")"
-    [ -z "$taxonomy_items" ] && taxonomy_items="$(get_taxonomy_items "${taxonomy_plural}")"
-    [ -z "$taxonomy_items" ] && return 1
-
     # build page
     file="${taxonomy_plural}/index.html"
     echo "Updating: $file"
@@ -223,15 +218,25 @@ function rebuild_index_pages {
       page_url="$site_url/$file" \
       .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
 
+    all_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
     # for each item in the current taxonomy group (for each author in authors),
     # create the index pages for each (which will list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
-    for value in $taxonomy_items
+    for value in $all_items
     do
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
+
       get_pages_in_taxonomy "$taxonomy" "$value"
+
+#xmessage "get_pages_in_taxonomy \"$taxonomy\" \"$value\":
+#'$(get_pages_in_taxonomy \"$taxonomy\" \"$value\")'
+#
+#\${ITEMS[@]}:
+#${ITEMS[@]}
+#"
+
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
@@ -498,34 +503,34 @@ do
   case "$option" in
     '404')
       rebuild_404_page
-      ;;
+    ;;
     archive)
       rebuild_archive_page
-      ;;
+    ;;
     contact)
       rebuild_contact_page
-      ;;
+    ;;
     homepage)
       rebuild_homepage
-      ;;
+    ;;
     pages)
       rebuild_custom_pages
-      ;;
+    ;;
     posts)
       rebuild_posts
-      ;;
+    ;;
     rss)
       echo "Updating: feed.rss"
       .app/create_rss.sh posts/ > feed.rss
       exit
-      ;;
+    ;;
     search)
       rebuild_search_page
-      ;;
+    ;;
     sitemap)
       .app/generate_sitemap.sh
       exit
-      ;;
+    ;;
     authors*|author*)
       authors_to_build="${option//\//:}"
       authors_to_build="${authors_to_build//*:/}"

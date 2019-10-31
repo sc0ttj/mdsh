@@ -38,49 +38,53 @@ function list_posts_in_dir {
   render _list
 }
 
-function get_taxonomy_items {
+function get_post_count {
+  grep -lRE "^#? ?$1:.*$2[, ]?" posts/*/*/*/*.mdsh 2>/dev/null \
+    | sort -u \
+    | while read file
+    do
+      cut -f1,2 -d'|' posts.csv \
+      | grep "$(basename "${file}")" \
+      | grep -v "^#"
+    done \
+    | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null
+}
+
+function get_taxonomy_items { # unused at the moment
   [ -z "$1" ] && return 1
   local item_list=''
-  local all_items="$(grep -hRE "^#? ?${1}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
-  local taxonomy_plural="$(lookup "taxonomies.$1.plural")"
-  [ "$all_items" = '' ] && return 1
+  local taxonomy="${1//taxonomies_}"
+  local taxonomy_plural="$(lookup "taxonomies.$taxonomy.plural")"
   [ "$taxonomy_plural" = '' ] && return 1
+  local all_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+  [ "$all_items" = '' ] && return 1
+  local array_name="site_$taxonomy_plural"
+
+  unset $(eval 'echo $array_name')
+  declare -ag $(eval 'echo $array_name')
 
   # add to $site_* arrays (like $site_tags, $site_categories, etc)
-  unset site_$1
   local OLD_IFS=$IFS
   local IFS=$'\n'
   for item in $all_items
   do
-    post_count=$(grep -lRE "^#? ?$1:.*$item[, ]?" posts/*/*/*/*.mdsh 2>/dev/null \
-      | sort -u \
-      | while read file
-      do
-        cut -f1,2 -d'|' posts.csv \
-        | grep "$(basename "${file}")" \
-        | grep -v "^#"
-      done \
-      | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
-
-    export post_count
+    post_count="$(get_post_count $1 $item)"
     [ "$post_count" = ''  ] && continue
-    [ $post_count -lt 1 ] && continue
-
+    [ "$post_count" = '0' ] && continue
     # set the item vars to be printed
     item_title="'${item}'"
     item_slug="$(echo "${item}" | slugify)"
     item_url="${site_url}/$taxonomy_plural/${item_slug}.html"
     item_post_count="$post_count"
-    add_item_to "site_$1"
+    add_item_to "$array_name"
     # update itemlist tmp file
     item_list="${item_list}\n${item_url}"
   done
   IFS=$OLD_IFS
+  export $(eval 'echo $array_name')
+  site+=($array_name)
   # update itemlist tmp file
   echo -e "$item_list" > /tmp/itemlist
-
-  # return list (to rebuild_index_pages)
-  echo "$all_items"
 }
 
 function get_pages_in_taxonomy {
@@ -112,89 +116,9 @@ function get_pages_in_taxonomy {
   echo -e "$item_list" > /tmp/itemlist
 }
 
-function get_posts_by_author {
-  [ -z "$1" ] && return 1
-  local author="$1"
-  local all_items="$(grep -lRE "#? ?author.*$author[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r)"
-  local item_list=''
-  classes="posts-by-author posts"
-  has_date=true
-  ITEMS=()
-  for item in $all_items
-  do
-    # skip post if it's commented out in posts.csv
-    [ "$(grep "$(basename "${item}")|" posts.csv | grep "^#" )" ] && continue
-    item_title="'$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#" | cut -f3 -d'|')'"
-    [ -z "$item_title" ] && continue
-    item_url="${site_url}/${item//.mdsh/.html}"
-    item_created="$(get_page_creation_date $item)"
-    add_item_to 'ITEMS'
-    item_list="${item_list}\n${item_url}"
-  done
-  # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
-}
-
-function get_posts_in_category {
-  [ -z "$1" ] && return 1
-  local category="$1"
-  local all_items="$(grep "|$category|" ./posts.csv | cut -f1-3 -d'|' | grep -v "^#" | sort -u | sort -r)"
-  local item_list=''
-  classes="posts-in-category posts"
-  has_date=true
-  ITEMS=()
-  local OLDIFS=$IFS
-  IFS="
-"
-  for item in $all_items
-  do
-    item_date="$(echo "$item" | cut -f1 -d'|')"
-    [ -z "$item_date" ] && continue
-    item_slug="$(echo "$item" | cut -f2 -d'|')"
-    item_title="'$(echo "$item" | cut -f3 -d'|')'"
-    item_url="${site_url}/posts/$item_date/${item_slug//.mdsh/}.html"
-    item_created="$(get_page_creation_date posts/$item_date/${item_slug})"
-    add_item_to 'ITEMS'
-    item_list="${item_list}\n${item_url}"
-  done
-  IFS=$OLD_IFS
-  # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
-}
-
-function get_posts_matching_tag {
-  [ -z "$1" ] && return 1
-  local tag="$1"
-  local all_items="$(grep -lRE "#? ?tags.*$tag[, ]?" posts/*/*/*/*.mdsh | sort -u | sort -r)"
-  local item_list=''
-  classes="posts-matching-tag posts"
-  has_date=true
-  ITEMS=()
-  local OLDIFS=$IFS
-  IFS="
-"
-  for item in $all_items
-  do
-    item_entry="$(grep -m1 "|$(basename $item)|" posts.csv | grep -v "^#")"
-    [ -z "$item_entry" ] && continue
-    item_title="'$(echo "$item_entry" | cut -f3 -d'|')'"
-    item_slug="'$(echo "$item_entry" | cut -f2 -d'|')'"
-    item_date="$(echo "$item_entry" | cut -f1 -d'|')"
-    item_url="${site_url}/posts/${item_date}/${item_slug//.mdsh/.html}"
-    item_created="$(get_page_creation_date $item)"
-    add_item_to 'ITEMS'
-    item_list="${item_list}\n${item_url}"
-  done
-  IFS=$OLD_IFS
-  # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
-}
-
-
 #
 # parse the data folder:
 #
-
 for sh_file in assets/data/*.sh
 do
   [ ! -z "$sh_file" ] && [ -f "$sh_file" ] && source "$sh_file"
@@ -231,95 +155,7 @@ do
   fi
 done
 
-#
-# generate up-to-date data objects of:
-#
-#  - site authors
-#  - site categories
-#  - site tags
-#
-
-rm /tmp/authors_itemlist &>/dev/null
-unset site_authors
-declare -ag site_authors
-for author in $(grep -v "^#" posts.csv | cut -f4 -d'|' | tr ' ' ',' | tr ',' '\n'| grep -v "^$" | sort -u)
-do
-  [ -z "$author" ] && continue
-  post_count=$(grep -lE "^#? ?author: .*$author" posts/*/*/*/*.mdsh 2>/dev/null \
-    | sort -u \
-    | while read file
-    do
-      cut -f1,2 -d'|' posts.csv \
-      | grep "$(basename "${file}")" \
-      | grep -v "^#" \
-      | tr '|' '/'
-    done \
-    | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
-
-  # set the item vars to be printed
-  item_title="${author}"
-  item_slug="$(echo "${author}" | slugify)"
-  item_url="${site_url}/authors/${item_slug}.html"
-  item_post_count="$post_count"
-  add_item_to 'site_authors'
-  # update itemlist tmp file
-  echo "${item_url}" >> /tmp/authors_itemlist
-done
-
-rm /tmp/categories_itemlist &>/dev/null
-unset site_categories
-declare -ag site_categories
-for category in $(grep -v "^#" ./posts.csv | cut -f5 -d'|' | tr ' ' ',' | tr ',' '\n'| sort -u)
-do
-  [ -z "$category" ] && continue
-  post_count=$(grep -lE "^#? ?category: .*$category" posts/*/*/*/*.mdsh 2>/dev/null \
-    | sort -u \
-    | while read file
-    do
-      cut -f1,2 -d'|' posts.csv \
-      | grep "$(basename "${file}")" \
-      | grep -v "^#" \
-      | tr '|' '/'
-    done \
-    | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
-
-  # set the item vars to be printed
-  item_title="${category}"
-  item_slug="$(echo "${category}" | slugify)"
-  item_url="${site_url}/categories/${item_slug}.html"
-  item_post_count="$post_count"
-  add_item_to 'site_categories'
-  # update itemlist tmp file
-  echo "${item_url}" >> /tmp/categories_itemlist
-done
-
-rm /tmp/tags_itemlist &>/dev/null
-unset site_tags
-declare -ag site_tags
-for tag in $(grep -v "^#" ./posts.csv | cut -f6 -d'|' | tr ' ' ',' | tr ',' '\n'| sort -u)
-do
-  [ -z "$tag" ] && continue
-  post_count=$(grep -lRE "^#? ?tags:.*$tag[, ]?" posts/*/*/*/*.mdsh 2>/dev/null \
-    | sort -u \
-    | while read file
-    do
-      cut -f1,2 -d'|' posts.csv \
-      | grep "$(basename "${file}")" \
-      | grep -v "^#" \
-      | tr '|' '/'
-    done \
-    | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null)
-
-  # set the item vars to be printed
-  item_title="${tag}"
-  item_slug="$(echo "${tag}" | slugify)"
-  item_url="${site_url}/tags/${item_slug}.html"
-  item_post_count="$post_count"
-  add_item_to 'site_tags'
-  # update itemlist tmp file
-  echo "${item_url}" >> /tmp/tags_itemlist
-done
-
+# declare and populate site_posts
 rm /tmp/archive_itemlist &>/dev/null
 unset item_list
 unset site_posts
@@ -347,11 +183,84 @@ do
 
   add_item_to 'site_posts'
 done
-
 echo -e "${item_list}" | grep -v "^$" > /tmp/archive_itemlist
 
 # add the generated site data to the 'site' array
 # generated from assets/data/site.yml
-site+=(site_authors site_categories site_tags site_posts)
+site+=(site_posts)
 
-return 0
+#xmessage "
+#\$site_posts keys:
+#${!site_posts[@]}
+#
+#\$site_posts values:
+#${site_posts[@]}
+#"
+
+taxonomies_list="${taxonomies[@]}"
+[ -z "${taxonomies_list[@]}" ] && return 1
+
+for taxonomy in ${taxonomies_list[@]}
+do
+  # get vars
+  item_list=''
+  taxonomy="${taxonomy//taxonomies_}"
+  taxonomy_plural="$(lookup "taxonomies.${taxonomy}.plural")"
+  [ "$taxonomy_plural" = '' ] && continue
+  all_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+  [ "$all_items" = '' ] && continue
+  array_name="site_$taxonomy_plural"
+
+  unset $(eval 'echo $array_name')
+  declare -ag $(eval 'echo $array_name')
+
+  # add to $site_* arrays (like $site_tags, $site_categories, etc)
+  OLD_IFS=$IFS
+  IFS=$'\n'
+  for item in $all_items
+  do
+    post_count="$(get_post_count $taxonomy $item)"
+    [ "$post_count" = ''  ] && continue
+    [ "$post_count" = '0' ] && continue
+    # set the item vars to be printed
+    item_title="'${item}'"
+    item_slug="$(echo "${item}" | slugify)"
+    item_url="${site_url}/$taxonomy_plural/${item_slug}.html"
+    item_post_count="$post_count"
+    add_item_to "$array_name"
+    # update itemlist tmp file
+    item_list="${item_list}\n${item_url}"
+  done
+  IFS=$OLD_IFS
+  export $(eval 'echo $array_name')
+  site+=($array_name)
+  # update itemlist tmp file
+  echo -e "$item_list" > /tmp/itemlist
+
+#xmessage "array_name: $array_name
+#
+#declare -p $array_name
+#$(declare -p $array_name)
+#
+#site_authors keys:
+#${!site_authors[@]}
+#
+#site_authors values:
+#${site_authors[@]}
+#
+#\$array_name keys:
+#$(eval 'echo \${!$array_name[@]}')
+#
+#\$array_name values:
+#$(eval 'echo \${$array_name[@]}')
+#
+#grep -hRE \"^#? ?${taxonomy}:.*[, ]\" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u
+#
+#all_tems:
+#'$all_items'
+#
+#item_list:
+#'$item_list'
+#"
+
+done
