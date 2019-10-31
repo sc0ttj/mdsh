@@ -189,14 +189,6 @@ echo -e "${item_list}" | grep -v "^$" > /tmp/archive_itemlist
 # generated from assets/data/site.yml
 site+=(site_posts)
 
-#xmessage "
-#\$site_posts keys:
-#${!site_posts[@]}
-#
-#\$site_posts values:
-#${site_posts[@]}
-#"
-
 taxonomies_list="${taxonomies[@]}"
 [ -z "${taxonomies_list[@]}" ] && return 1
 
@@ -236,31 +228,4 @@ do
   site+=($array_name)
   # update itemlist tmp file
   echo -e "$item_list" > /tmp/itemlist
-
-#xmessage "array_name: $array_name
-#
-#declare -p $array_name
-#$(declare -p $array_name)
-#
-#site_authors keys:
-#${!site_authors[@]}
-#
-#site_authors values:
-#${site_authors[@]}
-#
-#\$array_name keys:
-#$(eval 'echo \${!$array_name[@]}')
-#
-#\$array_name values:
-#$(eval 'echo \${$array_name[@]}')
-#
-#grep -hRE \"^#? ?${taxonomy}:.*[, ]\" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u
-#
-#all_tems:
-#'$all_items'
-#
-#item_list:
-#'$item_list'
-#"
-
 done

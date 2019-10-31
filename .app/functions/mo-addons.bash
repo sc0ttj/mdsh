@@ -15,7 +15,6 @@ function foreach {
   if [[ "$2" != "in" ]]; then
       echo "Invalid foreach - bad format."
   elif [[ "$(declare -p "$3" 2>/dev/null)" != "declare"* ]]; then
- xmessage "$(declare -p "$3")"
       echo "$3 is not an array"
   else
     foreachSourceName="${3}[@]"

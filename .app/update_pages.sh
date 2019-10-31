@@ -227,16 +227,7 @@ function rebuild_index_pages {
     do
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
-
       get_pages_in_taxonomy "$taxonomy" "$value"
-
-#xmessage "get_pages_in_taxonomy \"$taxonomy\" \"$value\":
-#'$(get_pages_in_taxonomy \"$taxonomy\" \"$value\")'
-#
-#\${ITEMS[@]}:
-#${ITEMS[@]}
-#"
-
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
