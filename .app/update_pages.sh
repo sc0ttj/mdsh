@@ -29,11 +29,7 @@ source_file=''
 relevant_year=''
 relevant_month=''
 relevant_day=''
-relevant_author=''
-relevant_category=''
-relevant_tags=''
-relevant_author_filter=''
-relevant_category_filter=''
+relevant_taxonomy=''
 previous_page=''
 
 # clean up posts.csv
@@ -270,76 +266,6 @@ function rebuild_index_pages {
   done
 }
 
-function rebuild_author_index {
-  echo "Updating: authors/index.html"
-  touch authors/index.html
-  # build page
-  page_title="Authors" \
-    page_slug="authors" \
-    page_descr="Here's a list of authors who've written for this site." \
-    page_url="$site_url/authors/index.html" \
-    .app/create_page.sh "$(render _authors)" > authors/index.html
-}
-
-
-function rebuild_author_pages {
-  [ ! -d ./authors/ ] && mkdir ./authors/
-  for author_hash in ${site_authors[@]}
-  do
-    author="$(eval "echo \${$author_hash[title]}")"
-    [ -z "$author" ] && continue
-    # skip current author if not in $relevant_authors
-    [ "$partial_build" = true ] && [ "__${author}__" != "__${relevant_author}__" ] && continue
-    # else carry on
-    author_slug="$(echo "$author" | slugify)"
-    [ -z "$author_slug" ] && continue
-    file="authors/${author_slug}.html"
-    touch $file
-    echo "Updating: $file"
-    get_posts_by_author "$author"
-    # build the page
-    page_title="Posts by $author" \
-      page_descr="Here's a list of posts written by $author." \
-      page_url="$site_url/authors/${author}.html" \
-      .app/create_page.sh "$(render _list)" > $file
-  done
-}
-
-function rebuild_category_index {
-  echo "Updating: categories/index.html"
-  touch categories/index.html
-  # build the page
-  page_title="Categories" \
-    page_slug="categories" \
-    page_descr="Here's a list of posts categories" \
-    page_url="$site_url/categories/index.html" \
-    .app/create_page.sh "$(render _categories)" > categories/index.html
-}
-
-
-function rebuild_category_pages {
-  for category_hash in ${site_categories[@]}
-  do
-    category="$(eval "echo \${$category_hash[title]}")"
-    [ -z "$category"      ] && continue
-    # skip current category if not in $relevant_categories
-    [ "$partial_build" = true ] && [ "__${category}__" != "__${relevant_category}__" ] && continue
-    # else carry on
-    category_slug="$(echo "$category" | slugify)"
-    [ -z "$category_slug" ] && continue
-    file="categories/${category_slug}.html"
-    touch $file
-    echo "Updating: $file"
-    # get the data (put into ITEMS)
-    get_posts_in_category "$category"
-    # build the page
-    page_title="Posts in category '$category'" \
-      page_descr="Here's a list of posts in the category '$category'" \
-      page_url="$site_url/categories/${category}.html" \
-      .app/create_page.sh "$(render _list)" > categories/$category.html
-  done
-}
-
 
 function rebuild_contact_page {
   if [ "$site_email" != "" ];then
@@ -367,42 +293,6 @@ function rebuild_search_page {
     .app/create_page.sh "$(render _search_results)" > search.html
 }
 
-
-function rebuild_tag_index {
-  echo "Updating: tags/index.html"
-  touch tags/index.html
-  # build the page
-  page_title="Tags" \
-    page_slug="tags" \
-    page_descr="Here's a list of all tags on the site, to help you find some relevant content." \
-    page_url="$site_url/tags/index.html" \
-    .app/create_page.sh "$(render _tags)" > tags/index.html
-}
-
-function rebuild_tag_pages {
-  # update tags pages
-  for tag_hash in ${site_tags[@]}
-  do
-    tag="$(eval "echo \${$tag_hash[title]}")"
-    [ "$tag" = "" ] && continue
-    # if doing a partial rebuild, skip current tag if not in $page_tags
-    [ "$partial_build" = true ] && [ "__${tag}__" != "__${relevant_tag}__" ] && continue
-    tag_slug="$(echo "$tag" | slugify)"
-    [ -z "$tag_slug" ] && continue
-    # else carry on
-    echo "Updating: tags/${tag_slug}.html"
-    touch tags/$tag_slug.html
-    # get the data (put into ITEMS)
-    get_posts_matching_tag "$tag"
-    # build the page
-    page_title="Posts tagged '$tag'" \
-      page_descr="Here's a list of posts matching the tag '$tag'" \
-      page_url="$site_url/tags/${tag}.html" \
-      .app/create_page.sh "$(render _list)" > tags/$tag.html
-  done
-}
-
-
 function rebuild_indexes_of_page {
   # we have a source file, so lets do a partial rebuild, which skips
   # rebuilding pages that haven't changed.
@@ -410,6 +300,7 @@ function rebuild_indexes_of_page {
   source_file="${source_file//.mdsh}"
   source_file="${source_file//.md}"
   source_file="${source_file}.mdsh"
+  rm /tmp/relevant_taxonomies &>/dev/null
 
   function get_vars {
   	local IFS="$1"
@@ -422,31 +313,21 @@ function rebuild_indexes_of_page {
   # which haven't actually changed
 	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
     [ ! -f "$source_file" ] && continue
-    relevant_author="$(grep -m1 '^author: '     "$source_file" | sed -e 's/.*: //' -e 's/^ *//')"
-    relevant_category="$(grep -m1 '^category: ' "$source_file" | sed -e 's/.*: //' -e 's/,.*//' -e 's/^ *//' -e 's/ *$//')"
-    relevant_tags="$(grep -m1 '^tags: '         "$source_file" | sed -e 's/.*: //' -e 's/^ *//' -e 's/,/ /g' -e 's/  / /g')"
-
     # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
     relevant_day="${relevant_day//\/*/}"
-
-    # set some filters to filter out irrelevant tags, categories, etc
-    # during our partial rebuilds
-    relevant_author_filter="grep $relevant_author"
-    relevant_category_filter="grep $relevant_category"
-
     # we have to write these vars to a file, cos we're in a sub-shell
-    echo "relevant_year=$relevant_year"                            > /tmp/relevant_meta_details
-    echo "relevant_month=$relevant_month"                         >> /tmp/relevant_meta_details
-    echo "relevant_day=$relevant_day"                             >> /tmp/relevant_meta_details
-    echo "relevant_author=$relevant_author"                       >> /tmp/relevant_meta_details
-    echo "relevant_category=$relevant_category"                   >> /tmp/relevant_meta_details
-    echo "relevant_tags='$relevant_tags'"                         >> /tmp/relevant_meta_details
-    echo "relevant_author_filter=\"$relevant_author_filter\""     >> /tmp/relevant_meta_details
-    echo "relevant_category_filter=\"$relevant_category_filter\"" >> /tmp/relevant_meta_details
-	  #break # we just need to test 1 line
+    echo "relevant_year=$relevant_year"    > /tmp/relevant_meta_details
+    echo "relevant_month=$relevant_month" >> /tmp/relevant_meta_details
+    echo "relevant_day=$relevant_day"     >> /tmp/relevant_meta_details
+
+    for taxonomy in $(get_taxonomies)
+    do
+      relevant_item="$(grep -m1 "^${taxonomy}: " "$source_file" | sed -e "s/.*: //" -e "s/^ *//" -e "s/, /,/g")"
+      echo -n "${taxonomy}:${relevant_item} " >> /tmp/relevant_taxonomies
+    done
 	done <<< "$source_file"
 
-  # out ofthe sub-shell, lets get the posts meta info we just processed
+  # out of the sub-shell, lets get the posts meta info we just processed
   source /tmp/relevant_meta_details
   rm     /tmp/relevant_meta_details
 
@@ -460,7 +341,7 @@ function rebuild_indexes_of_page {
   fi
 
   # finally, update all the relevant index pages (ignoring ones that don't list this post)
-  rebuild authors:$relevant_author categories:$relevant_category tags:$relevant_tags archive search homepage
+  rebuild $(cat /tmp/relevant_taxonomies) archive search homepage
 }
 
 ###############################################################################
@@ -604,14 +485,9 @@ if [ -z "$1" ] || [ "$1" = "all" ];then
   rebuild_yearly_indexes
   rebuild_404_page
   rebuild_archive_page
-  rebuild_author_index
-  rebuild_author_pages
-  rebuild_category_index
-  rebuild_category_pages
   rebuild_contact_page
   rebuild_search_page
-  rebuild_tag_index
-  rebuild_tag_pages
+  rebuild_index_pages
 fi
 
 
