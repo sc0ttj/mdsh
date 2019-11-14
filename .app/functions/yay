@@ -405,7 +405,17 @@ yay() {
 }
 
 lookup() {
-  local cached_var arr key
+  local cached_var arr key yaml_data
+  if [ -f "assets/data/${1%%.*}.yml" ];then
+    yml_data="$(.app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}" 2>/dev/null \
+      | sed \
+        -e 's/^"//' \
+        -e 's/"$//' 2>/dev/null)"
+    if [ "$yml_data" != "" ];then
+      echo "$yml_data"
+      return 0
+    fi
+  fi
 
   # if notation is something like foo[1].bar
   if [ "$(echo "$1" | grep -E '[Aa-Zz]\[[0-9]\]')" != "" ];then
@@ -438,8 +448,4 @@ lookup() {
     echo "${cached_var}" | sed -e 's/^"//' -e 's/"$//'
     return
   fi
-
-  # still nothing found, check yml files for given item
-  [ ! -f "assets/data/${1%%.*}.yml" ] && return 1
-  .app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}" | sed -e 's/^"//' -e 's/"$//'
 }

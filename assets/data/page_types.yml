@@ -1,0 +1,28 @@
+page:
+  name: page
+  plural: pages
+  taxonomies: author, category, tags
+  layout: main
+  stylesheet: main
+  date_in_path: false
+post:
+  name: post
+  plural: posts
+  taxonomies: author, category, tags
+  layout: main
+  stylesheet: main
+  date_in_path: true
+event:
+  name: event
+  plural: events
+  taxonomies: category, location, organiser, venue, start_date, end_date, tags
+  layout: main
+  stylesheet: main
+  date_in_path: false
+product:
+  name: product
+  plural: products
+  taxonomies: brand, category, tags
+  layout: simple
+  stylesheet: main
+  date_in_path: false

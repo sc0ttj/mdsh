@@ -130,7 +130,10 @@ fi
 
 # set {{page_body}} - used in the main.mustache template
 page_body="${body_html}"
-# render the main template
+
+# render the main template:
+# - render to HTML
+# - then replace HTML entities (created in process_markdown) with braces
 render ${page_layout:-main} | sed \
   -e 's|\&amp;#123;\&amp;#123;|{{|g' \
   -e 's|\&amp;#125;\&amp;#125;|}}|g' 1>/tmp/htmlfile
@@ -148,16 +151,10 @@ else
   cat /tmp/htmlfile
 fi
 
-# create a permalink
+# create a permalink (creates a symlink at $page_permlink,
+# pointing to the page url
 if [ "$page_permalink" != "" ];then
   generate_page_permalink "$page_permalink"
-fi
-
-if [ -f "$2" ] && [ "$is_blog_post" != true ];then
-  # if is not a blog post, its a page, so save to pages.csv
-  echo "${page_dir}|$2|$page_title|$(echo "$page_title" | slugify)|$page_author|$page_category|$(echo ${page_tags[@]} | sed 's/ /, /g')" >> pages.csv
-  sort -u pages.csv | uniq >> pages_sorted.csv
-  mv pages_sorted.csv pages.csv
 fi
 
 # clean up

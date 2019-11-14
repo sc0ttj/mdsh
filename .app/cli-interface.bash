@@ -31,8 +31,12 @@ oembed_filters="$(get_oembed_filters)"
 # Usage: new <post|page>
 #
 function new {
-  [ "$1" != "page" ] && [ "$1" != "post" ] && return 1
-  ${PWD}/.app/create_${1}.sh $2 $3 $4 $5
+  [ -z "$1" ] && echo "Usage: new <page_type>" && return 1
+  if [ "$(page_type_is_valid ${1:-foo})" = true ];then
+    ${PWD}/.app/create_post.sh "$@"
+    return 0
+  fi
+  return 1
 }
 
 # rebuild: Rebuild an HTML file from its source file. The source
@@ -46,7 +50,14 @@ function rebuild {
     return 0
   fi
   # $1 might be a parameter, like 'tags', 'year:2019', 'authors:foo,bar', '-all', ...
-  ${PWD}/.app/update_pages.sh $@
+  REBUILD_TYPE=pages ${PWD}/.app/update_pages.sh "$@"
+}
+
+# rebuild the index files associated with the given page
+# or taxonomy term
+function reindex {
+  # $1 might be a parameter, like 'tags', 'year:2019', 'authors:foo,bar', '-all', ...
+  REBUILD_TYPE=indexes ${PWD}/.app/update_pages.sh "$@"
 }
 
 function help {
@@ -57,15 +68,9 @@ function help {
   echo
   echo "  server [start|stop]              # start/stop a local web server"
   echo
-  echo "  new post                         # create a new post or page, using default site settings"
+  echo "  new <page-type>                  # create a new page, of the given type, using default settings"
   echo
-  echo "  new post -all                    # create a new post or page, asks to override various site settings"
-  echo
-  echo "  new page "file.md" > file.html     # create a page from a Markdown file"
-  echo
-  echo "  new page "file.mdsh" > file.html   # create a page from a .mdsh file"
-  echo
-  echo "  new page \"\$html\" > file.html     # create a page from an HTML string"
+  echo "  new <page-type> -all             # create a new page, asks to override default settings"
   echo
   echo "  rebuild                          # rebuild all index pages (authors, categories, tags, etc)"
   echo
@@ -73,9 +78,9 @@ function help {
   echo
   echo "  rebuild -ALL                     # re-build all posts from their .mdsh files"
   echo
-  echo "  rebuild file.md file.html        # build a specific page"
+  echo "  rebuild file.md > file.html      # build a specific page"
   echo
-  echo "  rebuild file.mdsh file.html      # re-build a specific page from a .mdsh file"
+  echo "  rebuild file.mdsh > file.html    # re-build a specific page from a .mdsh file"
   echo
   echo "  rebuild homepage                 # re-build the main index.html file"
   echo
@@ -87,17 +92,17 @@ function help {
   echo
   echo "  rebuild search                   # re-build search.html"
   echo
-  echo "  rebuild authors                  # re-build all pages in authors/"
+  echo "  rebuild <page-type>              # re-build pages of the given type (post, page, etc)"
   echo
-  echo "  rebuild authors:foo,bar          # re-build pages authors/foo.html and tags/bar.html"
+  echo "  rebuild <page-type>:foo          # re-build pages listed in <page-type>/foo/"
   echo
-  echo "  rebuild categories               # re-build all pages in categories/"
+  echo "  rebuild <page-type>:foo:bar      # re-build pages listed in <page-type>/foo/bar.html"
   echo
-  echo "  rebuild categories:foo,bar       # re-build pages categories/foo.html and tags/bar.html"
+  echo "  reindex <page-type>              # re-build all INDEX pages in <page-type>/"
   echo
-  echo "  rebuild tags                     # re-build all pages in tags/"
+  echo "  reindex <page-type>:foo          # re-build all INDEX pages in <page-type>/foo/"
   echo
-  echo "  rebuild tags:foo,bar             # re-build pages tags/foo.html and tags/bar.html"
+  echo "  reindex <page-type>:foo:bar      # re-build INDEX page <page-type>/foo/bar.html"
   echo
   echo "  rebuild years                    # re-build all posts/<years>/index.html index pages"
   echo
@@ -107,7 +112,7 @@ function help {
   echo
   echo "  rebuild months:foo <year>        # re-build posts/<year>/foo/index.html specifically"
   echo
-  echo "  unpublish file.html              # remove a page from site, inc all indexes, publish changes"
+  echo "  unpublish file.html              # remove a page from site, inc all index pages, publish changes"
 }
 
 # make the scripts available themselves, just in case the user wants them

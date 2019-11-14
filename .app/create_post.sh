@@ -4,10 +4,8 @@
 
 # Just follow the on screen instructions, enter the required post
 # meta information, then add your markdown content in the terminal.
-# When finished writing your Markdown, hit ENTER 3 times to exit
-# and save the file.
 #
-# Usage:   create_post [-all]
+# Usage:   create_post.sh <page_type> [-all]
 #
 #          Follow the instructions to create your page meta info.
 #          You can give `-all` to set all meta info, allowing you
@@ -17,8 +15,22 @@
 # load the local config file
 [ -f .site_config ] && source .site_config
 
+page_type="$1"
+page_type="${page_type//-all/post}"
+page_type="${page_type//-ALL/post}"
+
+if [ "$(page_type_is_valid $page_type)" != true ];then
+  echo "Invalid page type '$page_type'. Must be one of these:"
+  echo "$(lookup page_types.* | sed 's/page_types_//g')"
+  return 1
+fi
+
+page_type_plural="$(lookup page_types.${page_type}.plural)"
+page_type_plural="${page_type_plural:-posts}"
+
+# begin user input
 echo
-echo "Enter the meta info for your page:"
+echo "Enter the meta info for your ${page_type}:"
 echo
 
 # get user input to create the meta data
@@ -28,59 +40,72 @@ echo -n "Description:  "
 read -er description
 echo -n "Time to read: "
 read -er time_to_read
-echo -n "Category:     "
-read -er category
-echo -n "Tags (comma separated words or phrases): "
-read -er tags
 
-# set some defaults, based on site defaults
-layout="$site_layout"
-stylesheet="$site_stylesheet"
-code_stylesheet="$site_code_stylesheet"
-permalink=""
-author="${author:-$site_author}"
-email="${email:-$site_email}"
-twitter="${twitter:-$site_twitter}"
-language="${language:-$site_language}"
-js_deps="${js_deps:-$site_js_deps}"
+# based on page type, get the relevant taxonomies
+relevant_taxonomies=$(lookup page_types.$page_type.taxonomies)
+# Now let the user enter some values for each relevant taxonomy. Example:
+#  - taxonomy is "tags"
+#  - create var called 'tags_values'
+#  - it contains the tags associated with this page/post/item
+#  - in front matter will be "tags: $tags_values"
+for taxonomy_name in $relevant_taxonomies
+do
+  input_label="$(lookup taxonomies.${taxonomy_name}.input_label)"
+  [ "$input_label" != "" ] && input_label=" (${input_label})"
+  echo -n "$(echo "$taxonomy_name" | titlecase)${input_label}:     "
+  read -er values
+  # now slugify each taxonomy value given
+  OLDIFS=$IFS
+  IFS=","
+  for value in $values
+  do
+    fixed_values="$fixed_values $(echo $value | slugify | sed 's/^-//'),"
+  done
+  IFS=$OLD_IFS
+  # strip leading spaces and trailing commas
+  fixed_values="$(echo "$fixed_values" | sed -e 's/^ //' -e 's/,$//')"
+  # create the var to go into the front matter (example, "tags_values")
+  eval '${taxonomy_name}_values="$fixed_values"'
+done
+
+# set some defaults, based on page type defaults, falling back to site defaults
+default_layout="$(lookup page_types.${page_type}.layout)"
+default_layout="${layout:-$site_layout}"
+default_stylesheet="$(lookup page_types.${page_type}.stylesheet)"
+default_stylesheet="${stylesheet:-$site_stylesheet}"
+default_code_stylesheet="$(lookup page_types.${page_type}.code_stylesheet)"
+default_code_stylesheet="${code_stylesheet:-$site_code_stylesheet}"
+# set some defaults, falling back to site defaults
+default_permalink=""
+default_email="${email:-$site_email}"
+default_twitter="${twitter:-$site_twitter}"
+default_language="${language:-$site_language}"
+default_js_deps="${js_deps:-$site_js_deps}"
 
 # allow user to override site default if -all given
-if [ "$1" = "-all" ];then
+if [ "$1" = "-all" ] || [ "$2" = "-all" ] || [ "$1" = "-ALL" ] || [ "$2" = "-ALL" ];then
   echo -n "Layout:       "
-  read -er -i "$site_layout" layout
+  read -er -i "$default_layout" layout
   echo -n "Stylesheet:       "
-  read -er -i "$site_stylesheet" stylesheet
+  read -er -i "$default_stylesheet" stylesheet
   echo -n "Code stylesheet:       "
-  read -er -i "$site_code_stylesheet" code_stylesheet
+  read -er -i "$default_code_stylesheet" code_stylesheet
   echo -n "Permalink:       "
-  read -er -i "posts/$(echo "$title" | slugify)" permalink
-  echo -n "Author:       "
-  read -er -i "$site_author" author
+  read -er -i "$default_{page_type}/$(echo "$title" | slugify)" permalink
   echo -n "Email:        "
-  read -er -i "$site_email" email
+  read -er -i "$default_email" email
   echo -n "Twitter:      "
-  read -er -i "$site_twitter" twitter
+  read -er -i "$default_twitter" twitter
   echo -n "Language:     "
-  read -er -i "$site_language" language
+  read -er -i "$default_language" language
   echo -n "JS deps (comma separated package names): "
-  read -er -i "$site_js_deps" js_deps
+  read -er -i "$default_js_deps" js_deps
 fi
-
-# slugiy the tags
-OLDIFS=$IFS
-IFS=","
-for tag in $tags
-do
-  fixed_tags="$fixed_tags $(echo $tag | slugify | sed 's/^-//'),"
-done
-IFS=$OLD_IFS
-
-fixed_tags="$(echo "$fixed_tags" | sed -e 's/^ //' -e 's/,$//')"
-tags="$fixed_tags"
 
 # generate some more meta info
 slug=$(echo "$title" | slugify)
-date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")"
+date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")/"
+[ "$(lookup page_types.${page_type}.date_in_path)" = false ] && date_dir=""
 date_created="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 date_modified="$date_created"
 
@@ -88,15 +113,17 @@ date_modified="$date_created"
 meta_data="title:            $title
 slug:             $slug
 descr:            $description
+type:             $page_type
 permalink:        $permalink
 time_to_read:     $time_to_read
 created:          $date_created
-category:         $category
-tags:             $tags
+$(for taxonomy_name in $relevant_taxonomies
+do
+ echo "$taxonomy_name:      $(eval 'echo ${taxonomy_name}_values')"
+done)
 layout:           $layout
 stylesheet:       $stylesheet
 code_stylesheet:  $code_stylesheet
-author:           ${author:-$site_author}
 email:            ${email:-$site_email}
 twitter:          ${twitter:-$site_twitter}
 language:         ${language:-$site_language}
@@ -124,10 +151,11 @@ if [ "$answer" = 'n' ] || [ "$answer" = 'N' ];then
 fi
 
 # set the output files
-md_file="./posts/$date_dir/${slug}.md"
+filename="${page_type_plural}/${date_dir}${slug}"
+md_file="${filename}.md"
 mdsh_file="${md_file}sh"
 # write meta info to mdsh file
-mkdir -p ./posts/$date_dir/
+mkdir -p ./${page_type_plural}/${date_dir}
 echo "$meta_data" > "$mdsh_file"
 echo ""          >> "$mdsh_file"
 echo "---"       >> "$mdsh_file"
@@ -137,7 +165,7 @@ echo -n ""       >> "$md_file"
 if [ "$USE_EDITOR" != true ];then
 
   # final message
-  echo "Saved meta data in: posts/$date_dir/${slug}.mdsh"
+  echo "Saved meta data in: ${mdsh_file}"
   echo
   echo "Now write your markdown below, line by line.
    * supports TAB completion (of file names, etc)
@@ -148,7 +176,6 @@ if [ "$USE_EDITOR" != true ];then
    * Hit ENTER 3 times to exit and save the file. "
   echo
 
-
   #
   # begin interactive mdshell (user can create the markdown document line by line)
   #
@@ -156,32 +183,42 @@ if [ "$USE_EDITOR" != true ];then
   echo "## $title"
   echo
   # run interactive shell for writing the content itself, in markdown
-  .app/mdshell.sh posts/$date_dir/${slug}.mdsh
+  .app/mdshell.sh ${mdsh_file}
 
 else
-  $EDITOR posts/$date_dir/${slug}.mdsh
+  $EDITOR ${mdsh_file}
 
   # create the HTML page
-  html_file="posts/$date_dir/${slug}.html"
-  markdown_file="posts/$date_dir/${slug}.md"
-  rebuild "posts/$date_dir/${slug}.mdsh" > "$html_file"
+  html_file="${page_type_plural}/${date_dir}${slug}.html"
+  markdown_file="${page_type_plural}/${date_dir}${slug}.md"
+  rebuild "${mdsh_file}" > "$html_file"
 
   echo "Saved as:"
   echo
   echo "HTML page:      $html_file"
   echo "Markdown file:  $markdown_file"
-  echo "Source file:    posts/$date_dir/${slug}.mdsh"
+  echo "Source file:    ${mdsh_file}"
   echo
 
 fi
 
+# escape backticks in title
+title="${title//\`/\\\`}"
+
+
+# get taxonomy values as pipe separated list
+for taxonomy_name in $relevant_taxonomies
+do
+  taxonomy_values+="$(eval 'echo ${taxonomy_name}_values')|"
+done
+
 # update the main database of posts for the site
-echo "$date_dir|${slug}.mdsh|$title|$author|$category|$tags" >> posts.csv
-sort -u posts.csv | uniq >> posts_sorted.csv
-mv posts_sorted.csv posts.csv
+echo "$date_dir|${slug}.mdsh|$title|${taxonomy_values}" | sed 's/|$//g' >> ${page_type_plural}.csv
+sort -u ${page_type_plural}.csv | uniq >> ${page_type_plural}_sorted.csv
+mv ${page_type_plural}_sorted.csv ${page_type_plural}.csv
 
 # pass the source file to update_pages.sh, so it knows to only
-# rebuild index pages relevant to that post
-.app/update_pages.sh posts/$date_dir/${slug}.mdsh
+# rebuild index pages relevant to that page/post
+.app/update_pages.sh ${mdsh_file}
 
 exit 0

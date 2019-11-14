@@ -24,6 +24,7 @@ rm /tmp/_site_*.html &>/dev/null
 [ -f .site_config ] && source .site_config
 
 # set some vars
+REBUILD_TYPE=${REBUILD_TYPE:-indexes}
 partial_build=false
 source_file=''
 relevant_year=''
@@ -60,19 +61,41 @@ done
 
 ############################## functions ##################################
 
-function rebuild_posts {
-  cut -f1-2 -d'|' posts.csv | sort -r | head -${LIMIT:-99999} | while read line
+#function rebuild_posts_OLD {
+#  cut -f1-2 -d'|' posts.csv | sort -r | head -${LIMIT:-99999} | while read line
+#  do
+#    mdshfile="${line//|//}"
+#    mdshfile="${mdshfile//#/}"
+#    if [ -f "posts/$mdshfile" ];then
+#      source_file="$mdshfile"
+#      html_file="${mdshfile//.mdsh/.html}"
+#      [ "$2" = "mdonly" ] && source_file="posts/${mdshfile//.mdsh/.md}"
+#      [ ! -f "posts/$source_file" ] && continue
+#      # update (rebuild) all posts pages
+#      echo "Updating: posts/$html_file"
+#      .app/create_page.sh "posts/$source_file" > "posts/$html_file"
+#    fi
+#  done
+#}
+
+function rebuild_pages_of_type {
+  local page_type="$(lookup page_types.${1}.plural)"
+  [ -z "${page_type}" ] && return 1
+  [ ! -f "${page_type}.csv" ] && return 1
+  cut -f1-2 -d'|' ${page_type}.csv | sort -r | head -${LIMIT:-99999} | while read line
   do
     mdshfile="${line//|//}"
     mdshfile="${mdshfile//#/}"
-    if [ -f "posts/$mdshfile" ];then
+    # skip current type if not in $relevant_item
+    [ "$partial_build" = true ] && [ "__$(echo ${page_type} | slugify)__" != "__$(echo ${relevant_item} | slugify)__" ] && continue
+    if [ -f "$page_type/$mdshfile" ];then
       source_file="$mdshfile"
       html_file="${mdshfile//.mdsh/.html}"
-      [ "$2" = "mdonly" ] && source_file="posts/${mdshfile//.mdsh/.md}"
-      [ ! -f "posts/$source_file" ] && continue
-      # update (rebuild) all posts pages
-      echo "Updating: posts/$html_file"
-      .app/create_page.sh "posts/$source_file" > "posts/$html_file"
+      [ "$2" = "mdonly" ] && source_file="$page_type/${mdshfile//.mdsh/.md}"
+      [ ! -f "$page_type/$source_file" ] && continue
+      # update (rebuild) all posts/pages
+      echo "Updating: $page_type/$html_file"
+      .app/create_page.sh "$page_type/$source_file" > "$page_type/$html_file"
     fi
   done
 }
@@ -94,25 +117,27 @@ function rebuild_custom_pages {
     page_source="${page_source//.md/}"
     # get meta info
     page_title="$(echo "$page"    | cut -f3 -d'|')"
-    page_html="$(echo "$page"   | cut -f4 -d'|')"
-    page_slug="${page_html//.html/}"
+    html_file="$(echo "$page"     | cut -f4 -d'|')"
+    page_slug="${html_file//.html/}"
     page_author="$(echo "$page"   | cut -f5 -d'|')"
     page_category="$(echo "$page" | cut -f6 -d'|')"
     page_keywords="$(echo "$page" | cut -f7 -d'|')"
     # set source file
     for file in "${page_source}.mdsh" "${page_source}.md"
     do
-      [ -f "${page_dir}/${file}" ] && source_file="${page_dir}/${file}"
-      [ -f "$source_file" ] && break
+      if [ -f "${page_dir}/${file}" ];then
+        source_file="${page_dir}/${file}"
+        break
+      fi
     done
     # build page
-    echo "Updating: ${page_html}"
+    echo "Updating: ${html_file}"
     page_title="$page_title"       \
     page_slug="$page_slug"         \
     page_author="$page_author"     \
     page_category="$page_category" \
     page_keywords="$page_keywords" \
-      .app/create_page.sh "${source_file}" > "${page_dir}/${page_html}"
+      .app/create_page.sh "${source_file}" > "${page_dir}/${html_file}"
   done
 }
 
@@ -189,38 +214,51 @@ function rebuild_archive_page {
 }
 
 function rebuild_index_pages {
-  local file  page_slug  has_date
+  [ -z "$1" ] && return 1
+  [ -z "$2" ] && return 1
+  local page_type="$1"
+  local taxonomy_name="$2"
+  local taxonomy_item="$3"
   local taxonomies_list
-  # $1 should be match the key of a taxonomy in taxonomies.yml
-  [ "$1" != '' ] && taxonomies_list="$1" || taxonomies_list="${taxonomies[@]}"
+  local file
+  local page_slug
+  local has_date
+
+  # we need the plural version too
+  page_type_plural="$(get_page_type_plural $page_type)"
+
+  # limit the taxonomies we parse to the ones given by the user
+  [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="${taxonomies[@]}"
   [ -z "${taxonomies_list[@]}" ] && return 1
+
+  # for each taxonomy we need to parse
   for taxonomy in ${taxonomies_list[@]}
   do
     # get vars
     local taxonomy="${taxonomy//taxonomies_}"
-    local taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
-
-    # if $1 doesn't match any keys in taxonomies.yml, then
-    # search for singluar/plural versions to be sure
-    if [ -z "$taxonomy_name" ];then
-      taxonomy="$(get_taxonomy_name ${1//taxonomies_/})"
-      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
-    fi
-    if [ -z "$taxonomy_name" ];then
-      taxonomy="$(get_taxonomy_plural ${1//taxonomies_/})"
-      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
-    fi
+    local taxonomy_name="$(get_taxonomy_name "$taxonomy")"
     # if we still don't have it, skip it
     [ -z "$taxonomy_name" ] && continue
 
-    local taxonomy_plural="$(lookup "taxonomies.${taxonomy}.plural")"
+#    # if $taxonomy_name doesn't match any keys in taxonomies.yml, then
+#    # search for singular/plural versions to be sure
+#    if [ -z "$taxonomy_name" ];then
+#      taxonomy="$(get_taxonomy_name ${2//taxonomies_/})"
+#      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+#    fi
+#    if [ -z "$taxonomy_name" ];then
+#      taxonomy="$(get_taxonomy_plural ${2//taxonomies_/})"
+#      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
+#    fi
+
+    local taxonomy_plural="$(get_taxonomy_plural "$taxonomy")"
     local taxonomy_descr="$(lookup "taxonomies.${taxonomy}.descr")"
     local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
     local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy}.items_descr")"
 
     if [ "$partial_build" != true ];then
-      # build page - foo/index.html
-      file="${taxonomy_plural}/index.html"
+      # build page - (posts/authors/index.html)
+      file="${page_type_plural}/${taxonomy_plural}/index.html"
       echo "Updating: $file"
       touch "$file"
       has_date=''
@@ -231,28 +269,31 @@ function rebuild_index_pages {
         .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
     fi
 
-    # build index item pages (authors/bob.html, etc)
+    # build index item pages (posts/authors/bob.html, etc)
 
     # first, get all terms/items in current taxonomy:
     # for example. get all authors in "author"
-    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy}:.*[, ]" posts/*/*/*/*.mdsh|sed 's/ .*  //g'|cut -f2 -d':' | tr ',' '\n' | lstrip | sort -u)"
+    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh \
+      | sed 's/ .*  //g'\
+      | cut -f2 -d':' \
+      | tr ',' '\n' \
+      | lstrip \
+      | sort -u)"
     # for each item in the current taxonomy group (for each author in authors),
     # create the index pages (which list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
     for value in $all_taxonomy_items
     do
-      # skip current author if not in $relevant_authors
-      [ "$partial_build" = true ] && [ "__$(echo ${value} | slugify)__" != "__$(echo ${relevant_item} | slugify)__" ] && continue
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
-      get_pages_in_taxonomy "$taxonomy" "$value"
+      get_pages_in_taxonomy "$page_type" "$taxonomy" "$value"
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
       has_date=true
       page_slug="$(echo "$value" | slugify)"
-      file="${taxonomy_plural}/${page_slug}.html"
+      file="${page_type_plural}/${taxonomy_plural}/${page_slug}.html"
       # build page
       echo "Updating: $file"
       touch "$file"
@@ -293,6 +334,7 @@ function rebuild_search_page {
     .app/create_page.sh "$(render _search_results)" > search.html
 }
 
+
 function rebuild_indexes_of_page {
   # we have a source file, so lets do a partial rebuild, which skips
   # rebuilding pages that haven't changed.
@@ -311,19 +353,20 @@ function rebuild_indexes_of_page {
   # lets filter our all the irrelevant years, months, tags, categories
   # before we rebuild our pages - so we dont have to rebuild any pages
   # which haven't actually changed
-	while get_vars "/" dir relevant_year relevant_month relevant_day ; do
+	while get_vars "/" page_type relevant_year relevant_month relevant_day ; do
     [ ! -f "$source_file" ] && continue
     # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
     relevant_day="${relevant_day//\/*/}"
     # we have to write these vars to a file, cos we're in a sub-shell
-    echo "relevant_year=$relevant_year"    > /tmp/relevant_meta_details
+    echo "page_type=$page_type"            > /tmp/relevant_meta_details
+    echo "relevant_year=$relevant_year"   >> /tmp/relevant_meta_details
     echo "relevant_month=$relevant_month" >> /tmp/relevant_meta_details
     echo "relevant_day=$relevant_day"     >> /tmp/relevant_meta_details
 
     for taxonomy in $(get_taxonomies)
     do
       relevant_item="$(grep -m1 "^${taxonomy}: " "$source_file" | sed -e "s/.*: //" -e "s/^ *//" -e "s/, /,/g")"
-      echo -n "${taxonomy}:${relevant_item} " >> /tmp/relevant_taxonomies
+      echo -n "${page_type}:${taxonomy}:${relevant_item} " >> /tmp/relevant_taxonomies
     done
 	done <<< "$source_file"
 
@@ -331,17 +374,23 @@ function rebuild_indexes_of_page {
   source /tmp/relevant_meta_details
   rm     /tmp/relevant_meta_details
 
-  # get the previous post
-  previous_page="$(grep -v "^#" posts.csv | grep -B1 "$(basename "|$source_file|")" | head -1 | cut -f1,2 -d'|' | tr '|' '/')"
+  if [ "$page_type" = "posts" ];then
+    # get the previous post
+    previous_page="$(grep -v "^#" posts.csv \
+      | grep -B1 "$(basename "|$source_file|")" \
+      | head -1 \
+      | cut -f1,2 -d'|' \
+      | tr '|' '/')"
 
-  # if a partial rebuild update the previous post, as it's prev/next links may have changed
-  if [ -f "posts/$previous_page" ];then
-    echo "Updating: posts/${previous_page//.mdsh/.html}"
-    .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
+    # if a partial rebuild update the previous post, as it's prev/next links may have changed
+    if [ -f "posts/$previous_page" ];then
+      echo "Updating: posts/${previous_page//.mdsh/.html}"
+      .app/create_page.sh "posts/${previous_page//.mdsh/.md}" > "posts/${previous_page//.mdsh/.html}"
+    fi
   fi
 
   # finally, update all the relevant index pages (ignoring ones that don't list this post)
-  rebuild $(cat /tmp/relevant_taxonomies) archive search homepage
+  reindex $(cat /tmp/relevant_taxonomies) archive search homepage
 }
 
 ###############################################################################
@@ -393,7 +442,20 @@ if [ -f "${1//.mdsh}.mdsh" ];then
   rebuild_indexes_of_page "$source_file"
 fi
 
-# get taxonoies as case-friendly list ( like "foo|bar")
+# get page types as case-friendly list ( like "foo|bar")
+page_types="$(lookup page_types.* \
+  | sed 's/page_types_//g' \
+  | tr ' ' '\n' \
+  | while read t; do \
+    echo -n "${t//page_types_/}|" && lookup taxonomies.${t//page_types_/}.plural; \
+  done \
+  | tr '\n' '|' \
+  | sed \
+    -e 's/|/*|/g' \
+    -e 's/^|//g' \
+    -e 's/|$//g')"
+
+# get taxonomies as case-friendly list ( like "foo|bar")
 site_taxonomies="$(echo ${taxonomies[@]} \
   | tr ' ' '\n' \
   | while read t; do \
@@ -424,7 +486,7 @@ do
       rebuild_custom_pages
     ;;
     posts)
-      rebuild_posts
+      rebuild_page_of_type posts
     ;;
     rss)
       echo "Updating: feed.rss"
@@ -439,7 +501,7 @@ do
       .app/generate_sitemap.sh
       exit
     ;;
-    years*|year*)
+    'posts:years'*|'posts:year'*|years*|year*)
       years_to_build="${option//*:}"
       years_to_build="${years_to_build//,/ }"
       [ "$years_to_build" = "years" ] && partial_build=false || partial_build=true
@@ -448,7 +510,7 @@ do
         partial_build=$partial_build rebuild_yearly_indexes only
       done
     ;;
-    months*|month*)
+    'posts:months'*|'posts:month'*|months*|month*)
       months_to_build="${option//*:}"
       months_to_build="${months_to_build//,/ }"
       [ "$months_to_build" = "months" ] && partial_build=false || partial_build=true
@@ -458,18 +520,59 @@ do
       done
     ;;
     *)
-      [ "$(echo "${option//:*/}" | grep "$site_taxonomies"))" != "" ] || continue
-      items_to_build="${option//\//:}"
-      items_to_build="${items_to_build//*:/}"
-      items_to_build="${items_to_build//,/ }"
-      taxonomy_name="${option//:*/}"
+      # $item might be a page_type or taxonomy
+      item="$(echo "$option" | tr '/' ':' | cut -f1 -d':')"
 
-      # build pages
-      [ "$items_to_build" = "$option" ] && rebuild_index_pages $option
-      for relevant_item in $items_to_build
-      do
-        partial_build=true rebuild_index_pages "$taxonomy_name"
-      done
+      # get list of given page types or taxonomies to build
+      pages_to_build="${option//\//:}"
+      pages_to_build="${pages_to_build//*:/}"
+      pages_to_build="${pages_to_build//,/ }"
+
+      # check if processing page types
+      option_is_valid_page_type="$(echo "${item}" | grep -Eq "$page_types" && echo true || echo false)"
+
+      # if launched by `rebuild  command, we will rebuild the matching pages
+      rebuild_func='rebuild_pages_of_type'
+      if [ "$REBUILD_TYPE" = "indexes" ];then
+        # else, rebuild the index pages of given items,
+        # not the pages themselves
+        rebuild_func='rebuild_index_pages'
+      fi
+
+      # If $option is a page_type, we will rebuild pages
+      # matching the given page type
+      if [ "$option_is_valid_page_type" = true ];then
+        # if only given a page type
+        if [ "${pages_to_build}" = "${option}" ];then
+          echo $rebuild_func "$item"
+          echo
+        else
+          # else, user did NOT give a page type only, so get the
+          # page type and taxonomies stuff
+          page_type="$(echo "$option" | cut -f1 -d':')"
+          taxonomy_name="$(echo "$option" | cut -f2 -d':')"
+          taxonomy_values="$(echo "$option" | cut -f3 -d':')"
+
+          # check if processing a valid taxonomy (if not, skip it)
+          option_is_valid_taxonomy="$(echo "${taxonomy_name}" | grep -Eq "$site_taxonomies" && echo true || echo false)"
+
+          # If option is a taxonomy name, rebuild the relevant index pages
+          if [ "$option_is_valid_taxonomy" = true ];then
+            # at this point, $pages_to_build is a list of taxonomies [and items]
+            for relevant_item in $pages_to_build
+            do
+              # if user gave a taxonomy name only
+              if [ "$taxonomy_name" = "$relevant_item" ];then
+                echo partial_build=true $rebuild_func "$page_type" $taxonomy_name
+              else
+                # if user gave a taxonomy name and taxonomy item (brand:somebrand)
+                echo partial_build=true $rebuild_func "$page_type" $taxonomy_name $relevant_item
+              fi
+              echo
+            done
+          fi
+        fi
+      fi
     ;;
   esac
 done
@@ -479,7 +582,10 @@ if [ -z "$1" ] || [ "$1" = "all" ];then
   partial_rebuild=false
   if [ "$1" = "all" ];then
     rebuild_custom_pages
-    rebuild_posts
+    for page_type in $(get_page_types)
+    do
+      rebuild_pages_of_type $page_type
+    done
   fi
   rebuild_homepage
   rebuild_yearly_indexes
