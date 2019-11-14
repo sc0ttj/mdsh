@@ -65,8 +65,8 @@ function get_pages_in_taxonomy {
   [ -z "$2" ] && return 1
   [ -z "$3" ] && return 1
   local page_type_plural="${1//page_types_}"
-  local page_type_singular="$(get_page_type_singular ${page_type_plural})"
-  local taxonomy_name="${2//taxonomies_}"
+  local page_type_singular="$(get_page_type_name ${page_type_plural})"
+  local taxonomy_name="$(get_taxonomy_name ${2//taxonomies_})"
   local taxonomy_plural="$(get_taxonomy_plural $taxonomy_name)"
   local taxonomy_value="$3"
   local item_list=''

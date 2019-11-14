@@ -240,17 +240,6 @@ function rebuild_index_pages {
     # if we still don't have it, skip it
     [ -z "$taxonomy_name" ] && continue
 
-#    # if $taxonomy_name doesn't match any keys in taxonomies.yml, then
-#    # search for singular/plural versions to be sure
-#    if [ -z "$taxonomy_name" ];then
-#      taxonomy="$(get_taxonomy_name ${2//taxonomies_/})"
-#      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
-#    fi
-#    if [ -z "$taxonomy_name" ];then
-#      taxonomy="$(get_taxonomy_plural ${2//taxonomies_/})"
-#      taxonomy_name="$(lookup "taxonomies.${taxonomy}.name")"
-#    fi
-
     local taxonomy_plural="$(get_taxonomy_plural "$taxonomy")"
     local taxonomy_descr="$(lookup "taxonomies.${taxonomy}.descr")"
     local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
@@ -260,6 +249,7 @@ function rebuild_index_pages {
       # build page - (posts/authors/index.html)
       file="${page_type_plural}/${taxonomy_plural}/index.html"
       echo "Updating: $file"
+      mkdir -p "${page_type_plural}/${taxonomy_plural}/"
       touch "$file"
       has_date=''
       page_title="$(echo "${taxonomy_plural}" | titlecase)" \
@@ -273,29 +263,33 @@ function rebuild_index_pages {
 
     # first, get all terms/items in current taxonomy:
     # for example. get all authors in "author"
-    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh \
+    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh \
       | sed 's/ .*  //g'\
       | cut -f2 -d':' \
       | tr ',' '\n' \
       | lstrip \
       | sort -u)"
+
+#echo "\$all_taxonomy_items '$all_taxonomy_items'"
+
     # for each item in the current taxonomy group (for each author in authors),
     # create the index pages (which list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
     for value in $all_taxonomy_items
     do
+      page_slug="$(echo "$value" | slugify)"
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
-      get_pages_in_taxonomy "$page_type" "$taxonomy" "$value"
+      get_pages_in_taxonomy "$page_type" "$taxonomy" "$page_slug"
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
       has_date=true
-      page_slug="$(echo "$value" | slugify)"
       file="${page_type_plural}/${taxonomy_plural}/${page_slug}.html"
       # build page
       echo "Updating: $file"
+      mkdir -p "${page_type_plural}/${taxonomy_plural}/"
       touch "$file"
       page_title="${taxonomy_items_header} $value" \
         page_descr="${taxonomy_items_descr} $value" \
@@ -544,8 +538,7 @@ do
       if [ "$option_is_valid_page_type" = true ];then
         # if only given a page type
         if [ "${pages_to_build}" = "${option}" ];then
-          echo $rebuild_func "$item"
-          echo
+          $rebuild_func "$item"
         else
           # else, user did NOT give a page type only, so get the
           # page type and taxonomies stuff
@@ -563,12 +556,11 @@ do
             do
               # if user gave a taxonomy name only
               if [ "$taxonomy_name" = "$relevant_item" ];then
-                echo partial_build=true $rebuild_func "$page_type" $taxonomy_name
+                partial_build=true $rebuild_func "$page_type" $taxonomy_name
               else
                 # if user gave a taxonomy name and taxonomy item (brand:somebrand)
-                echo partial_build=true $rebuild_func "$page_type" $taxonomy_name $relevant_item
+                partial_build=true $rebuild_func "$page_type" $taxonomy_name $relevant_item
               fi
-              echo
             done
           fi
         fi
