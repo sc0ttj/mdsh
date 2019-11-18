@@ -235,28 +235,37 @@ function rebuild_index_pages {
   for taxonomy in ${taxonomies_list[@]}
   do
     # get vars
-    local taxonomy="${taxonomy//taxonomies_}"
+    taxonomy="${taxonomy//taxonomies_/}"
+    taxonomy="${taxonomy//,/}"
     local taxonomy_name="$(get_taxonomy_name "$taxonomy")"
     # if we still don't have it, skip it
     [ -z "$taxonomy_name" ] && continue
 
     local taxonomy_plural="$(get_taxonomy_plural "$taxonomy")"
-    local taxonomy_descr="$(lookup "taxonomies.${taxonomy}.descr")"
-    local taxonomy_items_header="$(lookup "taxonomies.${taxonomy}.items_header")"
-    local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy}.items_descr")"
+    local taxonomy_descr="$(lookup "taxonomies.${taxonomy_name}.descr")"
+    local taxonomy_items_header="$(lookup "taxonomies.${taxonomy_name}.items_header")"
+    local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy_name}.items_descr")"
+    local taxonomy_layout="$(lookup "taxonomies.${taxonomy_name}.layout")"
 
-    if [ "$partial_build" != true ];then
+    taxonomy_layout=${taxonomy_layout:-_list}
+
+    # if no specific taxonomy term given
+    if [ -z "$3" ];then
+      eval "ITEMS=(\${${page_type_plural}_${taxonomy_plural}[@]})"
       # build page - (posts/authors/index.html)
       file="${page_type_plural}/${taxonomy_plural}/index.html"
       echo "Updating: $file"
       mkdir -p "${page_type_plural}/${taxonomy_plural}/"
       touch "$file"
       has_date=''
+      post_count=''
+      item_after=''
+      item_before=''
       page_title="$(echo "${taxonomy_plural}" | titlecase)" \
         page_descr="${taxonomy_descr}" \
         page_slug="${taxonomy_plural}" \
         page_url="$site_url/$file" \
-        .app/create_page.sh "$(render _$taxonomy_plural)" > "$file"
+        .app/create_page.sh "$(render ${taxonomy_layout})" > "$file"
     fi
 
     # build index item pages (posts/authors/bob.html, etc)
@@ -270,18 +279,16 @@ function rebuild_index_pages {
       | lstrip \
       | sort -u)"
 
-#echo "\$all_taxonomy_items '$all_taxonomy_items'"
-
     # for each item in the current taxonomy group (for each author in authors),
     # create the index pages (which list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
-    for value in $all_taxonomy_items
+    for taxonomy_value in $all_taxonomy_items
     do
-      page_slug="$(echo "$value" | slugify)"
+      page_slug="$(echo "$taxonomy_value" | slugify)"
       # get all pages and their info for current taxonomy group/item
       # (where it matches $value, and is a specific category, author, etc)
-      get_pages_in_taxonomy "$page_type" "$taxonomy" "$page_slug"
+      get_pages_in_taxonomy "$page_type" "$taxonomy" "$taxonomy_value"
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
@@ -291,8 +298,8 @@ function rebuild_index_pages {
       echo "Updating: $file"
       mkdir -p "${page_type_plural}/${taxonomy_plural}/"
       touch "$file"
-      page_title="${taxonomy_items_header} $value" \
-        page_descr="${taxonomy_items_descr} $value" \
+      page_title="${taxonomy_items_header} $taxonomy_value" \
+        page_descr="${taxonomy_items_descr} $taxonomy_value" \
         page_slug="${page_slug}" \
         page_url="$site_url/${file}" \
         .app/create_page.sh "$(render _list)" > "$file"

@@ -21,7 +21,7 @@
   <li class="site-navigation--categories">
     <h3>Categories</h3>
     <ul>
-    {{#foreach category in site_categories}}
+    {{#foreach category in posts_categories}}
       <li>
         <a href="{{category.url}}">{{category.title}}</a>
       </li>
@@ -32,7 +32,7 @@
   <li class="site-navigation--tags">
     <h3>Tags</h3>
     <div>
-    {{#foreach tag in site_tags}}
+    {{#foreach tag in posts_tags}}
       <a href="{{tag.url}}">{{tag.title}}</a>,
     {{/foreach}}
     </div>
