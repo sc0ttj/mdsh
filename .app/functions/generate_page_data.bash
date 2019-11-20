@@ -188,7 +188,7 @@ function get_linked_data {
   # add item lists to index pages (including homepage, archive & search)
   if [ "$page_taxonomy" = "post" ];then
     ld_itemlist=''
-    rm /tmp/itemlist 2>/dev/null
+    rm "/tmp/$page_itemlist" 2>/dev/null
   else
     itemlist="$(cat "/tmp/$page_itemlist" 2>/dev/null)"
     [ ! -z "$itemlist" ] && rm /tmp/$page_itemlist 2>/dev/null

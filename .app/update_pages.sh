@@ -190,6 +190,8 @@ function rebuild_archive_page {
   page_title="Archive" \
     page_slug="archive" \
     page_descr="Here's a list of all posts on this blog, listed newest to oldest." \
+    page_taxonomy="archive" \
+    page_itemlist="post_itemlist" \
     page_url="$site_url/archive.html" \
     .app/create_page.sh "$(render _archive)" > archive.html
   # add archive page as posts/index.html  too)
