@@ -12,6 +12,7 @@ function get_page_data {
   get_page_data_from_yml_frontmatter "$1"
 
   # now clean up and set any missing values to fall back to site defaults
+  page_type="${page_type:-post}"
   page_title="${page_title:-$site_title}"
   page_slug="${page_slug:-$(echo "$page_title" | slugify)}"
   page_fonts="${page_fonts:-$site_fonts}"
@@ -183,20 +184,15 @@ function get_linked_data {
   # create the breadcrumb
   ld_breadcrumb="$(generate_ld_breadcrumb "${page_url:-$site_url}")"
 
+  page_taxonomy="${page_taxonomy:-post}"
   # add item lists to index pages (including homepage, archive & search)
-  if [ "$is_blog_post" = true ];then
+  if [ "$page_taxonomy" = "post" ];then
     ld_itemlist=''
     rm /tmp/itemlist 2>/dev/null
   else
-    # index pages like tags/foo, authors/baz
-    if [ -f /tmp/itemlist ];then
-      itemlist="$(cat "/tmp/itemlist" 2>/dev/null && rm /tmp/itemlist 2>/dev/null)"
-      ld_itemlist="$(generate_ld_itemlist "$itemlist")"
-    # post pages, index root pages like tags/index, authors/index
-    elif [ -f /tmp/${page_slug}_itemlist ];then
-      itemlist="$(cat "/tmp/${page_slug}_itemlist" 2>/dev/null && rm /tmp/${page_slug}_itemlist 2>/dev/null)"
-      ld_itemlist="$(generate_ld_itemlist "$itemlist")"
-    fi
+    itemlist="$(cat "/tmp/$page_itemlist" 2>/dev/null)"
+    [ ! -z "$itemlist" ] && rm /tmp/$page_itemlist 2>/dev/null
+    ld_itemlist="$(generate_ld_itemlist "$itemlist")"
   fi
 }
 
@@ -502,6 +498,7 @@ function add_item_to {
 #
 function add_keys_to_hash {
   # add keys to hash
+  echo "$hash_name"+=\( [type]="$item_type" \)
   echo "$hash_name"+=\( [title]="$item_title" \)
   echo "$hash_name"+=\( [slug]="$item_slug" \)
   echo "$hash_name"+=\( [url]="$item_url" \)

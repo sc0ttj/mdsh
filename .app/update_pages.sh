@@ -61,23 +61,6 @@ done
 
 ############################## functions ##################################
 
-#function rebuild_posts_OLD {
-#  cut -f1-2 -d'|' posts.csv | sort -r | head -${LIMIT:-99999} | while read line
-#  do
-#    mdshfile="${line//|//}"
-#    mdshfile="${mdshfile//#/}"
-#    if [ -f "posts/$mdshfile" ];then
-#      source_file="$mdshfile"
-#      html_file="${mdshfile//.mdsh/.html}"
-#      [ "$2" = "mdonly" ] && source_file="posts/${mdshfile//.mdsh/.md}"
-#      [ ! -f "posts/$source_file" ] && continue
-#      # update (rebuild) all posts pages
-#      echo "Updating: posts/$html_file"
-#      .app/create_page.sh "posts/$source_file" > "posts/$html_file"
-#    fi
-#  done
-#}
-
 function rebuild_pages_of_type {
   local page_type="$(lookup page_types.${1}.plural)"
   [ -z "${page_type}" ] && return 1
@@ -225,7 +208,8 @@ function rebuild_index_pages {
   local has_date
 
   # we need the plural version too
-  page_type_plural="$(get_page_type_plural $page_type)"
+  local page_type_plural="$(get_page_type_plural $page_type)"
+  local page_type_singular="$(get_page_type_name ${page_type_plural})"
 
   # limit the taxonomies we parse to the ones given by the user
   [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="${taxonomies[@]}"
@@ -249,8 +233,10 @@ function rebuild_index_pages {
 
     taxonomy_layout=${taxonomy_layout:-_list}
 
+    [ "$taxonomy_item" = "all" ] && taxonomy_item=""
     # if no specific taxonomy term given
-    if [ -z "$3" ];then
+    if [ -z "$taxonomy_item" ] || [ "$taxonomy_item" = "index" ];then
+      # get all items in this taxonomy into the ITEMS array
       eval "ITEMS=(\${${page_type_plural}_${taxonomy_plural}[@]})"
       # build page - (posts/authors/index.html)
       file="${page_type_plural}/${taxonomy_plural}/index.html"
@@ -258,15 +244,18 @@ function rebuild_index_pages {
       mkdir -p "${page_type_plural}/${taxonomy_plural}/"
       touch "$file"
       has_date=''
-      post_count=''
-      item_after=''
       item_before=''
       page_title="$(echo "${taxonomy_plural}" | titlecase)" \
         page_descr="${taxonomy_descr}" \
         page_slug="${taxonomy_plural}" \
+        page_taxonomy="$taxonomy_name" \
+        page_itemlist="${page_type_singular}_${taxonomy_name}_itemlist" \
         page_url="$site_url/$file" \
         .app/create_page.sh "$(render ${taxonomy_layout})" > "$file"
     fi
+
+    # if only building main taxonomy index, skip building items pages
+    [ "$taxonomy_item" = "index" ] && continue
 
     # build index item pages (posts/authors/bob.html, etc)
 
@@ -283,7 +272,7 @@ function rebuild_index_pages {
     # create the index pages (which list the relevant pages/posts)
     OLD_IFS=$IFS
     local IFS=$'\n'
-    for taxonomy_value in $all_taxonomy_items
+    for taxonomy_value in ${taxonomy_item:-$all_taxonomy_items}
     do
       page_slug="$(echo "$taxonomy_value" | slugify)"
       # get all pages and their info for current taxonomy group/item
@@ -301,6 +290,8 @@ function rebuild_index_pages {
       page_title="${taxonomy_items_header} $taxonomy_value" \
         page_descr="${taxonomy_items_descr} $taxonomy_value" \
         page_slug="${page_slug}" \
+        page_taxonomy="$taxonomy_name" \
+        page_itemlist="${page_type_singular}_${taxonomy_name}_${taxonomy_value}_itemlist" \
         page_url="$site_url/${file}" \
         .app/create_page.sh "$(render _list)" > "$file"
     done

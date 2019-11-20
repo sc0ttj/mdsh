@@ -87,11 +87,14 @@ function get_pages_in_taxonomy {
     [ -z "$item_title" ] && continue
     item_url="${site_url}/${item//.mdsh/.html}"
     item_created="$(get_page_creation_date $item)"
+    post_count=''
+    item_post_count=''
+    item_after=''
     add_item_to 'ITEMS'
     item_list="${item_list}\n${item_url}"
   done
   # update itemlist tmp file
-  echo -e "$item_list" > /tmp/itemlist
+  echo -e "$item_list" > /tmp/${page_type_singular}_${taxonomy_name}_${taxonomy_value}_itemlist
 }
 
 
@@ -118,6 +121,7 @@ function page_type_is_valid {
   echo $valid_type
 }
 
+################################################################################
 
 #
 # parse the data folder:
@@ -158,41 +162,6 @@ do
   fi
 done
 
-# declare and populate site_posts
-rm /tmp/archive_itemlist &>/dev/null
-unset item_list
-unset site_posts
-declare -ag site_posts
-for post in $(grep -v "^#" posts.csv | cut -f1,2 -d'|' | sort -u | sort -r | grep -v "^$")
-do
-  # skip post if it's commented out in posts.csv
-  [ "$(grep -m1 "${post}|" posts.csv | grep "^#" )" ] && continue
-
-  item_before=''
-  item_after=''
-  item_slug="${post//*|/}"
-  item_slug="${item_slug//.mdsh/}"
-  item_entry="$(grep -m1 "|${item_slug}.mdsh|" posts.csv)"
-  item_title="'$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f3 -d'|')'"
-  [ -z "$item_title" ] && continue
-  item_date="${post//|*/}"
-  item_tags="$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f6 -d'|' | tr ',' ' ')"
-  item_url="${site_url}/posts/${item_date}/${item_slug}.html"
-  item_created="$(get_page_creation_date posts/${post//|//})"
-  item_descr="\"$(get_page_descr posts/${post//|//})\""
-
-  # update itemlist tmp file
-  item_list="${item_list}\n${item_url}"
-
-  add_item_to 'site_posts'
-done
-echo -e "${item_list}" | grep -v "^$" > /tmp/archive_itemlist
-
-# add the generated site data to the 'site' array
-# generated from assets/data/site.yml
-site+=(site_posts)
-
-
 # for each page type
 for page_type in $(lookup page_types.* | sed 's/page_types_//g')
 do
@@ -201,11 +170,54 @@ do
   [ ! -d "${page_type_plural}/" ] && continue
   [ ! -f "${page_type_plural}.csv" ] && continue
 
-  # get the taxonomies associated with this $page_type
-  eval 'taxonomies_list="$(lookup page_types.${page_type_name}.taxonomies)"
+  # build an array for each page type, containing the list of pages of that type
+  eval '
+  # declare the array to populate: site_posts, site_events, etc
+  unset site_$page_type_plural
+  declare -ag site_$page_type_plural
+
+  # for each page listed of the current type in its relevant csv file
+  for page in $(grep -v "^#" ${page_type_plural}.csv | cut -f1,2 -d"|" | sort -u | sort -r | grep -v "^$")
+  do
+    # skip page if its commented out in ${page_type_plural}.csv
+    [ "$(grep -m1 "${page}|" ${page_type_plural}.csv | grep "^#" )" ] && continue
+
+    # build array of page details, which will be listed by name in site_$page_type_plural
+    post_count=""
+    item_post_count=""
+    item_before=""
+    item_after=""
+    item_type="$page_type"
+    item_slug="${page//*|/}"
+    item_slug="${item_slug//.mdsh/}"
+    item_entry="$(grep -m1 "|${item_slug}.mdsh|" ${page_type_plural}.csv)"
+    item_title="\"$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f3 -d"|")\""
+    [ -z "$item_title" ] && continue
+    item_date="${page//|*/}"
+    item_tags="$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f6 -d"|" | tr "," " ")"
+    item_url="${site_url}/${page_type_plural}/${item_date}/${item_slug}.html"
+    item_created="$(get_page_creation_date ${page_type_plural}/${page//|//})"
+    item_descr="\"$(get_page_descr ${page_type_plural}/${page//|//})\""
+
+    # add the page to the site_$page_type_plural  array
+    add_item_to "site_${page_type_plural}"
+
+    # update itemlist tmp file
+    item_list="${item_list}\n${item_url}"
+  done
+  echo -e "${item_list}" | grep -v "^$" > /tmp/${page_type}_itemlist
+  # finally, add the generated site data to the "site" array
+  # generated from assets/data/site.yml
+  site+=(site_$page_type_plural)
+
+
+  #
+  # generate the taxonomies data associated with this $page_type
+  #
+  taxonomies_list="$(lookup page_types.${page_type_name}.taxonomies)"
   [ -z "${taxonomies_list[@]}" ] && continue
 
-  # for each taxonomy
+  # for each taxonomy associated with $page_type
   for taxonomy in ${taxonomies_list[@]}
   do
     # get proper taxonomy name, values
@@ -217,7 +229,7 @@ do
     [ "$taxonomy_name" = "" ] && continue
     [ "$taxonomy_plural" = "" ] && continue
 
-    # get all items in this taxonomy
+    # get all items (pages) in this taxonomy
     all_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null | sed "s/ .*  //g" | cut -f2 -d":" | tr "," "\n" | lstrip | sort -u)"
     [ "$all_items" = "" ] && all_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null | sed "s/ .*  //g" | cut -f2 -d":" | tr "," "\n" | lstrip | sort -u)"
     [ "$all_items" = "" ] && continue
@@ -235,11 +247,12 @@ do
     do
       # if no posts in this taxonomy item (no posts in category "foo", or tagged "bar")
       # then skip it
-      post_count="$(get_post_count $taxonomy $item)"
+      post_count="$(get_post_count $taxonomy_name $item)"
       [ "$post_count" = ""  ] && continue
       [ "$post_count" = "0" ] && continue
       # else,
-      # set the assocd array containing details of the item
+      # set the assoc array containing details of the item
+      item_type="${taxonomy_name}"
       item_title="\"${item}\""
       item_slug="$(echo "${item}" | slugify)"
       item_url="${site_url}/${page_type_plural}/$taxonomy_plural/${item_slug}.html"
@@ -255,45 +268,8 @@ do
     export $(eval "echo $array_name")
     site+=($array_name)
     # update itemlist tmp file
-    echo -e "$item_list" > /tmp/itemlist
-  done
-
-  # we finished adding items to the taxonomies of the current page type,
-  # so lets build the pages arrays themselves (example, site_posts, site_events)
-  unset site_$page_type
-  declare -ag site_$page_type
-
-  # for each page listed in its relevant csv file, that isnt commented out
-  for page in $(grep -v "^#" ${page_type_plural}.csv | cut -f1,2 -d"|" | sort -u | sort -r | grep -v "^$")
-  do
-    # skip page if its commented out in ${page_type_plural}.csv
-    [ "$(grep -m1 "${page}|" ${page_type_plural}.csv | grep "^#" )" ] && continue
-
-    # build array of page details
-    item_before=""
-    item_after=""
-    item_slug="${page//*|/}"
-    item_slug="${item_slug//.mdsh/}"
-    item_entry="$(grep -m1 "|${item_slug}.mdsh|" ${page_type_plural}.csv)"
-    item_title="\"$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f3 -d"|")\""
-    [ -z "$item_title" ] && continue
-    item_date="${page//|*/}"
-    item_tags="$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f6 -d"|" | tr "," " ")"
-    item_url="${site_url}/${page_type_plural}/${item_date}/${item_slug}.html"
-    item_created="$(get_page_creation_date ${page_type_plural}/${page//|//})"
-    item_descr="\"$(get_page_descr ${page_type_plural}/${page//|//})\""
-
-    # add the page to the site_$page_type array
-    add_item_to "site_${page_type}"
-
-    # update itemlist tmp file
-    item_list="${item_list}\n${item_url}"
-  done
-  echo -e "${item_list}" | grep -v "^$" > /tmp/${page_type}_itemlist
-
-  # add the generated site data to the "site" array
-  # generated from assets/data/site.yml
-  site+=(site_$page_type)'
+    echo -e "$item_list" > /tmp/${page_type}_${taxonomy_name}_itemlist
+  done'
 done
 
 
