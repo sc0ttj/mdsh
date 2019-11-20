@@ -52,8 +52,8 @@ function get_page_data {
 
   # set whether or not the page being generated is a blog post (or custom page)
   case "$page_url" in
-  */posts/*/*/*) is_blog_post=true ;;
-  *)  is_blog_post='' ;;
+  */posts/*/*/*) page_type=post ;;
+  */pages/*/*/*) page_type=page ;;
   esac
 }
 
@@ -104,6 +104,8 @@ function get_page_data_from_yml_frontmatter {
 
   # now lets add to and clean up the returned page data
 
+  # page_type may be missing from older post files
+  page_type="${page_type:-post}"
   # limit to first category (remove all after first comma)
   page_category="${page_category//,*/}"
   # get current date as modified date, as we are updating this file now
@@ -115,8 +117,8 @@ function get_page_data_from_yml_frontmatter {
 
   # set whether or not the page being generated is a blog post (or custom page)
   case "$page_url" in
-  */posts/*/*/*) is_blog_post=true ;;
-  *)  is_blog_post='' ;;
+  */posts/*/*/*) page_type=post ;;
+  */pages/*/*/*) page_type=page ;;
   esac
 }
 

@@ -15,8 +15,8 @@ timestamp=$(date +%s)
 # load the local config file
 [ -f .site_config ] && source .site_config
 
-is_blog_post=''
 AUTO_APPEND=''
+is_blog_post=''
 
 ################################################################################
 
@@ -36,11 +36,11 @@ get_page_data "$1"
 get_linked_data
 get_css_meta
 get_js_meta
-if [ "$is_blog_post" = true ];then
+
+if [ "$page_type" = post ];then
+  is_blog_post=true
   get_prev_and_next_pages
 fi
-
-echo '' > /tmp/${page_slug}_itemlist
 
 # also get data from data folder (assets/data/<page-slug>/<file>)
 if [ -d "assets/data/${page_slug}/" ];then
@@ -159,8 +159,8 @@ fi
 
 # clean up
 rm    /tmp/htmlfile
-unset is_blog_post
 unset page_file
+unset is_blog_post
 unset site_title
 unset page_fonts
 unset page_header

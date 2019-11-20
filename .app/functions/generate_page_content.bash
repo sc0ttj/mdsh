@@ -22,7 +22,7 @@ function render {
   local template_name="${1//.mustache}.mustache"
 
   if [ -f "$template_name" ];then
-    cat "$template_name" | mo
+    \cat "$template_name" | mo
     return 0
   fi
 
@@ -34,9 +34,9 @@ function render {
   fi
 
   if [ -f "$template_file" ];then
-    cat "$template_file" | mo
+    \cat "$template_file" | mo
   elif [ -f "${MO_PARTIAL_DIR}${template_file}" ];then
-    cat "${MO_PARTIAL_DIR}${template_file}" | mo
+    \cat "${MO_PARTIAL_DIR}${template_file}" | mo
   else
     return 1
   fi
@@ -46,11 +46,11 @@ function render {
 # generate the <html> tag at top of page
 function html_tag {
   if [ -f /tmp/_site_html_tag.html ];then
-   cat /tmp/_site_html_tag.html
+   \cat /tmp/_site_html_tag.html
    return 0
   fi
   render _html_tag > /tmp/_site_html_tag.html
-  cat /tmp/_site_html_tag.html
+  \cat /tmp/_site_html_tag.html
 }
 
 # creates a default homepage
@@ -69,12 +69,11 @@ function generate_homepage {
 }
 
 function post_preview {
-  # exit if we are not building a blog post
-  [ "$is_blog_post" = false ] && return 1
   [ ! "$1" ] && return 1
-
   # $1 is the mdsh file of the post (or page) we want to preview
   get_page_data "$1"
+  # exit if we are not building a blog post
+  [ "$page_type" != post ] && return 1
 
   local tags=()
   for tag in ${page_keywords//,/ }
@@ -160,7 +159,7 @@ function process_markdown {
               -e 's|}}|\&#125;\&#125;|g' \
               /tmp/code_block_highlighted >> /tmp/fixed_markdown
           else
-            cat /tmp/code_block_highlighted >> /tmp/fixed_markdown
+            \cat /tmp/code_block_highlighted >> /tmp/fixed_markdown
           fi
           # we've now left the code block, so:
           echo -n > /tmp/code_block
