@@ -209,6 +209,10 @@ function rebuild_index_pages {
   local page_slug
   local has_date
 
+  # don't build index pages for pages of type "page"
+  [ "$page_type" = "page"  ] && return 0
+  [ "$page_type" = "pages" ] && return 0
+
   # we need the plural version too
   local page_type_plural="$(get_page_type_plural $page_type)"
   local page_type_singular="$(get_page_type_name ${page_type_plural})"
