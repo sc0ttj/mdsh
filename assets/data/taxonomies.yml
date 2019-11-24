@@ -25,7 +25,7 @@ tags:
   items_descr: Here's a list of items tagged
   input_label: comma separated words or phrases
   layout: _list
-brands:
+brand:
   name: brand
   plural: brands
   descr: Browse items by choosing a brand.

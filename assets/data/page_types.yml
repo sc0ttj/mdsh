@@ -23,6 +23,6 @@ product:
   name: product
   plural: products
   taxonomies: brand, category, tags
-  layout: simple
+  layout: product_details
   stylesheet: main
   date_in_path: false

@@ -18,6 +18,7 @@
 page_type="$1"
 page_type="${page_type//-all/post}"
 page_type="${page_type//-ALL/post}"
+page_type="$(get_page_type_name "$page_type")"
 
 if [ "$(page_type_is_valid $page_type)" != true ];then
   echo "Invalid page type '$page_type'. Must be one of these:"
@@ -25,10 +26,38 @@ if [ "$(page_type_is_valid $page_type)" != true ];then
   return 1
 fi
 
-page_type_plural="$(lookup page_types.${page_type}.plural)"
+page_type_plural="$(get_page_type_plural ${page_type})"
 page_type_plural="${page_type_plural:-posts}"
 
+# based on page type, get the relevant taxonomies
+relevant_taxonomies=$(lookup page_types.$page_type.taxonomies)
+relevant_taxonomies=${relevant_taxonomies//,/}
+
+# set some defaults, based on page type defaults, falling back to site defaults
+layout="$(lookup page_types.${page_type}.layout)"
+default_layout="${layout:-$site_layout}"
+stylesheet="$(lookup page_types.${page_type}.stylesheet)"
+default_stylesheet="${stylesheet:-$site_stylesheet}"
+code_stylesheet="$(lookup page_types.${page_type}.code_stylesheet)"
+default_code_stylesheet="${code_stylesheet:-$site_code_stylesheet}"
+# set some defaults, falling back to site defaults
+default_permalink=""
+default_email="${email:-$site_email}"
+default_twitter="${twitter:-$site_twitter}"
+default_language="${language:-$site_language}"
+default_js_deps="${js_deps}"
+[ -z "$default_js_deps" ] && default_js_deps="${js_deps[@]}"
+[ -z "$default_js_deps" ] && default_js_deps="${site_js_deps[@]}"
+[ -z "$default_js_deps" ] && default_js_deps="${site_js_deps[@]}"
+
+# get date as directory structure year/month/day
+if [ "$(lookup page_types.${page_type}.date_in_path)" = true ];then
+  date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")/"
+fi
+
+#
 # begin user input
+#
 echo
 echo "Enter the meta info for your ${page_type}:"
 echo
@@ -38,11 +67,13 @@ echo -n "Title:        "
 read -er title
 echo -n "Description:  "
 read -er description
-echo -n "Time to read: "
-read -er time_to_read
 
-# based on page type, get the relevant taxonomies
-relevant_taxonomies=$(lookup page_types.$page_type.taxonomies)
+# each page type will have different front matter required.
+# get the front matter needed for this specific page type
+if [ -f .app/templates/page_types/${page_type}.sh ];then
+  source .app/templates/page_types/${page_type}.sh
+fi
+
 # Now let the user enter some values for each relevant taxonomy. Example:
 #  - taxonomy is "tags"
 #  - create var called 'tags_values'
@@ -50,13 +81,15 @@ relevant_taxonomies=$(lookup page_types.$page_type.taxonomies)
 #  - in front matter will be "tags: $tags_values"
 for taxonomy_name in $relevant_taxonomies
 do
+  taxonomy_name="$(get_taxonomy_name ${taxonomy_name//,/})"
   input_label="$(lookup taxonomies.${taxonomy_name}.input_label)"
-  [ "$input_label" != "" ] && input_label=" (${input_label})"
-  echo -n "$(echo "$taxonomy_name" | titlecase)${input_label}:     "
+  [ "$input_label" != "" ] && input_label=" (${input_label//,/})"
+  echo -n "$(echo "$taxonomy_name" | titlecase)${input_label}: "
   read -er values
   # now slugify each taxonomy value given
   OLDIFS=$IFS
   IFS=","
+  unset fixed_values
   for value in $values
   do
     fixed_values="$fixed_values $(echo $value | slugify | sed 's/^-//'),"
@@ -65,22 +98,8 @@ do
   # strip leading spaces and trailing commas
   fixed_values="$(echo "$fixed_values" | sed -e 's/^ //' -e 's/,$//')"
   # create the var to go into the front matter (example, "tags_values")
-  eval '${taxonomy_name}_values="$fixed_values"'
+  eval "${taxonomy_name}_values='$fixed_values'"
 done
-
-# set some defaults, based on page type defaults, falling back to site defaults
-default_layout="$(lookup page_types.${page_type}.layout)"
-default_layout="${layout:-$site_layout}"
-default_stylesheet="$(lookup page_types.${page_type}.stylesheet)"
-default_stylesheet="${stylesheet:-$site_stylesheet}"
-default_code_stylesheet="$(lookup page_types.${page_type}.code_stylesheet)"
-default_code_stylesheet="${code_stylesheet:-$site_code_stylesheet}"
-# set some defaults, falling back to site defaults
-default_permalink=""
-default_email="${email:-$site_email}"
-default_twitter="${twitter:-$site_twitter}"
-default_language="${language:-$site_language}"
-default_js_deps="${js_deps:-$site_js_deps}"
 
 # allow user to override site default if -all given
 if [ "$1" = "-all" ] || [ "$2" = "-all" ] || [ "$1" = "-ALL" ] || [ "$2" = "-ALL" ];then
@@ -102,33 +121,50 @@ if [ "$1" = "-all" ] || [ "$2" = "-all" ] || [ "$1" = "-ALL" ] || [ "$2" = "-ALL
   read -er -i "$default_js_deps" js_deps
 fi
 
-# generate some more meta info
+# generate some more meta info, based on the user input we got
 slug=$(echo "$title" | slugify)
-date_dir="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y/%m/%d")/"
-[ "$(lookup page_types.${page_type}.date_in_path)" = false ] && date_dir=""
 date_created="$(LANG=C LC_ALL=C LC_CTYPE=C date -u +"%Y-%m-%dT%H:%M:%SZ")"
 date_modified="$date_created"
 
 # set meta info
-meta_data="title:            $title
-slug:             $slug
-descr:            $description
-type:             $page_type
-permalink:        $permalink
-time_to_read:     $time_to_read
-created:          $date_created
+meta_data="
+title:               $title
+slug:                $slug
+descr:               $description
+permalink:           $permalink
+type:                ${page_type:-post}
+layout:              ${layout:-$default_layout}
+stylesheet:          ${stylesheet:-$default_stylesheet}
+code_stylesheet:     ${code_stylesheet:-$default_code_stylesheet}
+
+# add meta info for this $page_type
+
+$(for field in ${front_matter_fields[@]}
+do
+  varname="$(eval "echo \${${field}[varname]}")"
+  value="$(eval "echo \${${field}[value]}")"
+  printf "%-20s %s\n" "$varname" "$value"
+done)
+
+# add taxonomies meta info
+
 $(for taxonomy_name in $relevant_taxonomies
 do
- echo "$taxonomy_name:      $(eval 'echo ${taxonomy_name}_values')"
+  value=''
+  value="$(eval "echo \${${taxonomy_name}_values}")"
+  printf "%-20s %s\n" "$taxonomy_name" "$value"
 done)
-layout:           $layout
-stylesheet:       $stylesheet
-code_stylesheet:  $code_stylesheet
-email:            ${email:-$site_email}
-twitter:          ${twitter:-$site_twitter}
-language:         ${language:-$site_language}
-js_deps:          $(echo ${js_deps:-$site_js_deps} | tr ',' '\n' | tr ' ' '\n' | grep -v ^$ | sed "s/^[ .*]//g" | while read line; do [ ! -z "$line" ] && echo "  ${line//@*/}: ${line}"; done)
-modified:         $date_modified"
+
+email:               ${email:-$site_email}
+twitter:             ${twitter:-$site_twitter}
+language:            ${language:-$site_language}
+js_deps:             ${js_deps:-$default_js_deps}
+created:             $date_created
+modified:            ${date_modified}
+"
+
+# remove empty lines and comments
+meta_data="$(echo "$meta_data" | grep -vE "^#|^$|^ ")"
 
 # show meta info
 echo

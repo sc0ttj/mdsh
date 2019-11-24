@@ -405,34 +405,38 @@ yay() {
 }
 
 lookup() {
-  local cached_var arr key yaml_data
+  local cached_var var_to_find arr key yaml_data
   if [ -f "assets/data/${1%%.*}.yml" ];then
-    yml_data="$(.app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}" 2>/dev/null \
-      | sed \
-        -e 's/^"//' \
-        -e 's/"$//' 2>/dev/null)"
+    yml_data="$(.app/functions/ysh -f "assets/data/${1%%.*}.yml" -q "${1#*.}" 2>/dev/null)"
     if [ "$yml_data" != "" ];then
-      echo "$yml_data"
+      echo "$yml_data" | tr -d '"' | sed -e 's|,$||'
       return 0
     fi
   fi
 
-  # if notation is something like foo[1].bar
-  if [ "$(echo "$1" | grep -E '[Aa-Zz]\[[0-9]\]')" != "" ];then
-    arr="$(eval echo \${${1%%.*}})"
-    key="${1#*.}";
+  var_to_find="$1"
+
+  # Support dot notation: (NOT WORKING YET)
+  #  Convert `foo.bar.some_thing.name` to `foo_bar_some_thing_name`
+  #  This relies on yaml_to_vars() creating the variables we need
+  #var_to_find=$(eval "echo \$$(echo $1 | sed -e 's|^||' -e 's|\.|_|g')")
+
+   # if notation is something like foo[1].bar
+  if [ "$(echo "$var_to_find" | grep -E '[Aa-Zz]\[[0-9]\]')" != "" ];then
+    arr="$(eval echo \${${var_to_find%%.*}})"
+    key="${var_to_find#*.}";
     cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo[bar].baz
-  elif [ "$(echo "$1" | grep -E '[Aa-Zz]\[[Aa-Zz_]\]')" != "" ];then
-    arr="$(eval echo \${${1%%.*}})"
-    key="${1#*.}";
+  elif [ "$(echo "$var_to_find" | grep -E '[Aa-Zz]\[[Aa-Zz_]\]')" != "" ];then
+    arr="$(eval echo \${${var_to_find%%.*}})"
+    key="${var_to_find#*.}";
     cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo.baz
-  elif [ "$(echo "$1" | grep -E '[Aa-Zz_].[Aa-Zz_]')" != "" ];then
-    arr="${1%%.*}"
-    key="${1#*.}";
+  elif [ "$(echo "$var_to_find" | grep -E '[Aa-Zz_].[Aa-Zz_]')" != "" ];then
+    arr="${var_to_find%%.*}"
+    key="${var_to_find#*.}";
     cached_var="$(eval "echo \${${arr}[${key}]}" 2>/dev/null)"
 
   # if notation is something like foo.bar
@@ -442,10 +446,10 @@ lookup() {
 
   # if var exists, and not empty, return it
   if [ ! -z "${cached_var[@]}" ];then
-    echo "${cached_var[@]}" | sed -e 's/^"//' -e 's/"$//'
+    echo "${cached_var[@]}" | tr -d '"' | sed -e 's|,$||'
     return
   elif [ ! -z "${cached_var}" ];then
-    echo "${cached_var}" | sed -e 's/^"//' -e 's/"$//'
+    echo "${cached_var}" | tr -d '"' | sed -e 's|,$||'
     return
   fi
 }
