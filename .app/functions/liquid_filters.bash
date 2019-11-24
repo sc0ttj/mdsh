@@ -519,28 +519,30 @@ csv_to_arrays() {
 }
 
 function csv_to_data {
-    local -a values
-    local -a headers
-    local counter
-    local array_name="${1:-new_array}"
+  local -a values
+  local -a headers
+  local counter
+  local array_name="${1:-new_array}"
 
-    IFS=, read -r -a headers
-    eval "unset $array_name; declare -ag $array_name"
-    counter=1
-    while IFS=, read -r -a values; do
-        [ "$counter" = 1 ] && eval "echo unset $array_name"
-        rand="${RANDOM}"
-        eval "echo ${array_name:-new_array}+=\( row${counter}_${rand} \)"
-        declare -Ag "row${counter}_${rand}=($(
-            paste -d '' <(
-                printf "[%s]=\n" "${headers[@]}"
-            ) <(
-                printf "%q\n" "${values[@]}"
-            )
-        ))"
-        (( counter++ ))
-    done
-    declare -p ${array_name:-new_array} ${!row*}
+  IFS=, read -r -a headers
+  eval "unset ${array_name:-new_array}; unset ${!row*}; declare -ag $array_name"
+  counter=1
+
+  while IFS=, read -r -a values; do
+    [ "$counter" = 1 ] && eval "echo unset $array_name"
+    rand="${RANDOM}"
+    eval "unset row${counter}_${rand};"
+    eval "echo ${array_name:-new_array}+=\( row${counter}_${rand} \)"
+    declare -Ag "row${counter}_${rand}=($(
+        paste -d '' <(
+            printf "[%s]=\n" "${headers[@]}"
+        ) <(
+            printf "%q\n" "${values[@]}"
+        )
+    ))"
+    (( counter++ ))
+  done
+  declare -p ${array_name:-new_array} ${!row*}
 }
 
 function json_escape () {
