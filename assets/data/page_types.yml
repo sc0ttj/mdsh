@@ -15,7 +15,7 @@ post:
 event:
   name: event
   plural: events
-  taxonomies: category, location, organiser, venue, start_date, end_date, tags
+  taxonomies: category, city, venue, tags
   layout: main
   stylesheet: main
   date_in_path: false

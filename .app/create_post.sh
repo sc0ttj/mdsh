@@ -167,6 +167,10 @@ modified:            ${date_modified}
 # remove empty lines and comments
 meta_data="$(echo "$meta_data" | grep -vE "^#|^$|^ ")"
 
+if [ -z "$permalink" ];then
+  meta_data="$(echo "$meta_data" | grep -v 'permalink: ')"
+fi
+
 # show meta info
 echo
 echo "Meta data:

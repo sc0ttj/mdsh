@@ -43,5 +43,16 @@ city:
   items_descr: Here's a list of events in
   input_label: a city name
   layout: _list
+venue:
+  name: venue
+  plural: venues
+  descr: Browse events by choosing a venue.
+  show_date: false
+  items_header: Events at
+  items_descr: Here's a list of events hosted at
+  input_label: a venue name
+  layout: _list
+
+
 
 
