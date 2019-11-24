@@ -87,18 +87,19 @@ do
   echo -n "$(echo "$taxonomy_name" | titlecase)${input_label}: "
   read -er values
   # now slugify each taxonomy value given
-  OLDIFS=$IFS
-  IFS=","
-  unset fixed_values
-  for value in $values
-  do
-    fixed_values="$fixed_values $(echo $value | slugify | sed 's/^-//'),"
-  done
-  IFS=$OLD_IFS
-  # strip leading spaces and trailing commas
-  fixed_values="$(echo "$fixed_values" | sed -e 's/^ //' -e 's/,$//')"
-  # create the var to go into the front matter (example, "tags_values")
-  eval "${taxonomy_name}_values='$fixed_values'"
+#  OLDIFS=$IFS
+#  IFS=","
+#  unset fixed_values
+#  for value in $values
+#  do
+#    fixed_values="$fixed_values $(echo "$value" | slugify | sed 's/^-//'),"
+#  done
+#  IFS=$OLD_IFS
+#  # strip leading spaces and trailing commas
+#  fixed_values="$(echo "$fixed_values" | sed -e 's/^ //' -e 's/,$//')"
+#  # create the var to go into the front matter (example, "tags_values")
+#  eval "${taxonomy_name}_values='$fixed_values'"
+  eval "${taxonomy_name}_values='$values'"
 done
 
 # allow user to override site default if -all given
