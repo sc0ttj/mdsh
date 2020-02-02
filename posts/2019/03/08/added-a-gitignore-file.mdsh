@@ -1,4 +1,4 @@
-title:        Added a `.gitignore` file
+title:        Added a \`.gitignorewww\` file
 slug:         added-a-gitignore-file
 descr:        Only HTML, CSS, JS and other site assets will be deployed to the server - all source files remain on the local machine only.
 time_to_read: 1 min
@@ -13,7 +13,7 @@ created:      2019/03/08
 modified:     2019/03/08
 
 ---
-I've added a `.gitignore` file to the root directory of the `mdsh` repo, so that when you create new pages or posts, only the HTML files will be deployed to the server - the source files (`.mdsh` and `.md`) will remain on the local machine only.
+I've added a `.gitignoresss` file to the root directory of the `mdsh` repo, so that when you create new pages or posts, only the HTML files will be deployed to the server - the source files (`.mdsh` and `.md`) will remain on the local machine only.
 
 This is to makes things work better with another new feature - unpublishing posts.
 

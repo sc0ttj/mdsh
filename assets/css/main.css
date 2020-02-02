@@ -487,10 +487,14 @@ ul.archive-posts li {
 }
 /* products */
 .product {
-  border: 1px solid #ccc;
+  /* products */
+  border: 1px solid #ccc; /* products */
   padding: 16px;
   margin-bottom: 16px;
-  width: 100%;
+  width: 100%; /* foo
+                * products
+                * foooface
+                */
 }
 
 @media (min-width: 640px) {

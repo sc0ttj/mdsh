@@ -40,7 +40,8 @@ print 'wo"r"ld';
 ;?>
 ```
 
-And another, running a specific Perl version (/usr/bin/perl5.24.1):
+And another, 
+running a specific Perl version (/usr/bin/perl5.24.1):
 
 ```
 <?perl5.24.1
@@ -66,7 +67,8 @@ Your date is `<?bash date ;?>.`
 
 Your PWD is `<?bash echo $PWD | grep mdsh ;?>`
 
-Your user is `<?bash whoami ;?>`. Your OS is `<?bash uname ;?>` and Pkg version is <?bash pkg -v | cut -f2 -d' ' ;?>.
+Your user is `<?bash whoami ;?>`. Your OS is `<?bash uname ;?>` and Pkg version 
+is <?bash pkg -v | cut -f2 -d' ' ;?>.
 
 I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.
 

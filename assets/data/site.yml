@@ -31,6 +31,7 @@ js_deps:
   cashjs: cash-dom@2.3.9/dist/cash.min.js
   jets: jets@0.14.1/jets.min.js
 search_enabled: true
+default_page_type: post
 product_options:
   colour: Colour
   size: Size

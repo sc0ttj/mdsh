@@ -22,7 +22,8 @@ And a Perl block:
 perl-lowo"r"ld
 ```
 
-And another, running a specific Perl version (/usr/bin/perl5.24.1):
+And another, 
+running a specific Perl version (/usr/bin/perl5.24.1):
 
 ```
 hello world from Perl
@@ -40,13 +41,13 @@ Current dir: $PWD
 
 ### bash
 
-Your date is `Fri Aug 30 19:34:58 BST 2019.`
+Your date is `Mon Jan 20 11:20:16 GMT 2020.`
 
 Your PWD is `/root/Sites/github/mdsh`
 
 Your user is `root
 `. Your OS is `Linux
-` and Pkg version is 1.9.22
+
 
 I have a small script I use to quickly load whatever SNES, PlayStation (etc) ROMs I wanna play.
 
