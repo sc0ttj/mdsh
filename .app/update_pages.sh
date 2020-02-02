@@ -439,7 +439,7 @@ function rebuild_indexes_of_page {
 # rebuild tags:foo,bar year:2019 authors:someone search
 
 
-# if $1 is a source file (passed in from create_post.sh)
+# if $1 is a source file (passed in from create.sh)
 if [ -f "${1//.mdsh}.mdsh" ];then
   partial_build=true
   source_file="${1//.mdsh}.mdsh"

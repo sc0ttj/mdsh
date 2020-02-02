@@ -33,7 +33,7 @@ oembed_filters="$(get_oembed_filters)"
 function new {
   [ -z "$1" ] && echo "Usage: new <page_type>" && return 1
   if [ "$(page_type_is_valid ${1:-foo})" = true ];then
-    ${PWD}/.app/create_post.sh "$@"
+    ${PWD}/.app/create.sh "$@"
     return 0
   fi
   return 1
@@ -117,7 +117,7 @@ function help {
 
 # make the scripts available themselves, just in case the user wants them
 alias create_page="${PWD}/.app/create_page.sh"
-alias create_post="${PWD}/.app/create_post.sh"
+alias create="${PWD}/.app/create.sh"
 alias create_rss="${PWD}/.app/create_rss.sh"
 alias generate_sitemap="${PWD}/.app/generate_sitemap.sh"
 alias update="${PWD}/.app/update_pages.sh"
