@@ -167,6 +167,6 @@ echo "Minifying CSS.."
 minify_css $css_file_to_minify $html_file_to_minify
 
 # minify the HTML
-echo "Minifying HTML.."
-minify_html
+#echo "Minifying HTML.."
+#minify_html
 
