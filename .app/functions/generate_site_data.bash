@@ -39,6 +39,7 @@ function list_posts_in_dir {
 }
 
 function get_post_count {
+if [ "$(lookup page_types.${page_type_name}.date_in_path)" = true ];then
   grep -lRE "^#? ?$1:.*$2[, ]?" posts/*/*/*/*.mdsh 2>/dev/null \
     | sort -u \
     | while read file
@@ -48,6 +49,17 @@ function get_post_count {
       | grep -v "^#"
     done \
     | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null
+else
+  grep -lRE "^#? ?$1:.*$2[, ]?" posts/*.mdsh 2>/dev/null \
+    | sort -u \
+    | while read file
+    do
+      cut -f1,2 -d'|' posts.csv \
+      | grep "$(basename "${file}")" \
+      | grep -v "^#"
+    done \
+    | wc -l 2>/dev/null | tr -d ' ' 2>/dev/null
+fi
 }
 
 function get_taxonomies {
@@ -70,8 +82,16 @@ function get_pages_in_taxonomy {
   local taxonomy_plural="$(get_taxonomy_plural $taxonomy_name)"
   local taxonomy_value="$3"
   local item_list=''
-  local all_items="$(grep -lRE "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
-  [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
+  local all_items=''
+
+  if [ "$(lookup page_types.${page_type_singular}.date_in_path)" = true ];then
+    all_items="$(grep -lRE "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
+    [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
+  else
+    all_items="$(grep -lRE "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
+    [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
+  fi
+
   [ -z "$all_items" ] && return 1
 
   all_items="$(echo "$all_items" | sort -u | sort -r | uniq)"
@@ -230,9 +250,17 @@ do
     [ "$taxonomy_plural" = "" ] && continue
 
     # get all items (pages) in this taxonomy
-    all_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null | sed "s/ .*  //g" | cut -f2 -d":" | tr "," "\n" | lstrip | sort -u)"
-    [ "$all_items" = "" ] && all_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null | sed "s/ .*  //g" | cut -f2 -d":" | tr "," "\n" | lstrip | sort -u)"
+    if [ "$(lookup page_types.${page_type_name}.date_in_path)" = true ];then
+      all_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null)"
+      [ "$all_items" = "" ] && all_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh 2>/dev/null)"
+    else
+      all_items="$(grep -hRE "^#? ?${taxonomy_plural}:.*[, ]" ${page_type_plural}/*.mdsh 2>/dev/null)"
+      [ "$all_items" = "" ] && all_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*.mdsh 2>/dev/null)"
+    fi
+
     [ "$all_items" = "" ] && continue
+
+    all_items="$(echo "$all_items" | sed "s/ .*  //g" | cut -f2 -d":" | tr "," "\n" | grep -v ^$ | lstrip | sort -u)"
 
     # set the array (example, "events_categories")
     array_name="${page_type_plural}_$taxonomy_plural"
@@ -245,19 +273,22 @@ do
 "
     for item in $all_items
     do
-      # if no posts in this taxonomy item (no posts in category "foo", or tagged "bar")
-      # then skip it
-      post_count="$(get_post_count $taxonomy_name $item)"
-      [ "$post_count" = ""  ] && continue
-      [ "$post_count" = "0" ] && continue
-      # else,
-      # set the assoc array containing details of the item
+      if [ "$page_type" = "$post" ];then
+        # if no posts in this taxonomy item (no posts in category "foo", or tagged "bar")
+        # then skip it
+        post_count="$(get_post_count $taxonomy_name $item)"
+        [ "$post_count" = ""  ] && continue
+        [ "$post_count" = "0" ] && continue
+      else
+        post_count=""
+      fi
+      # else, set the assoc array containing details of the item
       item_type="${taxonomy_name}"
       item_title="\"${item}\""
       item_slug="$(echo "${item}" | slugify)"
       item_url="${site_url}/${page_type_plural}/$taxonomy_plural/${item_slug}.html"
       item_post_count="$post_count"
-      item_after="($post_count)"
+      [ ! -z "$post_count" ] && item_after="($post_count)" || item_after=""
       # now add item to $array_name (example, add page to events_categories)
       add_item_to "$array_name"
       # update itemlist tmp file
@@ -272,4 +303,37 @@ do
   done'
 done
 
+# usage: get_taxonomies_of_page_type  $type
+function get_taxonomies_of_page_type {
+  [ -z "$1" ] && return 1
+  lookup page_types.${1}.taxonomies \
+    | tr ',' ' ' \
+    | tr ' ' '\n' \
+    | grep -v ^$
+}
+
+function set_default_index_pages {
+  local page_type=${site_default_page_type:-posts}
+  local page_type_plural=$(get_page_type_plural $page_type)
+  # Based on the default page type for this site ($site_default_page_type),
+  # get the sites default taxonomies.
+  local default_taxonomies="$(get_taxonomies_of_page_type $page_type)"
+
+  # For each taxonomy dir, symlink it to the site root
+  #
+  # Example:
+  #
+  #  symlink  posts/authors/    -> authors/
+  #  symlink  posts/categories/ -> categories/
+  #  symlink  posts/tags/    -   > tags/
+
+  for taxonomy in ${default_taxonomies}
+  do
+    [ -z "${taxonomy}" ] && continue
+    local taxonomy_plural="$(get_taxonomy_plural "$taxonomy" | slugify)"
+    [ ! -d "${page_type_plural}/${taxonomy_plural}/" ] && continue
+    rm -rf ${taxonomy_plural}/ 2>/dev/null
+    ln -s ${page_type_plural}/${taxonomy_plural} ${taxonomy_plural}/
+  done
+}
 

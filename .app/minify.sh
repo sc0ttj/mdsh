@@ -45,15 +45,11 @@ function minify_css {
   #  sed '/\/\*/,/\*\//d' remove comments
   #  sed...               remove spaces
   cat $(ls -1 assets/css/_*[^\.min].css | sort -r) \
-    | grep -v '/\*' \
-    | tr -d '\n' \
-    | sed -e '/\/\*/,/\*\//d' \
-          -e 's/  / /g' \
-          -e 's/ {/{/g' \
-          -e 's/{ /{/g' \
-          -e 's/ }/}/g' \
-          -e 's/: /:/g' \
-          -e 's/; /;/g' > "assets/css/_core.min.css"
+    | sed -e "s|/\*\(\\\\\)\?\*/|/~\1~/|g" -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" \
+          -e "s|\([^:/]\)//.*$|\1|" -e "s|^//.*$||" | tr '\n' ' ' \
+    | sed -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" -e "s|/\~\(\\\\\)\?\~/|/*\1*/|g" \
+          -e "s|\s\+| |g" -e "s| \([{;:,]\)|\1|g" -e "s|\([{;:,]\) |\1|g" \
+     > "assets/css/_core.min.css"
 
   for css_file in $css_file_list
   do
@@ -70,15 +66,11 @@ function minify_css {
     #  sed '/\/\*/,/\*\//d' remove comments
     #  ...                  remove spaces
     cat $css_bundle \
-      | grep -v '/\*' \
-      | tr -d '\n' \
-      | sed -e '/\/\*/,/\*\//d' \
-            -e 's/  / /g' \
-            -e 's/ {/{/g' \
-            -e 's/{ /{/g' \
-            -e 's/ }/}/g' \
-            -e 's/: /:/g' \
-            -e 's/; /;/g' > "${css_file//.css/.min.css}"
+      | sed -e "s|/\*\(\\\\\)\?\*/|/~\1~/|g" -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" \
+            -e "s|\([^:/]\)//.*$|\1|" -e "s|^//.*$||" | tr '\n' ' ' \
+      | sed -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" -e "s|/\~\(\\\\\)\?\~/|/*\1*/|g" \
+            -e "s|\s\+| |g" -e "s| \([{;:,]\)|\1|g" -e "s|\([{;:,]\) |\1|g" \
+       > "${css_file//.css/.min.css}"
 
     # add google fonts to css file (not including pygments themes)
     if [ "$(echo "${css_file//.css/.min.css}" | grep '/pygments')" = "" ] && \
@@ -125,15 +117,11 @@ function add_google_font_css_to {
   if [ "${site_fonts}" != "" ] && [ -f assets/css/google_fonts.css ];then
     [ ! -f ${css_file}.min.css ] && css_file=assets/css/main.min.css
     cat assets/css/google_fonts.css \
-      | grep -v '/\*' \
-      | tr -d '\n' \
-      | sed -e '/\/\*/,/\*\//d' \
-            -e 's/  / /g' \
-            -e 's/ {/{/g' \
-            -e 's/{ /{/g' \
-            -e 's/ }/}/g' \
-            -e 's/: /:/g' \
-            -e 's/; /;/g' > assets/css/google_fonts.min.css
+      | sed -e "s|/\*\(\\\\\)\?\*/|/~\1~/|g" -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" \
+            -e "s|\([^:/]\)//.*$|\1|" -e "s|^//.*$||" | tr '\n' ' ' \
+      | sed -e "s|/\*[^*]*\*\+\([^/][^*]*\*\+\)*/||g" -e "s|/\~\(\\\\\)\?\~/|/*\1*/|g" \
+            -e "s|\s\+| |g" -e "s| \([{;:,]\)|\1|g" -e "s|\([{;:,]\) |\1|g" \
+       > assets/css/google_fonts.min.css
 
     cat assets/css/google_fonts.min.css ${css_file}.min.css > /tmp/cssfile
     mv /tmp/cssfile ${css_file}.min.css
@@ -148,10 +136,12 @@ function minify_html {
   "
   for html_file in $html_files
   do
-    :
-    # dont minify HTML until we can skip contents of <pre>..</pre>
-    #sed ':a;N;$!ba;/<div class="highlight"><pre>\.*<\/pre><\/div>/! s@>\s*<@><@g' $html_file > ${html_file//.html/.minhtml}
-    #mv ${html_file//.html/.minhtml} ${html_file}
+    # see http://murga-linux.com/puppy/viewtopic.php?p=1048240
+    sed ':a;$!{N;ba;};s/@/@a/g;s/\n/@n/g;s/<pre/\n&/g;s/<\/pre>/&\n/g' "$html_file" \
+      | sed -r '/(^<pre|<\/pre>$)/!{s/@n//g;s/>\s+</></g;}' \
+      | sed ':a;$!{N;ba;};s/\n//g;s/@n/\n/g;s/@a/@/g'       \
+      | sed -e 's#<span></span>##g' -e 's#<p></p>##g' > ${html_file//.html/.minhtml}
+    mv ${html_file//.html/.minhtml} ${html_file}
   done
   IFS=$OLD_IFS
 }
@@ -160,7 +150,7 @@ function minify_html {
 ###############################################################################
 
 # get list of all css and html files we want to process
-html_files="$(find assets/css/ -type f -name "*.html" | grep -v 'min.html' | sort -u | uniq)"
+html_files="$(find posts/ -type f -name "*.html" | grep -v 'min.html' | sort -u | uniq)"
 css_files="$(find  assets/css/ -type f -name "*.css"  | grep -vE '.min.css|/_' | sort -r)"
 
 css_file_to_minify=''
@@ -177,6 +167,6 @@ echo "Minifying CSS.."
 minify_css $css_file_to_minify $html_file_to_minify
 
 # minify the HTML
-#echo "Minifying HTML.."
+echo "Minifying HTML.."
 minify_html
 

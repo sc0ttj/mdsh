@@ -199,8 +199,8 @@ function rebuild_archive_page {
 }
 
 function rebuild_index_pages {
+
   [ -z "$1" ] && return 1
-  [ -z "$2" ] && return 1
   local page_type="$1"
   local taxonomy_name="$2"
   local taxonomy_item="$3"
@@ -218,8 +218,9 @@ function rebuild_index_pages {
   local page_type_singular="$(get_page_type_name ${page_type_plural})"
 
   # limit the taxonomies we parse to the ones given by the user
-  [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="${taxonomies[@]}"
+  [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="$(get_taxonomies_of_page_type $page_type_singular)"
   [ -z "${taxonomies_list[@]}" ] && return 1
+
 
   # for each taxonomy we need to parse
   for taxonomy in ${taxonomies_list[@]}
@@ -267,12 +268,17 @@ function rebuild_index_pages {
 
     # first, get all terms/items in current taxonomy:
     # for example. get all authors in "author"
-    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" ${page_type_plural}/*/*/*/*.mdsh \
+    all_files="$(find ${page_type_plural}/ -name "*.mdsh")"
+    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" $all_files \
       | sed 's/ .*  //g'\
       | cut -f2 -d':' \
       | tr ',' '\n' \
       | lstrip \
       | sort -u)"
+
+    if [ -z "${taxonomy_item:-$all_taxonomy_items}" ];then
+      continue
+    fi
 
     # for each item in the current taxonomy group (for each author in authors),
     # create the index pages (which list the relevant pages/posts)
@@ -542,11 +548,12 @@ do
       if [ "$option_is_valid_page_type" = true ];then
         # if only given a page type
         if [ "${pages_to_build}" = "${option}" ];then
-          $rebuild_func "$item"
+          $rebuild_func "$item" "$(get_taxonomies_of_page_type "$item")"
         else
           # else, user did NOT give a page type only, so get the
           # page type and taxonomies stuff
           page_type="$(echo "$option" | cut -f1 -d':')"
+
           taxonomy_name="$(echo "$option" | cut -f2 -d':')"
           taxonomy_values="$(echo "$option" | cut -f3 -d':')"
 

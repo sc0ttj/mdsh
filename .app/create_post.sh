@@ -142,9 +142,10 @@ code_stylesheet:     ${code_stylesheet:-$default_code_stylesheet}
 
 $(for field in ${front_matter_fields[@]}
 do
+  value=''
   varname="$(eval "echo \${${field}[varname]}")"
   value="$(eval "echo \${${field}[value]}")"
-  printf "%-20s %s\n" "$varname" "$value"
+  printf "%-20s %s\n" "${varname}:" "$value"
 done)
 
 # add taxonomies meta info
@@ -153,7 +154,7 @@ $(for taxonomy_name in $relevant_taxonomies
 do
   value=''
   value="$(eval "echo \${${taxonomy_name}_values}")"
-  printf "%-20s %s\n" "$taxonomy_name" "$value"
+  printf "%-20s %s\n" "${taxonomy_name}:" "$value"
 done)
 
 email:               ${email:-$site_email}
@@ -250,7 +251,7 @@ title="${title//\`/\\\`}"
 # get taxonomy values as pipe separated list
 for taxonomy_name in $relevant_taxonomies
 do
-  taxonomy_values+="$(eval 'echo ${taxonomy_name}_values')|"
+  taxonomy_values+="$(eval "echo \$${taxonomy_name}_values")|"
 done
 
 # update the main database of posts for the site

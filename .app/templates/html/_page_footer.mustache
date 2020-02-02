@@ -1,30 +1,26 @@
-        {{#is_blog_post}}
+{{#is_blog_post}}
 
-          <div class="page-footer">
-            <div class="page-meta">
-              <span class="category"><a href="{{site_url}}/posts/categories/{{page_category}}.html">{{page_category}}</a></span>
-              <span class="author"><a href="{{site_url}}/posts/authors/{{page_author_slug}}.html">{{page_author}}</a></span>
-            </div>
+  <div class="page-footer">
+    <div class="page-meta">
+      <span class="category"><a href="{{site_url}}/posts/categories/{{page_category}}.html">{{page_category}}</a></span>
+      <span class="author"><a href="{{site_url}}/posts/authors/{{page_author_slug}}.html">{{page_author}}</a></span>
+    </div>
 
-            <ul class="prev-next-posts">
-              {{#prev_title}}
-              <li class="prev-post">
-                <span>Previous: </span>
-                <a href="../../../{{lookup page_prev.date}}/{{lookup page_prev.slug}}.html">
-                  {{lookup page_prev.title}}
-                </a>
-              </li>
-              {{/prev_title}}
+    <ul class="prev-next-posts">
+      {{#prev_title}}
+      <li class="prev-post">
+        <span>Previous: </span>
+        <a href="../../../{{lookup page_prev.date}}/{{lookup page_prev.slug}}.html">{{lookup page_prev.title}}</a>
+      </li>
+      {{/prev_title}}
 
-              {{#next_title}}
-              <li class="next-post">
-                <span>Next:</span>
-                <a href="../../../{{lookup page_next.date}}/{{lookup page_next.slug}}.html">
-                  {{lookup page_next.title}}
-                </a>
-              </li>
-              {{/next_title}}
-            </ul>
+      {{#next_title}}
+      <li class="next-post">
+        <span>Next:</span>
+        <a href="../../../{{lookup page_next.date}}/{{lookup page_next.slug}}.html">{{lookup page_next.title}}</a>
+      </li>
+      {{/next_title}}
+    </ul>
 
-          </div>
-        {{/is_blog_post}}
+  </div>
+{{/is_blog_post}}
