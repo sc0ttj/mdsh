@@ -3,7 +3,7 @@ author:
   plural: authors
   descr: Search for content, posts, pages and articles by choosing an author.
   show_date: true
-  items_header: Posts written by
+  items_header: {{page_type_plural | titlecase}} written by
   items_descr: Here's a list of items written by
   input_label: a name of an author
   layout: _list
@@ -12,7 +12,7 @@ category:
   plural: categories
   descr: Search for content, posts, pages and articles by choosing a category.
   show_date: true
-  items_header: Posts in category
+  items_header: {{page_type_plural | titlecase}} in category
   items_descr: Here's a list of items in category
   input_label: a single word
   layout: _list
@@ -21,7 +21,7 @@ tags:
   plural: tags
   descr: Search for tagged content, posts, pages and articles by choosing a tag.
   show_date: true
-  items_header: Posts tagged
+  items_header: {{page_type_plural | titlecase}} tagged
   items_descr: Here's a list of items tagged
   input_label: comma separated words or phrases
   layout: _list
@@ -30,7 +30,7 @@ brand:
   plural: brands
   descr: Browse items by choosing a brand.
   show_date: false
-  items_header: Products by
+  items_header: {{page_type_plural | titlecase}} by
   items_descr: Here's a list of items by
   input_label: a brand name
   layout: _list
