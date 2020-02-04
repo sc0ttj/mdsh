@@ -253,9 +253,9 @@ function rebuild_index_pages {
     [ -z "$taxonomy_name" ] && continue
 
     local taxonomy_plural="$(get_taxonomy_plural "$taxonomy")"
-    local taxonomy_descr="$(lookup "taxonomies.${taxonomy_name}.descr")"
-    local taxonomy_items_header="$(lookup "taxonomies.${taxonomy_name}.items_header")"
-    local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy_name}.items_descr")"
+    local taxonomy_descr="$(lookup "taxonomies.${taxonomy_name}.descr" | mo)"
+    local taxonomy_items_header="$(lookup "taxonomies.${taxonomy_name}.items_header" | mo)"
+    local taxonomy_items_descr="$(lookup "taxonomies.${taxonomy_name}.items_descr" | mo)"
     local taxonomy_layout="$(lookup "taxonomies.${taxonomy_name}.layout")"
 
     taxonomy_layout=${taxonomy_layout:-_list}
