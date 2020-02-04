@@ -62,24 +62,44 @@ done
 ############################## functions ##################################
 
 function rebuild_pages_of_type {
-  local page_type="$(lookup page_types.${1}.plural)"
-  [ -z "${page_type}" ] && return 1
-  [ ! -f "${page_type}.csv" ] && return 1
-  cut -f1-2 -d'|' ${page_type}.csv | sort -r | head -${LIMIT:-99999} | while read line
+  local page_type_singular="$(get_page_type_name "$1")"
+  local page_type_plural="$(lookup page_types.${page_type_singular}.plural)"
+  local taxonomy_name="$(get_taxonomy_name "$2")"
+  local taxonomy_plural="$(get_taxonomy_plural "$2")"
+  local relevant_item="$3"
+  local date_in_path=$(lookup page_types.${page_type_singular}.date_in_path)
+  local files=''
+
+  if [ "$date_in_path" = true ];then
+    files="$(grep -lRhi "${taxonomy_name}: .*$relevant_item" $page_type_plural/*/*/*/*.mdsh 2>/dev/null)"
+    [ -z "$files" ] && files="$(grep -lRh "${taxonomy_plural}: .*$relevant_item" $page_type_plural/*/*/*/*.mdsh 2>/dev/null)"
+  else
+    files="$(grep -lRhi "${taxonomy_name}: .*$relevant_item" $page_type_plural/*.mdsh 2>/dev/null)"
+    [ -z "$files" ] && files="$(grep -lRh "${taxonomy_plural}: .*$relevant_item" $page_type_plural/*.mdsh 2>/dev/null)"
+  fi
+
+xmessage "\$relevant_item='$relevant_item'
+
+\$files
+'$files'"
+
+  if [ -z "$files" ];then
+    continue
+  fi
+
+  echo "$files" | while read file
   do
-    mdshfile="${line//|//}"
-    mdshfile="${mdshfile//#/}"
-    # skip current type if not in $relevant_item
-    [ "$partial_build" = true ] && [ "__$(echo ${page_type} | slugify)__" != "__$(echo ${relevant_item} | slugify)__" ] && continue
-    if [ -f "$page_type/$mdshfile" ];then
-      source_file="$mdshfile"
-      html_file="${mdshfile//.mdsh/.html}"
-      [ "$2" = "mdonly" ] && source_file="$page_type/${mdshfile//.mdsh/.md}"
-      [ ! -f "$page_type/$source_file" ] && continue
-      # update (rebuild) all posts/pages
-      echo "Updating: $page_type/$html_file"
-      .app/create_page.sh "$page_type/$source_file" > "$page_type/$html_file"
+    mdshfile="${file}"
+    # skip if commented out in the relevant <page_type>.csv file
+    if [ "$(grep -m1 "|$mdshfile|" $page_type_plural.csv 2>/dev/null | grep "^#")" != "" ];then
+      continue
     fi
+    html_file="${mdshfile//.mdsh/.html}"
+    source_file="$mdshfile"
+    [ "$2" = "mdonly" ] && source_file="${mdshfile//.mdsh/.md}"
+    # update (rebuild) all posts/pages
+    echo "Updating: $html_file"
+    .app/create_page.sh "$source_file" > "$html_file"
   done
 }
 
@@ -471,7 +491,7 @@ site_taxonomies="$(echo ${taxonomies[@]} \
     -e 's/^|//g' \
     -e 's/|$//g')"
 
-for option in $@
+for option in "$@"
 do
   case "$option" in
     '404')
@@ -490,7 +510,7 @@ do
       rebuild_custom_pages
     ;;
     posts)
-      rebuild_page_of_type posts
+      rebuild_pages_of_type posts
     ;;
     rss)
       echo "Updating: feed.rss"
@@ -530,7 +550,8 @@ do
       # get list of given page types or taxonomies to build
       pages_to_build="${option//\//:}"
       pages_to_build="${pages_to_build//*:/}"
-      pages_to_build="${pages_to_build//,/ }"
+      pages_to_build="${pages_to_build//,/
+}"
 
       # check if processing page types
       option_is_valid_page_type="$(echo "${item}" | grep -Eq "$page_types" && echo true || echo false)"
@@ -563,16 +584,20 @@ do
           # If option is a taxonomy name, rebuild the relevant index pages
           if [ "$option_is_valid_taxonomy" = true ];then
             # at this point, $pages_to_build is a list of taxonomies [and items]
-            for relevant_item in $pages_to_build
+            OLDIFS=$IFS
+            IFS=$'\n'
+
+            for relevant_item in "$pages_to_build"
             do
               # if user gave a taxonomy name only
               if [ "$taxonomy_name" = "$relevant_item" ];then
-                partial_build=true $rebuild_func "$page_type" $taxonomy_name
+                partial_build=true $rebuild_func "$page_type" "$taxonomy_name"
               else
                 # if user gave a taxonomy name and taxonomy item (brand:somebrand)
-                partial_build=true $rebuild_func "$page_type" $taxonomy_name $relevant_item
+                partial_build=true $rebuild_func "$page_type" "$taxonomy_name" "$relevant_item"
               fi
             done
+            IFS=$OLDIFS
           fi
         fi
       fi
