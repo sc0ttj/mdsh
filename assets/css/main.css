@@ -425,6 +425,8 @@ ul.archive-posts li {
 .search-box input {
   padding: 8px;
   border: 1px solid #ccc;
+  margin-right: 8px;
+  margin-bottom: 8px;
 }
 
 .search-box button {
@@ -433,8 +435,17 @@ ul.archive-posts li {
   background-color: #222;
   border: 0;
   padding: 8px;
-  margin-left: 4px;
 }
+
+@media (min-width: 600px) {
+  .search-box input {
+    display: inline-block;
+  }
+  .search-box button {
+    display: inline-block;
+  }
+}
+
 .search-back {
   display: block;
   margin: -12px 0px 0px;
@@ -489,16 +500,12 @@ ul.archive-posts li {
   color: #fff;
   text-decoration: underline;
 }
-/* products */
+
 .product {
-  /* products */
-  border: 1px solid #ccc; /* products */
+  border: 1px solid #ccc;
   padding: 16px;
   margin-bottom: 16px;
-  width: 100%; /* foo
-                * products
-                * foooface
-                */
+  width: 100%;
 }
 
 @media (min-width: 640px) {
