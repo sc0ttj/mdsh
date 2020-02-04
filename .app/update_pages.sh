@@ -78,11 +78,6 @@ function rebuild_pages_of_type {
     [ -z "$files" ] && files="$(grep -lRh "${taxonomy_plural}: .*$relevant_item" $page_type_plural/*.mdsh 2>/dev/null)"
   fi
 
-xmessage "\$relevant_item='$relevant_item'
-
-\$files
-'$files'"
-
   if [ -z "$files" ];then
     continue
   fi
