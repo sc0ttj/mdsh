@@ -85,11 +85,11 @@ function get_pages_in_taxonomy {
   local all_items=''
 
   if [ "$(lookup page_types.${page_type_singular}.date_in_path)" = true ];then
-    all_items="$(grep -lRE "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
-    [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
+    all_items="$(grep -lREi "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
+    [ -z "$all_items" ] && all_items="$(grep -lREi "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
   else
-    all_items="$(grep -lRE "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
-    [ -z "$all_items" ] && all_items="$(grep -lRE "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
+    all_items="$(grep -lREi "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
+    [ -z "$all_items" ] && all_items="$(grep -lREi "#? ?${taxonomy_plural}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*.mdsh)"
   fi
 
   [ -z "$all_items" ] && return 1

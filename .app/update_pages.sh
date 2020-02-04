@@ -284,7 +284,7 @@ function rebuild_index_pages {
     # first, get all terms/items in current taxonomy:
     # for example. get all authors in "author"
     all_files="$(find ${page_type_plural}/ -name "*.mdsh")"
-    all_taxonomy_items="$(grep -hRE "^#? ?${taxonomy_name}:.*[, ]" $all_files \
+    all_taxonomy_items="$(grep -hREi "^#? ?${taxonomy_name}:.*[, ]" $all_files \
       | sed 's/ .*  //g'\
       | cut -f2 -d':' \
       | tr ',' '\n' \
@@ -574,7 +574,7 @@ do
           taxonomy_values="$(echo "$option" | cut -f3 -d':')"
 
           # check if processing a valid taxonomy (if not, skip it)
-          option_is_valid_taxonomy="$(echo "${taxonomy_name}" | grep -Eq "$site_taxonomies" && echo true || echo false)"
+          option_is_valid_taxonomy="$(echo "${taxonomy_name}" | grep -Eiq "$site_taxonomies" && echo true || echo false)"
 
           # If option is a taxonomy name, rebuild the relevant index pages
           if [ "$option_is_valid_taxonomy" = true ];then
