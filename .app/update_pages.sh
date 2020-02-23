@@ -236,7 +236,6 @@ function rebuild_index_pages {
   [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="$(get_taxonomies_of_page_type $page_type_singular)"
   [ -z "${taxonomies_list[@]}" ] && return 1
 
-
   # for each taxonomy we need to parse
   for taxonomy in ${taxonomies_list[@]}
   do
@@ -357,11 +356,13 @@ function rebuild_search_page {
 function rebuild_indexes_of_page {
   # we have a source file, so lets do a partial rebuild, which skips
   # rebuilding pages that haven't changed.
-  local source_file="${1//.html}"
-  source_file="${source_file//.mdsh}"
-  source_file="${source_file//.md}"
+  local source_file="${1//.html/}"
+  source_file="${source_file//.mdsh/}"
+  source_file="${source_file//.md/}"
   source_file="${source_file}.mdsh"
   rm /tmp/relevant_taxonomies &>/dev/null
+
+  local page_type page_type_plural
 
   function get_vars {
   	local IFS="$1"
@@ -372,28 +373,40 @@ function rebuild_indexes_of_page {
   # lets filter our all the irrelevant years, months, tags, categories
   # before we rebuild our pages - so we dont have to rebuild any pages
   # which haven't actually changed
-	while get_vars "/" page_type relevant_year relevant_month relevant_day ; do
+	while get_vars "/" page_type relevant_year relevant_month relevant_day
+	do
+
     [ ! -f "$source_file" ] && continue
+
+    page_type_plural="$page_type"
+    page_type=$(get_page_type_name "$page_type")
+
     # fix page day = cut off "/<somefile>.mdsh" (trailing filename)
     relevant_day="${relevant_day//\/*/}"
     # we have to write these vars to a file, cos we're in a sub-shell
-    echo "page_type=$page_type"            > /tmp/relevant_meta_details
-    echo "relevant_year=$relevant_year"   >> /tmp/relevant_meta_details
-    echo "relevant_month=$relevant_month" >> /tmp/relevant_meta_details
-    echo "relevant_day=$relevant_day"     >> /tmp/relevant_meta_details
+    echo "page_type=$page_type_plural"       > /tmp/relevant_meta_details
+    if [ "$(lookup page_types.${page_type}.date_in_path)" = true ];then
+      echo "relevant_year=$relevant_year"   >> /tmp/relevant_meta_details
+      echo "relevant_month=$relevant_month" >> /tmp/relevant_meta_details
+      echo "relevant_day=$relevant_day"     >> /tmp/relevant_meta_details
+    fi
 
-    for taxonomy in $(get_taxonomies)
+    OLD_IFS=$IFS
+    IFS=$'\n'
+    for taxonomy in $(get_taxonomies_of_page_type "$page_type")
     do
-      relevant_item="$(grep -m1 "^${taxonomy}: " "$source_file" | sed -e "s/.*: //" -e "s/^ *//" -e "s/, /,/g")"
-      echo -n "${page_type}:${taxonomy}:${relevant_item} " >> /tmp/relevant_taxonomies
+      relevant_item="$(grep -m1 "^${taxonomy}: " "$source_file" 2>/dev/null | sed -e "s/.*: //" -e "s/^ *//" -e "s/, /,/g")"
+      echo -n "${page_type_plural}:${taxonomy}:${relevant_item} " >> /tmp/relevant_taxonomies
     done
+    IFS=$OLD_IFS
+
 	done <<< "$source_file"
 
   # out of the sub-shell, lets get the posts meta info we just processed
   source /tmp/relevant_meta_details
   rm     /tmp/relevant_meta_details
 
-  if [ "$page_type" = "posts" ];then
+  if [ "$page_type" = "post" ];then
     # get the previous post
     previous_page="$(grep -v "^#" posts.csv \
       | grep -B1 "$(basename "|$source_file|")" \
@@ -408,8 +421,16 @@ function rebuild_indexes_of_page {
     fi
   fi
 
+  local other_pages_to_build=''
+  if [ "$page_type" = "post" ];then
+    other_pages_to_build="archive search homepage"
+  fi
+
   # finally, update all the relevant index pages (ignoring ones that don't list this post)
-  reindex $(cat /tmp/relevant_taxonomies) archive search homepage
+  reindex $(cat /tmp/relevant_taxonomies) $other_pages_to_build
+
+  exit 0
+
 }
 
 ###############################################################################
