@@ -426,8 +426,16 @@ function rebuild_indexes_of_page {
     other_pages_to_build="archive search homepage"
   fi
 
+  # also rebuild the index pages ('events:tags:index' will
+  # rebuild events/tags/index.html, for example)
+  local index_pages="$(cat /tmp/relevant_taxonomies \
+    | tr ' ' '\n' \
+    | cut -f1-2 -d':' \
+    | sed "s/$/:index/g" \
+    | sort -u | tr '\n' ' ')"
+
   # finally, update all the relevant index pages (ignoring ones that don't list this post)
-  reindex $(cat /tmp/relevant_taxonomies) $other_pages_to_build
+  reindex $(cat /tmp/relevant_taxonomies) $index_pages $other_pages_to_build
 
   exit 0
 
