@@ -77,12 +77,17 @@ function get_pages_in_taxonomy {
   [ -z "$2" ] && return 1
   [ -z "$3" ] && return 1
   local page_type_plural="${1//page_types_}"
-  local page_type_singular="$(get_page_type_name ${page_type_plural})"
-  local taxonomy_name="$(get_taxonomy_name ${2//taxonomies_})"
-  local taxonomy_plural="$(get_taxonomy_plural $taxonomy_name)"
+  local page_type_singular="$(get_page_type_name ${page_type_plural} | head -1)"
+  local taxonomy_name="$(get_taxonomy_name ${2//taxonomies_} | head -1)"
+  local taxonomy_plural="$(get_taxonomy_plural $taxonomy_name | head -1)"
   local taxonomy_value="$3"
   local item_list=''
   local all_items=''
+
+  [ -z "$page_type_plural" ] && return 1
+  [ -z "$page_type_singular" ] && return 1
+  [ -z "$taxonomy_name" ] && return 1
+  [ -z "$taxonomy_value" ] && return 1
 
   if [ "$(lookup page_types.${page_type_singular}.date_in_path)" = true ];then
     all_items="$(grep -lREi "#? ?${taxonomy_name}:.*${taxonomy_value}[, ]?" ${page_type_plural}/*/*/*/*.mdsh)"
@@ -114,7 +119,9 @@ function get_pages_in_taxonomy {
     item_list="${item_list}\n${item_url}"
   done
   # update itemlist tmp file
-  echo -e "$item_list" > /tmp/${page_type_singular}_${taxonomy_name}_${taxonomy_value}_itemlist
+  if [ ! -z "$item_list" ];then
+    echo -e "$item_list" > /tmp/${page_type_singular}_${taxonomy_name}_${taxonomy_value}_itemlist
+  fi
 }
 
 
@@ -128,8 +135,8 @@ function get_page_types {
   done
 }
 
-function get_page_type_name   { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f1 -d'|'; }
-function get_page_type_plural { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f2 -d'|'; }
+function get_page_type_name   { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f1 -d'|' | head -1; }
+function get_page_type_plural { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f2 -d'|' | head -1; }
 
 function page_type_is_valid {
   local page_types="$(lookup page_types.* | sed 's/page_types_//g')"

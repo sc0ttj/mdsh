@@ -69,6 +69,9 @@ function rebuild_pages_of_type {
   local relevant_item="$3"
   local date_in_path=$(lookup page_types.${page_type_singular}.date_in_path)
   local files=''
+  # horrible hack
+  page_type_plural="$page_type_singular"
+  page_type_singular="$page_type"
 
   if [ "$date_in_path" = true ];then
     files="$(grep -lRhi "${taxonomy_name}: .*$relevant_item" $page_type_plural/*/*/*/*.mdsh 2>/dev/null)"
@@ -79,7 +82,7 @@ function rebuild_pages_of_type {
   fi
 
   if [ -z "$files" ];then
-    continue
+    return 1
   fi
 
   echo "$files" | while read file
@@ -229,8 +232,8 @@ function rebuild_index_pages {
   [ "$page_type" = "pages" ] && return 0
 
   # we need the plural version too
-  local page_type_plural="$(get_page_type_plural $page_type)"
-  local page_type_singular="$(get_page_type_name ${page_type_plural})"
+  local page_type_plural="$(get_page_type_plural $page_type | head -1)"
+  local page_type_singular="$(get_page_type_name ${page_type_plural} | head -1)"
 
   # limit the taxonomies we parse to the ones given by the user
   [ "$taxonomy_name" != '' ] && taxonomies_list="$taxonomy_name" || taxonomies_list="$(get_taxonomies_of_page_type $page_type_singular)"
@@ -307,7 +310,7 @@ function rebuild_index_pages {
       # skip if no pages in this taxonomy group
       [ ${#ITEMS[@]} -lt 1 ] && continue
       # we have items, so set some vars
-      has_date=true
+      has_date=$(lookup page_types.$page_type.list_date)
       file="${page_type_plural}/${taxonomy_plural}/${page_slug}.html"
       # build page
       echo "Updating: $file"

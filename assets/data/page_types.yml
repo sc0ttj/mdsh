@@ -2,6 +2,7 @@ page:
   name: page
   plural: pages
   taxonomies:
+  list_date: false
   layout: main
   stylesheet: main
   date_in_path: false
@@ -9,6 +10,7 @@ post:
   name: post
   plural: posts
   taxonomies: author, category, tags
+  list_date: true
   layout: main
   stylesheet: main
   date_in_path: true
@@ -16,6 +18,7 @@ event:
   name: event
   plural: events
   taxonomies: category, city, venue, tags
+  list_date: true
   layout: main
   stylesheet: main
   date_in_path: false
@@ -23,6 +26,7 @@ product:
   name: product
   plural: products
   taxonomies: brand, category, tags
+  list_date: false
   layout: product_details
   stylesheet: main
   date_in_path: false
