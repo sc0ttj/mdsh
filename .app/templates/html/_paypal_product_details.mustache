@@ -1,0 +1,59 @@
+<!-- show products from page front matter YAML -->
+
+<div class="product">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+  <h4>{{page_title}}</h4>
+
+  <ul>
+    <li>Price: {{page_product_price | money $page_product_currency }}</li>
+    {{#page_product_shipping}}
+    <li>Shipping: {{page_product_shipping | money $page_product_currency }}</li>
+    {{/page_product_shipping}}
+  </ul>
+
+  <p>Options:</p>
+  <ul>
+
+    {{#site_product_options_colour}}
+    <li>
+      <p>{{site_product_options_colour}}:</p>
+      <select name="os0">
+        {{#site_product_colour_options}}
+        <option value="{{. | lowercase}}">{{.}}</option>
+        {{/site_product_colour_options}}
+      </select>
+      <input type="hidden" name="on0" value="{{site_product_options_colour}}">
+    </li>
+    {{/site_product_options_colour}}
+
+    {{#site_product_options_size}}
+    <li>
+      <p>{{site_product_options_size}}:</p>
+      <select name="os1">
+        {{#site_product_size_options}}
+        <option value="{{. | lowercase}}">{{.}}</option>
+        {{/site_product_size_options}}
+      </select>
+      <input type="hidden" name="on1" value="{{site_product_options_size}}">
+    </li>
+    {{/site_product_options_size}}
+
+  </ul>
+
+  <input
+    class="paypal-btn"
+    type="submit"
+    name="submit"
+    value="{{page_product_paypal_btn_label}}">
+
+  <!-- add the unique product identifier from page data -->
+  <input type="hidden" name="on2" value="id">
+  <input type="hidden" name="os2" value="{{page_product_id}}">
+  <!-- hidden values expected by paypal -->
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="hosted_button_id" value="{{page_product_paypal_btn_id}}">
+  <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>

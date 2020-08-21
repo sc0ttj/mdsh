@@ -1,0 +1,54 @@
+<!-- show products from assets/data/products.yml -->
+
+<div class="product">
+
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+
+    <h4>{{item.name}}</h4>
+
+    <ul>
+      <li>
+        <span>Price: </span><span>{{item.price | money £}}</span>
+      </li>
+      <li><span>Shipping: </span><span>{{item.shipping}}</span></li>
+    </ul>
+
+    <p>Options:</p>
+    <ul>
+      <li>
+        <span class="product-option-label">{{site_product_options_colour}}:</span>
+        <select name="os0">
+          {{#site_product_colour_options}}
+          <option value="{{. | lowercase}}">{{.}}</option>
+          {{/site_product_colour_options}}
+        </select>
+        <input type="hidden" name="on0" value="{{site_product_options_colour}}">
+      </li>
+
+      <li>
+        <span class="product-option-label">{{site_product_options_size}}:</span>
+        <select name="os1">
+          {{#site_product_size_options}}
+          <option value="{{. | lowercase}}">{{.}}</option>
+          {{/site_product_size_options}}
+        </select>
+        <input type="hidden" name="on1" value="{{site_product_options_size}}">
+      </li>
+    </ul>
+
+    <input
+      class="paypal-btn"
+      type="submit"
+      name="submit"
+      value="{{item.paypal_btn_label}}">
+
+    <!-- add the unique product name, from page data -->
+    <input type="hidden" name="on3" value="name">
+    <input type="hidden" name="os3" value="{{item.name}}">
+
+    <!-- hidden values expected by paypal -->
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="{{item.paypal_btn_id}}">
+    <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+  </form>
+</div>
