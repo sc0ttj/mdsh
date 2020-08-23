@@ -129,14 +129,17 @@ function get_pages_in_taxonomy {
 # page types
 #
 function get_page_types {
-  for x in ${page_types[@]}
+  for x in $(lookup page_types.* | sed 's/page_types_//g' | tr ' ' '\n')
   do
     echo "${x//page_types_/}"
   done
 }
 
-function get_page_type_name   { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f1 -d'|' | head -1; }
-function get_page_type_plural { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -E "^$1|\|$1" | cut -f2 -d'|' | head -1; }
+######
+###### BUG: 'product' page type always returns plural
+######
+function get_page_type_name   { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -m1 -E "^$1|\|$1" | cut -f1 -d'|' | head -1; }
+function get_page_type_plural { get_page_types | while read line; do echo -n "$line|"; lookup page_types.$line.plural; done | grep -m1 -E "^$1|\|$1" | cut -f2 -d'|' | head -1; }
 
 function page_type_is_valid {
   local page_types="$(lookup page_types.* | sed 's/page_types_//g')"
@@ -215,16 +218,39 @@ do
     item_before=""
     item_after=""
     item_type="$page_type"
+    item_date="${page//|*/}"
     item_slug="${page//*|/}"
     item_slug="${item_slug//.mdsh/}"
     item_entry="$(grep -m1 "|${item_slug}.mdsh|" ${page_type_plural}.csv)"
     item_title="\"$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f3 -d"|")\""
     [ -z "$item_title" ] && continue
-    item_date="${page//|*/}"
-    item_tags="$(echo "$item_entry" | grep -m1 "|${item_slug}.mdsh|" | cut -f6 -d"|" | tr "," " ")"
+
+    taxonomies_list="$(lookup page_types.${page_type_name}.taxonomies)"
+    [ -z "${taxonomies_list[@]}" ] && continue
+
     item_url="${site_url}/${page_type_plural}/${item_date}/${item_slug}.html"
     item_created="$(get_page_creation_date ${page_type_plural}/${page//|//})"
     item_descr="\"$(get_page_descr ${page_type_plural}/${page//|//})\""
+
+    #
+    ### HACK!! - add taxonomy data to site arrays from mdsh files, hard-coded ###
+    #
+    if [ -f "./$page_type_plural/$item_date/${item_slug}.mdsh" ];then
+      item_mdsh_file="./$page_type_plural/$item_date/${item_slug}.mdsh"
+    elif [ -f "./$page_type_plural/${item_slug}.mdsh" ];then
+      item_mdsh_file="./$page_type_plural/${item_slug}.mdsh"
+    fi
+    if [ -f "$item_mdsh_file" ];then
+      # see taxonomy entries in assets/data/page_types.yml
+      item_brand="$(grep -m1 "^brand:" $item_mdsh_file | cut -f2-99 -d":")"
+      item_venue="$(grep -m1 "^venue:" $item_mdsh_file | cut -f2-99 -d":")"
+      item_city="$(grep -m1 "^city:" $item_mdsh_file | cut -f2-99 -d":")"
+      item_tags="$(grep -m1 "^tags:" $item_mdsh_file | cut -f2-99 -d":")"
+      item_category="\"$(grep -m1 "^category:" $item_mdsh_file | cut -f2-99 -d":")\""
+    fi
+    #
+    #
+    #
 
     # add the page to the site_$page_type_plural  array
     add_item_to "site_${page_type_plural}"
@@ -232,6 +258,7 @@ do
     # update itemlist tmp file
     item_list="${item_list}\n${item_url}"
   done
+
   echo -e "${item_list}" | grep -v "^$" > /tmp/${page_type}_itemlist
   # finally, add the generated site data to the "site" array
   # generated from assets/data/site.yml
@@ -289,6 +316,7 @@ do
       else
         post_count=""
       fi
+
       # else, set the assoc array containing details of the item
       item_type="${taxonomy_name}"
       item_title="\"${item}\""
@@ -296,15 +324,18 @@ do
       item_url="${site_url}/${page_type_plural}/$taxonomy_plural/${item_slug}.html"
       item_post_count="$post_count"
       [ ! -z "$post_count" ] && item_after="($post_count)" || item_after=""
+
       # now add item to $array_name (example, add page to events_categories)
-      add_item_to "$array_name"
+      add_item_to "$array_name"   # array_name is "${page_type_plural}_$taxonomy_plural"
       # update itemlist tmp file
       item_list="${item_list}\n${item_url}"
     done
     IFS="$OLD_IFS"
+
     # export the array and add to site array
     export $(eval "echo $array_name")
     site+=($array_name)
+
     # update itemlist tmp file
     echo -e "$item_list" > /tmp/${page_type}_${taxonomy_name}_itemlist
   done'

@@ -520,6 +520,10 @@ function add_keys_to_hash {
   echo "$hash_name"+=\( [before]="'$item_before'" \)
   echo "$hash_name"+=\( [after]="'$item_after'" \)
   echo "$hash_name"+=\( [tags]="\"$item_tags\"" \)
+  # HACK .. the ones below shouldnt be hard coded, they're user-defined taxonomies
+  echo "$hash_name"+=\( [city]="\"$item_city\"" \)
+  echo "$hash_name"+=\( [venue]="\"$item_venue\"" \)
+  echo "$hash_name"+=\( [brand]="\"$item_brand\"" \)
   # add the hash to the ITEMS array
   echo ${1:-ITEMS}+=\( "$hash_name" \)
 }
