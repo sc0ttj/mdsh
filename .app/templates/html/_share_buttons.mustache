@@ -284,7 +284,7 @@ background-color: #FF6600
   </a>
 
   <!-- Sharingbutton Tumblr
-  <a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title={{page_descr | urlencode}}&amp;caption={{page_descr | urlencode}}&amp;content=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;canonicalUrl=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;shareSource=tumblr_share_button" target="_blank" rel="noopener" aria-label="Tumblr">
+  <a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title={{page_title | urlencode}}&amp;caption={{page_descr | urlencode}}&amp;content=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;canonicalUrl=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;shareSource=tumblr_share_button" target="_blank" rel="noopener" aria-label="Tumblr">
     <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5.5v5h5v4h-5V15c0 5 3.5 4.4 6 2.8v4.4c-6.7 3.2-12 0-12-4.2V9.5h-3V6.7c1-.3 2.2-.7 3-1.3.5-.5 1-1.2 1.4-2 .3-.7.6-1.7.7-3h3.8z"/></svg></div>Tumblr</div>
   </a>
@@ -303,19 +303,19 @@ background-color: #FF6600
   </a>
 
   <!-- Sharingbutton LinkedIn -->
-  <a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;title={{page_descr | urlencode}}&amp;summary={{page_descr | urlencode}}&amp;source=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}" target="_blank" rel="noopener" aria-label="LinkedIn">
+  <a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;title={{page_title | urlencode}}&amp;summary={{page_descr | urlencode}}&amp;source=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}" target="_blank" rel="noopener" aria-label="LinkedIn">
     <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div>LinkedIn</div>
   </a>
 
   <!-- Sharingbutton Reddit -->
-  <a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;resubmit=true&amp;title={{page_descr | urlencode}}" target="_blank" rel="noopener" aria-label="Reddit">
+  <a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}&amp;resubmit=true&amp;title={{page_title | urlencode}}" target="_blank" rel="noopener" aria-label="Reddit">
     <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg></div>Reddit</div>
   </a>
 
   <!-- Sharingbutton XING -->
-  <a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}};title={{page_descr | urlencode}}" target="_blank" rel="noopener" aria-label="XING">
+  <a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}};title={{page_title | urlencode}}" target="_blank" rel="noopener" aria-label="XING">
     <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.2 9.7l-3-5.4C7.2 4 7 4 6.8 4h-5c-.3 0-.4 0-.5.2v.5L4 10 .4 16v.5c0 .2.2.3.4.3h5c.3 0 .4 0 .5-.2l4-6.6v-.5zM24 .2l-.5-.2H18s-.2 0-.3.3l-8 14v.4l5.2 9c0 .2 0 .3.3.3h5.4s.3 0 .4-.2c.2-.2.2-.4 0-.5l-5-8.8L24 .7V.2z"/></svg></div>XING</div>
   </a>
@@ -333,7 +333,7 @@ background-color: #FF6600
   </a>
 
   <!-- Sharingbutton VK -->
-  <a class="resp-sharing-button__link" href="http://vk.com/share.php?title={{page_descr | urlencode}}&amp;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}" target="_blank" rel="noopener" aria-label="VK">
+  <a class="resp-sharing-button__link" href="http://vk.com/share.php?title={{page_title | urlencode}}&amp;url=https%3A%2F%2F{{site_domain | urlencode}}{{page_url | urlencode}}" target="_blank" rel="noopener" aria-label="VK">
     <div class="resp-sharing-button resp-sharing-button--vk resp-sharing-button--medium"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.547 7h-3.29a.743.743 0 0 0-.655.392s-1.312 2.416-1.734 3.23C14.734 12.813 14 12.126 14 11.11V7.603A1.104 1.104 0 0 0 12.896 6.5h-2.474a1.982 1.982 0 0 0-1.75.813s1.255-.204 1.255 1.49c0 .42.022 1.626.04 2.64a.73.73 0 0 1-1.272.503 21.54 21.54 0 0 1-2.498-4.543.693.693 0 0 0-.63-.403h-2.99a.508.508 0 0 0-.48.685C3.005 10.175 6.918 18 11.38 18h1.878a.742.742 0 0 0 .742-.742v-1.135a.73.73 0 0 1 1.23-.53l2.247 2.112a1.09 1.09 0 0 0 .746.295h2.953c1.424 0 1.424-.988.647-1.753-.546-.538-2.518-2.617-2.518-2.617a1.02 1.02 0 0 1-.078-1.323c.637-.84 1.68-2.212 2.122-2.8.603-.804 1.697-2.507.197-2.507z"/></svg></div>VK</div>
   </a>
