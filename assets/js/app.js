@@ -43,7 +43,7 @@ $.fn.isTouchDevice = function() {
 // https://hackernoon.com/javascript-apis-battery-c72baa74c203
 $.fn.batteryIsLow = function() {
   if ("getBattery" in navigator) {
-    navigator.getBattery().then(battery => {
+    navigator.getBattery().then(function(battery) {
       checkBatteryLevel()
       // battery.onchargingchange = checkBatteryLevel;
       // battery.onchargingtimechange = checkBatteryLevel;
